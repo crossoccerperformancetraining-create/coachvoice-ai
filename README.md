@@ -1,11 +1,29 @@
-# CoachVoice AI v1.7 — Coach Mentor
+# CoachVoice AI v1.8 — Firebase Login e Progresso
 
-Atualização principal:
-- Nova tela Coach Mentor AI.
-- Formulário por situação, público, tom, duração e idioma.
-- Respostas demonstrativas.
-- Marcação automática de pausas.
-- Perguntas de acompanhamento.
-- Botão de áudio e estrutura pronta para futura IA.
+## Novidades
 
-Envie os arquivos desta pasta para a raiz do repositório GitHub.
+- Tela de conta do treinador.
+- Cadastro por e-mail e senha.
+- Login por e-mail e senha.
+- Login com Google.
+- Progresso salvo no Firestore.
+- Progresso carregado ao entrar em outro aparelho.
+- Modo demonstração quando o Firebase não está configurado.
+
+## Configuração
+
+1. Crie um projeto no Firebase.
+2. Registre um aplicativo Web.
+3. Ative Authentication:
+   - E-mail/senha
+   - Google
+4. Crie o Firestore.
+5. Copie `firebase-config.example.js` para `firebase-config.js`.
+6. Cole a configuração fornecida pelo Firebase.
+7. Publique as regras de `firestore.rules`.
+8. Envie os arquivos para o GitHub.
+
+## Segurança
+
+Não coloque chaves privadas ou credenciais de conta de serviço no navegador.
+O objeto firebaseConfig identifica o projeto, mas a segurança depende das regras do Firebase.

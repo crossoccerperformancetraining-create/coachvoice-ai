@@ -102,7 +102,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <header class="topbar">
   <button class="icon-btn" onclick="openDrawer()">☰</button>
   <div class="brand"><h1>CoachVoice <span>AI</span></h1><p id="topSubtitle">Plataforma integrada</p></div>
-  <button class="icon-btn" onclick="openFeedback()">✓</button>
+  <button class="icon-btn" onclick="openAccount()">◉</button>
 </header>
 
 <section id="home" class="page active">
@@ -542,6 +542,22 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 </section>
 
 <section id="profile" class="page">
+  <article class="card">
+    <span class="label">Minha conta</span>
+    <div class="profile-card" style="box-shadow:none;padding:0">
+      <div class="avatar">PA</div>
+      <div style="flex:1">
+        <strong id="accountEmail">Modo demonstração</strong>
+        <small id="accountStatus">Firebase pendente</small>
+      </div>
+      <button class="outline" style="width:auto;padding:10px 14px" onclick="openAccount()">Gerenciar</button>
+    </div>
+    <br>
+    <button class="secondary" onclick="syncProgressNow()">Sincronizar progresso</button>
+    <br><br>
+    <button id="logoutAccountBtn" class="outline hidden" onclick="coachLogout()">Sair da conta</button>
+  </article>
+
   <article class="card profile-card">
     <div class="avatar">PA</div>
     <div><strong>Professor Andrade</strong><small>Plano de desenvolvimento do treinador</small></div>
@@ -574,6 +590,29 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   <button class="nav" data-page="mentor" onclick="go('mentor')">🤖<span>Mentor</span></button>
 </nav>
 </main>
+
+
+<div id="authOverlay" class="sheet-overlay" onclick="closeAccount()"></div>
+<div id="authScreen" class="sheet">
+  <div class="sheet-handle"></div>
+  <h2>Conta do treinador</h2>
+  <p class="intro">Entre para salvar seu progresso na nuvem e acessar o CoachVoice em outros aparelhos.</p>
+
+  <label class="label" for="authEmail">E-mail</label>
+  <input id="authEmail" type="email" placeholder="seuemail@exemplo.com" style="width:100%;padding:13px;border:1px solid var(--line);border-radius:13px;font:inherit;margin:7px 0 12px">
+
+  <label class="label" for="authPassword">Senha</label>
+  <input id="authPassword" type="password" placeholder="Mínimo de 6 caracteres" style="width:100%;padding:13px;border:1px solid var(--line);border-radius:13px;font:inherit;margin:7px 0 12px">
+
+  <div class="mentor-actions">
+    <button class="primary" onclick="coachLogin()">Entrar</button>
+    <button class="secondary" onclick="coachRegister()">Criar conta</button>
+  </div>
+  <br>
+  <button class="outline" onclick="coachGoogleLogin()">Continuar com Google</button>
+  <p id="authMessage" style="min-height:22px;font-weight:700"></p>
+  <button class="secondary" onclick="closeAccount()">Fechar</button>
+</div>
 
 <div id="sheetOverlay" class="sheet-overlay" onclick="closeFeedback()"></div>
 <div id="feedbackSheet" class="sheet">
@@ -1058,5 +1097,92 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));
 }
 </script>
+
+<script type="module">
+import {
+  initFirebase,
+  isFirebaseReady,
+  registerWithEmail,
+  loginWithEmail,
+  loginWithGoogle,
+  logoutUser,
+  saveCloudProgress,
+  loadCloudProgress
+} from './firebase-service.js';
+
+const authScreen = document.getElementById('authScreen');
+const accountEmail = document.getElementById('accountEmail');
+const authMessage = document.getElementById('authMessage');
+
+function setAuthMessage(message, isError=false){
+  authMessage.textContent = message;
+  authMessage.style.color = isError ? '#b42318' : '#247533';
+}
+function emailPassword(){
+  return {
+    email: document.getElementById('authEmail').value.trim(),
+    password: document.getElementById('authPassword').value
+  };
+}
+window.coachRegister = async () => {
+  try{
+    const {email,password}=emailPassword();
+    await registerWithEmail(email,password);
+    setAuthMessage('Conta criada com sucesso.');
+  }catch(err){setAuthMessage(err.message || 'Não foi possível criar a conta.', true);}
+};
+window.coachLogin = async () => {
+  try{
+    const {email,password}=emailPassword();
+    await loginWithEmail(email,password);
+    setAuthMessage('Login realizado.');
+  }catch(err){setAuthMessage(err.message || 'Não foi possível entrar.', true);}
+};
+window.coachGoogleLogin = async () => {
+  try{
+    await loginWithGoogle();
+    setAuthMessage('Login com Google realizado.');
+  }catch(err){setAuthMessage(err.message || 'Não foi possível entrar com Google.', true);}
+};
+window.coachLogout = async () => {
+  try{await logoutUser();}catch(err){toast('Erro ao sair.');}
+};
+window.openAccount = () => {
+  authScreen.classList.add('open');
+  document.getElementById('authOverlay').classList.add('show');
+};
+window.closeAccount = () => {
+  authScreen.classList.remove('open');
+  document.getElementById('authOverlay').classList.remove('show');
+};
+window.syncProgressNow = async () => {
+  if(!isFirebaseReady()){toast('Firebase ainda não configurado.');return;}
+  try{
+    await saveCloudProgress([...completed]);
+    toast('Progresso enviado para a nuvem.');
+  }catch(err){toast('Não foi possível sincronizar.');}
+};
+
+initFirebase(async user => {
+  if(user){
+    accountEmail.textContent = user.email || 'Conta conectada';
+    document.getElementById('accountStatus').textContent='Conectado';
+    document.getElementById('logoutAccountBtn').classList.remove('hidden');
+    try{
+      const cloud = await loadCloudProgress();
+      if(Array.isArray(cloud)){
+        cloud.forEach(id=>completed.add(id));
+        localStorage.setItem('coachvoice-completed', JSON.stringify([...completed]));
+        updateUI();
+      }
+    }catch(err){}
+  }else{
+    accountEmail.textContent = isFirebaseReady() ? 'Não conectado' : 'Modo demonstração';
+    document.getElementById('accountStatus').textContent = isFirebaseReady() ? 'Entrar' : 'Firebase pendente';
+    document.getElementById('logoutAccountBtn').classList.add('hidden');
+  }
+});
+</script>
+
 </body>
 </html>
