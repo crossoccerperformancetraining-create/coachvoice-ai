@@ -1,8 +1,8 @@
 {
   "name": "coachvoice-ai",
   "private": true,
-  "version": "2.2.0",
-  "description": "CoachVoice AI v2.2 com inglês iniciante passo a passo, repetição e correção visual.",
+  "version": "2.3.0",
+  "description": "CoachVoice AI v2.3 com ciclo diário, inglês em três níveis e IA em áreas profissionais.",
   "engines": {
     "node": "22.x"
   }

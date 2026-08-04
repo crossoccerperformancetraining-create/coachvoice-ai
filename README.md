@@ -1,44 +1,58 @@
-# CoachVoice AI v2.2 — inglês iniciante passo a passo
+# CoachVoice AI v2.3 — versão consolidada de testes
 
-## Nova experiência de inglês
+Esta é a versão planejada para permanecer em teste antes de novas atualizações.
 
-A área de inglês foi refeita para quem está começando do zero:
+## Áreas principais
 
-1. conhecer poucas palavras;
-2. ouvir cada palavra;
-3. ver o significado em português;
-4. montar a frase na ordem correta;
-5. ouvir devagar e na velocidade natural;
-6. repetir pelo microfone;
-7. visualizar palavras reconhecidas em verde;
-8. visualizar palavras para repetir em vermelho;
-9. receber uma orientação acolhedora;
-10. avançar somente uma frase por vez.
+- Diário do Treinador:
+  - plano da manhã;
+  - inglês;
+  - oratória;
+  - entrevista, treino, reunião ou jogo;
+  - reflexão no final do dia.
+- Inglês em três níveis:
+  - iniciante: palavras, montagem, repetição e correção visual;
+  - intermediário: situações e respostas guiadas;
+  - alto nível: simulações profissionais em inglês.
+- Oratória:
+  - transcrição;
+  - contagem de palavras;
+  - duração estimada;
+  - vícios e repetições;
+  - reescrita com IA e marcação de pausas.
+- Entrevistas com IA.
+- Liderança com IA.
+- Comunicação do modelo de jogo.
+- Coach Mentor.
+- Dia de jogo, biblioteca e formação completa.
+- Pontos, sequência de dias e atividades recentes.
 
-## Observação importante
+## IA
 
-As cores se baseiam na transcrição de voz feita pelo navegador. Isso ajuda a
-praticar, mas não é uma medição acústica precisa de pronúncia. O navegador pode
-interpretar uma palavra de forma diferente mesmo quando a fala está razoável.
+O aplicativo continua funcionando sem IA, usando respostas locais.
 
-## IA opcional
+Para ativar as respostas personalizadas, configure na Vercel:
 
-Foi adicionada a função:
+- `OPENAI_API_KEY`
+- opcional: `OPENAI_MODEL` com valor `gpt-5-mini`
 
-`api/english-coach.js`
+Arquivos de API:
 
-Quando `OPENAI_API_KEY` estiver configurada na Vercel, o botão de explicação
-personalizada usa IA. Sem a chave, o aplicativo continua funcionando com
-orientação local.
+- `api/mentor.js`
+- `api/english-coach.js`
+- `api/coach-ai.js`
 
 ## Publicação
 
-Substitua todos os arquivos da versão anterior.
+Substitua os arquivos da versão anterior pelos arquivos deste pacote.
 
 Commit sugerido:
 
-`Criar inglês iniciante passo a passo`
+`Criar versão consolidada de testes v2.3`
 
 Depois do deploy, abra:
 
-`https://coachvoice-ai.vercel.app/?v=22`
+`https://coachvoice-ai.vercel.app/?v=23`
+
+Use somente o domínio oficial. Não use URLs antigas de deployments marcados
+como `Ready Stale`.

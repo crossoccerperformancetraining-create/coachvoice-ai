@@ -1,4 +1,4 @@
-const CACHE='coachvoice-v2.2-ingles-iniciante';
+const CACHE='coachvoice-v2.3-ciclo-diario-ia';
 const FILES=['/','/index.html','/manifest.webmanifest','/icon-192.png','/icon-512.png'];
 
 self.addEventListener('install',event=>{

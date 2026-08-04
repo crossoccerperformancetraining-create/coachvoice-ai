@@ -19,6 +19,9 @@
     },
     "api/english-coach.js": {
       "maxDuration": 30
+    },
+    "api/coach-ai.js": {
+      "maxDuration": 30
     }
   }
 }
