@@ -6,10 +6,9 @@
 <meta name="theme-color" content="#071225">
 <meta name="application-name" content="CoachVoice AI">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="CoachVoice">
 <link rel="manifest" href="/manifest.webmanifest">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/icon-192.png">
 <title>CoachVoice AI — Plataforma Integrada</title>
 <style>
 :root{
@@ -64,6 +63,17 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 .test-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
 .permission-note{background:#eef5ff;border-left:4px solid #2f6fb2;border-radius:11px;padding:13px;line-height:1.55;color:#274f7a}
 
+
+.mentor-form{display:grid;gap:12px}.mentor-form label{font-size:.76rem;font-weight:800;color:#475467}
+.mentor-form select,.mentor-form textarea{width:100%;border:1px solid var(--line);border-radius:14px;background:#fff;padding:13px;font:inherit;color:#101828}
+.mentor-form textarea{min-height:130px;resize:vertical}.mentor-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mentor-result{display:grid;gap:12px}.mentor-section{background:#f8fafc;border-radius:15px;padding:14px}
+.mentor-section h3{margin:0 0 8px;font-size:1rem}.mentor-section p{margin:0;line-height:1.58;color:#344054}
+.pause-text{background:#edf8ec;border-left:4px solid #319444}.mentor-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.prompt-suggestions{display:flex;gap:8px;overflow:auto;padding-bottom:4px}.prompt-suggestion{border:1px solid var(--line);background:#fff;border-radius:14px;padding:11px;min-width:210px;text-align:left}
+.prompt-suggestion strong,.prompt-suggestion small{display:block}.prompt-suggestion small{margin-top:4px;color:var(--muted)}
+.chat-bubble{border-radius:16px;padding:13px;line-height:1.55;margin-bottom:10px}.chat-user{background:#0f2749;color:#fff;margin-left:28px}.chat-ai{background:#fff;border:1px solid #e4e7ec;margin-right:28px}
+
 @media(min-width:760px){.quick-grid{grid-template-columns:repeat(4,1fr)}.block-list{grid-template-columns:1fr 1fr}.stats{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
@@ -77,6 +87,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   <nav>
     <button class="drawer-link active" data-page="home" onclick="go('home')">⌂ Painel</button>
     <button class="drawer-link" data-page="tracks" onclick="go('tracks')">▦ Trilhas</button>
+    <button class="drawer-link" data-page="mentor" onclick="go('mentor')">🤖 Coach Mentor AI</button>
     <button class="drawer-link" data-page="practice" onclick="go('practice')">🎙 Treino do dia</button>
     <button class="drawer-link" data-page="oratory" onclick="go('oratory')">🗣 Academia de Oratória</button>
     <button class="drawer-link" data-page="technical" onclick="go('technical')">⚙ Testes técnicos</button>
@@ -102,12 +113,13 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <button class="primary" onclick="go('practice')">Começar treino do dia</button>
   </div>
 
-  <div class="section-title"><h2>Acesso rápido</h2><span>5 áreas</span></div>
+  <div class="section-title"><h2>Acesso rápido</h2><span>6 áreas</span></div>
   <div class="quick-grid">
     <button class="quick" onclick="openBlock('b1')"><span>🎙</span><strong>Entrevistas</strong><small>Pós-jogo e imprensa</small></button>
     <button class="quick" onclick="openBlock('b2')"><span>🇬🇧</span><strong>Inglês</strong><small>Treino e jogo</small></button>
     <button class="quick" onclick="openBlock('b3')"><span>🔥</span><strong>Liderança</strong><small>Vestiário</small></button>
     <button class="quick" onclick="openBlock('b4')"><span>🏢</span><strong>Gestão</strong><small>Jogadores e diretoria</small></button>
+    <button class="quick" onclick="go('mentor')"><span>🤖</span><strong>Coach Mentor</strong><small>Pergunte uma situação real</small></button>
     <button class="quick" onclick="go('oratory')"><span>🗣</span><strong>Oratória</strong><small>Português pausado</small></button>
     <button class="quick" onclick="go('technical')"><span>⚙</span><strong>Testes técnicos</strong><small>Microfone e câmera</small></button>
   </div>
@@ -193,6 +205,123 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   </article>
 </section>
 
+
+
+<section id="mentor" class="page">
+  <div class="hero">
+    <span class="eyebrow">ASSISTENTE PROFISSIONAL</span>
+    <h2>Como posso ajudar você hoje, professor?</h2>
+    <p>Descreva uma situação real. O Coach Mentor organizará a comunicação, uma resposta-modelo e um treino prático.</p>
+  </div>
+
+  <div class="section-title"><h2>Exemplos rápidos</h2><span>Toque para usar</span></div>
+  <div class="prompt-suggestions">
+    <button class="prompt-suggestion" onclick="mentorExample('Perdemos três jogos seguidos e amanhã tenho uma coletiva. Como devo responder?')">
+      <strong>Pressão da imprensa</strong><small>Sequência de derrotas</small>
+    </button>
+    <button class="prompt-suggestion" onclick="mentorExample('Tenho um jogador experiente insatisfeito por estar no banco. Como conduzir a conversa?')">
+      <strong>Jogador insatisfeito</strong><small>Conversa individual</small>
+    </button>
+    <button class="prompt-suggestion" onclick="mentorExample('Preciso fazer uma palestra curta antes de uma final importante.')">
+      <strong>Discurso pré-jogo</strong><small>Final importante</small>
+    </button>
+  </div>
+
+  <article class="card" style="margin-top:14px">
+    <span class="label">Preparar uma situação</span>
+    <div class="mentor-form">
+      <label for="mentorSituation">Descreva o que está acontecendo</label>
+      <textarea id="mentorSituation" placeholder="Ex.: A equipe perdeu duas partidas e a torcida está pressionando. Amanhã terei uma entrevista."></textarea>
+
+      <div class="mentor-grid">
+        <div>
+          <label for="mentorAudience">Com quem você falará?</label>
+          <select id="mentorAudience">
+            <option>Imprensa</option>
+            <option>Jogadores</option>
+            <option>Comissão técnica</option>
+            <option>Diretoria</option>
+            <option>Torcida</option>
+          </select>
+        </div>
+        <div>
+          <label for="mentorTone">Tom desejado</label>
+          <select id="mentorTone">
+            <option>Sereno</option>
+            <option>Firme</option>
+            <option>Tático</option>
+            <option>Protetor</option>
+            <option>Inspirador</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mentor-grid">
+        <div>
+          <label for="mentorDuration">Duração</label>
+          <select id="mentorDuration">
+            <option>15 segundos</option>
+            <option selected>30 segundos</option>
+            <option>60 segundos</option>
+          </select>
+        </div>
+        <div>
+          <label for="mentorLanguage">Idioma</label>
+          <select id="mentorLanguage">
+            <option>Português</option>
+            <option>Inglês</option>
+            <option>Português e inglês</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="primary" onclick="generateMentorDemo()">Preparar orientação</button>
+      <button class="secondary" onclick="futureFeature('Entrada por voz do Coach Mentor')">🎙 Descrever pelo microfone</button>
+    </div>
+  </article>
+
+  <section id="mentorResult" class="hidden">
+    <article class="card">
+      <span class="label">Plano preparado</span>
+      <div class="mentor-result">
+        <div class="mentor-section">
+          <h3>1. Leitura da situação</h3>
+          <p id="mentorAnalysis"></p>
+        </div>
+        <div class="mentor-section">
+          <h3>2. Resposta recomendada</h3>
+          <p id="mentorAnswer"></p>
+        </div>
+        <div class="mentor-section pause-text">
+          <h3>3. Versão com pausas</h3>
+          <p id="mentorPauseAnswer"></p>
+        </div>
+        <div class="mentor-section">
+          <h3>4. Evite</h3>
+          <p id="mentorAvoid"></p>
+        </div>
+        <div class="mentor-section">
+          <h3>5. Possível pergunta seguinte</h3>
+          <p id="mentorFollowup"></p>
+        </div>
+      </div>
+      <br>
+      <div class="mentor-actions">
+        <button class="secondary" onclick="speakMentor()">🔊 Ouvir resposta</button>
+        <button class="primary" onclick="futureFeature('Treino de resposta do Mentor')">🎙 Treinar resposta</button>
+      </div>
+    </article>
+
+    <article class="card">
+      <span class="label">Conversa demonstrativa</span>
+      <div id="mentorChat">
+        <div class="chat-user" id="mentorChatUser"></div>
+        <div class="chat-ai">Preparei uma resposta inicial. Na versão conectada à IA, poderei fazer perguntas de acompanhamento e adaptar o treino ao seu desempenho.</div>
+      </div>
+      <button class="outline" onclick="mentorFollowupDemo()">Gerar pergunta de acompanhamento</button>
+    </article>
+  </section>
+</section>
 
 <section id="oratory" class="page">
   <div class="hero">
@@ -442,7 +571,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   <button class="nav" data-page="tracks" onclick="go('tracks')">▦<span>Trilhas</span></button>
   <button class="nav" data-page="practice" onclick="go('practice')">🎙<span>Treinar</span></button>
   <button class="nav" data-page="progress" onclick="go('progress')">▥<span>Evolução</span></button>
-  <button class="nav" data-page="profile" onclick="go('profile')">◉<span>Perfil</span></button>
+  <button class="nav" data-page="mentor" onclick="go('mentor')">🤖<span>Mentor</span></button>
 </nav>
 </main>
 
@@ -546,7 +675,7 @@ function go(id){
   currentPage=id;
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));
   document.querySelectorAll('.nav,.drawer-link').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
-  const titles={home:'Plataforma integrada',tracks:'Trilhas de aprendizagem',practice:'Treino do dia',oratory:'Academia de Oratória',technical:'Testes técnicos',progress:'Minha evolução',profile:'Perfil e configurações',blockDetail:'Conteúdo do bloco',lessonDetail:'Aula prática'};
+  const titles={home:'Plataforma integrada',tracks:'Trilhas de aprendizagem',mentor:'Coach Mentor AI',practice:'Treino do dia',oratory:'Academia de Oratória',technical:'Testes técnicos',progress:'Minha evolução',profile:'Perfil e configurações',blockDetail:'Conteúdo do bloco',lessonDetail:'Aula prática'};
   document.getElementById('topSubtitle').textContent=titles[id]||'CoachVoice AI';
   closeDrawer();window.scrollTo(0,0);updateUI();
 }
@@ -632,6 +761,83 @@ function showDailyModel(){document.getElementById('dailyModel').classList.remove
 function showDailyAnalysis(){document.getElementById('dailyAnalysis').classList.remove('hidden');window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});toast('Análise demonstrativa pronta.')}
 
 
+
+
+let mentorSpokenText='';
+function mentorExample(text){
+  document.getElementById('mentorSituation').value=text;
+  window.scrollTo({top:document.getElementById('mentorSituation').getBoundingClientRect().top+window.scrollY-110,behavior:'smooth'});
+}
+function generateMentorDemo(){
+  const situation=document.getElementById('mentorSituation').value.trim();
+  const audience=document.getElementById('mentorAudience').value;
+  const tone=document.getElementById('mentorTone').value;
+  const duration=document.getElementById('mentorDuration').value;
+  const language=document.getElementById('mentorLanguage').value;
+  if(!situation){toast('Descreva uma situação primeiro.');return;}
+
+  const lower=situation.toLowerCase();
+  let analysis='A situação exige uma mensagem direta, equilibrada e orientada para o próximo passo.';
+  let answer='Entendemos a responsabilidade deste momento. Identificamos os pontos que precisam ser corrigidos e estamos trabalhando com clareza e compromisso. Nossa resposta precisa aparecer nas próximas ações.';
+  let avoid='Evite procurar culpados, prometer resultados imediatos ou dar explicações longas e defensivas.';
+  let follow='O que será feito de forma diferente no próximo compromisso?';
+
+  if(lower.includes('banco') || lower.includes('jogador')){
+    analysis='A conversa precisa reconhecer a frustração do jogador sem negociar a autoridade técnica.';
+    answer='Eu entendo que você gostaria de jogar mais. A decisão está baseada nas necessidades da equipe e em critérios específicos. Quero explicar esses critérios e combinar os pontos que podem aproximar você de uma nova oportunidade.';
+    avoid='Evite comparar o atleta com companheiros, fazer promessas de escalação ou encerrar a conversa sem um próximo passo.';
+    follow='O que você espera que eu faça para voltar a ter mais oportunidades?';
+  }else if(lower.includes('final') || lower.includes('pré-jogo') || lower.includes('palestra')){
+    analysis='A mensagem deve ser curta, emocionalmente forte e ligada a ações concretas.';
+    answer='Chegamos até aqui pelo trabalho e pela união. Hoje precisamos jogar com coragem, organização e confiança no companheiro. Cada ação importa. Vamos competir juntos do primeiro ao último minuto.';
+    avoid='Evite excesso de informações táticas, gritos constantes ou uma fala longa que perca impacto.';
+    follow='Qual será a primeira atitude que você espera da equipe quando a partida começar?';
+  }else if(lower.includes('derrota') || lower.includes('perdemos') || lower.includes('coletiva')){
+    analysis='É importante assumir responsabilidade, proteger o grupo e apresentar uma direção concreta.';
+    answer='Os resultados estão abaixo do que queremos e eu assumo minha responsabilidade. Identificamos os principais problemas e já iniciamos correções específicas. Precisamos responder com trabalho, equilíbrio e desempenho no próximo jogo.';
+    avoid='Evite atacar jogadores, discutir com jornalistas ou usar a arbitragem como explicação principal.';
+    follow='Por que a torcida deveria acreditar que a equipe conseguirá reagir?';
+  }
+
+  if(tone==='Firme') answer=answer.replace('Precisamos','Vamos');
+  if(tone==='Tático') answer+=' Taticamente, o foco será melhorar as distâncias entre os setores e a tomada de decisão.';
+  if(tone==='Protetor') answer='A responsabilidade começa por mim. '+answer;
+  if(tone==='Inspirador') answer+=' Este é o momento de mostrar nossa força como grupo.';
+
+  if(language==='Inglês'){
+    answer='We understand the responsibility of this moment. We have identified the main problems and started specific corrections. Our response must come through work, balance, and performance in the next match.';
+  }else if(language==='Português e inglês'){
+    answer += '\n\nEnglish: We understand the responsibility of this moment. We are working on clear corrections and we need to respond in the next match.';
+  }
+
+  if(duration==='15 segundos') answer=answer.split('.').slice(0,2).join('.')+'.';
+  if(duration==='60 segundos') answer+=' O grupo está comprometido com o processo, e nossa obrigação é transformar esse trabalho em uma atuação mais consistente.';
+
+  const pauses=answer.replace(/\. /g,'. / ').replace(/\n\n/g,' // ');
+  document.getElementById('mentorAnalysis').textContent=analysis+' Público: '+audience+'. Tom: '+tone+'.';
+  document.getElementById('mentorAnswer').textContent=answer;
+  document.getElementById('mentorPauseAnswer').textContent=pauses;
+  document.getElementById('mentorAvoid').textContent=avoid;
+  document.getElementById('mentorFollowup').textContent=follow;
+  document.getElementById('mentorChatUser').textContent=situation;
+  document.getElementById('mentorResult').classList.remove('hidden');
+  mentorSpokenText=answer;
+  window.scrollTo({top:document.getElementById('mentorResult').offsetTop-90,behavior:'smooth'});
+}
+function speakMentor(){
+  if(!mentorSpokenText){toast('Gere uma orientação primeiro.');return;}
+  const language=document.getElementById('mentorLanguage').value==='Inglês'?'en-US':'pt-BR';
+  speakText(mentorSpokenText,language,.86);
+}
+function mentorFollowupDemo(){
+  const follow=document.getElementById('mentorFollowup').textContent;
+  const chat=document.getElementById('mentorChat');
+  const bubble=document.createElement('div');
+  bubble.className='chat-ai';
+  bubble.textContent=follow;
+  chat.appendChild(bubble);
+  toast('Pergunta de acompanhamento adicionada.');
+}
 
 let micStream=null;
 let mediaRecorder=null;
@@ -847,15 +1053,10 @@ function saveFeedback(){
 updateUI();
 checkTechnicalEnvironment();
 </script>
-
 <script>
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .catch(() => console.log('Service worker não registrado neste ambiente.'));
-  });
+  window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));
 }
 </script>
-
 </body>
 </html>
