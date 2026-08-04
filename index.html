@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#071225">
-<meta name="application-name" content="CoachVoice AI">
+<meta name="application-name" content="CoachVoice AI v2.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="CoachVoice">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<title>CoachVoice AI — Plataforma Integrada</title>
+<title>CoachVoice AI v2.0 — Treino individual</title>
 <style>
 :root{
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -74,6 +74,39 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 .prompt-suggestion strong,.prompt-suggestion small{display:block}.prompt-suggestion small{margin-top:4px;color:var(--muted)}
 .chat-bubble{border-radius:16px;padding:13px;line-height:1.55;margin-bottom:10px}.chat-user{background:#0f2749;color:#fff;margin-left:28px}.chat-ai{background:#fff;border:1px solid #e4e7ec;margin-right:28px}
 
+
+.voice-panel{background:#f8fafc;border:1px solid #e4e7ec;border-radius:16px;padding:13px}
+.voice-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.voice-option{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 6px;font-weight:800;color:#344054}
+.voice-option.active{background:#0f2749;color:#fff;border-color:#0f2749}
+.voice-note{font-size:.73rem;color:var(--muted);line-height:1.45;margin:8px 0 0}
+.hub-grid,.library-grid,.day-grid{display:grid;gap:12px}
+.practice-card,.scenario-card,.mode-card{background:#fff;border:1px solid #e4e7ec;border-radius:18px;padding:15px;box-shadow:var(--shadow)}
+.practice-card{display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:center;text-align:left;width:100%}
+.practice-card .practice-icon{width:48px;height:48px;border-radius:14px;background:#0f2749;color:#fff;display:grid;place-items:center;font-size:1.25rem}
+.practice-card strong,.practice-card small{display:block}.practice-card small{color:var(--muted);margin-top:4px;line-height:1.35}
+.phrase-box{background:linear-gradient(145deg,#0d2341,#173f70);color:#fff;border-radius:20px;padding:20px}
+.phrase-box small{color:#cbd5e1;display:block}.phrase-box h2{font-size:1.5rem;line-height:1.38;margin:10px 0}
+.translation-box,.response-box{border-radius:15px;padding:14px;line-height:1.55}
+.translation-box{background:#edf8ec;border-left:4px solid #319444}
+.response-box{background:#f8fafc;border:1px solid #e4e7ec}
+.text-input,.select-field{width:100%;border:1px solid var(--line);border-radius:14px;background:#fff;padding:13px;font:inherit;color:#101828}
+.text-input{min-height:96px;resize:vertical}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mini-tag{display:inline-block;background:#eef4ff;color:#244f83;border-radius:999px;padding:6px 9px;font-size:.68rem;font-weight:850;margin:0 5px 6px 0}
+.scenario-card h3,.mode-card h3{margin:8px 0}.scenario-card p,.mode-card p{color:var(--muted);line-height:1.48}
+.filter-row{display:flex;gap:8px;overflow:auto;margin-bottom:13px}
+.filter-btn{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 13px;font-weight:800}
+.filter-btn.active{background:#0f2749;color:#fff;border-color:#0f2749}
+.score-line{display:grid;grid-template-columns:80px 1fr 42px;gap:9px;align-items:center;margin-top:9px}
+.score-line span{font-size:.77rem;color:#475467}.score-bar{height:8px;background:#e4e7ec;border-radius:999px;overflow:hidden}.score-bar i{display:block;height:100%;background:#319444;border-radius:999px}
+.score-pill{display:inline-grid;place-items:center;min-width:50px;padding:8px;border-radius:12px;background:#e9f7e7;color:#247533;font-weight:900}
+.day-check{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px;font-weight:800}
+.day-check.done{background:#e9f7e7;border-color:#70bd7b;color:#247533}
+.local-badge{display:inline-block;background:#fff7e8;color:#9a5a00;border-radius:999px;padding:7px 10px;font-size:.7rem;font-weight:850}
+.history-list{display:grid;gap:9px}.history-item{background:#f8fafc;border-radius:13px;padding:11px}.history-item strong,.history-item small{display:block}.history-item small{color:var(--muted);margin-top:4px}
+@media(min-width:760px){.hub-grid{grid-template-columns:1fr 1fr}.library-grid{grid-template-columns:1fr 1fr}.day-grid{grid-template-columns:repeat(3,1fr)}}
+
 @media(min-width:760px){.quick-grid{grid-template-columns:repeat(4,1fr)}.block-list{grid-template-columns:1fr 1fr}.stats{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
@@ -85,16 +118,19 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <div><strong>Professor Andrade</strong><small>Treinador</small></div>
   </div>
   <nav>
-    <button class="drawer-link active" data-page="home" onclick="go('home')">⌂ Painel</button>
-    <button class="drawer-link" data-page="tracks" onclick="go('tracks')">▦ Trilhas</button>
+    <button class="drawer-link active" data-page="home" onclick="go('home')">⌂ Início</button>
     <button class="drawer-link" data-page="mentor" onclick="go('mentor')">🤖 Coach Mentor AI</button>
-    <button class="drawer-link" data-page="practice" onclick="go('practice')">🎙 Treino do dia</button>
-    <button class="drawer-link" data-page="oratory" onclick="go('oratory')">🗣 Academia de Oratória</button>
-    <button class="drawer-link" data-page="technical" onclick="go('technical')">⚙ Testes técnicos</button>
+    <button class="drawer-link" data-page="practice" onclick="go('practice')">🎯 Central de treinos</button>
+    <button class="drawer-link" data-page="english" onclick="go('english')">🇬🇧 Inglês no futebol</button>
+    <button class="drawer-link" data-page="oratory" onclick="go('oratory')">🗣 Oratória em português</button>
+    <button class="drawer-link" data-page="library" onclick="go('library')">📚 Biblioteca de situações</button>
+    <button class="drawer-link" data-page="matchday" onclick="go('matchday')">🏟 Dia de jogo</button>
+    <button class="drawer-link" data-page="tracks" onclick="go('tracks')">▦ Formação completa</button>
+    <button class="drawer-link" data-page="technical" onclick="go('technical')">⚙ Testes do aparelho</button>
     <button class="drawer-link" data-page="progress" onclick="go('progress')">▥ Evolução</button>
-    <button class="drawer-link" data-page="profile" onclick="go('profile')">◉ Perfil</button>
+    <button class="drawer-link" data-page="profile" onclick="go('profile')">◉ Preferências</button>
   </nav>
-  <div class="drawer-note">CoachVoice AI — Protótipo integrado para testes de interface no celular.</div>
+  <div class="drawer-note">CoachVoice AI v2.0 — modo individual. Progresso, preferências e histórico ficam salvos somente neste aparelho.</div>
 </aside>
 <div id="overlay" class="overlay" onclick="closeDrawer()"></div>
 
@@ -102,26 +138,27 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <header class="topbar">
   <button class="icon-btn" onclick="openDrawer()">☰</button>
   <div class="brand"><h1>CoachVoice <span>AI</span></h1><p id="topSubtitle">Plataforma integrada</p></div>
-  <button class="icon-btn" onclick="openAccount()">◉</button>
+  <button class="icon-btn" onclick="go('profile')">◉</button>
 </header>
 
 <section id="home" class="page active">
   <div class="hero">
     <span class="eyebrow">BOM DIA, PROFESSOR</span>
-    <h2>Treine comunicação, liderança e inglês para o futebol.</h2>
-    <p>Continue de onde parou ou escolha uma trilha específica.</p>
-    <button class="primary" onclick="go('practice')">Começar treino do dia</button>
+    <h2>Seu assessor de comunicação e inglês para o futebol.</h2>
+    <p>Treine situações reais, ouça modelos com a voz escolhida e desenvolva respostas próprias.</p>
+    <button class="primary" onclick="go('mentor')">Falar com o Coach Mentor</button>
   </div>
 
-  <div class="section-title"><h2>Acesso rápido</h2><span>6 áreas</span></div>
+  <div class="section-title"><h2>Acesso rápido</h2><span>8 áreas</span></div>
   <div class="quick-grid">
-    <button class="quick" onclick="openBlock('b1')"><span>🎙</span><strong>Entrevistas</strong><small>Pós-jogo e imprensa</small></button>
-    <button class="quick" onclick="openBlock('b2')"><span>🇬🇧</span><strong>Inglês</strong><small>Treino e jogo</small></button>
-    <button class="quick" onclick="openBlock('b3')"><span>🔥</span><strong>Liderança</strong><small>Vestiário</small></button>
-    <button class="quick" onclick="openBlock('b4')"><span>🏢</span><strong>Gestão</strong><small>Jogadores e diretoria</small></button>
-    <button class="quick" onclick="go('mentor')"><span>🤖</span><strong>Coach Mentor</strong><small>Pergunte uma situação real</small></button>
-    <button class="quick" onclick="go('oratory')"><span>🗣</span><strong>Oratória</strong><small>Português pausado</small></button>
-    <button class="quick" onclick="go('technical')"><span>⚙</span><strong>Testes técnicos</strong><small>Microfone e câmera</small></button>
+    <button class="quick" onclick="go('mentor')"><span>🤖</span><strong>Coach Mentor</strong><small>Situação real e resposta</small></button>
+    <button class="quick" onclick="go('english')"><span>🇬🇧</span><strong>Inglês</strong><small>Ouvir, entender e responder</small></button>
+    <button class="quick" onclick="go('oratory')"><span>🗣</span><strong>Oratória</strong><small>Fala pausada e firme</small></button>
+    <button class="quick" onclick="openBlock('b1')"><span>🎙</span><strong>Entrevistas</strong><small>Imprensa e pós-jogo</small></button>
+    <button class="quick" onclick="openBlock('b3')"><span>🔥</span><strong>Liderança</strong><small>Jogadores e vestiário</small></button>
+    <button class="quick" onclick="go('library')"><span>📚</span><strong>Biblioteca</strong><small>Situações para praticar</small></button>
+    <button class="quick" onclick="go('matchday')"><span>🏟</span><strong>Dia de jogo</strong><small>Pré, intervalo e pós</small></button>
+    <button class="quick" onclick="go('practice')"><span>🎯</span><strong>Treino do dia</strong><small>Prática rápida orientada</small></button>
   </div>
 
   <div class="section-title"><h2>Seu progresso</h2><span id="homeProgressLabel">0% concluído</span></div>
@@ -275,8 +312,17 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
         </div>
       </div>
 
+      <div class="voice-panel">
+        <strong>Voz usada nas respostas</strong>
+        <div class="voice-options">
+          <button class="voice-option" data-voice="female" onclick="setVoicePreference('female')">👩 Feminina</button>
+          <button class="voice-option" data-voice="male" onclick="setVoicePreference('male')">👨 Masculina</button>
+          <button class="voice-option" data-voice="auto" onclick="setVoicePreference('auto')">⚙ Automática</button>
+        </div>
+        <p class="voice-note">O aparelho escolhe entre as vozes instaladas. A disponibilidade varia conforme o celular e o navegador.</p>
+      </div>
       <button class="primary" onclick="generateMentorDemo()">Preparar orientação</button>
-      <button class="secondary" onclick="futureFeature('Entrada por voz do Coach Mentor')">🎙 Descrever pelo microfone</button>
+      <button class="secondary" onclick="startMentorDictation()">🎙 Descrever pelo microfone</button>
     </div>
   </article>
 
@@ -308,7 +354,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
       <br>
       <div class="mentor-actions">
         <button class="secondary" onclick="speakMentor()">🔊 Ouvir resposta</button>
-        <button class="primary" onclick="futureFeature('Treino de resposta do Mentor')">🎙 Treinar resposta</button>
+        <button class="primary" onclick="startMentorPractice()">🎙 Treinar esta resposta</button>
       </div>
     </article>
 
@@ -318,9 +364,82 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
         <div class="chat-user" id="mentorChatUser"></div>
         <div class="chat-ai">Preparei uma resposta inicial. Na versão conectada à IA, poderei fazer perguntas de acompanhamento e adaptar o treino ao seu desempenho.</div>
       </div>
-      <button class="outline" onclick="mentorFollowupDemo()">Gerar pergunta de acompanhamento</button>
+      <div class="mentor-actions"><button class="outline" onclick="mentorFollowupDemo()">Pergunta de acompanhamento</button><button class="outline" onclick="saveCurrentMentorSession()">💾 Salvar sessão</button></div>
     </article>
   </section>
+</section>
+
+
+<section id="english" class="page">
+  <div class="hero">
+    <span class="eyebrow">INGLÊS PARA TREINADORES</span>
+    <h2>Ouça a situação, entenda a frase e responda como treinador.</h2>
+    <p>O exercício combina compreensão, vocabulário do futebol e construção de uma resposta própria.</p>
+  </div>
+
+  <article class="card">
+    <span class="label">Configuração do exercício</span>
+    <div class="form-grid">
+      <div>
+        <label class="label" for="englishLevel">Nível</label>
+        <select id="englishLevel" class="select-field" onchange="setEnglishLevel(this.value)">
+          <option value="basic">Iniciante</option>
+          <option value="intermediate">Intermediário</option>
+          <option value="advanced">Avançado</option>
+        </select>
+      </div>
+      <div>
+        <label class="label" for="englishAccent">Sotaque</label>
+        <select id="englishAccent" class="select-field" onchange="setEnglishAccent(this.value)">
+          <option value="en-US">Americano</option>
+          <option value="en-GB">Britânico</option>
+        </select>
+      </div>
+    </div>
+    <div class="voice-options">
+      <button class="voice-option" data-voice="female" onclick="setVoicePreference('female')">👩 Voz feminina</button>
+      <button class="voice-option" data-voice="male" onclick="setVoicePreference('male')">👨 Voz masculina</button>
+      <button class="voice-option" data-voice="auto" onclick="setVoicePreference('auto')">⚙ Automática</button>
+    </div>
+  </article>
+
+  <article class="phrase-box">
+    <small id="englishScenario">Situação</small>
+    <h2 id="englishPhrase">Press higher and close the central spaces.</h2>
+    <div class="audio-row">
+      <button class="secondary" onclick="playEnglish(.68)">🔊 Ouvir devagar</button>
+      <button class="secondary" onclick="playEnglish(.94)">▶ Ouvir natural</button>
+    </div>
+  </article>
+
+  <article class="card">
+    <span class="label">O que significa?</span>
+    <button id="englishMeaningBtn" class="outline" onclick="toggleEnglishMeaning()">Mostrar em português</button>
+    <div id="englishMeaning" class="translation-box hidden" style="margin-top:12px"></div>
+  </article>
+
+  <article class="card">
+    <span class="label">O que você diria?</span>
+    <p id="englishPrompt" class="intro"></p>
+    <textarea id="englishResponse" class="text-input" placeholder="Escreva ou dite sua resposta em inglês..."></textarea>
+    <div class="mentor-actions" style="margin-top:10px">
+      <button class="secondary" onclick="startEnglishDictation()">🎙 Ditar resposta</button>
+      <button class="primary" onclick="evaluateEnglishResponse()">Analisar resposta</button>
+    </div>
+  </article>
+
+  <article id="englishFeedbackCard" class="card hidden">
+    <span class="label">Feedback do exercício</span>
+    <div id="englishFeedback" class="response-box"></div>
+    <br>
+    <button class="outline" onclick="showEnglishModel()">Ver resposta recomendada</button>
+    <div id="englishModel" class="translation-box hidden" style="margin-top:12px"></div>
+  </article>
+
+  <div class="mentor-actions">
+    <button class="secondary" onclick="previousEnglishPhrase()">← Frase anterior</button>
+    <button class="primary" onclick="nextEnglishPhrase()">Próxima frase →</button>
+  </div>
 </section>
 
 <section id="oratory" class="page">
@@ -394,45 +513,106 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
 <section id="practice" class="page">
   <div class="hero">
-    <span class="eyebrow">TREINO DO DIA</span>
-    <h2>Resposta pós-jogo sob pressão.</h2>
-    <p>Tempo sugerido: 5 minutos.</p>
+    <span class="eyebrow">CENTRAL DE TREINOS</span>
+    <h2>Escolha a habilidade que precisa desenvolver hoje.</h2>
+    <p>Os exercícios foram organizados por situação profissional, e não apenas por matéria.</p>
   </div>
 
+  <div class="section-title"><h2>Academias</h2><span>Treino individual</span></div>
+  <div class="hub-grid">
+    <button class="practice-card" onclick="go('english')"><span class="practice-icon">🇬🇧</span><span><strong>Inglês no futebol</strong><small>Ouvir, traduzir, responder e repetir.</small></span><b>→</b></button>
+    <button class="practice-card" onclick="go('oratory')"><span class="practice-icon">🗣</span><span><strong>Oratória em português</strong><small>Pausas, ritmo e conclusão firme.</small></span><b>→</b></button>
+    <button class="practice-card" onclick="openBlock('b1')"><span class="practice-icon">🎙</span><span><strong>Entrevistas</strong><small>Perguntas difíceis e respostas curtas.</small></span><b>→</b></button>
+    <button class="practice-card" onclick="openBlock('b3')"><span class="practice-icon">🔥</span><span><strong>Liderança</strong><small>Vestiário, jogadores e comissão.</small></span><b>→</b></button>
+  </div>
+
+  <div class="section-title"><h2>Treino rápido do dia</h2><span>5 minutos</span></div>
   <article class="card">
     <span class="label">Pergunta do jornalista</span>
     <h3 id="dailyQuestion">A equipe voltou a cometer os mesmos erros. Por que eles ainda não foram corrigidos?</h3>
-    <button class="secondary" onclick="speakText(document.getElementById('dailyQuestion').textContent,'pt-BR',.95)">🔊 Ouvir pergunta</button>
+    <button class="secondary" onclick="speakText(document.getElementById('dailyQuestion').textContent,'pt-BR',.92)">🔊 Ouvir pergunta</button>
   </article>
 
   <article class="card">
-    <span class="label">Sua resposta</span>
-    <button class="primary" onclick="futureFeature('Microfone')">🎙 Responder pelo microfone</button>
-    <div class="content-box warning" style="margin-top:12px">
-      Nesta fase, voz e transcrição ainda não estão ativas. Use a resposta-modelo para testar o fluxo.
-    </div>
-    <br>
-    <button class="secondary" onclick="showDailyModel()">Ver resposta-modelo</button>
+    <span class="label">Prepare sua resposta</span>
+    <textarea id="dailyOwnAnswer" class="text-input" placeholder="Escreva a resposta que você daria..."></textarea>
+    <br><br>
+    <button class="secondary" onclick="showDailyModel()">Comparar com resposta-modelo</button>
   </article>
 
   <article id="dailyModel" class="card hidden">
     <span class="label">Resposta-modelo</span>
     <p class="content-box">Os erros existem e precisamos assumir essa responsabilidade. Já identificamos os principais problemas e estamos trabalhando em correções específicas. A resposta precisa aparecer no próximo jogo.</p>
     <br>
-    <button class="primary" onclick="showDailyAnalysis()">Analisar resposta</button>
+    <button class="primary" onclick="showDailyAnalysis()">Ver pontos de comunicação</button>
   </article>
 
   <article id="dailyAnalysis" class="card hidden">
-    <span class="label">Análise demonstrativa</span>
+    <span class="label">Pontos para observar</span>
     <div class="stats">
-      <div class="stat-card"><small>Clareza</small><strong>86</strong><div class="trend">Boa</div></div>
-      <div class="stat-card"><small>Objetividade</small><strong>89</strong><div class="trend">Muito boa</div></div>
-      <div class="stat-card"><small>Pausas</small><strong>78</strong><div class="trend">Pode melhorar</div></div>
-      <div class="stat-card"><small>Confiança</small><strong>84</strong><div class="trend">Boa</div></div>
+      <div class="stat-card"><small>Começo direto</small><strong>✓</strong><div class="trend">Assume o problema</div></div>
+      <div class="stat-card"><small>Objetividade</small><strong>✓</strong><div class="trend">Sem justificativa longa</div></div>
+      <div class="stat-card"><small>Próximo passo</small><strong>✓</strong><div class="trend">Aponta correção</div></div>
+      <div class="stat-card"><small>Proteção do grupo</small><strong>✓</strong><div class="trend">Não expõe atletas</div></div>
     </div>
   </article>
 </section>
 
+
+
+<section id="library" class="page">
+  <div class="hero">
+    <span class="eyebrow">BIBLIOTECA DE SITUAÇÕES</span>
+    <h2>Escolha uma situação real e leve diretamente ao Coach Mentor.</h2>
+    <p>Use os filtros para encontrar o tipo de conversa que precisa preparar.</p>
+  </div>
+
+  <div id="libraryFilters" class="filter-row"></div>
+  <div id="libraryGrid" class="library-grid"></div>
+</section>
+
+<section id="matchday" class="page">
+  <div class="hero">
+    <span class="eyebrow">MODO DIA DE JOGO</span>
+    <h2>Uma comunicação diferente para cada momento da partida.</h2>
+    <p>Prepare mensagens curtas para o pré-jogo, intervalo e pós-jogo.</p>
+  </div>
+
+  <div class="day-grid">
+    <article class="mode-card">
+      <span class="mini-tag">ANTES DA PARTIDA</span>
+      <h3>Pré-jogo</h3>
+      <p id="preMatchText">Joguem com coragem, organização e confiança no companheiro. Cada ação importa. Vamos competir juntos desde o primeiro minuto.</p>
+      <button class="secondary" onclick="speakText(document.getElementById('preMatchText').textContent,'pt-BR',.84)">🔊 Ouvir</button>
+      <br><br>
+      <button class="outline" onclick="prepareMatchMentor('pre')">Personalizar no Mentor</button>
+      <br><br>
+      <button class="day-check" data-day="pre" onclick="toggleDayMoment(this)">Marcar como preparado</button>
+    </article>
+
+    <article class="mode-card">
+      <span class="mini-tag">INTERVALO</span>
+      <h3>Correção rápida</h3>
+      <p id="halfMatchText">Ainda estamos no jogo. Precisamos aproximar os setores, acelerar a circulação e reagir imediatamente quando perdermos a bola.</p>
+      <button class="secondary" onclick="speakText(document.getElementById('halfMatchText').textContent,'pt-BR',.84)">🔊 Ouvir</button>
+      <br><br>
+      <button class="outline" onclick="prepareMatchMentor('half')">Personalizar no Mentor</button>
+      <br><br>
+      <button class="day-check" data-day="half" onclick="toggleDayMoment(this)">Marcar como preparado</button>
+    </article>
+
+    <article class="mode-card">
+      <span class="mini-tag">DEPOIS DA PARTIDA</span>
+      <h3>Pós-jogo</h3>
+      <p id="postMatchText">Vamos analisar o resultado com equilíbrio. Precisamos reconhecer os erros, proteger o grupo e transformar a avaliação em ações para o próximo jogo.</p>
+      <button class="secondary" onclick="speakText(document.getElementById('postMatchText').textContent,'pt-BR',.84)">🔊 Ouvir</button>
+      <br><br>
+      <button class="outline" onclick="prepareMatchMentor('post')">Personalizar no Mentor</button>
+      <br><br>
+      <button class="day-check" data-day="post" onclick="toggleDayMoment(this)">Marcar como preparado</button>
+    </article>
+  </div>
+</section>
 
 <section id="technical" class="page">
   <div class="hero">
@@ -507,8 +687,8 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
   <article class="card" style="margin-top:14px">
     <span class="label">Próxima etapa</span>
-    <h3>Publicação em HTTPS e integração com Firebase</h3>
-    <p class="intro">Depois desta verificação, a plataforma poderá salvar conta e progresso na nuvem, gravar voz e vídeo e enviar a transcrição para análise de inteligência artificial.</p>
+    <h3>Teste individual primeiro</h3>
+    <p class="intro">Nesta fase, o progresso fica no aparelho. Firebase, conta e sincronização serão retomados depois que a experiência principal estiver aprovada.</p>
   </article>
 </section>
 
@@ -542,77 +722,83 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 </section>
 
 <section id="profile" class="page">
-  <article class="card">
-    <span class="label">Minha conta</span>
-    <div class="profile-card" style="box-shadow:none;padding:0">
-      <div class="avatar">PA</div>
-      <div style="flex:1">
-        <strong id="accountEmail">Modo demonstração</strong>
-        <small id="accountStatus">Firebase pendente</small>
-      </div>
-      <button class="outline" style="width:auto;padding:10px 14px" onclick="openAccount()">Gerenciar</button>
-    </div>
-    <br>
-    <button class="secondary" onclick="syncProgressNow()">Sincronizar progresso</button>
-    <br><br>
-    <button id="logoutAccountBtn" class="outline hidden" onclick="coachLogout()">Sair da conta</button>
-  </article>
-
-  <article class="card profile-card">
-    <div class="avatar">PA</div>
-    <div><strong>Professor Andrade</strong><small>Plano de desenvolvimento do treinador</small></div>
-  </article>
-
-  <div class="section-title"><h2>Preferências</h2><span>Protótipo</span></div>
-  <div class="settings">
-    <div class="setting"><div><strong>Português do Brasil</strong><small>Idioma principal</small></div><span>›</span></div>
-    <div class="setting"><div><strong>Inglês americano</strong><small>Áudio das aulas</small></div><span>›</span></div>
-    <div class="setting"><div><strong>Lembrete diário</strong><small>Treino de 5 minutos</small></div><div class="switch"></div></div>
-    <div class="setting"><div><strong>Modo celular</strong><small>Botões e textos ampliados</small></div><div class="switch"></div></div>
+  <div class="hero">
+    <span class="eyebrow">MODO INDIVIDUAL</span>
+    <h2>Preferências do seu CoachVoice.</h2>
+    <p>Não é necessário login nesta etapa. Os dados ficam salvos somente neste aparelho.</p>
+    <span class="local-badge">💾 Armazenamento local ativo</span>
   </div>
 
-  <div class="section-title"><h2>Próximas integrações</h2><span>Fase técnica</span></div>
   <article class="card">
+    <span class="label">Identificação no aplicativo</span>
+    <label class="label" for="coachName">Como deseja ser chamado?</label>
+    <input id="coachName" class="select-field" value="Professor Andrade" placeholder="Ex.: Professor Andrade">
+    <br><br>
+    <button class="primary" onclick="saveLocalProfile()">Salvar nome e preferências</button>
+  </article>
+
+  <article class="card">
+    <span class="label">Voz da IA</span>
+    <h3>Escolha a voz usada em todo o aplicativo</h3>
+    <div class="voice-options">
+      <button class="voice-option" data-voice="female" onclick="setVoicePreference('female')">👩 Feminina</button>
+      <button class="voice-option" data-voice="male" onclick="setVoicePreference('male')">👨 Masculina</button>
+      <button class="voice-option" data-voice="auto" onclick="setVoicePreference('auto')">⚙ Automática</button>
+    </div>
+    <p class="voice-note">A escolha é aplicada ao Mentor, inglês, entrevistas, aulas e oratória. Nem todos os aparelhos oferecem as mesmas vozes.</p>
+  </article>
+
+  <article class="card">
+    <span class="label">Inglês</span>
+    <div class="form-grid">
+      <div>
+        <label class="label" for="profileEnglishAccent">Sotaque preferido</label>
+        <select id="profileEnglishAccent" class="select-field" onchange="setEnglishAccent(this.value)">
+          <option value="en-US">Americano</option>
+          <option value="en-GB">Britânico</option>
+        </select>
+      </div>
+      <div>
+        <label class="label" for="profileEnglishLevel">Nível atual</label>
+        <select id="profileEnglishLevel" class="select-field" onchange="setEnglishLevel(this.value)">
+          <option value="basic">Iniciante</option>
+          <option value="intermediate">Intermediário</option>
+          <option value="advanced">Avançado</option>
+        </select>
+      </div>
+    </div>
+  </article>
+
+  <article class="card">
+    <span class="label">Histórico neste aparelho</span>
+    <div class="stats">
+      <div class="stat-card"><small>Sessões do Mentor</small><strong id="mentorHistoryCount">0</strong></div>
+      <div class="stat-card"><small>Exercícios de inglês</small><strong id="englishHistoryCount">0</strong></div>
+    </div>
+    <div id="recentHistory" class="history-list" style="margin-top:12px"></div>
+    <br>
+    <button class="outline" onclick="clearLocalHistory()">Limpar histórico de testes</button>
+  </article>
+
+  <article class="card">
+    <span class="label">Planejamento técnico</span>
     <div class="structure">
-      <div><b>1</b><p><strong>Firebase</strong><small>Login, banco de dados e progresso na nuvem.</small></p></div>
-      <div><b>2</b><p><strong>Microfone</strong><small>Gravação, transcrição e análise de voz.</small></p></div>
-      <div><b>3</b><p><strong>Câmera</strong><small>Vídeo diagnóstico e vídeo final.</small></p></div>
-      <div><b>4</b><p><strong>IA</strong><small>Feedback personalizado e simulações dinâmicas.</small></p></div>
+      <div><b>1</b><p><strong>Agora</strong><small>Validar conteúdo, navegação, voz e rotina de treino.</small></p></div>
+      <div><b>2</b><p><strong>Depois</strong><small>Ativar IA conversacional, transcrição e análise real da voz.</small></p></div>
+      <div><b>3</b><p><strong>Fase de usuários</strong><small>Retomar Firebase, login e sincronização entre aparelhos.</small></p></div>
     </div>
   </article>
 </section>
 
 <nav class="bottom-nav">
   <button class="nav active" data-page="home" onclick="go('home')">⌂<span>Início</span></button>
-  <button class="nav" data-page="tracks" onclick="go('tracks')">▦<span>Trilhas</span></button>
-  <button class="nav" data-page="practice" onclick="go('practice')">🎙<span>Treinar</span></button>
-  <button class="nav" data-page="progress" onclick="go('progress')">▥<span>Evolução</span></button>
   <button class="nav" data-page="mentor" onclick="go('mentor')">🤖<span>Mentor</span></button>
+  <button class="nav" data-page="practice" onclick="go('practice')">🎯<span>Treinar</span></button>
+  <button class="nav" data-page="library" onclick="go('library')">📚<span>Biblioteca</span></button>
+  <button class="nav" data-page="progress" onclick="go('progress')">▥<span>Evolução</span></button>
 </nav>
 </main>
 
-
-<div id="authOverlay" class="sheet-overlay" onclick="closeAccount()"></div>
-<div id="authScreen" class="sheet">
-  <div class="sheet-handle"></div>
-  <h2>Conta do treinador</h2>
-  <p class="intro">Entre para salvar seu progresso na nuvem e acessar o CoachVoice em outros aparelhos.</p>
-
-  <label class="label" for="authEmail">E-mail</label>
-  <input id="authEmail" type="email" placeholder="seuemail@exemplo.com" style="width:100%;padding:13px;border:1px solid var(--line);border-radius:13px;font:inherit;margin:7px 0 12px">
-
-  <label class="label" for="authPassword">Senha</label>
-  <input id="authPassword" type="password" placeholder="Mínimo de 6 caracteres" style="width:100%;padding:13px;border:1px solid var(--line);border-radius:13px;font:inherit;margin:7px 0 12px">
-
-  <div class="mentor-actions">
-    <button class="primary" onclick="coachLogin()">Entrar</button>
-    <button class="secondary" onclick="coachRegister()">Criar conta</button>
-  </div>
-  <br>
-  <button class="outline" onclick="coachGoogleLogin()">Continuar com Google</button>
-  <p id="authMessage" style="min-height:22px;font-weight:700"></p>
-  <button class="secondary" onclick="closeAccount()">Fechar</button>
-</div>
 
 <div id="sheetOverlay" class="sheet-overlay" onclick="closeFeedback()"></div>
 <div id="feedbackSheet" class="sheet">
@@ -714,15 +900,365 @@ function go(id){
   currentPage=id;
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));
   document.querySelectorAll('.nav,.drawer-link').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
-  const titles={home:'Plataforma integrada',tracks:'Trilhas de aprendizagem',mentor:'Coach Mentor AI',practice:'Treino do dia',oratory:'Academia de Oratória',technical:'Testes técnicos',progress:'Minha evolução',profile:'Perfil e configurações',blockDetail:'Conteúdo do bloco',lessonDetail:'Aula prática'};
+  const titles={home:'Treino individual',tracks:'Formação completa',mentor:'Coach Mentor AI',practice:'Central de treinos',english:'Inglês no futebol',oratory:'Oratória em português',library:'Biblioteca de situações',matchday:'Modo dia de jogo',technical:'Testes do aparelho',progress:'Minha evolução',profile:'Preferências locais',blockDetail:'Conteúdo do bloco',lessonDetail:'Aula prática'};
   document.getElementById('topSubtitle').textContent=titles[id]||'CoachVoice AI';
   closeDrawer();window.scrollTo(0,0);updateUI();
 }
 function openDrawer(){document.getElementById('drawer').classList.add('open');document.getElementById('overlay').classList.add('show')}
 function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('overlay').classList.remove('show')}
 function toast(t){const x=document.getElementById('toast');x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),1900)}
-function futureFeature(name){toast(name+' será ativado na fase técnica final.')}
-function speakText(text,lang,rate){const u=new SpeechSynthesisUtterance(text);u.lang=lang;u.rate=rate;speechSynthesis.cancel();speechSynthesis.speak(u)}
+function futureFeature(name){toast(name+' está planejado para a próxima etapa.');}
+
+let voicePreference=localStorage.getItem('coachvoice-voice')||'auto';
+let englishAccent=localStorage.getItem('coachvoice-accent')||'en-US';
+let englishLevel=localStorage.getItem('coachvoice-english-level')||'basic';
+
+function normalizedVoiceName(value){return String(value||'').toLowerCase();}
+function pickVoice(lang){
+  const voices=speechSynthesis.getVoices();
+  const locale=(lang||'pt-BR').toLowerCase();
+  let candidates=voices.filter(v=>normalizedVoiceName(v.lang).startsWith(locale.split('-')[0]));
+  const exact=candidates.filter(v=>normalizedVoiceName(v.lang)===locale);
+  if(exact.length)candidates=exact;
+  if(!candidates.length)candidates=voices;
+
+  const femaleHints=['female','feminina','samantha','victoria','zira','susan','karen','moira','tessa','joana','luciana','maria','helena','paulina','amelie','serena','sara'];
+  const maleHints=['male','masculina','daniel','david','mark','george','alex','fred','thomas','felipe','ricardo','jorge','paulo','carlos','diego'];
+
+  if(voicePreference!=='auto'){
+    const hints=voicePreference==='female'?femaleHints:maleHints;
+    const match=candidates.find(v=>hints.some(h=>normalizedVoiceName(v.name).includes(h)));
+    if(match)return match;
+  }
+  return candidates[0]||null;
+}
+function speakText(text,lang,rate){
+  if(!('speechSynthesis' in window)){toast('Voz não disponível neste navegador.');return;}
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=lang;
+  u.rate=rate;
+  const voice=pickVoice(lang);
+  if(voice)u.voice=voice;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+}
+function setVoicePreference(value){
+  voicePreference=value;
+  localStorage.setItem('coachvoice-voice',value);
+  updateVoiceUI();
+  toast(value==='female'?'Voz feminina selecionada.':value==='male'?'Voz masculina selecionada.':'Seleção automática ativada.');
+}
+function updateVoiceUI(){
+  document.querySelectorAll('[data-voice]').forEach(btn=>btn.classList.toggle('active',btn.dataset.voice===voicePreference));
+  const englishAccentSelect=document.getElementById('englishAccent');
+  const profileAccentSelect=document.getElementById('profileEnglishAccent');
+  const englishLevelSelect=document.getElementById('englishLevel');
+  const profileLevelSelect=document.getElementById('profileEnglishLevel');
+  if(englishAccentSelect)englishAccentSelect.value=englishAccent;
+  if(profileAccentSelect)profileAccentSelect.value=englishAccent;
+  if(englishLevelSelect)englishLevelSelect.value=englishLevel;
+  if(profileLevelSelect)profileLevelSelect.value=englishLevel;
+}
+function setEnglishAccent(value){
+  englishAccent=value;
+  localStorage.setItem('coachvoice-accent',value);
+  updateVoiceUI();
+  toast(value==='en-GB'?'Inglês britânico selecionado.':'Inglês americano selecionado.');
+}
+function setEnglishLevel(value){
+  englishLevel=value;
+  localStorage.setItem('coachvoice-english-level',value);
+  renderEnglishPhrase();
+}
+
+
+const englishPhrases=[
+  {
+    levels:['basic','intermediate','advanced'],
+    scenario:'Treino — pressão defensiva',
+    phrase:'Press higher and close the central spaces.',
+    meaning:'Pressionem mais alto e fechem os espaços centrais.',
+    prompt:'Um auxiliar pergunta como a equipe deve pressionar. Responda em inglês com uma orientação complementar.',
+    model:'We need to stay compact and force them to play wide.',
+    keywords:['compact','wide','press']
+  },
+  {
+    levels:['basic','intermediate','advanced'],
+    scenario:'Treino — posse de bola',
+    phrase:'Keep possession and move the ball faster.',
+    meaning:'Mantenham a posse e movimentem a bola mais rápido.',
+    prompt:'Diga em inglês por que a circulação rápida é importante.',
+    model:'Quick circulation will help us create space and find the free player.',
+    keywords:['quick','space','player']
+  },
+  {
+    levels:['basic','intermediate','advanced'],
+    scenario:'Intervalo — controle emocional',
+    phrase:'Stay calm. We are still in the game.',
+    meaning:'Mantenham a calma. Nós ainda estamos no jogo.',
+    prompt:'Complete a mensagem de intervalo em inglês.',
+    model:'Stay organized, trust the plan, and take the next chance.',
+    keywords:['organized','plan','chance']
+  },
+  {
+    levels:['intermediate','advanced'],
+    scenario:'Entrevista — vitória',
+    phrase:'What made the difference in today’s victory?',
+    meaning:'O que fez a diferença na vitória de hoje?',
+    prompt:'Responda à pergunta do jornalista em inglês.',
+    model:'Our organization and intensity made the difference. We controlled the key moments.',
+    keywords:['organization','intensity','moments']
+  },
+  {
+    levels:['intermediate','advanced'],
+    scenario:'Conversa individual — jogador reserva',
+    phrase:'I need you to be ready when your opportunity comes.',
+    meaning:'Preciso que você esteja pronto quando sua oportunidade chegar.',
+    prompt:'Acrescente uma orientação profissional ao jogador.',
+    model:'Keep working with intensity and focus on the details we discussed.',
+    keywords:['working','intensity','details']
+  },
+  {
+    levels:['advanced'],
+    scenario:'Comissão técnica — revisão tática',
+    phrase:'Let’s review the defensive transition before the session.',
+    meaning:'Vamos revisar a transição defensiva antes da atividade.',
+    prompt:'Explique em inglês qual ponto deve ser observado.',
+    model:'We need to improve our reaction after losing possession and recover our shape faster.',
+    keywords:['reaction','possession','shape']
+  }
+];
+
+let englishIndex=0;
+function visibleEnglishPhrases(){
+  const selected=englishPhrases.filter(item=>item.levels.includes(englishLevel));
+  return selected.length?selected:englishPhrases;
+}
+function renderEnglishPhrase(){
+  const list=visibleEnglishPhrases();
+  englishIndex=Math.min(englishIndex,list.length-1);
+  const item=list[englishIndex]||list[0];
+  if(!item)return;
+  const scenario=document.getElementById('englishScenario');
+  if(!scenario)return;
+  scenario.textContent=item.scenario;
+  document.getElementById('englishPhrase').textContent=item.phrase;
+  document.getElementById('englishMeaning').textContent=item.meaning;
+  document.getElementById('englishPrompt').textContent=item.prompt;
+  document.getElementById('englishModel').textContent=item.model;
+  document.getElementById('englishMeaning').classList.add('hidden');
+  document.getElementById('englishModel').classList.add('hidden');
+  document.getElementById('englishFeedbackCard').classList.add('hidden');
+  document.getElementById('englishMeaningBtn').textContent='Mostrar em português';
+  document.getElementById('englishResponse').value='';
+  updateVoiceUI();
+}
+function playEnglish(rate){
+  const item=visibleEnglishPhrases()[englishIndex];
+  speakText(item.phrase,englishAccent,rate);
+}
+function toggleEnglishMeaning(){
+  const box=document.getElementById('englishMeaning');
+  box.classList.toggle('hidden');
+  document.getElementById('englishMeaningBtn').textContent=box.classList.contains('hidden')?'Mostrar em português':'Ocultar tradução';
+}
+function showEnglishModel(){
+  const box=document.getElementById('englishModel');
+  box.classList.remove('hidden');
+  speakText(box.textContent,englishAccent,.84);
+}
+function normalizeEnglish(value){
+  return String(value||'').toLowerCase().replace(/[^\w\s']/g,' ').replace(/\s+/g,' ').trim();
+}
+function evaluateEnglishResponse(){
+  const item=visibleEnglishPhrases()[englishIndex];
+  const response=document.getElementById('englishResponse').value.trim();
+  if(!response){toast('Escreva ou dite sua resposta primeiro.');return;}
+  const normalized=normalizeEnglish(response);
+  const words=normalized.split(' ').filter(Boolean);
+  const keywordHits=item.keywords.filter(k=>normalized.includes(k)).length;
+  const lengthScore=Math.min(100,Math.round(words.length/12*100));
+  const contentScore=Math.round(keywordHits/item.keywords.length*100);
+  const finalScore=Math.round(lengthScore*.35+contentScore*.65);
+  const levelMessage=finalScore>=75
+    ?'Boa construção. A resposta está objetiva e usa vocabulário adequado à situação.'
+    :finalScore>=45
+      ?'A ideia está compreensível. Tente acrescentar uma ação concreta e uma conclusão curta.'
+      :'Comece com uma frase simples: sujeito + ação + objetivo. Depois acrescente apenas um detalhe.';
+  document.getElementById('englishFeedback').innerHTML=`
+    <strong>Estimativa do exercício: ${finalScore}/100</strong>
+    <p>${levelMessage}</p>
+    <div class="score-line"><span>Extensão</span><div class="score-bar"><i style="width:${lengthScore}%"></i></div><b>${lengthScore}</b></div>
+    <div class="score-line"><span>Conteúdo</span><div class="score-bar"><i style="width:${contentScore}%"></i></div><b>${contentScore}</b></div>
+    <p class="voice-note">Esta nota considera apenas o texto. Pronúncia e naturalidade serão avaliadas quando a análise de áudio for conectada.</p>`;
+  document.getElementById('englishFeedbackCard').classList.remove('hidden');
+  saveEnglishSession(item,response,finalScore);
+  window.scrollTo({top:document.getElementById('englishFeedbackCard').offsetTop-90,behavior:'smooth'});
+}
+function nextEnglishPhrase(){
+  const list=visibleEnglishPhrases();
+  englishIndex=(englishIndex+1)%list.length;
+  renderEnglishPhrase();
+}
+function previousEnglishPhrase(){
+  const list=visibleEnglishPhrases();
+  englishIndex=(englishIndex-1+list.length)%list.length;
+  renderEnglishPhrase();
+}
+function speechRecognition(lang,onResult){
+  const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!Recognition){toast('Ditado por voz não disponível neste navegador.');return;}
+  const recognition=new Recognition();
+  recognition.lang=lang;
+  recognition.interimResults=false;
+  recognition.maxAlternatives=1;
+  recognition.onstart=()=>toast('Pode falar.');
+  recognition.onerror=()=>toast('Não foi possível reconhecer a fala.');
+  recognition.onresult=event=>onResult(event.results[0][0].transcript);
+  recognition.start();
+}
+function startEnglishDictation(){
+  speechRecognition(englishAccent,text=>{
+    document.getElementById('englishResponse').value=text;
+    toast('Resposta transcrita.');
+  });
+}
+function startMentorDictation(){
+  speechRecognition('pt-BR',text=>{
+    document.getElementById('mentorSituation').value=text;
+    toast('Situação transcrita.');
+  });
+}
+function startMentorPractice(){
+  const answer=document.getElementById('mentorAnswer').textContent;
+  if(!answer){toast('Prepare uma orientação primeiro.');return;}
+  go('oratory');
+  document.getElementById('oratoryText').textContent=answer.replace(/\. /g,'. / ');
+  toast('Resposta enviada para o treino de oratória.');
+}
+function saveEnglishSession(item,response,score){
+  const history=JSON.parse(localStorage.getItem('coachvoice-english-history')||'[]');
+  history.unshift({date:new Date().toLocaleString('pt-BR'),scenario:item.scenario,response,score});
+  localStorage.setItem('coachvoice-english-history',JSON.stringify(history.slice(0,30)));
+  updateLocalHistory();
+}
+
+const libraryScenarios=[
+  {id:'s1',category:'Imprensa',title:'Três jogos sem vencer',context:'A equipe está há três jogos sem vencer e amanhã haverá uma coletiva de imprensa.',audience:'Imprensa',tone:'Sereno',duration:'30 segundos'},
+  {id:'s2',category:'Imprensa',title:'Pergunta sobre arbitragem',context:'Um jornalista insiste que a arbitragem decidiu a partida. Quero responder sem criar conflito.',audience:'Imprensa',tone:'Sereno',duration:'30 segundos'},
+  {id:'s3',category:'Jogadores',title:'Jogador experiente no banco',context:'Um jogador experiente está insatisfeito por ter perdido a titularidade e pediu uma conversa.',audience:'Jogadores',tone:'Firme',duration:'60 segundos'},
+  {id:'s4',category:'Jogadores',title:'Jovem após um erro',context:'Um jogador jovem cometeu um erro decisivo e está emocionalmente abalado.',audience:'Jogadores',tone:'Protetor',duration:'30 segundos'},
+  {id:'s5',category:'Vestiário',title:'Final importante',context:'Preciso fazer uma mensagem curta antes de uma final importante.',audience:'Jogadores',tone:'Inspirador',duration:'30 segundos'},
+  {id:'s6',category:'Vestiário',title:'Intervalo perdendo',context:'Estamos perdendo por um gol no intervalo e a equipe está ansiosa.',audience:'Jogadores',tone:'Firme',duration:'30 segundos'},
+  {id:'s7',category:'Diretoria',title:'Cobrança por resultados',context:'A diretoria marcou uma reunião após uma sequência de resultados ruins.',audience:'Diretoria',tone:'Tático',duration:'60 segundos'},
+  {id:'s8',category:'Comissão',title:'Auxiliar discorda',context:'Meu auxiliar discorda da estratégia e precisamos alinhar a comunicação antes do treino.',audience:'Comissão técnica',tone:'Sereno',duration:'60 segundos'},
+  {id:'s9',category:'Carreira',title:'Apresentação em novo clube',context:'Vou me apresentar como novo treinador e preciso explicar minha identidade de trabalho.',audience:'Imprensa',tone:'Inspirador',duration:'60 segundos'},
+  {id:'s10',category:'Inglês',title:'Post-match interview',context:'I need to answer a post-match question after a difficult defeat.',audience:'Imprensa',tone:'Sereno',duration:'30 segundos',language:'Inglês'}
+];
+let libraryFilter='Todos';
+function renderLibrary(){
+  const filters=['Todos',...new Set(libraryScenarios.map(s=>s.category))];
+  const filtersBox=document.getElementById('libraryFilters');
+  const grid=document.getElementById('libraryGrid');
+  if(!filtersBox||!grid)return;
+  filtersBox.innerHTML=filters.map(filter=>`<button class="filter-btn ${filter===libraryFilter?'active':''}" onclick="filterLibrary('${filter}')">${filter}</button>`).join('');
+  const list=libraryFilter==='Todos'?libraryScenarios:libraryScenarios.filter(s=>s.category===libraryFilter);
+  grid.innerHTML=list.map(s=>`
+    <article class="scenario-card">
+      <span class="mini-tag">${s.category}</span>
+      <h3>${s.title}</h3>
+      <p>${s.context}</p>
+      <span class="mini-tag">${s.audience}</span><span class="mini-tag">${s.tone}</span><span class="mini-tag">${s.duration}</span>
+      <button class="primary" style="margin-top:10px" onclick="useLibraryScenario('${s.id}')">Preparar no Mentor</button>
+    </article>`).join('');
+}
+function filterLibrary(value){libraryFilter=value;renderLibrary();}
+function useLibraryScenario(id){
+  const item=libraryScenarios.find(s=>s.id===id);
+  if(!item)return;
+  document.getElementById('mentorSituation').value=item.context;
+  document.getElementById('mentorAudience').value=item.audience;
+  document.getElementById('mentorTone').value=item.tone;
+  document.getElementById('mentorDuration').value=item.duration;
+  document.getElementById('mentorLanguage').value=item.language||'Português';
+  go('mentor');
+  toast('Situação carregada no Mentor.');
+}
+
+const matchPrompts={
+  pre:'Tenho uma partida importante e quero preparar uma mensagem pré-jogo curta, clara e inspiradora.',
+  half:'Estamos no intervalo e preciso corrigir a equipe sem transmitir desespero.',
+  post:'Preciso preparar uma comunicação pós-jogo equilibrada para jogadores e imprensa.'
+};
+function prepareMatchMentor(moment){
+  document.getElementById('mentorSituation').value=matchPrompts[moment];
+  document.getElementById('mentorAudience').value=moment==='post'?'Imprensa':'Jogadores';
+  document.getElementById('mentorTone').value=moment==='pre'?'Inspirador':moment==='half'?'Firme':'Sereno';
+  document.getElementById('mentorDuration').value='30 segundos';
+  go('mentor');
+}
+function toggleDayMoment(button){
+  button.classList.toggle('done');
+  button.textContent=button.classList.contains('done')?'✓ Preparado':'Marcar como preparado';
+  const done=[...document.querySelectorAll('[data-day].done')].map(x=>x.dataset.day);
+  localStorage.setItem('coachvoice-matchday',JSON.stringify(done));
+}
+function loadDayMoments(){
+  const done=JSON.parse(localStorage.getItem('coachvoice-matchday')||'[]');
+  document.querySelectorAll('[data-day]').forEach(btn=>{
+    const isDone=done.includes(btn.dataset.day);
+    btn.classList.toggle('done',isDone);
+    btn.textContent=isDone?'✓ Preparado':'Marcar como preparado';
+  });
+}
+
+let currentMentorSession=null;
+function persistMentorSession(situation,answer,analysis){
+  currentMentorSession={date:new Date().toLocaleString('pt-BR'),situation,answer,analysis};
+}
+function saveCurrentMentorSession(){
+  if(!currentMentorSession){toast('Prepare uma orientação primeiro.');return;}
+  const history=JSON.parse(localStorage.getItem('coachvoice-mentor-history')||'[]');
+  history.unshift(currentMentorSession);
+  localStorage.setItem('coachvoice-mentor-history',JSON.stringify(history.slice(0,30)));
+  updateLocalHistory();
+  toast('Sessão salva neste aparelho.');
+}
+function updateLocalHistory(){
+  const mentorHistory=JSON.parse(localStorage.getItem('coachvoice-mentor-history')||'[]');
+  const englishHistory=JSON.parse(localStorage.getItem('coachvoice-english-history')||'[]');
+  const mentorCount=document.getElementById('mentorHistoryCount');
+  const englishCount=document.getElementById('englishHistoryCount');
+  if(mentorCount)mentorCount.textContent=mentorHistory.length;
+  if(englishCount)englishCount.textContent=englishHistory.length;
+  const recent=document.getElementById('recentHistory');
+  if(recent){
+    const combined=[
+      ...mentorHistory.slice(0,3).map(x=>({type:'Mentor',date:x.date,title:x.situation})),
+      ...englishHistory.slice(0,3).map(x=>({type:'Inglês',date:x.date,title:x.scenario+' — '+x.score+'/100'}))
+    ].slice(0,5);
+    recent.innerHTML=combined.length?combined.map(x=>`<div class="history-item"><strong>${x.type}: ${x.title}</strong><small>${x.date}</small></div>`).join(''):'<p class="intro">Ainda não há sessões salvas.</p>';
+  }
+}
+function saveLocalProfile(){
+  const name=document.getElementById('coachName').value.trim()||'Professor';
+  localStorage.setItem('coachvoice-name',name);
+  document.querySelectorAll('.drawer-profile strong').forEach(el=>el.textContent=name);
+  toast('Preferências salvas neste aparelho.');
+}
+function loadLocalProfile(){
+  const name=localStorage.getItem('coachvoice-name')||'Professor Andrade';
+  const input=document.getElementById('coachName');
+  if(input)input.value=name;
+  document.querySelectorAll('.drawer-profile strong').forEach(el=>el.textContent=name);
+}
+function clearLocalHistory(){
+  localStorage.removeItem('coachvoice-mentor-history');
+  localStorage.removeItem('coachvoice-english-history');
+  updateLocalHistory();
+  toast('Histórico de testes apagado.');
+}
+
 
 function renderBlocks(){
   const list=document.getElementById('blockList');
@@ -842,6 +1378,7 @@ async function generateMentorDemo(){
     document.getElementById('mentorChatUser').textContent=situation;
     resultSection.classList.remove('hidden');
     mentorSpokenText=payload.answer;
+    persistMentorSession(situation,payload.answer,payload.analysis);
     toast('Orientação personalizada pronta.');
     window.scrollTo({top:resultSection.offsetTop-90,behavior:'smooth'});
   }catch(error){
@@ -900,11 +1437,13 @@ function generateMentorFallback({situation,audience,tone,duration,language}){
   document.getElementById('mentorChatUser').textContent=situation;
   document.getElementById('mentorResult').classList.remove('hidden');
   mentorSpokenText=answer;
+  persistMentorSession(situation,answer,analysis);
 }
 
 function speakMentor(){
   if(!mentorSpokenText){toast('Gere uma orientação primeiro.');return;}
-  const language=document.getElementById('mentorLanguage').value==='Inglês'?'en-US':'pt-BR';
+  const selectedLanguage=document.getElementById('mentorLanguage').value;
+  const language=selectedLanguage==='Inglês'?englishAccent:'pt-BR';
   speakText(mentorSpokenText,language,.86);
 }
 function mentorFollowupDemo(){
@@ -1111,7 +1650,13 @@ function updateUI(){
   document.getElementById('homeProgressBar').style.width=percent+'%';
   document.getElementById('homeProgressLabel').textContent=percent+'% concluído';
   document.getElementById('progressSummary').textContent=done+' aulas concluídas';
-  renderBlocks();renderProgressBlocks();
+  renderBlocks();
+  renderProgressBlocks();
+  renderLibrary();
+  updateVoiceUI();
+  updateLocalHistory();
+  loadDayMoments();
+  loadLocalProfile();
 }
 function openFeedback(){document.getElementById('feedbackSheet').classList.add('open');document.getElementById('sheetOverlay').classList.add('show')}
 function closeFeedback(){document.getElementById('feedbackSheet').classList.remove('open');document.getElementById('sheetOverlay').classList.remove('show')}
@@ -1128,6 +1673,7 @@ function saveFeedback(){
   document.querySelectorAll('[data-feedback]').forEach(x=>x.classList.remove('selected'));
   closeFeedback();toast('Avaliação salva neste celular.');
 }
+renderEnglishPhrase();
 updateUI();
 checkTechnicalEnvironment();
 </script>
@@ -1135,92 +1681,6 @@ checkTechnicalEnvironment();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));
 }
-</script>
-
-<script type="module">
-import {
-  initFirebase,
-  isFirebaseReady,
-  registerWithEmail,
-  loginWithEmail,
-  loginWithGoogle,
-  logoutUser,
-  saveCloudProgress,
-  loadCloudProgress
-} from './firebase-service.js';
-
-const authScreen = document.getElementById('authScreen');
-const accountEmail = document.getElementById('accountEmail');
-const authMessage = document.getElementById('authMessage');
-
-function setAuthMessage(message, isError=false){
-  authMessage.textContent = message;
-  authMessage.style.color = isError ? '#b42318' : '#247533';
-}
-function emailPassword(){
-  return {
-    email: document.getElementById('authEmail').value.trim(),
-    password: document.getElementById('authPassword').value
-  };
-}
-window.coachRegister = async () => {
-  try{
-    const {email,password}=emailPassword();
-    await registerWithEmail(email,password);
-    setAuthMessage('Conta criada com sucesso.');
-  }catch(err){setAuthMessage(err.message || 'Não foi possível criar a conta.', true);}
-};
-window.coachLogin = async () => {
-  try{
-    const {email,password}=emailPassword();
-    await loginWithEmail(email,password);
-    setAuthMessage('Login realizado.');
-  }catch(err){setAuthMessage(err.message || 'Não foi possível entrar.', true);}
-};
-window.coachGoogleLogin = async () => {
-  try{
-    await loginWithGoogle();
-    setAuthMessage('Login com Google realizado.');
-  }catch(err){setAuthMessage(err.message || 'Não foi possível entrar com Google.', true);}
-};
-window.coachLogout = async () => {
-  try{await logoutUser();}catch(err){toast('Erro ao sair.');}
-};
-window.openAccount = () => {
-  authScreen.classList.add('open');
-  document.getElementById('authOverlay').classList.add('show');
-};
-window.closeAccount = () => {
-  authScreen.classList.remove('open');
-  document.getElementById('authOverlay').classList.remove('show');
-};
-window.syncProgressNow = async () => {
-  if(!isFirebaseReady()){toast('Firebase ainda não configurado.');return;}
-  try{
-    await saveCloudProgress([...completed]);
-    toast('Progresso enviado para a nuvem.');
-  }catch(err){toast('Não foi possível sincronizar.');}
-};
-
-initFirebase(async user => {
-  if(user){
-    accountEmail.textContent = user.email || 'Conta conectada';
-    document.getElementById('accountStatus').textContent='Conectado';
-    document.getElementById('logoutAccountBtn').classList.remove('hidden');
-    try{
-      const cloud = await loadCloudProgress();
-      if(Array.isArray(cloud)){
-        cloud.forEach(id=>completed.add(id));
-        localStorage.setItem('coachvoice-completed', JSON.stringify([...completed]));
-        updateUI();
-      }
-    }catch(err){}
-  }else{
-    accountEmail.textContent = isFirebaseReady() ? 'Não conectado' : 'Modo demonstração';
-    document.getElementById('accountStatus').textContent = isFirebaseReady() ? 'Entrar' : 'Firebase pendente';
-    document.getElementById('logoutAccountBtn').classList.add('hidden');
-  }
-});
 </script>
 
 </body>

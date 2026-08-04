@@ -1,54 +1,52 @@
-# CoachVoice AI v1.9 — Coach Mentor com IA
+# CoachVoice AI v2.0 — modo individual
 
-## Novidade principal
+Esta versão foi reorganizada para os testes iniciais de uma única pessoa, sem
+login e sem Firebase.
 
-A tela Coach Mentor agora chama uma função segura da Vercel em:
+## Novidades
 
-`POST /api/mentor`
+- navegação principal com Início, Mentor, Treinar, Biblioteca e Evolução;
+- página de inglês interativa:
+  - frase em inglês;
+  - áudio lento e natural;
+  - significado em português;
+  - pergunta “o que você diria?”;
+  - ditado por voz quando disponível;
+  - resposta recomendada;
+  - feedback textual demonstrativo;
+- preferência global de voz feminina, masculina ou automática;
+- escolha entre inglês americano e britânico;
+- níveis iniciante, intermediário e avançado;
+- biblioteca de situações profissionais;
+- modo Dia de Jogo: pré-jogo, intervalo e pós-jogo;
+- Coach Mentor integrado ao treino de oratória;
+- histórico local de sessões do Mentor e exercícios de inglês;
+- nome, progresso e preferências salvos no próprio aparelho.
 
-A chave da OpenAI fica na Vercel e nunca aparece no navegador ou no GitHub.
+## Dados
 
-## Configuração na Vercel
+O aplicativo usa `localStorage`. Nenhuma conta é necessária.
 
-1. Abra o projeto CoachVoice na Vercel.
-2. Entre em **Settings → Environment Variables**.
-3. Crie:
+O Firebase será retomado somente quando houver necessidade de:
 
-```text
-OPENAI_API_KEY = sua chave secreta da API
-```
+- mais usuários;
+- sincronização entre dispositivos;
+- recuperação de progresso;
+- armazenamento de áudio e vídeo.
 
-4. Opcionalmente, crie:
+## IA do Coach Mentor
 
-```text
-OPENAI_MODEL = gpt-5-mini
-```
+A rota opcional `api/mentor.js` continua incluída. Quando `OPENAI_API_KEY`
+estiver configurada na Vercel, o Mentor usa IA real. Sem a variável, o
+aplicativo apresenta a orientação demonstrativa local.
 
-5. Marque Production, Preview e Development.
-6. Salve.
-7. Faça um novo deploy.
+Nunca coloque a chave da API dentro do `index.html` ou do GitHub.
 
-## Arquivos novos
+## Publicação
 
-- `api/mentor.js`: função segura que consulta a OpenAI.
-- `package.json`: configura o runtime Node.js.
+Envie os arquivos para a raiz do repositório do CoachVoice. A Vercel fará um
+novo deploy automaticamente.
 
-## Teste
+Commit sugerido:
 
-Abra o app, entre em **Mentor**, descreva uma situação e toque em
-**Preparar orientação**.
-
-Se a variável ainda não estiver configurada, o aplicativo mantém o modo
-demonstrativo como fallback.
-
-## Segurança
-
-Nunca coloque `OPENAI_API_KEY` em:
-
-- `index.html`;
-- `firebase-config.js`;
-- arquivos enviados ao GitHub;
-- código executado no navegador.
-
-O `firebaseConfig` é configuração pública do aplicativo Firebase. A chave da
-OpenAI é secreta e deve permanecer apenas no servidor.
+`Criar CoachVoice v2.0 em modo individual`
