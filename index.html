@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#071225">
+<meta name="application-name" content="CoachVoice AI">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CoachVoice">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<title>CoachVoice AI — Plataforma Integrada</title>
+<style>
+:root{
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --navy:#071225;--navy2:#10213c;--green:#56d43d;--green2:#2f9e44;
+  --bg:#eef2f6;--card:#fff;--muted:#667085;--line:#d0d5dd;--soft:#f8fafc;
+  --shadow:0 8px 24px rgba(15,23,42,.07);
+  color:#101828;background:var(--bg)
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg)}
+button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
+.topbar{position:sticky;top:0;z-index:30;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:13px 15px;display:flex;align-items:center;justify-content:space-between;gap:11px}
+.brand{min-width:0}.brand h1{font-size:1.16rem;margin:0}.brand h1 span{color:var(--green)}.brand p{margin:3px 0 0;font-size:.72rem;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{width:43px;height:43px;flex:0 0 43px;border:0;border-radius:50%;background:rgba(255,255,255,.1);color:#fff;font-size:1.05rem}
+.page{display:none;padding:16px;max-width:820px;margin:auto}.page.active{display:block}
+.hero,.card,.block-card,.stat-card{background:var(--card);border-radius:20px;padding:18px;box-shadow:var(--shadow)}
+.hero{background:linear-gradient(145deg,#fff,#f7fbf7)}.hero h2{font-size:1.43rem;line-height:1.27;margin:8px 0}.hero p,.intro,.muted{color:var(--muted);line-height:1.5}
+.eyebrow,.label{font-size:.7rem;letter-spacing:.1em;font-weight:850;color:#27853b}
+.section-title{display:flex;justify-content:space-between;align-items:end;margin:22px 2px 12px;gap:12px}.section-title h2{margin:0;font-size:1.19rem}.section-title span{font-size:.75rem;color:var(--muted)}
+.primary,.secondary,.outline{width:100%;border-radius:14px;padding:14px;border:0;font-weight:850;font-size:.94rem}
+.primary{background:linear-gradient(135deg,#173a67,#071225);color:#fff}.secondary{background:#f2f4f7;color:#101828;border:1px solid var(--line)}.outline{background:#fff;border:1px solid #9db4cc;color:#183c66}
+.grid{display:grid;gap:12px}.two{grid-template-columns:repeat(2,1fr)}
+.quick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.quick{border:0;background:#fff;border-radius:17px;padding:15px;text-align:left;box-shadow:var(--shadow)}.quick span{display:grid;place-items:center;width:43px;height:43px;border-radius:13px;background:#0f2749;color:#fff;font-size:1.15rem;margin-bottom:10px}.quick strong,.quick small{display:block}.quick small{margin-top:4px;color:var(--muted);line-height:1.35}
+.block-list{display:grid;gap:13px}.block-card{position:relative;overflow:hidden}.block-card:after{content:"";position:absolute;width:95px;height:95px;border-radius:50%;background:rgba(86,212,61,.08);right:-34px;top:-34px}.block-head{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center}.block-icon{width:52px;height:52px;border-radius:15px;background:#0f2749;color:#fff;display:grid;place-items:center;font-size:1.3rem}.block-card h3{margin:0;font-size:1.04rem}.block-card p{margin:5px 0 0;font-size:.84rem;color:var(--muted);line-height:1.4}.badge{position:relative;z-index:1;background:#e9f7e7;color:#247533;border-radius:999px;padding:7px 9px;font-size:.7rem;font-weight:850}
+.progress-track{height:9px;background:#dfe7ef;border-radius:999px;overflow:hidden;margin:14px 0 12px}.progress-fill{height:100%;background:linear-gradient(90deg,#2d8d3d,var(--green));border-radius:999px}
+.card{margin-bottom:14px}.card h2,.card h3{line-height:1.4}.card h3{font-size:1.22rem;margin:8px 0 13px}
+.lesson-list{display:grid;gap:10px}.lesson{display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;background:#fff;border:1px solid #e4e7ec;border-radius:15px;padding:12px;text-align:left;width:100%}.lesson-num{width:40px;height:40px;border-radius:12px;background:#eef5ee;color:#267536;display:grid;place-items:center;font-weight:900}.lesson strong,.lesson small{display:block;text-align:left}.lesson small{margin-top:3px;color:var(--muted)}.lesson-status{font-size:.78rem;color:#667085}.lesson.done{border-color:#70bd7b;background:#f5fcf4}.lesson.done .lesson-num{background:#319444;color:#fff}
+.chips{display:flex;gap:8px;overflow:auto;margin:14px 0}.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 14px;white-space:nowrap;font-weight:780}.chip.active{background:#0d1f38;color:#fff;border-color:#0d1f38}
+.content-box{background:#f7f9fc;border-left:4px solid #3b9b4b;padding:14px;border-radius:10px;line-height:1.62}.warning{background:#fff7e8;border-left-color:#d68910}.english{background:#edf8ec;color:#235f2e}
+.structure{display:grid;gap:9px}.structure div{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;background:#f8fafc;border-radius:14px;padding:11px}.structure b{width:34px;height:34px;border-radius:50%;background:#0f2749;color:#fff;display:grid;place-items:center}.structure strong,.structure small{display:block}.structure small{color:var(--muted);margin-top:3px}
+.audio-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat-card{padding:15px}.stat-card small,.stat-card strong{display:block}.stat-card small{color:var(--muted)}.stat-card strong{font-size:1.45rem;margin-top:5px}.trend{font-size:.75rem;color:#27853b;margin-top:5px}
+.overall{background:linear-gradient(135deg,#10213c,#1a467b);color:#fff}.overall small{color:#d7e0eb}.overall-row{display:flex;justify-content:space-between;align-items:center}.overall-row b{font-size:2rem}
+.timeline{display:grid;gap:9px}.timeline-item{display:grid;grid-template-columns:36px 1fr auto;gap:10px;align-items:center;background:#f8fafc;border-radius:14px;padding:11px}.timeline-item span:first-child{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#e5e7eb;font-weight:900}.timeline-item.done span:first-child{background:#319444;color:#fff}.timeline-item small{color:var(--muted)}
+.profile-card{display:flex;align-items:center;gap:13px}.avatar{width:62px;height:62px;border-radius:50%;background:#dbe5f1;color:#071225;display:grid;place-items:center;font-weight:900;font-size:1.08rem}.profile-card strong,.profile-card small{display:block}.profile-card small{margin-top:4px;color:var(--muted)}
+.settings{display:grid;gap:10px}.setting{background:#fff;border-radius:15px;padding:14px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow)}.setting small{display:block;color:var(--muted);margin-top:3px}.switch{width:45px;height:26px;border-radius:999px;background:#319444;position:relative}.switch:after{content:"";position:absolute;width:20px;height:20px;border-radius:50%;background:#fff;right:3px;top:3px}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:35;background:#08162a;display:grid;grid-template-columns:repeat(5,1fr);padding:8px 4px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -6px 20px rgba(15,23,42,.14)}
+.nav{border:0;background:transparent;color:#b8c4d2;display:grid;place-items:center;gap:3px;font-size:1.08rem}.nav span{font-size:.61rem}.nav.active{color:var(--green)}
+.drawer{position:fixed;inset:0 auto 0 0;width:min(86vw,330px);z-index:60;background:linear-gradient(180deg,#071225,#10213c);color:#fff;padding:24px 17px;transform:translateX(-105%);transition:.24s;display:flex;flex-direction:column}.drawer.open{transform:translateX(0)}.drawer-profile{display:flex;gap:11px;align-items:center;padding-bottom:17px;border-bottom:1px solid rgba(255,255,255,.13)}.drawer-profile .avatar{width:52px;height:52px}.drawer-profile small{display:block;color:var(--green);margin-top:3px}.drawer nav{display:grid;gap:5px;margin-top:15px}.drawer-link{border:0;background:transparent;color:#fff;text-align:left;padding:13px;border-radius:12px}.drawer-link.active{background:rgba(255,255,255,.09);color:var(--green)}.drawer-note{margin-top:auto;color:#b7c4d5;font-size:.76rem;line-height:1.5}.overlay{position:fixed;inset:0;background:rgba(2,6,23,.57);z-index:50;opacity:0;pointer-events:none;transition:.2s}.overlay.show{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:80;background:#fff;border-radius:24px 24px 0 0;padding:14px 18px calc(22px + env(safe-area-inset-bottom));transform:translateY(105%);transition:.24s;max-height:87vh;overflow:auto}.sheet.open{transform:translateY(0)}.sheet-handle{width:45px;height:5px;border-radius:999px;background:#d0d5dd;margin:0 auto 14px}.sheet h2{margin:0}.feedback-options{display:grid;gap:9px}.feedback-options button{border:1px solid var(--line);border-radius:13px;background:#fff;padding:13px;text-align:left;font-weight:750}.feedback-options button.selected{border-color:#319444;background:#ecf8eb;color:#247533}.sheet textarea{width:100%;min-height:88px;border:1px solid var(--line);border-radius:13px;padding:12px;font:inherit;margin:12px 0}.sheet-overlay{position:fixed;inset:0;background:rgba(2,6,23,.57);z-index:70;opacity:0;pointer-events:none;transition:.2s}.sheet-overlay.show{opacity:1;pointer-events:auto}
+.toast{position:fixed;left:16px;right:16px;bottom:94px;background:#101828;color:#fff;border-radius:14px;padding:13px;opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s;z-index:90;text-align:center}.toast.show{opacity:1;transform:none}
+.hidden{display:none!important}
+
+.tech-grid{display:grid;gap:12px}.tech-card{background:#fff;border-radius:18px;padding:15px;box-shadow:var(--shadow)}
+.tech-head{display:grid;grid-template-columns:46px 1fr auto;gap:11px;align-items:center}.tech-icon{width:46px;height:46px;border-radius:14px;background:#0f2749;color:#fff;display:grid;place-items:center;font-size:1.15rem}
+.tech-head strong,.tech-head small{display:block}.tech-head small{margin-top:4px;color:var(--muted)}
+.status-pill{border-radius:999px;padding:7px 9px;font-size:.69rem;font-weight:850;background:#eef2f6;color:#475467}
+.status-pill.ok{background:#e9f7e7;color:#247533}.status-pill.warn{background:#fff7e8;color:#8a5a0a}.status-pill.error{background:#fff1f0;color:#b42318}
+.device-result{margin-top:12px;background:#f8fafc;border-radius:13px;padding:12px;line-height:1.5;color:#475467}
+.media-preview{width:100%;border-radius:16px;background:#0f172a;min-height:180px;display:none;margin-top:12px;object-fit:cover}
+.media-preview.show{display:block}.audio-player{width:100%;margin-top:12px;display:none}.audio-player.show{display:block}
+.test-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.permission-note{background:#eef5ff;border-left:4px solid #2f6fb2;border-radius:11px;padding:13px;line-height:1.55;color:#274f7a}
+
+@media(min-width:760px){.quick-grid{grid-template-columns:repeat(4,1fr)}.block-list{grid-template-columns:1fr 1fr}.stats{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside id="drawer" class="drawer">
+  <div class="drawer-profile">
+    <div class="avatar">PA</div>
+    <div><strong>Professor Andrade</strong><small>Treinador</small></div>
+  </div>
+  <nav>
+    <button class="drawer-link active" data-page="home" onclick="go('home')">⌂ Painel</button>
+    <button class="drawer-link" data-page="tracks" onclick="go('tracks')">▦ Trilhas</button>
+    <button class="drawer-link" data-page="practice" onclick="go('practice')">🎙 Treino do dia</button>
+    <button class="drawer-link" data-page="oratory" onclick="go('oratory')">🗣 Academia de Oratória</button>
+    <button class="drawer-link" data-page="technical" onclick="go('technical')">⚙ Testes técnicos</button>
+    <button class="drawer-link" data-page="progress" onclick="go('progress')">▥ Evolução</button>
+    <button class="drawer-link" data-page="profile" onclick="go('profile')">◉ Perfil</button>
+  </nav>
+  <div class="drawer-note">CoachVoice AI — Protótipo integrado para testes de interface no celular.</div>
+</aside>
+<div id="overlay" class="overlay" onclick="closeDrawer()"></div>
+
+<main>
+<header class="topbar">
+  <button class="icon-btn" onclick="openDrawer()">☰</button>
+  <div class="brand"><h1>CoachVoice <span>AI</span></h1><p id="topSubtitle">Plataforma integrada</p></div>
+  <button class="icon-btn" onclick="openFeedback()">✓</button>
+</header>
+
+<section id="home" class="page active">
+  <div class="hero">
+    <span class="eyebrow">BOM DIA, PROFESSOR</span>
+    <h2>Treine comunicação, liderança e inglês para o futebol.</h2>
+    <p>Continue de onde parou ou escolha uma trilha específica.</p>
+    <button class="primary" onclick="go('practice')">Começar treino do dia</button>
+  </div>
+
+  <div class="section-title"><h2>Acesso rápido</h2><span>5 áreas</span></div>
+  <div class="quick-grid">
+    <button class="quick" onclick="openBlock('b1')"><span>🎙</span><strong>Entrevistas</strong><small>Pós-jogo e imprensa</small></button>
+    <button class="quick" onclick="openBlock('b2')"><span>🇬🇧</span><strong>Inglês</strong><small>Treino e jogo</small></button>
+    <button class="quick" onclick="openBlock('b3')"><span>🔥</span><strong>Liderança</strong><small>Vestiário</small></button>
+    <button class="quick" onclick="openBlock('b4')"><span>🏢</span><strong>Gestão</strong><small>Jogadores e diretoria</small></button>
+    <button class="quick" onclick="go('oratory')"><span>🗣</span><strong>Oratória</strong><small>Português pausado</small></button>
+    <button class="quick" onclick="go('technical')"><span>⚙</span><strong>Testes técnicos</strong><small>Microfone e câmera</small></button>
+  </div>
+
+  <div class="section-title"><h2>Seu progresso</h2><span id="homeProgressLabel">0% concluído</span></div>
+  <article class="card overall">
+    <div class="overall-row">
+      <div><small>Progresso geral</small><strong id="homeCompleted">0 de 26 aulas</strong></div>
+      <b id="homePercent">0%</b>
+    </div>
+    <div class="progress-track"><div id="homeProgressBar" class="progress-fill" style="width:0%"></div></div>
+  </article>
+
+  <div class="section-title"><h2>Continuar estudando</h2><span>Recomendado</span></div>
+  <article class="block-card">
+    <div class="block-head">
+      <div class="block-icon">🎙</div>
+      <div><h3>Entrevistas pós-jogo</h3><p>Estrutura de resposta, pressão da imprensa e simulação.</p></div>
+      <span class="badge">Bloco 1</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" style="width:45%"></div></div>
+    <button class="outline" onclick="openBlock('b1')">Abrir trilha</button>
+  </article>
+</section>
+
+<section id="tracks" class="page">
+  <div class="hero">
+    <span class="eyebrow">TRILHAS DE APRENDIZAGEM</span>
+    <h2>Cinco blocos para desenvolver sua comunicação como treinador.</h2>
+    <p>As aulas podem ser feitas em sequência ou consultadas conforme sua necessidade.</p>
+  </div>
+  <div class="section-title"><h2>Todos os blocos</h2><span>32 aulas</span></div>
+  <div id="blockList" class="block-list"></div>
+</section>
+
+<section id="blockDetail" class="page">
+  <button class="secondary" style="margin-bottom:14px" onclick="go('tracks')">← Voltar para trilhas</button>
+  <div class="hero">
+    <span id="blockEyebrow" class="eyebrow">BLOCO</span>
+    <h2 id="blockTitle"></h2>
+    <p id="blockDescription"></p>
+  </div>
+  <div class="section-title"><h2>Aulas do bloco</h2><span id="blockLessonCount"></span></div>
+  <div id="lessonList" class="lesson-list"></div>
+</section>
+
+<section id="lessonDetail" class="page">
+  <button class="secondary" style="margin-bottom:14px" onclick="backToBlock()">← Voltar para o bloco</button>
+  <div class="hero">
+    <span id="lessonEyebrow" class="eyebrow"></span>
+    <h2 id="lessonTitle"></h2>
+    <p id="lessonSubtitle"></p>
+  </div>
+
+  <article class="card">
+    <span class="label">Situação</span>
+    <h3 id="lessonSituation"></h3>
+    <div id="lessonContent" class="content-box"></div>
+  </article>
+
+  <article class="card">
+    <span class="label">Estrutura recomendada</span>
+    <div class="structure">
+      <div><b>1</b><p><strong>Começo direto</strong><small>Diga a ideia principal na primeira frase.</small></p></div>
+      <div><b>2</b><p><strong>Explicação</strong><small>Apresente um motivo ou orientação concreta.</small></p></div>
+      <div><b>3</b><p><strong>Fechamento</strong><small>Conclua com segurança e próximo passo.</small></p></div>
+    </div>
+  </article>
+
+  <article class="card">
+    <span class="label">Áudio demonstrativo</span>
+    <div class="audio-row">
+      <button class="secondary" onclick="speakLesson(.72)">🔊 Devagar</button>
+      <button class="secondary" onclick="speakLesson(.96)">▶ Normal</button>
+    </div>
+  </article>
+
+  <article class="card">
+    <span class="label">Prática</span>
+    <button class="primary" onclick="futureFeature('Microfone')">🎙 Responder pelo microfone</button>
+    <br><br>
+    <button id="completeLessonBtn" class="outline" onclick="toggleLessonComplete()">Marcar aula como concluída</button>
+  </article>
+</section>
+
+
+<section id="oratory" class="page">
+  <div class="hero">
+    <span class="eyebrow">ACADEMIA DE ORATÓRIA</span>
+    <h2>Português claro, pausado e confiante.</h2>
+    <p>Treine respiração, pausas, ritmo, entonação e organização antes de ativarmos a análise real da sua voz.</p>
+  </div>
+
+  <div class="section-title"><h2>Treino guiado</h2><span>30 a 60 segundos</span></div>
+  <article class="card">
+    <span class="label">Texto com marcação de pausas</span>
+    <h3 id="oratoryText">A equipe competiu bem. / Tivemos organização e coragem. // Agora precisamos corrigir os detalhes / e manter o foco no próximo jogo.</h3>
+    <div class="content-box">
+      <strong>/</strong> pausa curta de aproximadamente meio segundo.<br>
+      <strong>//</strong> pausa maior de aproximadamente um segundo.
+    </div>
+    <br>
+    <div class="audio-row">
+      <button class="secondary" onclick="speakOratory(.68)">🔊 Ouvir pausadamente</button>
+      <button class="secondary" onclick="speakOratory(.9)">▶ Ouvir natural</button>
+    </div>
+  </article>
+
+  <article class="card">
+    <span class="label">Duração do exercício</span>
+    <div class="chips">
+      <button class="chip active" data-seconds="30" onclick="selectOratoryTime(this,30)">30 segundos</button>
+      <button class="chip" data-seconds="45" onclick="selectOratoryTime(this,45)">45 segundos</button>
+      <button class="chip" data-seconds="60" onclick="selectOratoryTime(this,60)">60 segundos</button>
+    </div>
+    <div class="stat-card overall">
+      <div class="overall-row">
+        <div><small id="oratoryInstruction">Prepare a postura e respire.</small><strong id="oratoryClock">00:30</strong></div>
+        <b id="oratoryStage">Pronto</b>
+      </div>
+      <div class="progress-track"><div id="oratoryTimerBar" class="progress-fill" style="width:0%"></div></div>
+    </div>
+    <br>
+    <button id="oratoryStartBtn" class="primary" onclick="startOratoryTimer()">Iniciar treino guiado</button>
+  </article>
+
+  <article class="card">
+    <span class="label">Sequência da fala</span>
+    <div class="structure">
+      <div><b>1</b><p><strong>Respire</strong><small>Inspire pelo nariz e solte o ar antes de começar.</small></p></div>
+      <div><b>2</b><p><strong>Responda diretamente</strong><small>Use uma frase curta para apresentar a ideia central.</small></p></div>
+      <div><b>3</b><p><strong>Faça uma pausa</strong><small>Não emende a explicação imediatamente.</small></p></div>
+      <div><b>4</b><p><strong>Explique com calma</strong><small>Use uma ou duas ideias, sem acelerar.</small></p></div>
+      <div><b>5</b><p><strong>Conclua</strong><small>Termine a resposta sem deixar a voz desaparecer.</small></p></div>
+    </div>
+  </article>
+
+  <article class="card">
+    <span class="label">Autoavaliação</span>
+    <div class="lesson-list">
+      <button class="lesson" data-number="1" onclick="toggleCheck(this)"><span class="lesson-num">1</span><span><strong>Falei sem correr</strong><small>Mantive velocidade confortável.</small></span><span class="lesson-status">Marcar</span></button>
+      <button class="lesson" data-number="2" onclick="toggleCheck(this)"><span class="lesson-num">2</span><span><strong>Usei pausas</strong><small>Separei as ideias principais.</small></span><span class="lesson-status">Marcar</span></button>
+      <button class="lesson" data-number="3" onclick="toggleCheck(this)"><span class="lesson-num">3</span><span><strong>Evitei vícios de linguagem</strong><small>Reduzi “né”, “então” e repetições.</small></span><span class="lesson-status">Marcar</span></button>
+      <button class="lesson" data-number="4" onclick="toggleCheck(this)"><span class="lesson-num">4</span><span><strong>Concluí com firmeza</strong><small>Terminei a mensagem com segurança.</small></span><span class="lesson-status">Marcar</span></button>
+    </div>
+  </article>
+
+  <article class="card">
+    <span class="label">Próxima fase técnica</span>
+    <p class="content-box warning">Com o microfone ativo, a plataforma medirá velocidade, pausas, duração, repetições, vícios de linguagem e momentos de aceleração.</p>
+    <br>
+    <button class="primary" onclick="futureFeature('Análise real da oratória')">🎙 Testar análise da voz</button>
+  </article>
+</section>
+
+<section id="practice" class="page">
+  <div class="hero">
+    <span class="eyebrow">TREINO DO DIA</span>
+    <h2>Resposta pós-jogo sob pressão.</h2>
+    <p>Tempo sugerido: 5 minutos.</p>
+  </div>
+
+  <article class="card">
+    <span class="label">Pergunta do jornalista</span>
+    <h3 id="dailyQuestion">A equipe voltou a cometer os mesmos erros. Por que eles ainda não foram corrigidos?</h3>
+    <button class="secondary" onclick="speakText(document.getElementById('dailyQuestion').textContent,'pt-BR',.95)">🔊 Ouvir pergunta</button>
+  </article>
+
+  <article class="card">
+    <span class="label">Sua resposta</span>
+    <button class="primary" onclick="futureFeature('Microfone')">🎙 Responder pelo microfone</button>
+    <div class="content-box warning" style="margin-top:12px">
+      Nesta fase, voz e transcrição ainda não estão ativas. Use a resposta-modelo para testar o fluxo.
+    </div>
+    <br>
+    <button class="secondary" onclick="showDailyModel()">Ver resposta-modelo</button>
+  </article>
+
+  <article id="dailyModel" class="card hidden">
+    <span class="label">Resposta-modelo</span>
+    <p class="content-box">Os erros existem e precisamos assumir essa responsabilidade. Já identificamos os principais problemas e estamos trabalhando em correções específicas. A resposta precisa aparecer no próximo jogo.</p>
+    <br>
+    <button class="primary" onclick="showDailyAnalysis()">Analisar resposta</button>
+  </article>
+
+  <article id="dailyAnalysis" class="card hidden">
+    <span class="label">Análise demonstrativa</span>
+    <div class="stats">
+      <div class="stat-card"><small>Clareza</small><strong>86</strong><div class="trend">Boa</div></div>
+      <div class="stat-card"><small>Objetividade</small><strong>89</strong><div class="trend">Muito boa</div></div>
+      <div class="stat-card"><small>Pausas</small><strong>78</strong><div class="trend">Pode melhorar</div></div>
+      <div class="stat-card"><small>Confiança</small><strong>84</strong><div class="trend">Boa</div></div>
+    </div>
+  </article>
+</section>
+
+
+<section id="technical" class="page">
+  <div class="hero">
+    <span class="eyebrow">FASE TÉCNICA 1</span>
+    <h2>Central de testes do celular.</h2>
+    <p>Confira se o navegador está preparado para usar áudio, microfone, câmera e armazenamento local.</p>
+  </div>
+
+  <article class="card">
+    <span class="label">Importante</span>
+    <p class="permission-note">Microfone e câmera normalmente exigem um endereço seguro com <strong>HTTPS</strong>. O navegador só pedirá autorização depois que você tocar no botão de teste.</p>
+  </article>
+
+  <div class="tech-grid">
+    <article class="tech-card">
+      <div class="tech-head">
+        <span class="tech-icon">🔒</span>
+        <div><strong>Conexão segura</strong><small>Necessária para microfone e câmera</small></div>
+        <span id="secureStatus" class="status-pill">Verificando</span>
+      </div>
+      <div id="secureResult" class="device-result">Analisando o endereço atual.</div>
+    </article>
+
+    <article class="tech-card">
+      <div class="tech-head">
+        <span class="tech-icon">🔊</span>
+        <div><strong>Áudio do navegador</strong><small>Reprodução dos exemplos das aulas</small></div>
+        <span id="speechStatus" class="status-pill">Verificando</span>
+      </div>
+      <div id="speechResult" class="device-result">Verificando síntese de voz.</div>
+      <button class="secondary" style="margin-top:12px" onclick="testSpeech()">Ouvir áudio de teste</button>
+    </article>
+
+    <article class="tech-card">
+      <div class="tech-head">
+        <span class="tech-icon">🎙</span>
+        <div><strong>Microfone</strong><small>Gravação local de até 10 segundos</small></div>
+        <span id="micTechStatus" class="status-pill">Não testado</span>
+      </div>
+      <div id="micTechResult" class="device-result">Toque em iniciar para solicitar a permissão.</div>
+      <div class="test-actions">
+        <button id="micStartBtn" class="primary" onclick="startMicTest()">Iniciar</button>
+        <button id="micStopBtn" class="secondary" onclick="stopMicTest()" disabled>Parar</button>
+      </div>
+      <audio id="micPlayback" class="audio-player" controls></audio>
+    </article>
+
+    <article class="tech-card">
+      <div class="tech-head">
+        <span class="tech-icon">🎥</span>
+        <div><strong>Câmera</strong><small>Visualização local, sem envio</small></div>
+        <span id="cameraTechStatus" class="status-pill">Não testado</span>
+      </div>
+      <div id="cameraTechResult" class="device-result">Toque em iniciar para solicitar a permissão.</div>
+      <div class="test-actions">
+        <button id="cameraStartBtn" class="primary" onclick="startCameraTest()">Iniciar</button>
+        <button id="cameraStopBtn" class="secondary" onclick="stopCameraTest()" disabled>Parar</button>
+      </div>
+      <video id="cameraPreview" class="media-preview" playsinline muted></video>
+    </article>
+
+    <article class="tech-card">
+      <div class="tech-head">
+        <span class="tech-icon">💾</span>
+        <div><strong>Armazenamento local</strong><small>Progresso e avaliações neste aparelho</small></div>
+        <span id="storageStatus" class="status-pill">Verificando</span>
+      </div>
+      <div id="storageResult" class="device-result">Verificando armazenamento.</div>
+      <button class="secondary" style="margin-top:12px" onclick="testStorage()">Executar teste</button>
+    </article>
+  </div>
+
+  <article class="card" style="margin-top:14px">
+    <span class="label">Próxima etapa</span>
+    <h3>Publicação em HTTPS e integração com Firebase</h3>
+    <p class="intro">Depois desta verificação, a plataforma poderá salvar conta e progresso na nuvem, gravar voz e vídeo e enviar a transcrição para análise de inteligência artificial.</p>
+  </article>
+</section>
+
+<section id="progress" class="page">
+  <div class="hero">
+    <span class="eyebrow">MINHA EVOLUÇÃO</span>
+    <h2>Acompanhe sua formação completa.</h2>
+    <p>Os números desta versão são demonstrativos e o progresso das aulas é salvo neste aparelho.</p>
+  </div>
+
+  <div class="section-title"><h2>Resumo geral</h2><span id="progressSummary">0 aulas concluídas</span></div>
+  <div class="stats">
+    <div class="stat-card"><small>Clareza</small><strong>68 → 84</strong><div class="trend">+16 pontos</div></div>
+    <div class="stat-card"><small>Confiança</small><strong>60 → 81</strong><div class="trend">+21 pontos</div></div>
+    <div class="stat-card"><small>Inglês</small><strong>52 → 73</strong><div class="trend">+21 pontos</div></div>
+    <div class="stat-card"><small>Liderança</small><strong>70 → 86</strong><div class="trend">+16 pontos</div></div>
+  </div>
+
+  <div class="section-title"><h2>Progresso por bloco</h2><span>Atualização automática</span></div>
+  <div id="progressBlocks" class="block-list"></div>
+
+  <div class="section-title"><h2>Jornada</h2><span>Etapas principais</span></div>
+  <div class="timeline">
+    <div class="timeline-item done"><span>1</span><div><strong>Diagnóstico inicial</strong><small>Comunicação e confiança</small></div><b>✓</b></div>
+    <div class="timeline-item done"><span>2</span><div><strong>Entrevistas</strong><small>Respostas sob pressão</small></div><b>✓</b></div>
+    <div class="timeline-item"><span>3</span><div><strong>Inglês no futebol</strong><small>Treino e dia de jogo</small></div><b>→</b></div>
+    <div class="timeline-item"><span>4</span><div><strong>Liderança</strong><small>Vestiário e equipe</small></div><b>→</b></div>
+    <div class="timeline-item"><span>5</span><div><strong>Comunicação profissional</strong><small>Diretoria e conflitos</small></div><b>→</b></div>
+    <div class="timeline-item"><span>6</span><div><strong>Avaliação final</strong><small>Vídeo, voz e IA</small></div><b>🔒</b></div>
+  </div>
+</section>
+
+<section id="profile" class="page">
+  <article class="card profile-card">
+    <div class="avatar">PA</div>
+    <div><strong>Professor Andrade</strong><small>Plano de desenvolvimento do treinador</small></div>
+  </article>
+
+  <div class="section-title"><h2>Preferências</h2><span>Protótipo</span></div>
+  <div class="settings">
+    <div class="setting"><div><strong>Português do Brasil</strong><small>Idioma principal</small></div><span>›</span></div>
+    <div class="setting"><div><strong>Inglês americano</strong><small>Áudio das aulas</small></div><span>›</span></div>
+    <div class="setting"><div><strong>Lembrete diário</strong><small>Treino de 5 minutos</small></div><div class="switch"></div></div>
+    <div class="setting"><div><strong>Modo celular</strong><small>Botões e textos ampliados</small></div><div class="switch"></div></div>
+  </div>
+
+  <div class="section-title"><h2>Próximas integrações</h2><span>Fase técnica</span></div>
+  <article class="card">
+    <div class="structure">
+      <div><b>1</b><p><strong>Firebase</strong><small>Login, banco de dados e progresso na nuvem.</small></p></div>
+      <div><b>2</b><p><strong>Microfone</strong><small>Gravação, transcrição e análise de voz.</small></p></div>
+      <div><b>3</b><p><strong>Câmera</strong><small>Vídeo diagnóstico e vídeo final.</small></p></div>
+      <div><b>4</b><p><strong>IA</strong><small>Feedback personalizado e simulações dinâmicas.</small></p></div>
+    </div>
+  </article>
+</section>
+
+<nav class="bottom-nav">
+  <button class="nav active" data-page="home" onclick="go('home')">⌂<span>Início</span></button>
+  <button class="nav" data-page="tracks" onclick="go('tracks')">▦<span>Trilhas</span></button>
+  <button class="nav" data-page="practice" onclick="go('practice')">🎙<span>Treinar</span></button>
+  <button class="nav" data-page="progress" onclick="go('progress')">▥<span>Evolução</span></button>
+  <button class="nav" data-page="profile" onclick="go('profile')">◉<span>Perfil</span></button>
+</nav>
+</main>
+
+<div id="sheetOverlay" class="sheet-overlay" onclick="closeFeedback()"></div>
+<div id="feedbackSheet" class="sheet">
+  <div class="sheet-handle"></div>
+  <h2>Avaliar esta tela</h2>
+  <p class="intro">Seu comentário será salvo neste celular.</p>
+  <div class="feedback-options">
+    <button data-feedback="Gostei">👍 Gostei</button>
+    <button data-feedback="Texto pequeno">🔤 Texto pequeno</button>
+    <button data-feedback="Botão apertado">👆 Botão apertado</button>
+    <button data-feedback="Tela confusa">🧭 Tela confusa</button>
+    <button data-feedback="Precisa melhorar">🛠 Precisa melhorar</button>
+  </div>
+  <textarea id="feedbackNote" placeholder="Escreva sua sugestão..."></textarea>
+  <button class="primary" onclick="saveFeedback()">Salvar avaliação</button>
+  <br><br>
+  <button class="secondary" onclick="closeFeedback()">Fechar</button>
+</div>
+
+<div id="toast" class="toast"></div>
+</div>
+
+<script>
+const blocks={
+b1:{
+  number:'BLOCO 1',icon:'🎙',title:'Entrevistas pós-jogo',
+  description:'Respostas para vitória, derrota, pressão, arbitragem e análise tática.',
+  lessons:[
+    ['b1l1','Vídeo diagnóstico','Resposta inicial antes das orientações','A imprensa pergunta sobre uma derrota difícil.','A responsabilidade é coletiva e começa por mim. Precisamos reconhecer os erros, corrigir nossas distâncias e reagir no próximo jogo.','pt-BR'],
+    ['b1l2','Estrutura de resposta','Direto, motivo e conclusão','O que fez a diferença na vitória?','Nossa organização fez a diferença. Controlamos os momentos decisivos e mantivemos o foco até o fim. Agora precisamos repetir esse padrão.','pt-BR'],
+    ['b1l3','Pausas e ritmo','Controle da velocidade sob pressão','A torcida está insatisfeita. O que você responde?','Entendemos a cobrança da torcida. Ela tem o direito de cobrar. Nossa responsabilidade é responder com trabalho, equilíbrio e resultados.','pt-BR'],
+    ['b1l4','Perguntas difíceis','Pressão, arbitragem e críticas','A arbitragem influenciou o resultado?','Prefiro concentrar minha análise no desempenho da equipe. Houve decisões discutíveis, mas precisamos melhorar aquilo que está sob nosso controle.','pt-BR'],
+    ['b1l5','Estilos de comunicação','Sereno, firme, tático e protetor','Por que a equipe perdeu o controle do jogo?','O adversário criou superioridade no meio e demoramos para ajustar a primeira pressão. Quando corrigimos, recuperamos equilíbrio.','pt-BR'],
+    ['b1l6','Entrevista em inglês','Respostas curtas para a imprensa','What made the difference in today’s victory?','Our organization and intensity made the difference. We controlled the key moments and stayed focused until the end.','en-US'],
+    ['b1l7','Simulação completa','Três perguntas seguidas','Coletiva completa após uma partida difícil.','Mantenha a mesma linha de comunicação: responda diretamente, explique um ponto principal e conclua com o próximo passo.','pt-BR'],
+    ['b1l8','Vídeo final','Comparação da evolução','Repita a entrevista do diagnóstico.','Compare clareza, objetividade, pausas, confiança, postura e capacidade de concluir a mensagem.','pt-BR']
+  ]
+},
+b2:{
+  number:'BLOCO 2',icon:'🇬🇧',title:'Inglês para treino e jogo',
+  description:'Comandos, mensagens de jogo e comunicação com a comissão técnica.',
+  lessons:[
+    ['b2l1','Comandos de pressão','Pressão alta e recuperação','Dê uma instrução de pressão.','Press higher and recover the ball quickly.','en-US'],
+    ['b2l2','Posse e circulação','Velocidade com a bola','Peça mais circulação de bola.','Keep possession and move the ball quickly.','en-US'],
+    ['b2l3','Compactação','Distâncias entre os setores','Organize a equipe defensivamente.','Stay compact, protect the middle, and defend together.','en-US'],
+    ['b2l4','Transição','Reação após perder a bola','Dê uma instrução de transição defensiva.','React quickly after losing the ball and recover your shape.','en-US'],
+    ['b2l5','Dia de jogo','Pré-jogo, intervalo e lateral','Faça uma mensagem curta antes da partida.','Play with courage, stay organized, and trust the plan.','en-US'],
+    ['b2l6','Comissão técnica','Reuniões e feedback','Inicie uma reunião com a comissão.','Let’s review the main points before the session.','en-US']
+  ]
+},
+b3:{
+  number:'BLOCO 3',icon:'🔥',title:'Liderança e vestiário',
+  description:'Discursos, intervalo, pós-jogo e conversas individuais.',
+  lessons:[
+    ['b3l1','Mensagem pré-jogo','Identidade, ação e fechamento','A equipe enfrenta um adversário superior.','Respeitamos o adversário, mas não vamos entrar com medo. Precisamos competir juntos, proteger o centro e aproveitar nossos momentos com coragem.','pt-BR'],
+    ['b3l2','Fala do intervalo','Reconhecer, corrigir e direcionar','A equipe está perdendo por 1 a 0.','Ainda estamos no jogo. Vamos acelerar a circulação, aproximar os setores e atacar com mais presença. Sem desespero: organização e coragem.','pt-BR'],
+    ['b3l3','Mensagem pós-jogo','Vitória, derrota e aprendizado','A equipe perdeu, mas competiu bem.','O resultado não veio, mas a atitude foi correta. Precisamos reconhecer os erros, manter o compromisso e reagir juntos.','pt-BR'],
+    ['b3l4','Conversa com reserva','Manter conexão e direção','Um jogador reclama por ter poucos minutos.','Eu entendo sua frustração. A decisão está baseada nas necessidades da equipe. Quero que você trabalhe nestes pontos porque sua oportunidade pode chegar.','pt-BR'],
+    ['b3l5','Liderança do capitão','Responsabilidade e influência','Oriente o capitão antes de um jogo tenso.','Preciso que você ajude o grupo a manter equilíbrio, proteja os mais jovens e cobre com respeito nos momentos difíceis.','pt-BR'],
+    ['b3l6','Simulação de liderança','Três momentos do mesmo jogo','Pré-jogo, intervalo e pós-jogo.','Adapte energia e conteúdo a cada momento, mantendo clareza, coerência e direção.','pt-BR']
+  ]
+},
+b4:{
+  number:'BLOCO 4',icon:'🏢',title:'Comunicação profissional',
+  description:'Jogadores, comissão técnica, diretoria, conflitos e decisões difíceis.',
+  lessons:[
+    ['b4l1','Decisões com jogadores','Minutos e desempenho','Explique por que um jogador está no banco.','A decisão está baseada nas necessidades da equipe e em comportamentos específicos. Quero explicar os critérios e definir um próximo passo claro.','pt-BR'],
+    ['b4l2','Discordância na comissão','Ouvir e alinhar','Seu auxiliar discorda da estratégia.','Quero entender sua leitura e as evidências. Depois tomaremos a decisão e comunicaremos uma mensagem única ao grupo.','pt-BR'],
+    ['b4l3','Reunião com diretoria','Fato, impacto e proposta','A diretoria cobra resultados.','Os resultados estão abaixo do esperado. Identificamos os problemas, iniciamos correções e propomos metas claras para o próximo ciclo.','pt-BR'],
+    ['b4l4','Conflito interno','Reduzir tensão','Dois jogadores discutem no vestiário.','Vamos interromper a escalada, ouvir cada lado e retomar a conversa com condições de respeito e compromisso.','pt-BR'],
+    ['b4l5','Crítica pública','Proteger o grupo','Um jogador critica uma decisão em entrevista.','Vou conversar com o atleta em particular. A equipe precisa de diálogo, mas questões internas não devem ser tratadas publicamente.','pt-BR'],
+    ['b4l6','Reunião simulada','Três conversas difíceis','Jogador, auxiliar e diretoria.','Mantenha respeito, explique critérios, evite justificativas longas e conclua com uma ação concreta.','pt-BR']
+  ]
+},
+b5:{
+  number:'BLOCO 5',icon:'🗣',title:'Oratória em português',
+  description:'Fala pausada, respiração, ritmo, entonação e segurança em público.',
+  lessons:[
+    ['b5l1','Respiração antes da resposta','Controle físico e início calmo','Você recebe uma pergunta difícil e sente vontade de responder rapidamente.','Respire antes de falar. Comece com uma frase curta. Faça uma pausa e só depois apresente a explicação.','pt-BR'],
+    ['b5l2','Pausas estratégicas','Separar ideias e aumentar impacto','Treine uma resposta com duas ideias principais.','A equipe competiu bem. Tivemos organização e coragem. Agora precisamos corrigir os detalhes e manter o foco.','pt-BR'],
+    ['b5l3','Ritmo confortável','Evitar aceleração sob pressão','A pergunta provoca desconforto e exige controle.','Não precisamos responder tudo de uma vez. Primeiro reconhecemos o problema. Depois explicamos a correção e o próximo passo.','pt-BR'],
+    ['b5l4','Vícios de linguagem','Reduzir repetições e palavras de apoio','Evite usar “né”, “então”, “tipo” e frases inacabadas.','A resposta precisa ser direta. Identificamos o problema, iniciamos as correções e vamos avaliar a evolução no próximo jogo.','pt-BR'],
+    ['b5l5','Entonação e ênfase','Destacar a mensagem principal','Escolha duas palavras para receber maior ênfase.','Precisamos jogar com equilíbrio, coragem e responsabilidade. O grupo está preparado para reagir.','pt-BR'],
+    ['b5l6','Discurso de 60 segundos','Organização, presença e conclusão','Faça uma apresentação curta sobre sua identidade como treinador.','Minha equipe precisa competir com organização, coragem e respeito ao jogo. Busco clareza nas decisões, responsabilidade nos resultados e evolução diária.','pt-BR']
+  ]
+}
+};
+
+let currentPage='home',currentBlock='b1',currentLesson=null,selectedFeedback='';
+const completed=new Set(JSON.parse(localStorage.getItem('coachvoice-completed')||'[]'));
+
+function allLessons(){return Object.values(blocks).flatMap(b=>b.lessons)}
+function blockCompleted(key){return blocks[key].lessons.filter(l=>completed.has(l[0])).length}
+function blockPercent(key){return Math.round(blockCompleted(key)/blocks[key].lessons.length*100)}
+function totalPercent(){const all=allLessons();return Math.round([...completed].filter(id=>all.some(l=>l[0]===id)).length/all.length*100)}
+function totalCompleted(){return allLessons().filter(l=>completed.has(l[0])).length}
+
+function go(id){
+  currentPage=id;
+  document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));
+  document.querySelectorAll('.nav,.drawer-link').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
+  const titles={home:'Plataforma integrada',tracks:'Trilhas de aprendizagem',practice:'Treino do dia',oratory:'Academia de Oratória',technical:'Testes técnicos',progress:'Minha evolução',profile:'Perfil e configurações',blockDetail:'Conteúdo do bloco',lessonDetail:'Aula prática'};
+  document.getElementById('topSubtitle').textContent=titles[id]||'CoachVoice AI';
+  closeDrawer();window.scrollTo(0,0);updateUI();
+}
+function openDrawer(){document.getElementById('drawer').classList.add('open');document.getElementById('overlay').classList.add('show')}
+function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('overlay').classList.remove('show')}
+function toast(t){const x=document.getElementById('toast');x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),1900)}
+function futureFeature(name){toast(name+' será ativado na fase técnica final.')}
+function speakText(text,lang,rate){const u=new SpeechSynthesisUtterance(text);u.lang=lang;u.rate=rate;speechSynthesis.cancel();speechSynthesis.speak(u)}
+
+function renderBlocks(){
+  const list=document.getElementById('blockList');
+  list.innerHTML=Object.entries(blocks).map(([key,b])=>`
+    <article class="block-card">
+      <div class="block-head">
+        <div class="block-icon">${b.icon}</div>
+        <div><h3>${b.title}</h3><p>${b.description}</p></div>
+        <span class="badge">${blockPercent(key)}%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:${blockPercent(key)}%"></div></div>
+      <button class="outline" onclick="openBlock('${key}')">Abrir bloco</button>
+    </article>`).join('');
+}
+function renderProgressBlocks(){
+  document.getElementById('progressBlocks').innerHTML=Object.entries(blocks).map(([key,b])=>`
+    <article class="block-card">
+      <div class="block-head">
+        <div class="block-icon">${b.icon}</div>
+        <div><h3>${b.title}</h3><p>${blockCompleted(key)} de ${b.lessons.length} aulas concluídas</p></div>
+        <span class="badge">${blockPercent(key)}%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:${blockPercent(key)}%"></div></div>
+    </article>`).join('');
+}
+function openBlock(key){
+  currentBlock=key;const b=blocks[key];
+  document.getElementById('blockEyebrow').textContent=b.number;
+  document.getElementById('blockTitle').textContent=b.icon+' '+b.title;
+  document.getElementById('blockDescription').textContent=b.description;
+  document.getElementById('blockLessonCount').textContent=b.lessons.length+' aulas';
+  document.getElementById('lessonList').innerHTML=b.lessons.map((l,i)=>`
+    <button class="lesson ${completed.has(l[0])?'done':''}" onclick="openLesson('${l[0]}')">
+      <span class="lesson-num">${completed.has(l[0])?'✓':i+1}</span>
+      <span><strong>${l[1]}</strong><small>${l[2]}</small></span>
+      <span class="lesson-status">${completed.has(l[0])?'Concluída':'Abrir ›'}</span>
+    </button>`).join('');
+  go('blockDetail');
+}
+function findLesson(id){
+  for(const [key,b] of Object.entries(blocks)){
+    const lesson=b.lessons.find(l=>l[0]===id);
+    if(lesson)return {key,block:b,lesson};
+  }
+}
+function openLesson(id){
+  const found=findLesson(id);if(!found)return;
+  currentBlock=found.key;currentLesson=id;
+  const l=found.lesson;
+  document.getElementById('lessonEyebrow').textContent=found.block.number+' • AULA';
+  document.getElementById('lessonTitle').textContent=l[1];
+  document.getElementById('lessonSubtitle').textContent=l[2];
+  document.getElementById('lessonSituation').textContent=l[3];
+  document.getElementById('lessonContent').textContent=l[4];
+  document.getElementById('lessonContent').className='content-box '+(l[5]==='en-US'?'english':'');
+  updateLessonButton();go('lessonDetail');
+}
+function backToBlock(){openBlock(currentBlock)}
+function speakLesson(rate){
+  const f=findLesson(currentLesson);if(f)speakText(f.lesson[4],f.lesson[5],rate);
+}
+function toggleLessonComplete(){
+  if(!currentLesson)return;
+  if(completed.has(currentLesson)){completed.delete(currentLesson);toast('Aula marcada como pendente.')}
+  else{completed.add(currentLesson);toast('Aula concluída.')}
+  localStorage.setItem('coachvoice-completed',JSON.stringify([...completed]));
+  updateLessonButton();updateUI();
+}
+function updateLessonButton(){
+  const b=document.getElementById('completeLessonBtn');
+  if(!b||!currentLesson)return;
+  b.textContent=completed.has(currentLesson)?'✓ Aula concluída — desfazer':'Marcar aula como concluída';
+}
+function showDailyModel(){document.getElementById('dailyModel').classList.remove('hidden');window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})}
+function showDailyAnalysis(){document.getElementById('dailyAnalysis').classList.remove('hidden');window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});toast('Análise demonstrativa pronta.')}
+
+
+
+let micStream=null;
+let mediaRecorder=null;
+let micChunks=[];
+let cameraStream=null;
+
+function setTechStatus(id,text,type){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.textContent=text;
+  el.className='status-pill '+(type||'');
+}
+function checkTechnicalEnvironment(){
+  const secure=window.isSecureContext || location.hostname==='localhost';
+  setTechStatus('secureStatus',secure?'Seguro':'Não seguro',secure?'ok':'warn');
+  document.getElementById('secureResult').textContent=secure
+    ?'O navegador informa que esta página está em um contexto seguro.'
+    :'Este arquivo não está em HTTPS. Áudio pode funcionar, mas microfone e câmera podem ser bloqueados pelo navegador.';
+
+  const speech='speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+  setTechStatus('speechStatus',speech?'Compatível':'Indisponível',speech?'ok':'error');
+  document.getElementById('speechResult').textContent=speech
+    ?'O navegador possui reprodução de voz.'
+    :'O navegador não oferece síntese de voz nesta página.';
+
+  testStorage(false);
+}
+function testSpeech(){
+  if(!('speechSynthesis' in window)){
+    toast('Áudio de voz não disponível neste navegador.');
+    return;
+  }
+  speakText('Teste de áudio do CoachVoice. Fale com calma, clareza e confiança.','pt-BR',.82);
+  toast('Reproduzindo áudio de teste.');
+}
+async function startMicTest(){
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    setTechStatus('micTechStatus','Indisponível','error');
+    document.getElementById('micTechResult').textContent='O navegador não disponibilizou a API de microfone.';
+    return;
+  }
+  try{
+    micStream=await navigator.mediaDevices.getUserMedia({audio:true});
+    micChunks=[];
+    mediaRecorder=new MediaRecorder(micStream);
+    mediaRecorder.ondataavailable=e=>{if(e.data.size>0)micChunks.push(e.data)};
+    mediaRecorder.onstop=()=>{
+      const blob=new Blob(micChunks,{type:mediaRecorder.mimeType||'audio/webm'});
+      const url=URL.createObjectURL(blob);
+      const player=document.getElementById('micPlayback');
+      player.src=url;player.classList.add('show');
+      setTechStatus('micTechStatus','Funcionando','ok');
+      document.getElementById('micTechResult').textContent='Gravação concluída. Use o reprodutor abaixo para ouvir.';
+      micStream.getTracks().forEach(t=>t.stop());micStream=null;
+    };
+    mediaRecorder.start();
+    setTechStatus('micTechStatus','Gravando','warn');
+    document.getElementById('micTechResult').textContent='Microfone ativo. Fale uma frase curta e toque em parar.';
+    document.getElementById('micStartBtn').disabled=true;
+    document.getElementById('micStopBtn').disabled=false;
+    setTimeout(()=>{if(mediaRecorder && mediaRecorder.state==='recording')stopMicTest()},10000);
+  }catch(err){
+    setTechStatus('micTechStatus','Bloqueado','error');
+    document.getElementById('micTechResult').textContent='Não foi possível acessar o microfone: '+friendlyMediaError(err);
+  }
+}
+function stopMicTest(){
+  if(mediaRecorder && mediaRecorder.state==='recording')mediaRecorder.stop();
+  document.getElementById('micStartBtn').disabled=false;
+  document.getElementById('micStopBtn').disabled=true;
+}
+async function startCameraTest(){
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    setTechStatus('cameraTechStatus','Indisponível','error');
+    document.getElementById('cameraTechResult').textContent='O navegador não disponibilizou a API de câmera.';
+    return;
+  }
+  try{
+    cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});
+    const preview=document.getElementById('cameraPreview');
+    preview.srcObject=cameraStream;await preview.play();preview.classList.add('show');
+    setTechStatus('cameraTechStatus','Funcionando','ok');
+    document.getElementById('cameraTechResult').textContent='Câmera ativa somente nesta tela. Nenhum vídeo está sendo enviado.';
+    document.getElementById('cameraStartBtn').disabled=true;
+    document.getElementById('cameraStopBtn').disabled=false;
+  }catch(err){
+    setTechStatus('cameraTechStatus','Bloqueada','error');
+    document.getElementById('cameraTechResult').textContent='Não foi possível acessar a câmera: '+friendlyMediaError(err);
+  }
+}
+function stopCameraTest(){
+  if(cameraStream){cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null}
+  const preview=document.getElementById('cameraPreview');
+  preview.pause();preview.srcObject=null;preview.classList.remove('show');
+  document.getElementById('cameraStartBtn').disabled=false;
+  document.getElementById('cameraStopBtn').disabled=true;
+  setTechStatus('cameraTechStatus','Teste concluído','ok');
+  document.getElementById('cameraTechResult').textContent='Câmera desligada corretamente.';
+}
+function friendlyMediaError(err){
+  if(!err)return 'erro desconhecido.';
+  if(err.name==='NotAllowedError')return 'permissão negada ou página sem HTTPS.';
+  if(err.name==='NotFoundError')return 'dispositivo não encontrado.';
+  if(err.name==='NotReadableError')return 'o dispositivo está sendo usado por outro aplicativo.';
+  return err.message||err.name;
+}
+function testStorage(showToast=true){
+  try{
+    const key='coachvoice-tech-test';
+    localStorage.setItem(key,String(Date.now()));
+    localStorage.removeItem(key);
+    setTechStatus('storageStatus','Funcionando','ok');
+    document.getElementById('storageResult').textContent='O navegador consegue salvar progresso e avaliações neste aparelho.';
+    if(showToast)toast('Armazenamento local funcionando.');
+  }catch(err){
+    setTechStatus('storageStatus','Bloqueado','error');
+    document.getElementById('storageResult').textContent='O navegador bloqueou o armazenamento local.';
+    if(showToast)toast('Armazenamento local bloqueado.');
+  }
+}
+
+let oratorySeconds=30;
+let oratoryTimer=null;
+function selectOratoryTime(btn,seconds){
+  oratorySeconds=seconds;
+  document.querySelectorAll('#oratory [data-seconds]').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');
+  resetOratoryTimer();
+}
+function formatClock(seconds){
+  return '00:'+String(seconds).padStart(2,'0');
+}
+function resetOratoryTimer(){
+  if(oratoryTimer) clearInterval(oratoryTimer);
+  oratoryTimer=null;
+  document.getElementById('oratoryClock').textContent=formatClock(oratorySeconds);
+  document.getElementById('oratoryStage').textContent='Pronto';
+  document.getElementById('oratoryInstruction').textContent='Prepare a postura e respire.';
+  document.getElementById('oratoryTimerBar').style.width='0%';
+  document.getElementById('oratoryStartBtn').textContent='Iniciar treino guiado';
+}
+function startOratoryTimer(){
+  if(oratoryTimer){resetOratoryTimer();return;}
+  let remaining=oratorySeconds;
+  document.getElementById('oratoryStartBtn').textContent='Parar treino';
+  document.getElementById('oratoryStage').textContent='Respire';
+  document.getElementById('oratoryInstruction').textContent='Respire, mantenha os ombros alinhados e comece sem pressa.';
+  oratoryTimer=setInterval(()=>{
+    remaining--;
+    const elapsed=oratorySeconds-remaining;
+    const ratio=elapsed/oratorySeconds;
+    document.getElementById('oratoryClock').textContent=formatClock(Math.max(remaining,0));
+    document.getElementById('oratoryTimerBar').style.width=Math.min(ratio*100,100)+'%';
+    if(ratio<.18){
+      document.getElementById('oratoryStage').textContent='Começo';
+      document.getElementById('oratoryInstruction').textContent='Apresente a resposta direta.';
+    }else if(ratio<.48){
+      document.getElementById('oratoryStage').textContent='Pausa';
+      document.getElementById('oratoryInstruction').textContent='Faça uma pausa e organize a explicação.';
+    }else if(ratio<.82){
+      document.getElementById('oratoryStage').textContent='Explique';
+      document.getElementById('oratoryInstruction').textContent='Desenvolva uma ou duas ideias sem acelerar.';
+    }else{
+      document.getElementById('oratoryStage').textContent='Conclua';
+      document.getElementById('oratoryInstruction').textContent='Feche a mensagem com voz firme.';
+    }
+    if(remaining<=0){
+      clearInterval(oratoryTimer);oratoryTimer=null;
+      document.getElementById('oratoryStage').textContent='Concluído';
+      document.getElementById('oratoryInstruction').textContent='Avalie seu ritmo, suas pausas e sua conclusão.';
+      document.getElementById('oratoryStartBtn').textContent='Repetir treino';
+      toast('Treino de oratória concluído.');
+    }
+  },1000);
+}
+function speakOratory(rate){
+  const clean=document.getElementById('oratoryText').textContent
+    .replaceAll('//','. ').replaceAll('/','; ');
+  speakText(clean,'pt-BR',rate);
+}
+function toggleCheck(btn){
+  const number=btn.dataset.number || btn.querySelector('.lesson-num').textContent;
+  btn.dataset.number=number==='✓' ? (btn.dataset.number||'1') : number;
+  btn.classList.toggle('done');
+  btn.querySelector('.lesson-status').textContent=btn.classList.contains('done')?'Concluído':'Marcar';
+  btn.querySelector('.lesson-num').textContent=btn.classList.contains('done')?'✓':btn.dataset.number;
+}
+
+function updateUI(){
+  const total=allLessons().length,done=totalCompleted(),percent=totalPercent();
+  document.getElementById('homeCompleted').textContent=done+' de '+total+' aulas';
+  document.getElementById('homePercent').textContent=percent+'%';
+  document.getElementById('homeProgressBar').style.width=percent+'%';
+  document.getElementById('homeProgressLabel').textContent=percent+'% concluído';
+  document.getElementById('progressSummary').textContent=done+' aulas concluídas';
+  renderBlocks();renderProgressBlocks();
+}
+function openFeedback(){document.getElementById('feedbackSheet').classList.add('open');document.getElementById('sheetOverlay').classList.add('show')}
+function closeFeedback(){document.getElementById('feedbackSheet').classList.remove('open');document.getElementById('sheetOverlay').classList.remove('show')}
+document.querySelectorAll('[data-feedback]').forEach(btn=>btn.onclick=()=>{
+  document.querySelectorAll('[data-feedback]').forEach(x=>x.classList.remove('selected'));
+  btn.classList.add('selected');selectedFeedback=btn.dataset.feedback;
+});
+function saveFeedback(){
+  const note=document.getElementById('feedbackNote').value.trim();
+  const list=JSON.parse(localStorage.getItem('coachvoice-feedback')||'[]');
+  list.push({page:currentPage,feedback:selectedFeedback||'Sem seleção',note,date:new Date().toLocaleString('pt-BR')});
+  localStorage.setItem('coachvoice-feedback',JSON.stringify(list));
+  document.getElementById('feedbackNote').value='';selectedFeedback='';
+  document.querySelectorAll('[data-feedback]').forEach(x=>x.classList.remove('selected'));
+  closeFeedback();toast('Avaliação salva neste celular.');
+}
+updateUI();
+checkTechnicalEnvironment();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .catch(() => console.log('Service worker não registrado neste ambiente.'));
+  });
+}
+</script>
+
+</body>
+</html>
