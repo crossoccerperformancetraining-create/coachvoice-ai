@@ -1,29 +1,54 @@
-# CoachVoice AI v1.8 — Firebase Login e Progresso
+# CoachVoice AI v1.9 — Coach Mentor com IA
 
-## Novidades
+## Novidade principal
 
-- Tela de conta do treinador.
-- Cadastro por e-mail e senha.
-- Login por e-mail e senha.
-- Login com Google.
-- Progresso salvo no Firestore.
-- Progresso carregado ao entrar em outro aparelho.
-- Modo demonstração quando o Firebase não está configurado.
+A tela Coach Mentor agora chama uma função segura da Vercel em:
 
-## Configuração
+`POST /api/mentor`
 
-1. Crie um projeto no Firebase.
-2. Registre um aplicativo Web.
-3. Ative Authentication:
-   - E-mail/senha
-   - Google
-4. Crie o Firestore.
-5. Copie `firebase-config.example.js` para `firebase-config.js`.
-6. Cole a configuração fornecida pelo Firebase.
-7. Publique as regras de `firestore.rules`.
-8. Envie os arquivos para o GitHub.
+A chave da OpenAI fica na Vercel e nunca aparece no navegador ou no GitHub.
+
+## Configuração na Vercel
+
+1. Abra o projeto CoachVoice na Vercel.
+2. Entre em **Settings → Environment Variables**.
+3. Crie:
+
+```text
+OPENAI_API_KEY = sua chave secreta da API
+```
+
+4. Opcionalmente, crie:
+
+```text
+OPENAI_MODEL = gpt-5-mini
+```
+
+5. Marque Production, Preview e Development.
+6. Salve.
+7. Faça um novo deploy.
+
+## Arquivos novos
+
+- `api/mentor.js`: função segura que consulta a OpenAI.
+- `package.json`: configura o runtime Node.js.
+
+## Teste
+
+Abra o app, entre em **Mentor**, descreva uma situação e toque em
+**Preparar orientação**.
+
+Se a variável ainda não estiver configurada, o aplicativo mantém o modo
+demonstrativo como fallback.
 
 ## Segurança
 
-Não coloque chaves privadas ou credenciais de conta de serviço no navegador.
-O objeto firebaseConfig identifica o projeto, mas a segurança depende das regras do Firebase.
+Nunca coloque `OPENAI_API_KEY` em:
+
+- `index.html`;
+- `firebase-config.js`;
+- arquivos enviados ao GitHub;
+- código executado no navegador.
+
+O `firebaseConfig` é configuração pública do aplicativo Firebase. A chave da
+OpenAI é secreta e deve permanecer apenas no servidor.

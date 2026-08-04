@@ -1,0 +1,9 @@
+{
+  "name": "coachvoice-ai",
+  "private": true,
+  "version": "1.9.0",
+  "description": "CoachVoice AI com Coach Mentor conectado à OpenAI por Vercel Function",
+  "engines": {
+    "node": "22.x"
+  }
+}

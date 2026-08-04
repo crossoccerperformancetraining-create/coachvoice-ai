@@ -807,14 +807,54 @@ function mentorExample(text){
   document.getElementById('mentorSituation').value=text;
   window.scrollTo({top:document.getElementById('mentorSituation').getBoundingClientRect().top+window.scrollY-110,behavior:'smooth'});
 }
-function generateMentorDemo(){
+async function generateMentorDemo(){
   const situation=document.getElementById('mentorSituation').value.trim();
   const audience=document.getElementById('mentorAudience').value;
   const tone=document.getElementById('mentorTone').value;
   const duration=document.getElementById('mentorDuration').value;
   const language=document.getElementById('mentorLanguage').value;
+
   if(!situation){toast('Descreva uma situação primeiro.');return;}
 
+  const resultSection=document.getElementById('mentorResult');
+  const submitButton=document.querySelector('#mentor .mentor-form .primary');
+  const originalLabel=submitButton.textContent;
+  submitButton.disabled=true;
+  submitButton.textContent='Preparando orientação...';
+
+  try{
+    const response=await fetch('/api/mentor',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({situation,audience,tone,duration,language})
+    });
+
+    const payload=await response.json().catch(()=>({}));
+    if(!response.ok){
+      throw new Error(payload.error || 'Não foi possível consultar o Coach Mentor.');
+    }
+
+    document.getElementById('mentorAnalysis').textContent=payload.analysis;
+    document.getElementById('mentorAnswer').textContent=payload.answer;
+    document.getElementById('mentorPauseAnswer').textContent=payload.pauseAnswer;
+    document.getElementById('mentorAvoid').textContent=payload.avoid;
+    document.getElementById('mentorFollowup').textContent=payload.followup;
+    document.getElementById('mentorChatUser').textContent=situation;
+    resultSection.classList.remove('hidden');
+    mentorSpokenText=payload.answer;
+    toast('Orientação personalizada pronta.');
+    window.scrollTo({top:resultSection.offsetTop-90,behavior:'smooth'});
+  }catch(error){
+    console.error(error);
+    generateMentorFallback({situation,audience,tone,duration,language});
+    toast('IA indisponível. Mostrando orientação demonstrativa.');
+  }finally{
+    submitButton.disabled=false;
+    submitButton.textContent=originalLabel;
+  }
+}
+
+function generateMentorFallback({situation,audience,tone,duration,language}){
   const lower=situation.toLowerCase();
   let analysis='A situação exige uma mensagem direta, equilibrada e orientada para o próximo passo.';
   let answer='Entendemos a responsabilidade deste momento. Identificamos os pontos que precisam ser corrigidos e estamos trabalhando com clareza e compromisso. Nossa resposta precisa aparecer nas próximas ações.';
@@ -852,17 +892,16 @@ function generateMentorDemo(){
   if(duration==='15 segundos') answer=answer.split('.').slice(0,2).join('.')+'.';
   if(duration==='60 segundos') answer+=' O grupo está comprometido com o processo, e nossa obrigação é transformar esse trabalho em uma atuação mais consistente.';
 
-  const pauses=answer.replace(/\. /g,'. / ').replace(/\n\n/g,' // ');
   document.getElementById('mentorAnalysis').textContent=analysis+' Público: '+audience+'. Tom: '+tone+'.';
   document.getElementById('mentorAnswer').textContent=answer;
-  document.getElementById('mentorPauseAnswer').textContent=pauses;
+  document.getElementById('mentorPauseAnswer').textContent=answer.replace(/\. /g,'. / ').replace(/\n\n/g,' // ');
   document.getElementById('mentorAvoid').textContent=avoid;
   document.getElementById('mentorFollowup').textContent=follow;
   document.getElementById('mentorChatUser').textContent=situation;
   document.getElementById('mentorResult').classList.remove('hidden');
   mentorSpokenText=answer;
-  window.scrollTo({top:document.getElementById('mentorResult').offsetTop-90,behavior:'smooth'});
 }
+
 function speakMentor(){
   if(!mentorSpokenText){toast('Gere uma orientação primeiro.');return;}
   const language=document.getElementById('mentorLanguage').value==='Inglês'?'en-US':'pt-BR';
