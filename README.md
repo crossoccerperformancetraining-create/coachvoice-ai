@@ -1,52 +1,39 @@
-# CoachVoice AI v2.0 — modo individual
+# CoachVoice AI v2.1 — microfone nas aulas
 
-Esta versão foi reorganizada para os testes iniciais de uma única pessoa, sem
-login e sem Firebase.
+## Correções
 
-## Novidades
+- o botão “Responder pelo microfone” das aulas agora solicita o microfone;
+- a fala é convertida em texto;
+- o treinador pode corrigir a transcrição;
+- a resposta recebe uma comparação textual inicial;
+- é possível ouvir a própria resposta;
+- as práticas ficam registradas localmente;
+- o `sw.js` não procura mais o arquivo Firebase removido;
+- o novo service worker assume o controle e apaga caches antigos.
 
-- navegação principal com Início, Mentor, Treinar, Biblioteca e Evolução;
-- página de inglês interativa:
-  - frase em inglês;
-  - áudio lento e natural;
-  - significado em português;
-  - pergunta “o que você diria?”;
-  - ditado por voz quando disponível;
-  - resposta recomendada;
-  - feedback textual demonstrativo;
-- preferência global de voz feminina, masculina ou automática;
-- escolha entre inglês americano e britânico;
-- níveis iniciante, intermediário e avançado;
-- biblioteca de situações profissionais;
-- modo Dia de Jogo: pré-jogo, intervalo e pós-jogo;
-- Coach Mentor integrado ao treino de oratória;
-- histórico local de sessões do Mentor e exercícios de inglês;
-- nome, progresso e preferências salvos no próprio aparelho.
+## Limite desta primeira análise
 
-## Dados
+A nota da aula é uma comparação da transcrição. Ela ainda não mede diretamente:
 
-O aplicativo usa `localStorage`. Nenhuma conta é necessária.
+- pronúncia;
+- qualidade da voz;
+- velocidade real;
+- duração das pausas;
+- clareza acústica.
 
-O Firebase será retomado somente quando houver necessidade de:
-
-- mais usuários;
-- sincronização entre dispositivos;
-- recuperação de progresso;
-- armazenamento de áudio e vídeo.
-
-## IA do Coach Mentor
-
-A rota opcional `api/mentor.js` continua incluída. Quando `OPENAI_API_KEY`
-estiver configurada na Vercel, o Mentor usa IA real. Sem a variável, o
-aplicativo apresenta a orientação demonstrativa local.
-
-Nunca coloque a chave da API dentro do `index.html` ou do GitHub.
+Essas medições exigirão gravação de áudio e análise específica na próxima
+etapa.
 
 ## Publicação
 
-Envie os arquivos para a raiz do repositório do CoachVoice. A Vercel fará um
-novo deploy automaticamente.
+Substitua todos os arquivos do repositório pelos arquivos deste pacote.
 
 Commit sugerido:
 
-`Criar CoachVoice v2.0 em modo individual`
+`Ativar microfone nas aulas e corrigir cache`
+
+Depois do deploy, abra:
+
+`https://coachvoice-ai.vercel.app/?v=21`
+
+No computador, use `Ctrl + F5` uma vez.

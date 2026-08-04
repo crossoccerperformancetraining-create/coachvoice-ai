@@ -1,5 +1,5 @@
 {
-  "name": "CoachVoice AI v2.0",
+  "name": "CoachVoice AI v2.1",
   "short_name": "CoachVoice",
   "start_url": "/",
   "scope": "/",
@@ -21,5 +21,5 @@
       "purpose": "any maskable"
     }
   ],
-  "description": "Treino individual de comunicação, inglês e liderança para treinadores de futebol."
+  "description": "Treino individual com microfone, inglês e comunicação para treinadores de futebol."
 }

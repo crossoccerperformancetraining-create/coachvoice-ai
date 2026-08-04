@@ -1,8 +1,8 @@
 {
   "name": "coachvoice-ai",
   "private": true,
-  "version": "2.0.0",
-  "description": "CoachVoice AI v2.0 em modo individual, com inglês interativo, biblioteca, dia de jogo e preferências de voz.",
+  "version": "2.1.0",
+  "description": "CoachVoice AI v2.1 com microfone funcional nas aulas e cache de atualização corrigido.",
   "engines": {
     "node": "22.x"
   }

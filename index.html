@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#071225">
-<meta name="application-name" content="CoachVoice AI v2.0">
+<meta name="application-name" content="CoachVoice AI v2.1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="CoachVoice">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<title>CoachVoice AI v2.0 — Treino individual</title>
+<title>CoachVoice AI v2.1 — Treino individual</title>
 <style>
 :root{
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -105,6 +105,18 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 .day-check.done{background:#e9f7e7;border-color:#70bd7b;color:#247533}
 .local-badge{display:inline-block;background:#fff7e8;color:#9a5a00;border-radius:999px;padding:7px 10px;font-size:.7rem;font-weight:850}
 .history-list{display:grid;gap:9px}.history-item{background:#f8fafc;border-radius:13px;padding:11px}.history-item strong,.history-item small{display:block}.history-item small{color:var(--muted);margin-top:4px}
+
+.lesson-mic-status{margin:10px 0 0;padding:10px 12px;border-radius:12px;background:#f8fafc;color:#475467;font-size:.78rem;line-height:1.45}
+.lesson-mic-status.listening{background:#fff4e5;color:#9a5a00;border:1px solid #f2c879}
+.lesson-mic-status.ready{background:#eaf7e8;color:#247533;border:1px solid #9bd3a3}
+.lesson-feedback{margin-top:12px;background:#f8fafc;border:1px solid #e4e7ec;border-radius:15px;padding:14px;line-height:1.55}
+.lesson-feedback h3{margin:0 0 8px}
+.lesson-feedback-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
+.lesson-feedback-grid div{background:#fff;border:1px solid #e4e7ec;border-radius:12px;padding:10px;text-align:center}
+.lesson-feedback-grid strong,.lesson-feedback-grid small{display:block}
+.lesson-feedback-grid strong{font-size:1.15rem;color:#0f2749}
+.lesson-feedback-grid small{font-size:.68rem;color:#667085;margin-top:3px}
+
 @media(min-width:760px){.hub-grid{grid-template-columns:1fr 1fr}.library-grid{grid-template-columns:1fr 1fr}.day-grid{grid-template-columns:repeat(3,1fr)}}
 
 @media(min-width:760px){.quick-grid{grid-template-columns:repeat(4,1fr)}.block-list{grid-template-columns:1fr 1fr}.stats{grid-template-columns:repeat(4,1fr)}}
@@ -130,7 +142,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <button class="drawer-link" data-page="progress" onclick="go('progress')">▥ Evolução</button>
     <button class="drawer-link" data-page="profile" onclick="go('profile')">◉ Preferências</button>
   </nav>
-  <div class="drawer-note">CoachVoice AI v2.0 — modo individual. Progresso, preferências e histórico ficam salvos somente neste aparelho.</div>
+  <div class="drawer-note">CoachVoice AI v2.1 — modo individual. Progresso, preferências e histórico ficam salvos somente neste aparelho.</div>
 </aside>
 <div id="overlay" class="overlay" onclick="closeDrawer()"></div>
 
@@ -235,9 +247,18 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   </article>
 
   <article class="card">
-    <span class="label">Prática</span>
-    <button class="primary" onclick="futureFeature('Microfone')">🎙 Responder pelo microfone</button>
-    <br><br>
+    <span class="label">Prática com microfone</span>
+    <p class="intro">Fale sua própria resposta. O navegador solicitará acesso ao microfone e transformará sua fala em texto.</p>
+    <button id="lessonMicBtn" class="primary" onclick="startLessonDictation()">🎙 Falar pelo microfone</button>
+    <div id="lessonMicStatus" class="lesson-mic-status">Microfone pronto. Toque no botão e comece a falar.</div>
+    <br>
+    <textarea id="lessonTranscript" class="text-input" placeholder="Sua resposta aparecerá aqui. Também é possível digitar ou corrigir o texto."></textarea>
+    <div class="mentor-actions" style="margin-top:10px">
+      <button class="secondary" onclick="listenLessonResponse()">🔊 Ouvir minha resposta</button>
+      <button class="primary" onclick="evaluateLessonResponse()">Analisar resposta</button>
+    </div>
+    <div id="lessonFeedback" class="lesson-feedback hidden"></div>
+    <br>
     <button id="completeLessonBtn" class="outline" onclick="toggleLessonComplete()">Marcar aula como concluída</button>
   </article>
 </section>
@@ -774,6 +795,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <div class="stats">
       <div class="stat-card"><small>Sessões do Mentor</small><strong id="mentorHistoryCount">0</strong></div>
       <div class="stat-card"><small>Exercícios de inglês</small><strong id="englishHistoryCount">0</strong></div>
+      <div class="stat-card"><small>Práticas com microfone</small><strong id="lessonHistoryCount">0</strong></div>
     </div>
     <div id="recentHistory" class="history-list" style="margin-top:12px"></div>
     <br>
@@ -1227,16 +1249,20 @@ function saveCurrentMentorSession(){
 function updateLocalHistory(){
   const mentorHistory=JSON.parse(localStorage.getItem('coachvoice-mentor-history')||'[]');
   const englishHistory=JSON.parse(localStorage.getItem('coachvoice-english-history')||'[]');
+  const lessonHistory=JSON.parse(localStorage.getItem('coachvoice-lesson-history')||'[]');
   const mentorCount=document.getElementById('mentorHistoryCount');
   const englishCount=document.getElementById('englishHistoryCount');
+  const lessonCount=document.getElementById('lessonHistoryCount');
   if(mentorCount)mentorCount.textContent=mentorHistory.length;
   if(englishCount)englishCount.textContent=englishHistory.length;
+  if(lessonCount)lessonCount.textContent=lessonHistory.length;
   const recent=document.getElementById('recentHistory');
   if(recent){
     const combined=[
       ...mentorHistory.slice(0,3).map(x=>({type:'Mentor',date:x.date,title:x.situation})),
-      ...englishHistory.slice(0,3).map(x=>({type:'Inglês',date:x.date,title:x.scenario+' — '+x.score+'/100'}))
-    ].slice(0,5);
+      ...englishHistory.slice(0,3).map(x=>({type:'Inglês',date:x.date,title:x.scenario+' — '+x.score+'/100'})),
+      ...lessonHistory.slice(0,3).map(x=>({type:'Aula',date:x.date,title:x.lesson+' — '+x.score+'/100'}))
+    ].sort((a,b)=>String(b.date).localeCompare(String(a.date))).slice(0,5);
     recent.innerHTML=combined.length?combined.map(x=>`<div class="history-item"><strong>${x.type}: ${x.title}</strong><small>${x.date}</small></div>`).join(''):'<p class="intro">Ainda não há sessões salvas.</p>';
   }
 }
@@ -1255,6 +1281,7 @@ function loadLocalProfile(){
 function clearLocalHistory(){
   localStorage.removeItem('coachvoice-mentor-history');
   localStorage.removeItem('coachvoice-english-history');
+  localStorage.removeItem('coachvoice-lesson-history');
   updateLocalHistory();
   toast('Histórico de testes apagado.');
 }
@@ -1314,12 +1341,151 @@ function openLesson(id){
   document.getElementById('lessonSituation').textContent=l[3];
   document.getElementById('lessonContent').textContent=l[4];
   document.getElementById('lessonContent').className='content-box '+(l[5]==='en-US'?'english':'');
+  const transcript=document.getElementById('lessonTranscript');
+  const feedback=document.getElementById('lessonFeedback');
+  const status=document.getElementById('lessonMicStatus');
+  if(transcript)transcript.value='';
+  if(feedback){feedback.innerHTML='';feedback.classList.add('hidden');}
+  if(status){status.className='lesson-mic-status';status.textContent='Microfone pronto. Toque no botão e comece a falar.';}
   updateLessonButton();go('lessonDetail');
 }
 function backToBlock(){openBlock(currentBlock)}
 function speakLesson(rate){
   const f=findLesson(currentLesson);if(f)speakText(f.lesson[4],f.lesson[5],rate);
 }
+
+function lessonRecognitionLanguage(){
+  const found=findLesson(currentLesson);
+  if(!found)return 'pt-BR';
+  return found.lesson[5]==='en-US'?englishAccent:found.lesson[5];
+}
+function setLessonMicStatus(message,state=''){
+  const status=document.getElementById('lessonMicStatus');
+  if(!status)return;
+  status.textContent=message;
+  status.className='lesson-mic-status'+(state?' '+state:'');
+}
+function startLessonDictation(){
+  const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!Recognition){
+    setLessonMicStatus('Este navegador não oferece transcrição por voz. No computador, teste pelo Google Chrome.','');
+    toast('Transcrição por voz indisponível.');
+    return;
+  }
+  if(!currentLesson){
+    toast('Abra uma aula primeiro.');
+    return;
+  }
+
+  const recognition=new Recognition();
+  recognition.lang=lessonRecognitionLanguage();
+  recognition.interimResults=true;
+  recognition.continuous=false;
+  recognition.maxAlternatives=1;
+
+  let finalText='';
+  const button=document.getElementById('lessonMicBtn');
+  recognition.onstart=()=>{
+    if(button){button.disabled=true;button.textContent='🔴 Ouvindo...';}
+    setLessonMicStatus('Microfone ativo. Fale sua resposta com calma e conclua a ideia.','listening');
+  };
+  recognition.onresult=event=>{
+    let interim='';
+    for(let i=event.resultIndex;i<event.results.length;i++){
+      const part=event.results[i][0].transcript;
+      if(event.results[i].isFinal)finalText+=(finalText?' ':'')+part;
+      else interim+=part;
+    }
+    document.getElementById('lessonTranscript').value=(finalText+(interim?' '+interim:'')).trim();
+  };
+  recognition.onerror=event=>{
+    const messages={
+      'not-allowed':'O acesso ao microfone foi bloqueado. Permita o microfone nas configurações do navegador.',
+      'audio-capture':'Nenhum microfone foi encontrado neste aparelho.',
+      'no-speech':'Nenhuma fala foi detectada. Tente novamente falando mais perto do microfone.',
+      'network':'O serviço de reconhecimento de voz não respondeu. Verifique a conexão.'
+    };
+    setLessonMicStatus(messages[event.error]||'Não foi possível reconhecer a fala. Tente novamente.','');
+  };
+  recognition.onend=()=>{
+    if(button){button.disabled=false;button.textContent='🎙 Falar novamente';}
+    const value=document.getElementById('lessonTranscript').value.trim();
+    if(value)setLessonMicStatus('Resposta transcrita. Você pode corrigir o texto e tocar em “Analisar resposta”.','ready');
+  };
+
+  try{recognition.start();}
+  catch(error){
+    console.error(error);
+    setLessonMicStatus('Não foi possível iniciar o microfone. Atualize a página e tente novamente.','');
+  }
+}
+function listenLessonResponse(){
+  const response=document.getElementById('lessonTranscript').value.trim();
+  if(!response){toast('Fale ou escreva uma resposta primeiro.');return;}
+  speakText(response,lessonRecognitionLanguage(),.88);
+}
+function normalizeLessonText(value){
+  return String(value||'')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9'\s]/g,' ')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+function evaluateLessonResponse(){
+  const found=findLesson(currentLesson);
+  const response=document.getElementById('lessonTranscript').value.trim();
+  if(!found||!response){toast('Fale ou escreva uma resposta primeiro.');return;}
+
+  const model=found.lesson[4];
+  const responseWords=normalizeLessonText(response).split(' ').filter(w=>w.length>2);
+  const modelWords=[...new Set(normalizeLessonText(model).split(' ').filter(w=>w.length>2))];
+  const overlap=modelWords.filter(word=>responseWords.includes(word)).length;
+  const contentScore=Math.min(100,Math.round((overlap/Math.max(1,Math.min(modelWords.length,10)))*100));
+  const idealWords=Math.max(8,normalizeLessonText(model).split(' ').length);
+  const lengthRatio=Math.min(responseWords.length,idealWords)/Math.max(responseWords.length,idealWords);
+  const objectiveScore=Math.round(lengthRatio*100);
+  const hasClosing=/\b(vamos|precisamos|agora|next|need|will|must|together|juntos)\b/i.test(normalizeLessonText(response));
+  const closingScore=hasClosing?100:55;
+  const estimated=Math.round(contentScore*.5+objectiveScore*.3+closingScore*.2);
+
+  let message;
+  if(estimated>=78){
+    message='A resposta está próxima do objetivo da aula: apresenta conteúdo relevante, extensão controlada e uma direção clara.';
+  }else if(estimated>=52){
+    message='A ideia principal está presente. Tente reduzir explicações soltas e terminar com uma ação ou próximo passo.';
+  }else{
+    message='Comece com uma frase direta, acrescente uma orientação concreta e conclua dizendo o que deve acontecer agora.';
+  }
+
+  const feedback=document.getElementById('lessonFeedback');
+  feedback.innerHTML=`
+    <h3>Comparação textual: ${estimated}/100</h3>
+    <p>${message}</p>
+    <div class="lesson-feedback-grid">
+      <div><strong>${contentScore}</strong><small>Palavras da situação</small></div>
+      <div><strong>${objectiveScore}</strong><small>Extensão e objetividade</small></div>
+      <div><strong>${closingScore}</strong><small>Direção no fechamento</small></div>
+      <div><strong>${responseWords.length}</strong><small>Palavras faladas</small></div>
+    </div>
+    <p class="voice-note">Esta primeira análise compara apenas a transcrição. Ritmo, pausas, pronúncia e clareza do áudio serão adicionados na etapa de análise de voz.</p>
+    <button class="outline" style="margin-top:12px" onclick="speakLesson(.82)">Ouvir novamente a resposta-modelo</button>`;
+  feedback.classList.remove('hidden');
+
+  const history=JSON.parse(localStorage.getItem('coachvoice-lesson-history')||'[]');
+  history.unshift({
+    date:new Date().toLocaleString('pt-BR'),
+    lesson:found.lesson[1],
+    response,
+    score:estimated
+  });
+  localStorage.setItem('coachvoice-lesson-history',JSON.stringify(history.slice(0,30)));
+  toast('Comparação da resposta concluída.');
+  feedback.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+
 function toggleLessonComplete(){
   if(!currentLesson)return;
   if(completed.has(currentLesson)){completed.delete(currentLesson);toast('Aula marcada como pendente.')}
