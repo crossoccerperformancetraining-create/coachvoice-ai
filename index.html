@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#071225">
-<meta name="application-name" content="CoachVoice AI v2.1">
+<meta name="application-name" content="CoachVoice AI v2.2">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="CoachVoice">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<title>CoachVoice AI v2.1 — Treino individual</title>
+<title>CoachVoice AI v2.2 — Treino individual</title>
 <style>
 :root{
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -117,6 +117,42 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 .lesson-feedback-grid strong{font-size:1.15rem;color:#0f2749}
 .lesson-feedback-grid small{font-size:.68rem;color:#667085;margin-top:3px}
 
+
+.beginner-progress{display:flex;align-items:center;gap:10px;margin:12px 0}
+.beginner-progress-track{flex:1;height:10px;border-radius:999px;background:#e4e7ec;overflow:hidden}
+.beginner-progress-track i{display:block;height:100%;border-radius:999px;background:#319444;transition:width .25s ease}
+.beginner-step{background:#fff;border:1px solid #e4e7ec;border-radius:18px;padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
+.beginner-step-number{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#0f2749;color:#fff;font-weight:900;margin-right:7px}
+.vocab-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.vocab-card{border:1px solid #d8dee8;border-radius:15px;padding:12px;background:#f8fafc;text-align:left}
+.vocab-card strong{display:block;font-size:1.1rem;color:#0f2749}
+.vocab-card small{display:block;color:#667085;margin-top:3px}
+.vocab-card .pronounce{color:#247533;font-weight:850;margin-top:6px}
+.beginner-phrase{font-size:1.65rem;line-height:1.4;font-weight:900;color:#0f2749;margin:8px 0}
+.beginner-translation{font-size:1rem;color:#475467;margin:0 0 10px}
+.chunk-row,.builder-bank,.builder-answer,.word-result{display:flex;flex-wrap:wrap;gap:8px}
+.chunk-btn,.builder-token{border:1px solid #cfd7e3;border-radius:12px;background:#fff;padding:10px 13px;font-weight:850;color:#0f2749}
+.builder-token.used{opacity:.35;pointer-events:none}
+.builder-answer{min-height:52px;padding:10px;border:2px dashed #cbd5e1;border-radius:14px;background:#f8fafc;margin-bottom:10px}
+.builder-answer:empty:before{content:"Toque nas palavras na ordem correta";color:#98a2b3;font-size:.8rem}
+.word-result span{padding:9px 11px;border-radius:11px;font-weight:900;border:1px solid transparent}
+.word-result .correct{background:#e9f7e7;color:#1f7a30;border-color:#78c684}
+.word-result .wrong{background:#fff0f0;color:#b42318;border-color:#f0a19b}
+.word-result .extra{background:#f2f4f7;color:#475467;border-color:#d0d5dd}
+.beginner-status{padding:12px;border-radius:13px;background:#f8fafc;border:1px solid #e4e7ec;line-height:1.5}
+.beginner-status.listening{background:#fff4e5;border-color:#f2c879;color:#9a5a00}
+.beginner-status.success{background:#e9f7e7;border-color:#78c684;color:#247533}
+.beginner-status.retry{background:#fff7ed;border-color:#f6bd73;color:#9a5a00}
+.human-feedback{background:linear-gradient(145deg,#edf8ec,#f8fff7);border-left:4px solid #319444;border-radius:14px;padding:14px;line-height:1.55}
+.ai-feedback{background:#eef4ff;border:1px solid #c7d7f4;border-radius:14px;padding:14px;line-height:1.55}
+.beginner-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.mastery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.mastery-grid div{background:#f8fafc;border-radius:12px;padding:10px;text-align:center}
+.mastery-grid strong,.mastery-grid small{display:block}
+.mastery-grid strong{font-size:1.15rem;color:#0f2749}
+.mastery-grid small{font-size:.67rem;color:#667085;margin-top:3px}
+@media(min-width:760px){.vocab-grid{grid-template-columns:repeat(3,1fr)}}
+
 @media(min-width:760px){.hub-grid{grid-template-columns:1fr 1fr}.library-grid{grid-template-columns:1fr 1fr}.day-grid{grid-template-columns:repeat(3,1fr)}}
 
 @media(min-width:760px){.quick-grid{grid-template-columns:repeat(4,1fr)}.block-list{grid-template-columns:1fr 1fr}.stats{grid-template-columns:repeat(4,1fr)}}
@@ -142,7 +178,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <button class="drawer-link" data-page="progress" onclick="go('progress')">▥ Evolução</button>
     <button class="drawer-link" data-page="profile" onclick="go('profile')">◉ Preferências</button>
   </nav>
-  <div class="drawer-note">CoachVoice AI v2.1 — modo individual. Progresso, preferências e histórico ficam salvos somente neste aparelho.</div>
+  <div class="drawer-note">CoachVoice AI v2.2 — modo individual. Progresso, preferências e histórico ficam salvos somente neste aparelho.</div>
 </aside>
 <div id="overlay" class="overlay" onclick="closeDrawer()"></div>
 
@@ -393,20 +429,20 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
 <section id="english" class="page">
   <div class="hero">
-    <span class="eyebrow">INGLÊS PARA TREINADORES</span>
-    <h2>Ouça a situação, entenda a frase e responda como treinador.</h2>
-    <p>O exercício combina compreensão, vocabulário do futebol e construção de uma resposta própria.</p>
+    <span class="eyebrow">INGLÊS DO ZERO PARA TREINADORES</span>
+    <h2>Aprenda uma frase por vez, sem precisar falar inglês fluentemente.</h2>
+    <p>Você ouve, entende, monta a frase, repete por partes e recebe uma correção visual simples.</p>
   </div>
 
   <article class="card">
-    <span class="label">Configuração do exercício</span>
+    <span class="label">Seu modo de aprendizagem</span>
     <div class="form-grid">
       <div>
         <label class="label" for="englishLevel">Nível</label>
         <select id="englishLevel" class="select-field" onchange="setEnglishLevel(this.value)">
-          <option value="basic">Iniciante</option>
-          <option value="intermediate">Intermediário</option>
-          <option value="advanced">Avançado</option>
+          <option value="basic">Começando do zero</option>
+          <option value="intermediate">Já conheço algumas frases</option>
+          <option value="advanced">Consigo responder sozinho</option>
         </select>
       </div>
       <div>
@@ -424,43 +460,73 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     </div>
   </article>
 
-  <article class="phrase-box">
-    <small id="englishScenario">Situação</small>
-    <h2 id="englishPhrase">Press higher and close the central spaces.</h2>
-    <div class="audio-row">
-      <button class="secondary" onclick="playEnglish(.68)">🔊 Ouvir devagar</button>
-      <button class="secondary" onclick="playEnglish(.94)">▶ Ouvir natural</button>
-    </div>
-  </article>
-
-  <article class="card">
-    <span class="label">O que significa?</span>
-    <button id="englishMeaningBtn" class="outline" onclick="toggleEnglishMeaning()">Mostrar em português</button>
-    <div id="englishMeaning" class="translation-box hidden" style="margin-top:12px"></div>
-  </article>
-
-  <article class="card">
-    <span class="label">O que você diria?</span>
-    <p id="englishPrompt" class="intro"></p>
-    <textarea id="englishResponse" class="text-input" placeholder="Escreva ou dite sua resposta em inglês..."></textarea>
-    <div class="mentor-actions" style="margin-top:10px">
-      <button class="secondary" onclick="startEnglishDictation()">🎙 Ditar resposta</button>
-      <button class="primary" onclick="evaluateEnglishResponse()">Analisar resposta</button>
-    </div>
-  </article>
-
-  <article id="englishFeedbackCard" class="card hidden">
-    <span class="label">Feedback do exercício</span>
-    <div id="englishFeedback" class="response-box"></div>
-    <br>
-    <button class="outline" onclick="showEnglishModel()">Ver resposta recomendada</button>
-    <div id="englishModel" class="translation-box hidden" style="margin-top:12px"></div>
-  </article>
-
-  <div class="mentor-actions">
-    <button class="secondary" onclick="previousEnglishPhrase()">← Frase anterior</button>
-    <button class="primary" onclick="nextEnglishPhrase()">Próxima frase →</button>
+  <div class="beginner-progress">
+    <strong id="beginnerProgressText">Lição 1 de 8</strong>
+    <div class="beginner-progress-track"><i id="beginnerProgressBar" style="width:12.5%"></i></div>
   </div>
+
+  <article class="beginner-step">
+    <h3><span class="beginner-step-number">1</span>Conheça as palavras</h3>
+    <p class="intro">Toque em cada palavra para ouvir. A escrita aproximada ajuda no primeiro contato, mas não substitui o áudio.</p>
+    <div id="beginnerVocabulary" class="vocab-grid"></div>
+  </article>
+
+  <article class="beginner-step">
+    <h3><span class="beginner-step-number">2</span>Entenda a frase</h3>
+    <span id="beginnerScenario" class="mini-tag">Comando de treino</span>
+    <div id="beginnerPhrase" class="beginner-phrase">Pass the ball.</div>
+    <p id="beginnerMeaning" class="beginner-translation">Passe a bola.</p>
+    <p><strong>Ajuda de pronúncia:</strong> <span id="beginnerPronunciation">páss dhâ ból</span></p>
+    <div class="beginner-actions">
+      <button class="secondary" onclick="speakBeginnerPhrase(.62)">🔊 Ouvir devagar</button>
+      <button class="secondary" onclick="speakBeginnerPhrase(.9)">▶ Ouvir natural</button>
+    </div>
+    <br>
+    <div id="beginnerChunks" class="chunk-row"></div>
+  </article>
+
+  <article class="beginner-step">
+    <h3><span class="beginner-step-number">3</span>Monte a frase</h3>
+    <p class="intro">Toque nas palavras na ordem correta. Errar faz parte do treino.</p>
+    <div id="builderAnswer" class="builder-answer"></div>
+    <div id="builderBank" class="builder-bank"></div>
+    <div class="beginner-actions" style="margin-top:10px">
+      <button class="outline" onclick="resetSentenceBuilder()">Limpar</button>
+      <button class="primary" onclick="checkSentenceBuilder()">Conferir ordem</button>
+    </div>
+    <div id="builderFeedback" class="beginner-status hidden" style="margin-top:10px"></div>
+  </article>
+
+  <article class="beginner-step">
+    <h3><span class="beginner-step-number">4</span>Ouça e repita</h3>
+    <p class="intro">O reconhecimento do navegador transforma sua fala em texto. Ele ajuda no treino, mas pode cometer erros.</p>
+    <button id="beginnerMicBtn" class="primary" onclick="startBeginnerRepeat()">🎙 Ouvir e repetir</button>
+    <div id="beginnerMicStatus" class="beginner-status" style="margin-top:10px">Toque no botão. Ouça a frase e repita com calma.</div>
+    <div id="beginnerTranscriptBox" class="hidden" style="margin-top:12px">
+      <span class="label">Palavras reconhecidas</span>
+      <div id="beginnerWordResult" class="word-result"></div>
+      <p><strong>O navegador entendeu:</strong> <span id="beginnerTranscript"></span></p>
+    </div>
+  </article>
+
+  <article id="beginnerFeedbackCard" class="beginner-step hidden">
+    <h3><span class="beginner-step-number">5</span>Feedback humano</h3>
+    <div id="beginnerHumanFeedback" class="human-feedback"></div>
+    <div id="beginnerMastery" class="mastery-grid"></div>
+    <div class="beginner-actions" style="margin-top:12px">
+      <button class="secondary" onclick="retryBeginnerPhrase()">🔁 Tentar novamente</button>
+      <button class="primary" onclick="nextBeginnerLesson()">Próxima lição →</button>
+    </div>
+    <br>
+    <button class="outline" onclick="askEnglishAI()">✨ Pedir explicação personalizada à IA</button>
+    <div id="beginnerAIFeedback" class="ai-feedback hidden" style="margin-top:10px"></div>
+  </article>
+
+  <article class="card">
+    <span class="label">Sua trilha inicial</span>
+    <p class="intro">Primeiro você aprende palavras e comandos curtos. Só depois passa para entrevistas e respostas completas.</p>
+    <div id="beginnerLessonMap" class="history-list"></div>
+  </article>
 </section>
 
 <section id="oratory" class="page">
@@ -990,161 +1056,456 @@ function setEnglishAccent(value){
 function setEnglishLevel(value){
   englishLevel=value;
   localStorage.setItem('coachvoice-english-level',value);
-  renderEnglishPhrase();
+  renderBeginnerLesson();
 }
 
 
-const englishPhrases=[
+const beginnerLessons=[
   {
-    levels:['basic','intermediate','advanced'],
-    scenario:'Treino — pressão defensiva',
-    phrase:'Press higher and close the central spaces.',
-    meaning:'Pressionem mais alto e fechem os espaços centrais.',
-    prompt:'Um auxiliar pergunta como a equipe deve pressionar. Responda em inglês com uma orientação complementar.',
-    model:'We need to stay compact and force them to play wide.',
-    keywords:['compact','wide','press']
+    title:'Passe a bola',
+    scenario:'Treino — comando básico',
+    phrase:'Pass the ball.',
+    meaning:'Passe a bola.',
+    pronunciation:'páss dhâ ból',
+    words:[
+      {en:'pass',pt:'passar / passe',hint:'páss'},
+      {en:'the',pt:'o / a',hint:'dhâ'},
+      {en:'ball',pt:'bola',hint:'ból'}
+    ],
+    chunks:['Pass','the ball']
   },
   {
-    levels:['basic','intermediate','advanced'],
-    scenario:'Treino — posse de bola',
-    phrase:'Keep possession and move the ball faster.',
-    meaning:'Mantenham a posse e movimentem a bola mais rápido.',
-    prompt:'Diga em inglês por que a circulação rápida é importante.',
-    model:'Quick circulation will help us create space and find the free player.',
-    keywords:['quick','space','player']
+    title:'Jogue aberto',
+    scenario:'Treino — amplitude',
+    phrase:'Play wide.',
+    meaning:'Jogue aberto.',
+    pronunciation:'plêi uáid',
+    words:[
+      {en:'play',pt:'jogar / jogue',hint:'plêi'},
+      {en:'wide',pt:'aberto / pelos lados',hint:'uáid'}
+    ],
+    chunks:['Play','wide']
   },
   {
-    levels:['basic','intermediate','advanced'],
-    scenario:'Intervalo — controle emocional',
-    phrase:'Stay calm. We are still in the game.',
-    meaning:'Mantenham a calma. Nós ainda estamos no jogo.',
-    prompt:'Complete a mensagem de intervalo em inglês.',
-    model:'Stay organized, trust the plan, and take the next chance.',
-    keywords:['organized','plan','chance']
+    title:'Pressione mais alto',
+    scenario:'Treino — pressão',
+    phrase:'Press higher.',
+    meaning:'Pressione mais alto.',
+    pronunciation:'préss ráier',
+    words:[
+      {en:'press',pt:'pressionar',hint:'préss'},
+      {en:'higher',pt:'mais alto',hint:'ráier'}
+    ],
+    chunks:['Press','higher']
   },
   {
-    levels:['intermediate','advanced'],
-    scenario:'Entrevista — vitória',
-    phrase:'What made the difference in today’s victory?',
-    meaning:'O que fez a diferença na vitória de hoje?',
-    prompt:'Responda à pergunta do jornalista em inglês.',
-    model:'Our organization and intensity made the difference. We controlled the key moments.',
-    keywords:['organization','intensity','moments']
+    title:'Recupere a bola',
+    scenario:'Treino — reação à perda',
+    phrase:'Recover the ball.',
+    meaning:'Recupere a bola.',
+    pronunciation:'ricâver dhâ ból',
+    words:[
+      {en:'recover',pt:'recuperar',hint:'ricâver'},
+      {en:'the',pt:'o / a',hint:'dhâ'},
+      {en:'ball',pt:'bola',hint:'ból'}
+    ],
+    chunks:['Recover','the ball']
   },
   {
-    levels:['intermediate','advanced'],
-    scenario:'Conversa individual — jogador reserva',
-    phrase:'I need you to be ready when your opportunity comes.',
-    meaning:'Preciso que você esteja pronto quando sua oportunidade chegar.',
-    prompt:'Acrescente uma orientação profissional ao jogador.',
-    model:'Keep working with intensity and focus on the details we discussed.',
-    keywords:['working','intensity','details']
+    title:'Chute a bola',
+    scenario:'Treino — finalização',
+    phrase:'Kick the ball.',
+    meaning:'Chute a bola.',
+    pronunciation:'kík dhâ ból',
+    words:[
+      {en:'kick',pt:'chutar / chute',hint:'kík'},
+      {en:'the',pt:'o / a',hint:'dhâ'},
+      {en:'ball',pt:'bola',hint:'ból'}
+    ],
+    chunks:['Kick','the ball']
   },
   {
-    levels:['advanced'],
-    scenario:'Comissão técnica — revisão tática',
-    phrase:'Let’s review the defensive transition before the session.',
-    meaning:'Vamos revisar a transição defensiva antes da atividade.',
-    prompt:'Explique em inglês qual ponto deve ser observado.',
-    model:'We need to improve our reaction after losing possession and recover our shape faster.',
-    keywords:['reaction','possession','shape']
+    title:'Mantenha a calma',
+    scenario:'Jogo — controle emocional',
+    phrase:'Stay calm.',
+    meaning:'Mantenha a calma.',
+    pronunciation:'stêi cám',
+    words:[
+      {en:'stay',pt:'mantenha / fique',hint:'stêi'},
+      {en:'calm',pt:'calmo',hint:'cám'}
+    ],
+    chunks:['Stay','calm']
+  },
+  {
+    title:'Movam-se mais rápido',
+    scenario:'Treino — intensidade',
+    phrase:'Move faster.',
+    meaning:'Movam-se mais rápido.',
+    pronunciation:'múv fáster',
+    words:[
+      {en:'move',pt:'mover / movimentar',hint:'múv'},
+      {en:'faster',pt:'mais rápido',hint:'fáster'}
+    ],
+    chunks:['Move','faster']
+  },
+  {
+    title:'Muito bem, continuem',
+    scenario:'Treino — incentivo',
+    phrase:'Good job. Keep going.',
+    meaning:'Muito bem. Continuem.',
+    pronunciation:'gúd djób. kíip gôuin',
+    words:[
+      {en:'good',pt:'bom / muito bem',hint:'gúd'},
+      {en:'job',pt:'trabalho',hint:'djób'},
+      {en:'keep',pt:'continue / mantenha',hint:'kíip'},
+      {en:'going',pt:'seguindo / continuando',hint:'gôuin'}
+    ],
+    chunks:['Good job','Keep going']
   }
 ];
 
-let englishIndex=0;
-function visibleEnglishPhrases(){
-  const selected=englishPhrases.filter(item=>item.levels.includes(englishLevel));
-  return selected.length?selected:englishPhrases;
+let beginnerIndex=Number(localStorage.getItem('coachvoice-beginner-index')||0);
+let builderSelection=[];
+let lastBeginnerResult=null;
+
+function currentBeginnerLesson(){
+  beginnerIndex=Math.max(0,Math.min(beginnerIndex,beginnerLessons.length-1));
+  return beginnerLessons[beginnerIndex];
 }
-function renderEnglishPhrase(){
-  const list=visibleEnglishPhrases();
-  englishIndex=Math.min(englishIndex,list.length-1);
-  const item=list[englishIndex]||list[0];
-  if(!item)return;
-  const scenario=document.getElementById('englishScenario');
-  if(!scenario)return;
-  scenario.textContent=item.scenario;
-  document.getElementById('englishPhrase').textContent=item.phrase;
-  document.getElementById('englishMeaning').textContent=item.meaning;
-  document.getElementById('englishPrompt').textContent=item.prompt;
-  document.getElementById('englishModel').textContent=item.model;
-  document.getElementById('englishMeaning').classList.add('hidden');
-  document.getElementById('englishModel').classList.add('hidden');
-  document.getElementById('englishFeedbackCard').classList.add('hidden');
-  document.getElementById('englishMeaningBtn').textContent='Mostrar em português';
-  document.getElementById('englishResponse').value='';
+function setEnglishLevel(value){
+  englishLevel=value;
+  localStorage.setItem('coachvoice-english-level',value);
+  if(value!=='basic'){
+    toast('Nesta versão, o modo passo a passo continua disponível. Os níveis superiores serão ampliados depois.');
+  }
+  renderBeginnerLesson();
+}
+function renderBeginnerLesson(){
+  const lesson=currentBeginnerLesson();
+  const progress=((beginnerIndex+1)/beginnerLessons.length)*100;
+  const progressText=document.getElementById('beginnerProgressText');
+  if(!progressText)return;
+
+  progressText.textContent=`Lição ${beginnerIndex+1} de ${beginnerLessons.length}`;
+  document.getElementById('beginnerProgressBar').style.width=progress+'%';
+  document.getElementById('beginnerScenario').textContent=lesson.scenario;
+  document.getElementById('beginnerPhrase').textContent=lesson.phrase;
+  document.getElementById('beginnerMeaning').textContent=lesson.meaning;
+  document.getElementById('beginnerPronunciation').textContent=lesson.pronunciation;
+
+  document.getElementById('beginnerVocabulary').innerHTML=lesson.words.map((word,index)=>`
+    <button class="vocab-card" onclick="speakBeginnerWord(${index})">
+      <strong>${word.en}</strong>
+      <small>${word.pt}</small>
+      <span class="pronounce">Como apoio: ${word.hint}</span>
+    </button>`).join('');
+
+  document.getElementById('beginnerChunks').innerHTML=lesson.chunks.map((chunk,index)=>`
+    <button class="chunk-btn" onclick="speakBeginnerChunk(${index})">🔊 ${chunk}</button>`).join('');
+
+  resetSentenceBuilder();
+  document.getElementById('beginnerTranscriptBox').classList.add('hidden');
+  document.getElementById('beginnerFeedbackCard').classList.add('hidden');
+  document.getElementById('beginnerAIFeedback').classList.add('hidden');
+  document.getElementById('beginnerMicStatus').className='beginner-status';
+  document.getElementById('beginnerMicStatus').textContent='Toque no botão. Ouça a frase e repita com calma.';
+  document.getElementById('beginnerMicBtn').disabled=false;
+  document.getElementById('beginnerMicBtn').textContent='🎙 Ouvir e repetir';
+
+  renderBeginnerMap();
   updateVoiceUI();
 }
-function playEnglish(rate){
-  const item=visibleEnglishPhrases()[englishIndex];
-  speakText(item.phrase,englishAccent,rate);
+function speakBeginnerWord(index){
+  const word=currentBeginnerLesson().words[index];
+  speakText(word.en,englishAccent,.62);
 }
-function toggleEnglishMeaning(){
-  const box=document.getElementById('englishMeaning');
-  box.classList.toggle('hidden');
-  document.getElementById('englishMeaningBtn').textContent=box.classList.contains('hidden')?'Mostrar em português':'Ocultar tradução';
+function speakBeginnerChunk(index){
+  const chunk=currentBeginnerLesson().chunks[index];
+  speakText(chunk,englishAccent,.62);
 }
-function showEnglishModel(){
-  const box=document.getElementById('englishModel');
-  box.classList.remove('hidden');
-  speakText(box.textContent,englishAccent,.84);
+function speakBeginnerPhrase(rate=.7){
+  speakText(currentBeginnerLesson().phrase,englishAccent,rate);
 }
-function normalizeEnglish(value){
-  return String(value||'').toLowerCase().replace(/[^\w\s']/g,' ').replace(/\s+/g,' ').trim();
+function cleanWord(value){
+  return String(value||'')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9']/g,'');
 }
-function evaluateEnglishResponse(){
-  const item=visibleEnglishPhrases()[englishIndex];
-  const response=document.getElementById('englishResponse').value.trim();
-  if(!response){toast('Escreva ou dite sua resposta primeiro.');return;}
-  const normalized=normalizeEnglish(response);
-  const words=normalized.split(' ').filter(Boolean);
-  const keywordHits=item.keywords.filter(k=>normalized.includes(k)).length;
-  const lengthScore=Math.min(100,Math.round(words.length/12*100));
-  const contentScore=Math.round(keywordHits/item.keywords.length*100);
-  const finalScore=Math.round(lengthScore*.35+contentScore*.65);
-  const levelMessage=finalScore>=75
-    ?'Boa construção. A resposta está objetiva e usa vocabulário adequado à situação.'
-    :finalScore>=45
-      ?'A ideia está compreensível. Tente acrescentar uma ação concreta e uma conclusão curta.'
-      :'Comece com uma frase simples: sujeito + ação + objetivo. Depois acrescente apenas um detalhe.';
-  document.getElementById('englishFeedback').innerHTML=`
-    <strong>Estimativa do exercício: ${finalScore}/100</strong>
-    <p>${levelMessage}</p>
-    <div class="score-line"><span>Extensão</span><div class="score-bar"><i style="width:${lengthScore}%"></i></div><b>${lengthScore}</b></div>
-    <div class="score-line"><span>Conteúdo</span><div class="score-bar"><i style="width:${contentScore}%"></i></div><b>${contentScore}</b></div>
-    <p class="voice-note">Esta nota considera apenas o texto. Pronúncia e naturalidade serão avaliadas quando a análise de áudio for conectada.</p>`;
-  document.getElementById('englishFeedbackCard').classList.remove('hidden');
-  saveEnglishSession(item,response,finalScore);
-  window.scrollTo({top:document.getElementById('englishFeedbackCard').offsetTop-90,behavior:'smooth'});
+function tokenizeEnglish(value){
+  return String(value||'').split(/\s+/).map(cleanWord).filter(Boolean);
 }
-function nextEnglishPhrase(){
-  const list=visibleEnglishPhrases();
-  englishIndex=(englishIndex+1)%list.length;
-  renderEnglishPhrase();
+function levenshtein(a,b){
+  const matrix=Array.from({length:b.length+1},()=>Array(a.length+1).fill(0));
+  for(let i=0;i<=b.length;i++)matrix[i][0]=i;
+  for(let j=0;j<=a.length;j++)matrix[0][j]=j;
+  for(let i=1;i<=b.length;i++){
+    for(let j=1;j<=a.length;j++){
+      matrix[i][j]=b[i-1]===a[j-1]
+        ?matrix[i-1][j-1]
+        :Math.min(matrix[i-1][j-1]+1,matrix[i][j-1]+1,matrix[i-1][j]+1);
+    }
+  }
+  return matrix[b.length][a.length];
 }
-function previousEnglishPhrase(){
-  const list=visibleEnglishPhrases();
-  englishIndex=(englishIndex-1+list.length)%list.length;
-  renderEnglishPhrase();
+function wordSimilarity(a,b){
+  if(a===b)return 1;
+  const longest=Math.max(a.length,b.length);
+  if(!longest)return 1;
+  return 1-(levenshtein(a,b)/longest);
 }
-function speechRecognition(lang,onResult){
-  const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!Recognition){toast('Ditado por voz não disponível neste navegador.');return;}
-  const recognition=new Recognition();
-  recognition.lang=lang;
-  recognition.interimResults=false;
-  recognition.maxAlternatives=1;
-  recognition.onstart=()=>toast('Pode falar.');
-  recognition.onerror=()=>toast('Não foi possível reconhecer a fala.');
-  recognition.onresult=event=>onResult(event.results[0][0].transcript);
-  recognition.start();
+function compareSpokenWords(targetPhrase,transcript){
+  const target=tokenizeEnglish(targetPhrase);
+  const spoken=tokenizeEnglish(transcript);
+  const used=new Set();
+  const results=target.map(targetWord=>{
+    let bestIndex=-1,bestScore=0;
+    spoken.forEach((spokenWord,index)=>{
+      if(used.has(index))return;
+      const score=wordSimilarity(targetWord,spokenWord);
+      if(score>bestScore){bestScore=score;bestIndex=index;}
+    });
+    const correct=bestIndex>=0&&bestScore>=.72;
+    if(correct)used.add(bestIndex);
+    return {word:targetWord,correct,heard:correct?spoken[bestIndex]:''};
+  });
+  const extras=spoken.filter((_,index)=>!used.has(index));
+  const score=Math.round(results.filter(r=>r.correct).length/Math.max(1,results.length)*100);
+  return {results,extras,score};
 }
-function startEnglishDictation(){
-  speechRecognition(englishAccent,text=>{
-    document.getElementById('englishResponse').value=text;
-    toast('Resposta transcrita.');
+function shuffledBuilderWords(){
+  const words=tokenizeEnglish(currentBeginnerLesson().phrase);
+  return words.map((word,index)=>({word,index,sort:(index*7+beginnerIndex*3)%11}))
+    .sort((a,b)=>a.sort-b.sort||b.index-a.index);
+}
+function resetSentenceBuilder(){
+  builderSelection=[];
+  const answer=document.getElementById('builderAnswer');
+  const bank=document.getElementById('builderBank');
+  const feedback=document.getElementById('builderFeedback');
+  if(!answer||!bank)return;
+  answer.innerHTML='';
+  bank.innerHTML=shuffledBuilderWords().map((item,index)=>`
+    <button class="builder-token" data-builder="${index}" onclick="selectBuilderWord(this,'${item.word}')">${item.word}</button>`).join('');
+  feedback.classList.add('hidden');
+  feedback.textContent='';
+}
+function selectBuilderWord(button,word){
+  button.classList.add('used');
+  builderSelection.push(word);
+  document.getElementById('builderAnswer').innerHTML=builderSelection.map((item,index)=>`
+    <button class="builder-token" onclick="removeBuilderWord(${index})">${item}</button>`).join('');
+}
+function removeBuilderWord(index){
+  builderSelection.splice(index,1);
+  const answer=document.getElementById('builderAnswer');
+  answer.innerHTML=builderSelection.map((item,i)=>`
+    <button class="builder-token" onclick="removeBuilderWord(${i})">${item}</button>`).join('');
+  const targetCounts={};
+  builderSelection.forEach(word=>targetCounts[word]=(targetCounts[word]||0)+1);
+  document.querySelectorAll('[data-builder]').forEach(btn=>{
+    const word=cleanWord(btn.textContent);
+    if(targetCounts[word]>0){btn.classList.add('used');targetCounts[word]--;}
+    else btn.classList.remove('used');
   });
 }
+function checkSentenceBuilder(){
+  const expected=tokenizeEnglish(currentBeginnerLesson().phrase).join(' ');
+  const actual=builderSelection.join(' ');
+  const feedback=document.getElementById('builderFeedback');
+  feedback.classList.remove('hidden');
+  if(actual===expected){
+    feedback.className='beginner-status success';
+    feedback.textContent='✓ Muito bem. A ordem está correta.';
+    speakBeginnerPhrase(.68);
+  }else{
+    feedback.className='beginner-status retry';
+    feedback.textContent='Ainda não. Ouça a frase novamente e tente montar em blocos menores.';
+  }
+}
+function startBeginnerRepeat(){
+  const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const button=document.getElementById('beginnerMicBtn');
+  const status=document.getElementById('beginnerMicStatus');
+
+  speakBeginnerPhrase(.62);
+
+  if(!Recognition){
+    status.className='beginner-status retry';
+    status.textContent='Este navegador não oferece transcrição por voz. No computador, use o Google Chrome.';
+    return;
+  }
+
+  status.className='beginner-status';
+  status.textContent='Ouça a frase. O microfone abrirá em seguida...';
+  button.disabled=true;
+  button.textContent='🔊 Ouça primeiro';
+
+  setTimeout(()=>{
+    const recognition=new Recognition();
+    recognition.lang=englishAccent;
+    recognition.interimResults=false;
+    recognition.maxAlternatives=1;
+
+    recognition.onstart=()=>{
+      status.className='beginner-status listening';
+      status.textContent='🔴 Agora repita a frase.';
+      button.textContent='🔴 Ouvindo...';
+    };
+    recognition.onresult=event=>{
+      const transcript=event.results[0][0].transcript;
+      renderBeginnerComparison(transcript);
+    };
+    recognition.onerror=event=>{
+      const messages={
+        'not-allowed':'O acesso ao microfone foi bloqueado. Permita o microfone no navegador.',
+        'no-speech':'Não ouvi nenhuma frase. Tente novamente falando um pouco mais perto.',
+        'audio-capture':'Nenhum microfone foi encontrado.',
+        'network':'O reconhecimento de voz não respondeu. Verifique a conexão.'
+      };
+      status.className='beginner-status retry';
+      status.textContent=messages[event.error]||'Não consegui reconhecer. Vamos tentar novamente.';
+    };
+    recognition.onend=()=>{
+      button.disabled=false;
+      button.textContent='🎙 Repetir novamente';
+    };
+    try{recognition.start();}
+    catch(error){
+      status.className='beginner-status retry';
+      status.textContent='Não foi possível iniciar o microfone. Atualize a página e tente novamente.';
+      button.disabled=false;
+    }
+  },1700);
+}
+function renderBeginnerComparison(transcript){
+  const lesson=currentBeginnerLesson();
+  const comparison=compareSpokenWords(lesson.phrase,transcript);
+  lastBeginnerResult={...comparison,transcript,lesson:lesson.title};
+
+  document.getElementById('beginnerTranscriptBox').classList.remove('hidden');
+  document.getElementById('beginnerTranscript').textContent=transcript;
+  document.getElementById('beginnerWordResult').innerHTML=[
+    ...comparison.results.map(item=>`<span class="${item.correct?'correct':'wrong'}">${item.correct?'✓':'×'} ${item.word}</span>`),
+    ...comparison.extras.map(word=>`<span class="extra">+ ${word}</span>`)
+  ].join('');
+
+  const status=document.getElementById('beginnerMicStatus');
+  const feedback=document.getElementById('beginnerFeedbackCard');
+  const human=document.getElementById('beginnerHumanFeedback');
+
+  status.className='beginner-status '+(comparison.score>=75?'success':'retry');
+  status.textContent=comparison.score>=75
+    ?'Muito bem. O navegador reconheceu a maior parte da frase.'
+    :'Bom começo. Vamos trabalhar apenas as palavras vermelhas.';
+
+  let message;
+  if(comparison.score>=90){
+    message=`Excelente tentativa. Você acertou praticamente toda a frase. Agora ouça na velocidade natural e repita mais uma vez sem olhar.`;
+  }else if(comparison.score>=60){
+    const missing=comparison.results.filter(x=>!x.correct).map(x=>x.word).join(', ');
+    message=`Você já acertou boa parte. Concentre-se somente em: <strong>${missing||'a frase completa'}</strong>. Ouça essa parte devagar e tente novamente.`;
+  }else{
+    const firstChunk=lesson.chunks[0];
+    message=`Sem pressa. Vamos reduzir a dificuldade: primeiro repita apenas <strong>${firstChunk}</strong>. Depois acrescente o restante da frase.`;
+  }
+  human.innerHTML=message;
+  document.getElementById('beginnerMastery').innerHTML=`
+    <div><strong>${comparison.score}%</strong><small>Palavras reconhecidas</small></div>
+    <div><strong>${comparison.results.filter(x=>x.correct).length}</strong><small>Palavras verdes</small></div>
+    <div><strong>${comparison.results.filter(x=>!x.correct).length}</strong><small>Palavras para repetir</small></div>`;
+
+  feedback.classList.remove('hidden');
+  saveBeginnerAttempt(comparison.score,transcript);
+  feedback.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function retryBeginnerPhrase(){
+  document.getElementById('beginnerAIFeedback').classList.add('hidden');
+  speakBeginnerPhrase(.58);
+  setTimeout(()=>startBeginnerRepeat(),1200);
+}
+function nextBeginnerLesson(){
+  beginnerIndex=(beginnerIndex+1)%beginnerLessons.length;
+  localStorage.setItem('coachvoice-beginner-index',String(beginnerIndex));
+  renderBeginnerLesson();
+  document.getElementById('english').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function saveBeginnerAttempt(score,transcript){
+  const history=JSON.parse(localStorage.getItem('coachvoice-beginner-history')||'[]');
+  history.unshift({
+    date:new Date().toLocaleString('pt-BR'),
+    lesson:currentBeginnerLesson().title,
+    score,
+    transcript
+  });
+  localStorage.setItem('coachvoice-beginner-history',JSON.stringify(history.slice(0,80)));
+
+  const mastery=JSON.parse(localStorage.getItem('coachvoice-beginner-mastery')||'{}');
+  const key=String(beginnerIndex);
+  mastery[key]=Math.max(Number(mastery[key]||0),score);
+  localStorage.setItem('coachvoice-beginner-mastery',JSON.stringify(mastery));
+  renderBeginnerMap();
+  updateLocalHistory();
+}
+function renderBeginnerMap(){
+  const container=document.getElementById('beginnerLessonMap');
+  if(!container)return;
+  const mastery=JSON.parse(localStorage.getItem('coachvoice-beginner-mastery')||'{}');
+  container.innerHTML=beginnerLessons.map((lesson,index)=>{
+    const score=Number(mastery[index]||0);
+    return `<button class="history-item" style="width:100%;text-align:left;border:0" onclick="openBeginnerLesson(${index})">
+      <strong>${score>=80?'✓ ':''}${index+1}. ${lesson.title}</strong>
+      <small>${lesson.meaning} · Melhor resultado: ${score}%</small>
+    </button>`;
+  }).join('');
+}
+function openBeginnerLesson(index){
+  beginnerIndex=index;
+  localStorage.setItem('coachvoice-beginner-index',String(index));
+  renderBeginnerLesson();
+  document.getElementById('english').scrollIntoView({behavior:'smooth',block:'start'});
+}
+async function askEnglishAI(){
+  const box=document.getElementById('beginnerAIFeedback');
+  const lesson=currentBeginnerLesson();
+  box.classList.remove('hidden');
+  box.textContent='Preparando uma explicação simples...';
+
+  const localFallback=()=>{
+    const missing=(lastBeginnerResult?.results||[]).filter(x=>!x.correct).map(x=>x.word);
+    box.innerHTML=missing.length
+      ?`Vamos trabalhar uma coisa por vez. Ouça e repita estas palavras isoladamente: <strong>${missing.join(', ')}</strong>. Depois fale a frase completa.`
+      :`Você reconheceu bem a frase. O próximo passo é repetir na velocidade natural e usar o comando em uma situação de treino.`;
+  };
+
+  if(!lastBeginnerResult){box.textContent='Faça uma tentativa pelo microfone primeiro.';return;}
+
+  try{
+    const response=await fetch('/api/english-coach',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        phrase:lesson.phrase,
+        meaning:lesson.meaning,
+        pronunciation:lesson.pronunciation,
+        transcript:lastBeginnerResult.transcript,
+        score:lastBeginnerResult.score
+      })
+    });
+    const payload=await response.json().catch(()=>({}));
+    if(!response.ok||!payload.feedback)throw new Error(payload.error||'IA indisponível');
+    box.textContent=payload.feedback;
+  }catch(error){
+    console.info('English AI fallback:',error);
+    localFallback();
+  }
+}
+
+function startEnglishDictation(){
+  startBeginnerRepeat();
+}
+
 function startMentorDictation(){
   speechRecognition('pt-BR',text=>{
     document.getElementById('mentorSituation').value=text;
@@ -1250,6 +1611,7 @@ function updateLocalHistory(){
   const mentorHistory=JSON.parse(localStorage.getItem('coachvoice-mentor-history')||'[]');
   const englishHistory=JSON.parse(localStorage.getItem('coachvoice-english-history')||'[]');
   const lessonHistory=JSON.parse(localStorage.getItem('coachvoice-lesson-history')||'[]');
+  const beginnerHistory=JSON.parse(localStorage.getItem('coachvoice-beginner-history')||'[]');
   const mentorCount=document.getElementById('mentorHistoryCount');
   const englishCount=document.getElementById('englishHistoryCount');
   const lessonCount=document.getElementById('lessonHistoryCount');
@@ -1261,7 +1623,8 @@ function updateLocalHistory(){
     const combined=[
       ...mentorHistory.slice(0,3).map(x=>({type:'Mentor',date:x.date,title:x.situation})),
       ...englishHistory.slice(0,3).map(x=>({type:'Inglês',date:x.date,title:x.scenario+' — '+x.score+'/100'})),
-      ...lessonHistory.slice(0,3).map(x=>({type:'Aula',date:x.date,title:x.lesson+' — '+x.score+'/100'}))
+      ...lessonHistory.slice(0,3).map(x=>({type:'Aula',date:x.date,title:x.lesson+' — '+x.score+'/100'})),
+      ...beginnerHistory.slice(0,3).map(x=>({type:'Inglês básico',date:x.date,title:x.lesson+' — '+x.score+'%'}))
     ].sort((a,b)=>String(b.date).localeCompare(String(a.date))).slice(0,5);
     recent.innerHTML=combined.length?combined.map(x=>`<div class="history-item"><strong>${x.type}: ${x.title}</strong><small>${x.date}</small></div>`).join(''):'<p class="intro">Ainda não há sessões salvas.</p>';
   }
@@ -1282,6 +1645,8 @@ function clearLocalHistory(){
   localStorage.removeItem('coachvoice-mentor-history');
   localStorage.removeItem('coachvoice-english-history');
   localStorage.removeItem('coachvoice-lesson-history');
+  localStorage.removeItem('coachvoice-beginner-history');
+  localStorage.removeItem('coachvoice-beginner-mastery');
   updateLocalHistory();
   toast('Histórico de testes apagado.');
 }
@@ -1839,7 +2204,7 @@ function saveFeedback(){
   document.querySelectorAll('[data-feedback]').forEach(x=>x.classList.remove('selected'));
   closeFeedback();toast('Avaliação salva neste celular.');
 }
-renderEnglishPhrase();
+renderBeginnerLesson();
 updateUI();
 checkTechnicalEnvironment();
 </script>

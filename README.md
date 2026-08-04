@@ -1,39 +1,44 @@
-# CoachVoice AI v2.1 — microfone nas aulas
+# CoachVoice AI v2.2 — inglês iniciante passo a passo
 
-## Correções
+## Nova experiência de inglês
 
-- o botão “Responder pelo microfone” das aulas agora solicita o microfone;
-- a fala é convertida em texto;
-- o treinador pode corrigir a transcrição;
-- a resposta recebe uma comparação textual inicial;
-- é possível ouvir a própria resposta;
-- as práticas ficam registradas localmente;
-- o `sw.js` não procura mais o arquivo Firebase removido;
-- o novo service worker assume o controle e apaga caches antigos.
+A área de inglês foi refeita para quem está começando do zero:
 
-## Limite desta primeira análise
+1. conhecer poucas palavras;
+2. ouvir cada palavra;
+3. ver o significado em português;
+4. montar a frase na ordem correta;
+5. ouvir devagar e na velocidade natural;
+6. repetir pelo microfone;
+7. visualizar palavras reconhecidas em verde;
+8. visualizar palavras para repetir em vermelho;
+9. receber uma orientação acolhedora;
+10. avançar somente uma frase por vez.
 
-A nota da aula é uma comparação da transcrição. Ela ainda não mede diretamente:
+## Observação importante
 
-- pronúncia;
-- qualidade da voz;
-- velocidade real;
-- duração das pausas;
-- clareza acústica.
+As cores se baseiam na transcrição de voz feita pelo navegador. Isso ajuda a
+praticar, mas não é uma medição acústica precisa de pronúncia. O navegador pode
+interpretar uma palavra de forma diferente mesmo quando a fala está razoável.
 
-Essas medições exigirão gravação de áudio e análise específica na próxima
-etapa.
+## IA opcional
+
+Foi adicionada a função:
+
+`api/english-coach.js`
+
+Quando `OPENAI_API_KEY` estiver configurada na Vercel, o botão de explicação
+personalizada usa IA. Sem a chave, o aplicativo continua funcionando com
+orientação local.
 
 ## Publicação
 
-Substitua todos os arquivos do repositório pelos arquivos deste pacote.
+Substitua todos os arquivos da versão anterior.
 
 Commit sugerido:
 
-`Ativar microfone nas aulas e corrigir cache`
+`Criar inglês iniciante passo a passo`
 
 Depois do deploy, abra:
 
-`https://coachvoice-ai.vercel.app/?v=21`
-
-No computador, use `Ctrl + F5` uma vez.
+`https://coachvoice-ai.vercel.app/?v=22`

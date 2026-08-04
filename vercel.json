@@ -16,6 +16,9 @@
   "functions": {
     "api/mentor.js": {
       "maxDuration": 30
+    },
+    "api/english-coach.js": {
+      "maxDuration": 30
     }
   }
 }
