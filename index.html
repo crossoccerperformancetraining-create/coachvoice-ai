@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#071225">
-<meta name="application-name" content="CoachVoice AI v3.0">
+<meta name="application-name" content="CoachVoice AI v3.1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="CoachVoice">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<title>CoachVoice AI v3.0 — Treino individual</title>
+<title>CoachVoice AI v3.1 — Treino individual</title>
 <style>
 :root{
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -173,6 +173,35 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 .activity-list{display:grid;gap:8px}.activity{background:#f8fafc;border-radius:13px;padding:11px;border-left:4px solid #319444}.activity strong,.activity small{display:block}.activity small{color:#667085;margin-top:4px}
 @media(min-width:760px){.daily-options{grid-template-columns:repeat(4,1fr)}.journal-grid{grid-template-columns:1fr 1fr}.metric-grid{grid-template-columns:repeat(4,1fr)}.principle-grid{grid-template-columns:repeat(3,1fr)}}
 
+
+.mobile-note{background:#fff7e8;border:1px solid #f0cb8a;border-radius:14px;padding:12px;color:#8a5400;line-height:1.5}
+.mobile-note strong{display:block;margin-bottom:4px}
+.voice-capture-overlay{position:fixed;inset:0;background:rgba(4,14,29,.7);z-index:130;display:none;align-items:flex-end;justify-content:center;padding:12px}
+.voice-capture-overlay.open{display:flex}
+.voice-capture-sheet{width:min(620px,100%);background:#fff;border-radius:22px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.28)}
+.voice-capture-icon{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;margin:0 auto 10px;background:#eef4ff;font-size:2rem}
+.voice-capture-icon.live{background:#fff0f0;animation:pulseMic 1.2s infinite}
+@keyframes pulseMic{50%{transform:scale(1.08);box-shadow:0 0 0 12px rgba(180,35,24,.08)}}
+.voice-capture-time{text-align:center;font-size:1.8rem;font-weight:950;color:#0f2749}
+.voice-capture-status{text-align:center;color:#475467;line-height:1.5;margin:7px 0 12px}
+.voice-capture-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.voice-capture-actions .full{grid-column:1/-1}
+.voice-fallback{background:#f8fafc;border:1px solid #e4e7ec;border-radius:14px;padding:12px;margin-top:10px}
+.interview-controls{display:grid;gap:10px}
+.scenario-help{background:#eef4ff;border-left:4px solid #275b99;border-radius:14px;padding:13px;line-height:1.5;color:#344054}
+.interview-local-score{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.interview-local-score div{background:#fff;border:1px solid #d8dee8;border-radius:12px;padding:9px;text-align:center}
+.interview-local-score strong,.interview-local-score small{display:block}.interview-local-score small{font-size:.65rem;color:#667085;margin-top:3px}
+.principle-section{margin-top:14px}.principle-section h3{font-size:.92rem;margin:0 0 8px;color:#344054}
+.principle-card{border:1px solid #d8dee8;background:#fff;border-radius:14px;padding:12px;text-align:left;color:#344054}
+.principle-card strong,.principle-card small{display:block}.principle-card small{color:#667085;margin-top:4px;line-height:1.4}
+.principle-card.active{background:#e9f7e7;border-color:#78c684;color:#247533}.principle-card.active small{color:#397845}
+.selected-principles{background:#f8fafc;border:1px solid #e4e7ec;border-radius:14px;padding:12px;line-height:1.5;margin-top:10px}
+.game-guide-steps{display:grid;gap:8px;margin:10px 0}.game-guide-step{display:grid;grid-template-columns:30px 1fr;gap:8px;align-items:start}.game-guide-step b{width:30px;height:30px;border-radius:50%;background:#0f2749;color:#fff;display:grid;place-items:center}.game-guide-step p{margin:0;color:#475467;line-height:1.45}
+.inline-result{background:#f8fafc;border:1px solid #e4e7ec;border-radius:14px;padding:12px;line-height:1.55;margin-top:10px}
+.diagnostic-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.diagnostic-item{background:#f8fafc;border:1px solid #e4e7ec;border-radius:13px;padding:10px}.diagnostic-item strong,.diagnostic-item small{display:block}.diagnostic-item small{color:#667085;margin-top:3px}
+@media(min-width:760px){.interview-controls{grid-template-columns:2fr 1fr}.voice-capture-overlay{align-items:center}.diagnostic-grid{grid-template-columns:repeat(4,1fr)}}
+
 @media(min-width:760px){.hub-grid{grid-template-columns:1fr 1fr}.library-grid{grid-template-columns:1fr 1fr}.day-grid{grid-template-columns:repeat(3,1fr)}}
 
 @media(min-width:760px){.quick-grid{grid-template-columns:repeat(4,1fr)}.block-list{grid-template-columns:1fr 1fr}.stats{grid-template-columns:repeat(4,1fr)}}
@@ -204,7 +233,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <button class="drawer-link" data-page="technical" onclick="go('technical')">⚙ Testes do aparelho</button>
     <button class="drawer-link" data-page="profile" onclick="go('profile')">◉ Preferências</button>
   </nav>
-  <div class="drawer-note">CoachVoice AI v3.0 — versão consolidada para testes. Dados salvos somente neste aparelho; IA ativada quando a chave estiver configurada na Vercel.</div>
+  <div class="drawer-note">CoachVoice AI v3.1 — versão consolidada para testes. Dados salvos somente neste aparelho; IA ativada quando a chave estiver configurada na Vercel.</div>
 </aside>
 <div id="overlay" class="overlay" onclick="closeDrawer()"></div>
 
@@ -781,24 +810,65 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
 <section id="interviews" class="page">
   <div class="hero">
-    <span class="eyebrow">ENTREVISTAS COM IA</span>
-    <h2>Treine respostas e continue a coletiva com perguntas seguintes.</h2>
-    <p>A IA atua como jornalista. A análise observa clareza, responsabilidade, exposição do grupo e próximo passo.</p>
+    <span class="eyebrow">ENTREVISTAS — TREINO COMPLETO</span>
+    <h2>Escolha um tema, prepare a resposta e continue a coletiva.</h2>
+    <p>O aplicativo funciona em modo local e usa IA quando ela estiver conectada. Sua resposta não será apagada ao mostrar o resultado.</p>
   </div>
   <article class="simulation-card">
-    <select id="interviewScenario" class="select-field" onchange="loadInterviewScenario()">
-      <option value="defeat">Derrota e sequência ruim</option>
-      <option value="referee">Pergunta provocativa sobre arbitragem</option>
-      <option value="player">Decisão sobre um jogador importante</option>
-      <option value="victory">Vitória e expectativa elevada</option>
-    </select>
-    <h3 id="interviewQuestion"></h3>
-    <button class="secondary" onclick="speakText(document.getElementById('interviewQuestion').textContent,'pt-BR',.9)">🔊 Ouvir jornalista</button>
+    <div class="interview-controls">
+      <div>
+        <label class="label" for="interviewScenario">Tema da entrevista</label>
+        <select id="interviewScenario" class="select-field" onchange="loadInterviewScenario(true)">
+          <optgroup label="Resultados e pressão">
+            <option value="defeat">Sequência sem vencer</option>
+            <option value="heavy-defeat">Derrota por placar elevado</option>
+            <option value="poor-win">Vitória com desempenho ruim</option>
+            <option value="victory">Vitória e expectativa de título</option>
+            <option value="fan-pressure">Protesto e cobrança da torcida</option>
+          </optgroup>
+          <optgroup label="Arbitragem e disciplina">
+            <option value="referee">Arbitragem influenciou o resultado?</option>
+            <option value="var">Decisão do VAR</option>
+            <option value="red-card">Expulsão de um jogador</option>
+          </optgroup>
+          <optgroup label="Jogadores e elenco">
+            <option value="player">Jogador importante no banco</option>
+            <option value="young-error">Erro de jogador jovem</option>
+            <option value="goalkeeper-error">Falha do goleiro</option>
+            <option value="transfer">Pedido de contratação/reforço</option>
+            <option value="locker-leak">Informação do vestiário vazou</option>
+          </optgroup>
+          <optgroup label="Tática, carreira e jogos especiais">
+            <option value="tactical">Mudança tática durante o jogo</option>
+            <option value="derby">Clássico e rivalidade</option>
+            <option value="final">Final ou jogo decisivo</option>
+            <option value="new-club">Apresentação em novo clube</option>
+            <option value="job-pressure">Pergunta sobre possível demissão</option>
+          </optgroup>
+        </select>
+      </div>
+      <div>
+        <label class="label" for="interviewPressure">Estilo do jornalista</label>
+        <select id="interviewPressure" class="select-field" onchange="updateInterviewHelp()">
+          <option value="normal">Profissional</option>
+          <option value="insistent">Insistente</option>
+          <option value="provocative">Provocativo</option>
+        </select>
+      </div>
+    </div>
+    <div id="interviewThemeHelp" class="scenario-help" style="margin-top:10px"></div>
+    <h3 id="interviewQuestion" style="margin-top:12px"></h3>
+    <div class="mentor-actions">
+      <button class="secondary" onclick="speakText(document.getElementById('interviewQuestion').textContent,'pt-BR',.9)">🔊 Ouvir jornalista</button>
+      <button class="outline" onclick="showInterviewStructure()">Ver estrutura sugerida</button>
+    </div>
+    <div id="interviewStructure" class="inline-result hidden"></div>
   </article>
   <article class="card">
-    <textarea id="interviewResponse" class="text-input" placeholder="Responda como treinador."></textarea>
+    <span class="label">Sua resposta</span>
+    <textarea id="interviewResponse" class="text-input" placeholder="Responda como treinador. Você pode falar ou escrever."></textarea>
     <div class="mentor-actions" style="margin-top:10px">
-      <button class="secondary" onclick="dictateTo('interviewResponse','pt-BR')">🎙 Responder por voz</button>
+      <button class="secondary" onclick="dictateTo('interviewResponse','pt-BR',{maxSeconds:35,label:'Resposta da entrevista'})">🎙 Responder por voz</button>
       <button class="primary" onclick="analyzeInterview()">✨ Analisar e continuar</button>
     </div>
     <div id="interviewResult" class="ai-result hidden" style="margin-top:12px"></div>
@@ -828,23 +898,45 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
 <section id="gamemodel" class="page">
   <div class="hero">
-    <span class="eyebrow">MODELO DE JOGO E COMUNICAÇÃO</span>
-    <h2>Converta ideias táticas em mensagens que jogadores entendem.</h2>
-    <p>Escolha princípios, momento e público. A IA cria uma orientação curta, sem excesso de termos técnicos.</p>
+    <span class="eyebrow">MODELO DE JOGO — PASSO A PASSO</span>
+    <h2>Transforme sua ideia de futebol em uma mensagem simples para os jogadores.</h2>
+    <p>Aqui, “princípio” significa um comportamento que você quer ver em campo. Escolha de um a três comportamentos.</p>
   </div>
   <article class="card">
-    <span class="label">Princípios principais</span>
-    <div id="gamePrinciples" class="principle-grid"></div>
-    <div class="form-grid" style="margin-top:12px">
-      <select id="gameMoment" class="select-field">
-        <option>Treino</option><option>Pré-jogo</option><option>Intervalo</option><option>Pós-jogo</option>
-      </select>
-      <select id="gameAudience" class="select-field">
-        <option>Equipe completa</option><option>Defensores</option><option>Meio-campistas</option><option>Atacantes</option><option>Comissão técnica</option>
-      </select>
+    <div class="game-guide-steps">
+      <div class="game-guide-step"><b>1</b><p>Escolha <strong>o que a equipe precisa fazer</strong>, como proteger o centro ou abrir o campo.</p></div>
+      <div class="game-guide-step"><b>2</b><p>Indique <strong>quando e para quem</strong> você vai falar.</p></div>
+      <div class="game-guide-step"><b>3</b><p>O CoachVoice cria uma mensagem curta com objetivo, ações e fechamento.</p></div>
     </div>
-    <textarea id="gameContext" class="text-input" style="margin-top:10px" placeholder="Contexto opcional: adversário, dificuldade ou objetivo do exercício."></textarea>
-    <button class="primary" style="margin-top:10px" onclick="generateGameMessage()">✨ Criar mensagem do modelo de jogo</button>
+    <button class="outline" onclick="selectBasicGameExample()">Usar um exemplo básico</button>
+  </article>
+  <article class="card">
+    <span class="label">1. Comportamentos que você quer ver</span>
+    <div id="gamePrinciples"></div>
+    <div id="gameSelectedSummary" class="selected-principles">Nenhum comportamento escolhido. Toque em uma ou mais opções abaixo.</div>
+  </article>
+  <article class="card">
+    <span class="label">2. Momento e público</span>
+    <div class="form-grid">
+      <div>
+        <label class="label" for="gameMoment">Quando será a mensagem?</label>
+        <select id="gameMoment" class="select-field">
+          <option>Treino</option><option>Pré-jogo</option><option>Intervalo</option><option>Pós-jogo</option>
+        </select>
+      </div>
+      <div>
+        <label class="label" for="gameAudience">Para quem?</label>
+        <select id="gameAudience" class="select-field">
+          <option>Equipe completa</option><option>Defensores</option><option>Meio-campistas</option><option>Atacantes</option><option>Comissão técnica</option>
+        </select>
+      </div>
+    </div>
+    <label class="label" for="gameContext" style="margin-top:10px">Contexto opcional</label>
+    <textarea id="gameContext" class="text-input" placeholder="Ex.: adversário sai com três jogadores; nossa equipe está deixando espaço no centro."></textarea>
+  </article>
+  <article class="card">
+    <span class="label">3. Criar a mensagem</span>
+    <button class="primary" onclick="generateGameMessage()">✨ Criar orientação para os jogadores</button>
     <div id="gameModelResult" class="ai-result hidden" style="margin-top:12px"></div>
   </article>
 </section>
@@ -913,6 +1005,13 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   <article class="card">
     <span class="label">Importante</span>
     <p class="permission-note">Microfone e câmera normalmente exigem um endereço seguro com <strong>HTTPS</strong>. O navegador só pedirá autorização depois que você tocar no botão de teste.</p>
+  </article>
+
+  <article class="card" style="margin-bottom:14px">
+    <span class="label">Diagnóstico rápido do celular</span>
+    <p class="intro">Este teste mostra quais recursos o navegador disponibiliza. O botão de falar agora grava áudio mesmo quando a transcrição nativa não funciona.</p>
+    <button class="primary" onclick="runMobileDiagnostics()">Executar diagnóstico completo</button>
+    <div id="mobileDiagnosticResult" class="diagnostic-grid" style="margin-top:12px"></div>
   </article>
 
   <div class="tech-grid">
@@ -1109,6 +1208,27 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 </main>
 
 
+
+<div id="voiceCaptureOverlay" class="voice-capture-overlay" role="dialog" aria-modal="true" aria-labelledby="voiceCaptureTitle">
+  <div class="voice-capture-sheet">
+    <div id="voiceCaptureIcon" class="voice-capture-icon">🎙</div>
+    <h2 id="voiceCaptureTitle" style="text-align:center">Gravação de voz</h2>
+    <div id="voiceCaptureTime" class="voice-capture-time">00:00</div>
+    <p id="voiceCaptureStatus" class="voice-capture-status">Preparando o microfone...</p>
+    <audio id="voiceCapturePlayback" controls style="width:100%;display:none"></audio>
+    <div id="voiceFallbackBox" class="voice-fallback hidden">
+      <label class="label" for="voiceFallbackText">A gravação funcionou, mas a transcrição automática não ficou disponível.</label>
+      <textarea id="voiceFallbackText" class="text-input" placeholder="Digite a frase que você falou para continuar o exercício."></textarea>
+      <button class="primary" style="margin-top:8px" onclick="useVoiceFallbackText()">Usar este texto</button>
+    </div>
+    <div class="voice-capture-actions" style="margin-top:12px">
+      <button id="voiceStopBtn" class="primary" onclick="stopUniversalVoiceCapture()">⏹ Parar e transcrever</button>
+      <button id="voiceCancelBtn" class="secondary" onclick="cancelUniversalVoiceCapture()">Cancelar</button>
+      <button id="voiceCloseBtn" class="outline full hidden" onclick="closeVoiceCapture()">Fechar</button>
+    </div>
+  </div>
+</div>
+
 <div id="sheetOverlay" class="sheet-overlay" onclick="closeFeedback()"></div>
 <div id="feedbackSheet" class="sheet">
   <div class="sheet-handle"></div>
@@ -1206,12 +1326,34 @@ function totalPercent(){const all=allLessons();return Math.round([...completed].
 function totalCompleted(){return allLessons().filter(l=>completed.has(l[0])).length}
 
 function go(id){
+  if(currentPage==='studio'&&id!=='studio'&&typeof stopStudioCamera==='function')stopStudioCamera();
+  if(!document.getElementById(id)){toast('Esta área não foi encontrada. Atualize o aplicativo.');return;}
   currentPage=id;
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));
   document.querySelectorAll('.nav,.drawer-link').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
-  const titles={home:'Ciclo diário',daily:'Diário do Treinador',mentor:'Coach Mentor AI',practice:'Central de treinos',english:'Inglês em 3 níveis',oratory:'Oratória com IA',interviews:'Entrevistas com IA',leadership:'Liderança com IA',gamemodel:'Modelo de jogo',library:'Biblioteca de situações',matchday:'Modo dia de jogo',tracks:'Formação completa',technical:'Testes do aparelho',progress:'Evolução real',profile:'Preferências locais',blockDetail:'Conteúdo do bloco',lessonDetail:'Aula prática',studio:'Estúdio do Treinador'};
+  const titles={home:'Ciclo diário',daily:'Diário do Treinador',mentor:'Coach Mentor AI',practice:'Central de treinos',english:'Inglês em 3 níveis',oratory:'Oratória com IA',interviews:'Entrevistas',leadership:'Liderança com IA',gamemodel:'Modelo de jogo passo a passo',library:'Biblioteca de situações',matchday:'Modo dia de jogo',tracks:'Formação completa',technical:'Diagnóstico do aparelho',progress:'Evolução real',profile:'Preferências locais',blockDetail:'Conteúdo do bloco',lessonDetail:'Aula prática',studio:'Estúdio do Treinador'};
   document.getElementById('topSubtitle').textContent=titles[id]||'CoachVoice AI';
-  closeDrawer();window.scrollTo(0,0);updateUI();
+  closeDrawer();window.scrollTo(0,0);preparePageForNavigation(id);refreshLiveStats();
+}
+function preparePageForNavigation(id){
+  if(id==='english')renderEnglishMode();
+  if(id==='library')renderLibrary();
+  if(id==='daily'){renderDailyPlan();loadDailyJournal();}
+  if(id==='interviews'&&!document.getElementById('interviewQuestion').textContent.trim())loadInterviewScenario(false);
+  if(id==='leadership'&&!document.getElementById('leadershipSituation').options.length)renderLeadershipRoles();
+  if(id==='gamemodel')renderGamePrinciples();
+  if(id==='oratory'&&!document.getElementById('oratoryText').textContent.trim())loadOratoryScenario();
+  if(id==='progress')updateProgressDashboard();
+  if(id==='technical'){checkTechnicalEnvironment();runMobileDiagnostics(false);}
+  if(id==='studio'&&typeof initializeStudio==='function')initializeStudio();
+}
+function refreshLiveStats(){
+  const total=allLessons().length,done=totalCompleted(),percent=totalPercent();
+  const values={homeCompleted:`${done} de ${total}`,homePercent:`${percent}%`,progressSummary:`${done} aulas concluídas`,homeEnglishLevel:englishLevelLabel(recommendedEnglishLevel())};
+  Object.entries(values).forEach(([id,value])=>{const el=document.getElementById(id);if(el)el.textContent=value;});
+  const homeBar=document.getElementById('homeProgressBar');if(homeBar)homeBar.style.width=percent+'%';
+  const homeLabel=document.getElementById('homeProgressLabel');if(homeLabel)homeLabel.textContent=percent+'% concluído';
+  updateProgressDashboard();updateLocalHistory();updateHomeDaily();
 }
 function openDrawer(){document.getElementById('drawer').classList.add('open');document.getElementById('overlay').classList.add('show')}
 function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('overlay').classList.remove('show')}
@@ -1279,7 +1421,10 @@ function getJSON(key,fallback){
   catch{return fallback;}
 }
 function dateKey(date=new Date()){
-  return date.toISOString().slice(0,10);
+  const year=date.getFullYear();
+  const month=String(date.getMonth()+1).padStart(2,'0');
+  const day=String(date.getDate()).padStart(2,'0');
+  return `${year}-${month}-${day}`;
 }
 function addActivity(type,title,score=null){
   const activities=getJSON('coachvoice-activities',[]);
@@ -1291,7 +1436,7 @@ function addXP(points,title){
   localStorage.setItem('coachvoice-xp',String(current+points));
   markPracticeDay();
   if(title)addActivity('Prática',title,points);
-  updateUI();
+  refreshLiveStats();
 }
 function markPracticeDay(){
   const days=getJSON('coachvoice-practice-days',[]);
@@ -1460,22 +1605,9 @@ function checkSentenceBuilder(){
   else{feedback.className='beginner-status retry';feedback.textContent='Ainda não. Ouça por blocos e tente novamente.';}
 }
 function startBeginnerRepeat(){
-  const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
   const button=document.getElementById('beginnerMicBtn'),status=document.getElementById('beginnerMicStatus');
-  speakBeginnerPhrase(.58);
-  if(!Recognition){status.className='beginner-status retry';status.textContent='Transcrição por voz indisponível. Teste no Google Chrome.';return;}
-  status.className='beginner-status';status.textContent='Ouça. O microfone abrirá em seguida...';button.disabled=true;button.textContent='🔊 Ouça primeiro';
-  setTimeout(()=>{
-    const recognition=new Recognition();recognition.lang=englishAccent;recognition.interimResults=false;recognition.maxAlternatives=1;
-    recognition.onstart=()=>{status.className='beginner-status listening';status.textContent='🔴 Agora repita a frase.';button.textContent='🔴 Ouvindo...';};
-    recognition.onresult=event=>renderBeginnerComparison(event.results[0][0].transcript);
-    recognition.onerror=event=>{
-      const messages={'not-allowed':'Permita o microfone no navegador.','no-speech':'Não ouvi a frase. Tente novamente.','audio-capture':'Microfone não encontrado.','network':'O reconhecimento de voz não respondeu.'};
-      status.className='beginner-status retry';status.textContent=messages[event.error]||'Não consegui reconhecer. Vamos tentar novamente.';
-    };
-    recognition.onend=()=>{button.disabled=false;button.textContent='🎙 Repetir novamente';};
-    try{recognition.start();}catch{status.className='beginner-status retry';status.textContent='Não foi possível iniciar o microfone.';button.disabled=false;}
-  },1550);
+  speakBeginnerPhrase(.58);status.className='beginner-status';status.textContent='Ouça a frase. O microfone abrirá em seguida...';button.disabled=true;button.textContent='🔊 Ouça primeiro';
+  setTimeout(()=>{button.disabled=false;button.textContent='🎙 Repetir novamente';startUniversalVoiceCapture({lang:englishAccent,maxSeconds:10,label:'Repita a frase em inglês',onText:transcript=>{renderBeginnerComparison(transcript);status.className='beginner-status success';status.textContent='Fala recebida. Veja a comparação abaixo.';}});},1450);
 }
 function renderBeginnerComparison(transcript){
   const lesson=currentBeginnerLesson(),comparison=compareSpokenWords(lesson.phrase,transcript);
@@ -1601,26 +1733,122 @@ async function analyzeAdvancedEnglish(){
 function nextAdvancedLesson(){advancedIndex=(advancedIndex+1)%advancedLessons.length;localStorage.setItem('coachvoice-advanced-index',String(advancedIndex));renderAdvancedLesson();}
 function previousAdvancedLesson(){advancedIndex=(advancedIndex-1+advancedLessons.length)%advancedLessons.length;localStorage.setItem('coachvoice-advanced-index',String(advancedIndex));renderAdvancedLesson();}
 
-function recognizeSpeech(lang,onResult,onStatus){
+let universalVoiceStream=null;
+let universalVoiceRecorder=null;
+let universalVoiceChunks=[];
+let universalVoiceBlob=null;
+let universalVoiceUrl='';
+let universalVoiceTimer=null;
+let universalVoiceStartedAt=0;
+let universalVoiceRecognition=null;
+let universalVoiceRecognizedText='';
+let universalVoiceCallback=null;
+let universalVoiceOptions={};
+
+function preferredAudioMimeType(){
+  const types=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'];
+  return types.find(type=>window.MediaRecorder&&MediaRecorder.isTypeSupported(type))||'';
+}
+function formatVoiceTime(seconds){return `00:${String(Math.max(0,seconds)).padStart(2,'0')}`;}
+function openVoiceCaptureSheet(){
+  document.getElementById('voiceCaptureOverlay').classList.add('open');
+  document.getElementById('voiceFallbackBox').classList.add('hidden');
+  document.getElementById('voiceCloseBtn').classList.add('hidden');
+  document.getElementById('voiceStopBtn').classList.remove('hidden');
+  document.getElementById('voiceCancelBtn').classList.remove('hidden');
+  document.getElementById('voiceCapturePlayback').style.display='none';
+  document.getElementById('voiceFallbackText').value='';
+}
+function setVoiceCaptureStatus(message,state=''){
+  document.getElementById('voiceCaptureStatus').textContent=message;
+  document.getElementById('voiceCaptureIcon').classList.toggle('live',state==='live');
+}
+async function startUniversalVoiceCapture(options={}){
+  universalVoiceOptions={lang:'pt-BR',maxSeconds:25,label:'Resposta por voz',...options};
+  universalVoiceCallback=typeof universalVoiceOptions.onText==='function'?universalVoiceOptions.onText:null;
+  universalVoiceChunks=[];universalVoiceBlob=null;universalVoiceRecognizedText='';
+  openVoiceCaptureSheet();
+  document.getElementById('voiceCaptureTitle').textContent=universalVoiceOptions.label;
+  document.getElementById('voiceCaptureTime').textContent='00:00';
+  setVoiceCaptureStatus('Solicitando acesso ao microfone...');
+  if(!navigator.mediaDevices?.getUserMedia){startRecognitionOnlyFallback();return;}
+  try{
+    universalVoiceStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
+    if(!window.MediaRecorder){stopUniversalVoiceTracks();startRecognitionOnlyFallback();return;}
+    const mime=preferredAudioMimeType();
+    universalVoiceRecorder=new MediaRecorder(universalVoiceStream,mime?{mimeType:mime}:{});
+    universalVoiceRecorder.ondataavailable=event=>{if(event.data&&event.data.size)universalVoiceChunks.push(event.data);};
+    universalVoiceRecorder.onstop=finalizeUniversalVoiceCapture;
+    universalVoiceRecorder.start(500);
+    startParallelBrowserRecognition();
+    universalVoiceStartedAt=Date.now();
+    setVoiceCaptureStatus('🔴 Microfone ativo. Fale com calma e toque em parar.','live');
+    universalVoiceTimer=setInterval(()=>{
+      const elapsed=Math.floor((Date.now()-universalVoiceStartedAt)/1000);
+      document.getElementById('voiceCaptureTime').textContent=formatVoiceTime(elapsed);
+      if(elapsed>=Number(universalVoiceOptions.maxSeconds||25))stopUniversalVoiceCapture();
+    },250);
+  }catch(error){console.error(error);stopUniversalVoiceTracks();setVoiceCaptureStatus(friendlyVoiceError(error));showVoiceManualFallback();}
+}
+function startParallelBrowserRecognition(){
+  if(/iPad|iPhone|iPod/i.test(navigator.userAgent))return;
+  const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;if(!Recognition)return;
+  try{
+    universalVoiceRecognition=new Recognition();universalVoiceRecognition.lang=universalVoiceOptions.lang||'pt-BR';universalVoiceRecognition.interimResults=true;universalVoiceRecognition.continuous=true;
+    universalVoiceRecognition.onresult=event=>{
+      let final=universalVoiceRecognizedText,interim='';
+      for(let i=event.resultIndex;i<event.results.length;i++){const part=event.results[i][0].transcript;if(event.results[i].isFinal)final+=(final?' ':'')+part;else interim+=part;}
+      universalVoiceRecognizedText=(final+(interim?' '+interim:'')).trim();
+    };
+    universalVoiceRecognition.onerror=()=>{};universalVoiceRecognition.start();
+  }catch(error){console.info('Reconhecimento paralelo indisponível:',error);}
+}
+function startRecognitionOnlyFallback(){
   const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!Recognition){toast('Transcrição por voz indisponível neste navegador.');return;}
-  const recognition=new Recognition();recognition.lang=lang;recognition.interimResults=false;recognition.maxAlternatives=1;
-  recognition.onstart=()=>onStatus&&onStatus('listening');
-  recognition.onresult=event=>onResult(event.results[0][0].transcript);
-  recognition.onerror=()=>{onStatus&&onStatus('error');toast('Não foi possível reconhecer a fala.');};
-  recognition.start();
+  if(!Recognition){setVoiceCaptureStatus('Este navegador não permite gravar nem transcrever pela página. Digite sua resposta abaixo.');showVoiceManualFallback();return;}
+  try{
+    universalVoiceRecognition=new Recognition();universalVoiceRecognition.lang=universalVoiceOptions.lang||'pt-BR';universalVoiceRecognition.interimResults=true;universalVoiceRecognition.continuous=false;
+    universalVoiceRecognition.onstart=()=>setVoiceCaptureStatus('🔴 Pode falar agora.','live');
+    universalVoiceRecognition.onresult=event=>{universalVoiceRecognizedText=event.results[0][0].transcript;};
+    universalVoiceRecognition.onerror=event=>{setVoiceCaptureStatus(`Não foi possível reconhecer a fala (${event.error}).`);showVoiceManualFallback();};
+    universalVoiceRecognition.onend=()=>{if(universalVoiceRecognizedText)deliverUniversalVoiceText(universalVoiceRecognizedText);else showVoiceManualFallback();};
+    universalVoiceRecognition.start();
+  }catch(error){setVoiceCaptureStatus('Não foi possível iniciar a fala.');showVoiceManualFallback();}
 }
-function dictateTo(elementId,lang){
-  const element=document.getElementById(elementId);if(!element)return;
-  recognizeSpeech(lang,text=>{element.value=text;toast('Fala transcrita.');});
+function stopUniversalVoiceCapture(){
+  clearInterval(universalVoiceTimer);universalVoiceTimer=null;document.getElementById('voiceStopBtn').disabled=true;setVoiceCaptureStatus('Finalizando a gravação...');
+  if(universalVoiceRecognition){try{universalVoiceRecognition.stop();}catch{}universalVoiceRecognition=null;}
+  if(universalVoiceRecorder&&universalVoiceRecorder.state==='recording')universalVoiceRecorder.stop();
+  else if(universalVoiceRecognizedText)deliverUniversalVoiceText(universalVoiceRecognizedText);else showVoiceManualFallback();
 }
-function startEnglishDictation(){if(englishLevel==='basic')startBeginnerRepeat();else if(englishLevel==='intermediate')dictateTo('intermediateResponse',englishAccent);else dictateTo('advancedResponse',englishAccent);}
+async function finalizeUniversalVoiceCapture(){
+  clearInterval(universalVoiceTimer);universalVoiceTimer=null;
+  const mime=universalVoiceRecorder?.mimeType||universalVoiceChunks[0]?.type||'audio/webm';
+  universalVoiceBlob=new Blob(universalVoiceChunks,{type:mime});stopUniversalVoiceTracks();
+  const player=document.getElementById('voiceCapturePlayback');if(universalVoiceUrl)URL.revokeObjectURL(universalVoiceUrl);universalVoiceUrl=URL.createObjectURL(universalVoiceBlob);player.src=universalVoiceUrl;player.style.display='block';
+  if(universalVoiceRecognizedText.trim()){setVoiceCaptureStatus('Fala reconhecida. Inserindo o texto...');setTimeout(()=>deliverUniversalVoiceText(universalVoiceRecognizedText.trim()),350);return;}
+  setVoiceCaptureStatus('Gravação concluída. Tentando transcrever...');
+  try{
+    const response=await fetch(`/api/transcribe?lang=${encodeURIComponent(universalVoiceOptions.lang||'pt-BR')}`,{method:'POST',headers:{'Content-Type':universalVoiceBlob.type||'application/octet-stream'},body:universalVoiceBlob});
+    const payload=await response.json().catch(()=>({}));if(!response.ok||!payload.text)throw new Error(payload.error||'Transcrição indisponível');deliverUniversalVoiceText(payload.text.trim());
+  }catch(error){console.info('Transcrição do servidor indisponível:',error);setVoiceCaptureStatus('O áudio foi gravado, mas a transcrição automática não está disponível. Ouça e digite abaixo para continuar.');showVoiceManualFallback();}
+}
+function deliverUniversalVoiceText(text){
+  const value=String(text||'').trim();if(!value){showVoiceManualFallback();return;}
+  if(universalVoiceCallback)universalVoiceCallback(value);else if(universalVoiceOptions.targetId){const target=document.getElementById(universalVoiceOptions.targetId);if(target)target.value=value;}
+  setVoiceCaptureStatus('✓ Texto inserido.');setTimeout(closeVoiceCapture,400);
+}
+function useVoiceFallbackText(){const value=document.getElementById('voiceFallbackText').value.trim();if(!value){toast('Digite uma frase para continuar.');return;}deliverUniversalVoiceText(value);}
+function showVoiceManualFallback(){document.getElementById('voiceFallbackBox').classList.remove('hidden');document.getElementById('voiceStopBtn').classList.add('hidden');document.getElementById('voiceCancelBtn').classList.add('hidden');document.getElementById('voiceCloseBtn').classList.remove('hidden');}
+function cancelUniversalVoiceCapture(){if(universalVoiceRecorder&&universalVoiceRecorder.state==='recording'){try{universalVoiceRecorder.onstop=null;universalVoiceRecorder.stop();}catch{}}if(universalVoiceRecognition){try{universalVoiceRecognition.abort();}catch{}universalVoiceRecognition=null;}stopUniversalVoiceTracks();closeVoiceCapture();}
+function stopUniversalVoiceTracks(){if(universalVoiceStream){universalVoiceStream.getTracks().forEach(track=>track.stop());universalVoiceStream=null;}}
+function closeVoiceCapture(){clearInterval(universalVoiceTimer);universalVoiceTimer=null;stopUniversalVoiceTracks();document.getElementById('voiceCaptureOverlay').classList.remove('open');document.getElementById('voiceStopBtn').disabled=false;universalVoiceCallback=null;universalVoiceOptions={};}
+function friendlyVoiceError(error){const name=error?.name||'';if(name==='NotAllowedError'||name==='PermissionDeniedError')return 'O microfone foi bloqueado. Nas permissões do site, selecione Microfone → Permitir.';if(name==='NotFoundError')return 'Nenhum microfone foi encontrado neste celular.';if(name==='NotReadableError')return 'O microfone está sendo usado por outro aplicativo. Feche chamadas ou gravadores e tente novamente.';return 'Não foi possível iniciar o microfone. Atualize a página e tente novamente.';}
+function dictateTo(elementId,lang,options={}){startUniversalVoiceCapture({targetId:elementId,lang,maxSeconds:options.maxSeconds||25,label:options.label||'Resposta por voz'});}
+function startEnglishDictation(){if(englishLevel==='basic')startBeginnerRepeat();else if(englishLevel==='intermediate')dictateTo('intermediateResponse',englishAccent,{maxSeconds:20,label:'Resposta em inglês'});else dictateTo('advancedResponse',englishAccent,{maxSeconds:35,label:'Resposta em inglês'});}
 
 function startMentorDictation(){
-  recognizeSpeech('pt-BR',text=>{
-    document.getElementById('mentorSituation').value=text;
-    toast('Situação transcrita.');
-  });
+  startUniversalVoiceCapture({lang:'pt-BR',maxSeconds:40,label:'Descrever situação ao Mentor',onText:text=>{document.getElementById('mentorSituation').value=text;toast('Situação transcrita.');}});
 }
 function startMentorPractice(){
   const answer=document.getElementById('mentorAnswer').textContent;
@@ -1794,20 +2022,64 @@ async function improveOratoryWithAI(){
 }
 
 const interviewScenarios={
-  defeat:'A equipe está há quatro jogos sem vencer. Por que a torcida deveria acreditar na recuperação?',
-  referee:'A arbitragem decidiu a partida de hoje?',
-  player:'Por que um dos jogadores mais importantes começou no banco?',
-  victory:'Depois desta vitória, sua equipe se tornou favorita ao título?'
+  defeat:{question:'A equipe está há quatro jogos sem vencer. Por que a torcida deveria acreditar na recuperação?',help:'Reconheça a sequência, assuma responsabilidade e apresente uma correção concreta.',model:'Entendemos a cobrança. Identificamos os principais problemas e estamos trabalhando em correções específicas. Nossa resposta precisa aparecer no próximo jogo.',avoid:'Prometer vitória, procurar culpados ou fazer uma explicação muito longa.'},
+  'heavy-defeat':{question:'Depois de uma derrota por placar elevado, como você explica uma atuação tão abaixo do esperado?',help:'Assuma o resultado sem expor jogadores. Separe o que aconteceu do que será corrigido.',model:'O desempenho ficou muito abaixo do que representamos. A responsabilidade começa por mim. Vamos analisar com clareza, corrigir os comportamentos que falharam e exigir uma resposta imediata.',avoid:'Minimizar o placar, atacar atletas individualmente ou dizer que “foi apenas um dia ruim”.'},
+  'poor-win':{question:'Mesmo com a vitória, sua equipe jogou mal. O resultado esconde os problemas?',help:'Valorize o resultado, mas demonstre que a análise não depende apenas do placar.',model:'A vitória é importante, mas nossa avaliação precisa ser honesta. Tivemos dificuldades que devem ser corrigidas. Vamos aproveitar o resultado sem deixar de evoluir no desempenho.',avoid:'Fingir que a atuação foi boa ou desvalorizar completamente a vitória.'},
+  victory:{question:'Depois desta vitória, sua equipe se tornou favorita ao título?',help:'Evite criar expectativa excessiva. Mantenha o foco no processo e no próximo compromisso.',model:'Foi uma vitória importante, mas ela não muda nossa forma de trabalhar. Precisamos manter regularidade, corrigir detalhes e pensar no próximo jogo.',avoid:'Assumir favoritismo ou usar uma falsa humildade que pareça pouco natural.'},
+  'fan-pressure':{question:'A torcida protestou novamente. Você entende que perdeu o apoio dos torcedores?',help:'Reconheça o direito de cobrança, sem entrar em confronto ou usar a torcida como justificativa.',model:'A torcida tem o direito de cobrar e nós entendemos a insatisfação. Nossa responsabilidade é responder com trabalho, desempenho e resultados.',avoid:'Criticar a torcida ou dizer que o protesto não influencia ninguém.'},
+  referee:{question:'A arbitragem decidiu a partida de hoje?',help:'Você pode reconhecer uma decisão discutível sem transformar a arbitragem na explicação principal.',model:'Houve decisões que podem ser discutidas, mas prefiro concentrar a análise naquilo que estava sob nosso controle. Precisamos melhorar nosso desempenho.',avoid:'Acusar intenção, ofender ou usar a arbitragem como única causa do resultado.'},
+  var:{question:'O VAR anulou um gol decisivo. Você considera que a tecnologia está prejudicando o futebol?',help:'Separe sua frustração com o lance de uma acusação geral contra a tecnologia.',model:'O lance foi decisivo e naturalmente gera discussão. Vamos buscar os esclarecimentos pelos canais corretos, mas nossa análise também precisa considerar o restante da partida.',avoid:'Afirmar fraude ou intenção sem evidência.'},
+  'red-card':{question:'A expulsão foi irresponsabilidade do jogador e comprometeu a equipe?',help:'Proteja o atleta publicamente e deixe a correção individual para uma conversa interna.',model:'A expulsão mudou o jogo e precisamos avaliar o lance com calma. Vamos tratar internamente os comportamentos necessários, sem expor o jogador publicamente.',avoid:'Humilhar o atleta ou negar que o lance teve impacto.'},
+  player:{question:'Por que um dos jogadores mais importantes começou no banco?',help:'Explique o critério sem revelar informações confidenciais ou comparar negativamente atletas.',model:'Foi uma decisão baseada nas necessidades da equipe para este jogo. Todos conhecem os critérios e o jogador continua importante para o grupo.',avoid:'Prometer titularidade ou expor questões internas.'},
+  'young-error':{question:'O erro do jogador jovem decidiu a partida. Ele estava preparado para esse nível de pressão?',help:'Assuma a decisão técnica e proteja o desenvolvimento do atleta.',model:'A decisão de utilizá-lo foi minha. Um erro não define o jogador. Vamos apoiar, corrigir e ajudá-lo a transformar essa experiência em evolução.',avoid:'Responsabilizar o jovem pelo resultado ou tratá-lo como vítima incapaz.'},
+  'goalkeeper-error':{question:'O goleiro voltou a falhar. Você ainda confia nele?',help:'Demonstre confiança sem negar o erro e sem anunciar decisões futuras no calor do momento.',model:'Confiamos no jogador e também sabemos que o lance precisa ser analisado. Vamos corrigir com o mesmo critério aplicado a todos e tomar decisões pensando na equipe.',avoid:'Garantir escalação futura ou retirar publicamente a confiança.'},
+  transfer:{question:'Seu elenco precisa urgentemente de reforços para competir?',help:'Explique necessidades sem desvalorizar os jogadores que já estão no clube.',model:'Estamos avaliando possibilidades junto à direção, mas confiamos no grupo atual. Qualquer movimento será pensado para complementar o elenco e atender necessidades específicas.',avoid:'Dizer que o elenco é insuficiente ou exigir nomes publicamente.'},
+  'locker-leak':{question:'Informações do vestiário chegaram à imprensa. O grupo está dividido?',help:'Não confirme detalhes internos. Reforce que o assunto será tratado com responsabilidade.',model:'Questões internas serão tratadas dentro do clube. Nosso foco é preservar o grupo, alinhar responsabilidades e manter a equipe concentrada no trabalho.',avoid:'Investigar culpados diante da imprensa ou confirmar rumores.'},
+  tactical:{question:'Por que você demorou tanto para mudar a equipe taticamente?',help:'Explique a leitura e o momento da decisão sem ficar defensivo.',model:'Avaliamos diferentes sinais durante o jogo e fizemos a mudança quando entendemos que ela poderia produzir o efeito necessário. Depois, vamos revisar se poderíamos ter ajustado antes.',avoid:'Dizer apenas que “é fácil analisar depois” ou atacar a pergunta.'},
+  derby:{question:'Depois de perder o clássico, você entende a revolta da torcida?',help:'Reconheça o peso emocional do clássico e mantenha a resposta profissional.',model:'Entendemos o significado do clássico e a frustração da torcida. O resultado dói, mas agora precisamos assumir, corrigir e responder no próximo compromisso.',avoid:'Tratar como um jogo qualquer ou dramatizar além do necessário.'},
+  final:{question:'Sua equipe está preparada para a pressão de uma final?',help:'Transmita preparação por meio de comportamentos, não por promessas emocionais.',model:'A equipe se preparou para competir com organização, coragem e equilíbrio. Respeitamos o adversário e vamos concentrar energia em cada ação da partida.',avoid:'Garantir o título ou usar frases motivacionais sem conteúdo.'},
+  'new-club':{question:'Qual identidade você pretende implementar neste novo clube?',help:'Apresente poucos princípios e conecte-os ao trabalho diário.',model:'Quero uma equipe organizada, corajosa e comprometida com o coletivo. Essa identidade será construída no treinamento, nas decisões e na forma de competir.',avoid:'Prometer uma transformação imediata ou usar muitos conceitos abstratos.'},
+  'job-pressure':{question:'Você acredita que este pode ser seu último jogo no comando da equipe?',help:'Não especule sobre decisões da direção. Mantenha foco na sua responsabilidade atual.',model:'Minha responsabilidade é preparar a equipe e buscar uma resposta no próximo jogo. Decisões institucionais cabem à direção, e eu sigo concentrado no trabalho.',avoid:'Implorar permanência, atacar a direção ou fingir que a pressão não existe.'}
 };
-function loadInterviewScenario(){document.getElementById('interviewQuestion').textContent=interviewScenarios[document.getElementById('interviewScenario').value];document.getElementById('interviewResponse').value='';document.getElementById('interviewResult').classList.add('hidden');}
+function currentInterviewData(){return interviewScenarios[document.getElementById('interviewScenario').value]||interviewScenarios.defeat;}
+function pressureInterviewQuestion(question){
+  const pressure=document.getElementById('interviewPressure')?.value||'normal';
+  if(pressure==='insistent')return question+' Preciso de uma resposta mais objetiva, treinador.';
+  if(pressure==='provocative')return question+' A impressão é que você está evitando assumir o problema. O que responde?';
+  return question;
+}
+function updateInterviewHelp(){
+  const data=currentInterviewData(),pressure=document.getElementById('interviewPressure')?.value||'normal';
+  const label=pressure==='provocative'?'Pergunta provocativa':pressure==='insistent'?'Jornalista insistente':'Entrevista profissional';
+  document.getElementById('interviewThemeHelp').innerHTML=`<strong>${label}:</strong> ${data.help}`;
+  document.getElementById('interviewQuestion').textContent=pressureInterviewQuestion(data.question);
+}
+function loadInterviewScenario(reset=true){
+  updateInterviewHelp();
+  if(reset){document.getElementById('interviewResponse').value='';document.getElementById('interviewResult').classList.add('hidden');document.getElementById('interviewStructure').classList.add('hidden');}
+}
+function showInterviewStructure(){
+  const box=document.getElementById('interviewStructure');box.classList.toggle('hidden');
+  box.innerHTML='<strong>Estrutura de 4 passos:</strong><br>1. Responda diretamente.<br>2. Reconheça o fato ou a cobrança.<br>3. Explique apenas um ponto principal.<br>4. Termine com a correção ou o próximo passo.';
+}
+function interviewLocalAssessment(response){
+  const words=response.split(/\s+/).filter(Boolean).length;
+  const blame=(response.match(/\b(culpa|árbitro|jogador|eles erraram|não é comigo|diretoria)\b/gi)||[]).length;
+  const action=/\b(vamos|precisamos|corrigir|trabalhar|próximo|melhorar|avaliar|responder)\b/i.test(response);
+  const objective=words>=18&&words<=95?100:words<18?60:55;
+  const protection=Math.max(35,100-blame*25);
+  const direction=action?100:50;
+  return {words,objective,protection,direction,score:Math.round(objective*.35+protection*.3+direction*.35)};
+}
 async function analyzeInterview(){
-  const question=document.getElementById('interviewQuestion').textContent,response=document.getElementById('interviewResponse').value.trim(),box=document.getElementById('interviewResult');
+  const data=currentInterviewData(),question=document.getElementById('interviewQuestion').textContent,response=document.getElementById('interviewResponse').value.trim(),box=document.getElementById('interviewResult');
   if(!response){toast('Responda à pergunta primeiro.');return;}
-  box.classList.remove('hidden');box.textContent='O jornalista está analisando sua resposta...';
-  const result=await callCoachAI('interview',{question,response});
-  box.textContent=`Leitura: ${result.feedback||'A resposta deve reconhecer o tema sem ficar defensiva e terminar com uma ação concreta.'}\n\nResposta-modelo: ${result.model||'Entendemos a cobrança. Identificamos os problemas e estamos trabalhando em correções específicas. Nossa resposta precisa aparecer no próximo jogo.'}\n\nEvite: ${result.avoid||'Culpar jogadores, discutir ou prometer resultado.'}\n\nPróxima pergunta: ${result.nextQuestion||'O que será feito de forma diferente no próximo jogo?'}`;
-  const history=getJSON('coachvoice-interview-history',[]);history.unshift({date:new Date().toLocaleString('pt-BR'),day:dateKey(),question,response});
-  localStorage.setItem('coachvoice-interview-history',JSON.stringify(history.slice(0,80)));addXP(12,'Simulação de entrevista');
+  const local=interviewLocalAssessment(response);box.classList.remove('hidden');
+  box.innerHTML=`<strong>Análise local: ${local.score}/100</strong><div class="interview-local-score"><div><strong>${local.objective}</strong><small>Objetividade</small></div><div><strong>${local.protection}</strong><small>Proteção do grupo</small></div><div><strong>${local.direction}</strong><small>Próximo passo</small></div></div><p>Buscando orientação adicional...</p>`;
+  const result=await callCoachAI('interview',{theme:document.getElementById('interviewScenario').value,pressure:document.getElementById('interviewPressure').value,question,response,local});
+  box.textContent=`Leitura: ${result.feedback||data.help}\n\nResposta-modelo: ${result.model||data.model}\n\nEvite: ${result.avoid||data.avoid}\n\nPróxima pergunta: ${result.nextQuestion||'Qual mudança concreta o torcedor verá no próximo compromisso?'}`;
+  const history=getJSON('coachvoice-interview-history',[]);history.unshift({date:new Date().toLocaleString('pt-BR'),day:dateKey(),theme:document.getElementById('interviewScenario').value,question,response,score:local.score});
+  localStorage.setItem('coachvoice-interview-history',JSON.stringify(history.slice(0,100)));addXP(12,'Simulação de entrevista');
 }
 
 const leadershipData={
@@ -1848,23 +2120,61 @@ async function continueLeadershipRoleplay(){
   localStorage.setItem('coachvoice-leadership-history',JSON.stringify(history.slice(0,80)));addXP(12,'Simulação de liderança');
 }
 
-const gamePrinciplesList=['Organização defensiva','Pressão pós-perda','Amplitude','Controle do centro','Transição rápida','Posse com objetivo','Intensidade','Coragem para jogar','Compactação'];
-let selectedPrinciples=new Set(getJSON('coachvoice-game-principles',[]));
+const gamePrinciplesList=[
+  {id:'protect-center',category:'Sem a bola',label:'Proteger o centro',description:'Fechar os espaços por dentro e orientar o adversário para os lados.',action:'fechar o centro e conduzir o adversário para fora'},
+  {id:'compact',category:'Sem a bola',label:'Defender compacto',description:'Manter pouca distância entre defesa, meio e ataque.',action:'aproximar os setores e defender juntos'},
+  {id:'counterpress',category:'Sem a bola',label:'Reagir após perder a bola',description:'Pressionar imediatamente ou recuperar a organização.',action:'reagir rápido após a perda e recuperar a forma'},
+  {id:'high-press',category:'Sem a bola',label:'Pressionar mais alto',description:'Avançar as linhas quando surgir o gatilho combinado.',action:'subir a pressão juntos quando o passe entrar no gatilho'},
+  {id:'width',category:'Com a bola',label:'Abrir o campo',description:'Dar largura para criar espaço por dentro.',action:'usar a largura e manter jogadores abertos'},
+  {id:'circulation',category:'Com a bola',label:'Circular a bola mais rápido',description:'Mover a bola antes que a defesa se reorganize.',action:'acelerar a circulação e encontrar o jogador livre'},
+  {id:'depth',category:'Com a bola',label:'Atacar a profundidade',description:'Fazer movimentos nas costas da última linha.',action:'atacar o espaço atrás da defesa no momento certo'},
+  {id:'support',category:'Com a bola',label:'Dar apoio ao portador',description:'Criar linhas de passe próximas e seguras.',action:'aproximar para oferecer duas opções de passe'},
+  {id:'attack-transition',category:'Transições',label:'Atacar rápido após recuperar',description:'Reconhecer se há espaço para avançar imediatamente.',action:'olhar para frente após recuperar e acelerar se houver espaço'},
+  {id:'def-transition',category:'Transições',label:'Voltar à organização',description:'Quando não for possível pressionar, proteger espaço e reorganizar.',action:'recuar juntos, proteger o centro e reorganizar'},
+  {id:'emotion',category:'Comportamento',label:'Manter equilíbrio',description:'Continuar tomando boas decisões em momentos difíceis.',action:'manter calma, comunicação e disciplina nas decisões'},
+  {id:'compete',category:'Comportamento',label:'Competir em cada ação',description:'Aumentar concentração, intensidade e ajuda entre companheiros.',action:'disputar cada ação e ajudar o companheiro'}
+];
+const legacyGamePrincipleMap={'Organização defensiva':'compact','Pressão pós-perda':'counterpress','Amplitude':'width','Controle do centro':'protect-center','Transição rápida':'attack-transition','Posse com objetivo':'circulation','Intensidade':'compete','Coragem para jogar':'compete','Compactação':'compact'};
+const storedGamePrinciples=getJSON('coachvoice-game-principles',[]).map(value=>legacyGamePrincipleMap[value]||value).filter(value=>gamePrinciplesList.some(item=>item.id===value));
+let selectedPrinciples=new Set(storedGamePrinciples.slice(0,3));
+localStorage.setItem('coachvoice-game-principles',JSON.stringify([...selectedPrinciples]));
+function principleById(id){return gamePrinciplesList.find(item=>item.id===id);}
 function renderGamePrinciples(){
   const container=document.getElementById('gamePrinciples');if(!container)return;
-  container.innerHTML=gamePrinciplesList.map((item,index)=>`<button class="principle ${selectedPrinciples.has(item)?'active':''}" onclick="toggleGamePrinciple('${item.replaceAll("'","\\'")}')">${item}</button>`).join('');
+  const categories=[...new Set(gamePrinciplesList.map(item=>item.category))];
+  container.innerHTML=categories.map(category=>`<div class="principle-section"><h3>${category}</h3><div class="principle-grid">${gamePrinciplesList.filter(item=>item.category===category).map(item=>`<button class="principle-card ${selectedPrinciples.has(item.id)?'active':''}" onclick="toggleGamePrinciple('${item.id}')"><strong>${selectedPrinciples.has(item.id)?'✓ ':''}${item.label}</strong><small>${item.description}</small></button>`).join('')}</div></div>`).join('');
+  updateGameSelectedSummary();
 }
-function toggleGamePrinciple(value){
-  if(selectedPrinciples.has(value))selectedPrinciples.delete(value);else selectedPrinciples.add(value);
+function toggleGamePrinciple(id){
+  if(selectedPrinciples.has(id))selectedPrinciples.delete(id);else if(selectedPrinciples.size<3)selectedPrinciples.add(id);else{toast('Escolha no máximo três comportamentos.');return;}
   localStorage.setItem('coachvoice-game-principles',JSON.stringify([...selectedPrinciples]));renderGamePrinciples();
 }
+function updateGameSelectedSummary(){
+  const box=document.getElementById('gameSelectedSummary');if(!box)return;
+  const items=[...selectedPrinciples].map(principleById).filter(Boolean);
+  box.innerHTML=items.length?`<strong>Escolhidos (${items.length}/3):</strong> ${items.map(item=>item.label).join(' • ')}`:'Nenhum comportamento escolhido. Toque em uma ou mais opções acima.';
+}
+function selectBasicGameExample(){
+  selectedPrinciples=new Set(['protect-center','compact','counterpress']);
+  localStorage.setItem('coachvoice-game-principles',JSON.stringify([...selectedPrinciples]));renderGamePrinciples();
+  document.getElementById('gameMoment').value='Treino';document.getElementById('gameAudience').value='Equipe completa';document.getElementById('gameContext').value='A equipe está deixando espaços por dentro quando perde a bola.';
+  toast('Exemplo básico carregado.');
+}
+function localGameMessage(items,moment,audience,context){
+  const actions=items.map(item=>item.action);
+  const intro=moment==='Intervalo'?'Ainda estamos no jogo.':moment==='Pré-jogo'?'Desde o primeiro minuto,':moment==='Pós-jogo'?'Na nossa análise,':'No exercício de hoje,';
+  const body=actions.map((action,index)=>`${index+1}. ${action}.`).join(' ');
+  const close=audience==='Comissão técnica'?'Vamos observar esses comportamentos e corrigir com uma mensagem única.':'Façam isso juntos, comuniquem e mantenham clareza em cada ação.';
+  return `${intro} nosso foco é simples. ${body} ${context?`Contexto: ${context}. `:''}${close}`;
+}
 async function generateGameMessage(){
-  if(!selectedPrinciples.size){toast('Escolha pelo menos um princípio.');return;}
-  const box=document.getElementById('gameModelResult');box.classList.remove('hidden');box.textContent='Transformando o modelo em uma mensagem simples...';
-  const payload={principles:[...selectedPrinciples],moment:document.getElementById('gameMoment').value,audience:document.getElementById('gameAudience').value,context:document.getElementById('gameContext').value.trim()};
+  const box=document.getElementById('gameModelResult');box.classList.remove('hidden');
+  if(!selectedPrinciples.size){box.textContent='Escolha de um a três comportamentos. Para começar, toque em “Usar um exemplo básico”.';box.scrollIntoView({behavior:'smooth',block:'center'});return;}
+  const items=[...selectedPrinciples].map(principleById).filter(Boolean),moment=document.getElementById('gameMoment').value,audience=document.getElementById('gameAudience').value,context=document.getElementById('gameContext').value.trim();
+  const local=localGameMessage(items,moment,audience,context);box.textContent='Mensagem local pronta. Consultando a IA para simplificar ainda mais...';
+  const payload={principles:items.map(item=>({label:item.label,action:item.action})),moment,audience,context,local};
   const result=await callCoachAI('game-model',payload);
-  const local=`Hoje o foco é ${[...selectedPrinciples].slice(0,3).join(', ')}. Precisamos reconhecer o momento, agir juntos e manter clareza em cada ação.`;
-  box.textContent=`Mensagem: ${result.message||local}\n\nOrientação curta: ${result.briefing||'Use no máximo três princípios e relacione cada um a uma ação observável.'}\n\nEvite: ${result.avoid||'Excesso de conceitos e instruções longas.'}`;
+  box.textContent=`O que você quer da equipe:\n${items.map(item=>'• '+item.label+': '+item.action).join('\n')}\n\nMensagem para falar:\n${result.message||local}\n\nVersão muito curta:\n${result.briefing||items.map(item=>item.label).join(', ')+'. Juntos e com comunicação.'}\n\nEvite:\n${result.avoid||'Dar mais de três ideias ao mesmo tempo ou usar conceitos sem explicar a ação.'}`;
   addXP(10,'Comunicação do modelo de jogo');
 }
 
@@ -2084,58 +2394,11 @@ function setLessonMicStatus(message,state=''){
   status.className='lesson-mic-status'+(state?' '+state:'');
 }
 function startLessonDictation(){
-  const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!Recognition){
-    setLessonMicStatus('Este navegador não oferece transcrição por voz. No computador, teste pelo Google Chrome.','');
-    toast('Transcrição por voz indisponível.');
-    return;
-  }
-  if(!currentLesson){
-    toast('Abra uma aula primeiro.');
-    return;
-  }
-
-  const recognition=new Recognition();
-  recognition.lang=lessonRecognitionLanguage();
-  recognition.interimResults=true;
-  recognition.continuous=false;
-  recognition.maxAlternatives=1;
-
-  let finalText='';
-  const button=document.getElementById('lessonMicBtn');
-  recognition.onstart=()=>{
-    if(button){button.disabled=true;button.textContent='🔴 Ouvindo...';}
-    setLessonMicStatus('Microfone ativo. Fale sua resposta com calma e conclua a ideia.','listening');
-  };
-  recognition.onresult=event=>{
-    let interim='';
-    for(let i=event.resultIndex;i<event.results.length;i++){
-      const part=event.results[i][0].transcript;
-      if(event.results[i].isFinal)finalText+=(finalText?' ':'')+part;
-      else interim+=part;
-    }
-    document.getElementById('lessonTranscript').value=(finalText+(interim?' '+interim:'')).trim();
-  };
-  recognition.onerror=event=>{
-    const messages={
-      'not-allowed':'O acesso ao microfone foi bloqueado. Permita o microfone nas configurações do navegador.',
-      'audio-capture':'Nenhum microfone foi encontrado neste aparelho.',
-      'no-speech':'Nenhuma fala foi detectada. Tente novamente falando mais perto do microfone.',
-      'network':'O serviço de reconhecimento de voz não respondeu. Verifique a conexão.'
-    };
-    setLessonMicStatus(messages[event.error]||'Não foi possível reconhecer a fala. Tente novamente.','');
-  };
-  recognition.onend=()=>{
-    if(button){button.disabled=false;button.textContent='🎙 Falar novamente';}
-    const value=document.getElementById('lessonTranscript').value.trim();
-    if(value)setLessonMicStatus('Resposta transcrita. Você pode corrigir o texto e tocar em “Analisar resposta”.','ready');
-  };
-
-  try{recognition.start();}
-  catch(error){
-    console.error(error);
-    setLessonMicStatus('Não foi possível iniciar o microfone. Atualize a página e tente novamente.','');
-  }
+  if(!currentLesson){toast('Abra uma aula primeiro.');return;}
+  const button=document.getElementById('lessonMicBtn');if(button){button.disabled=true;button.textContent='🎙 Abrindo microfone...';}
+  setLessonMicStatus('Preparando o microfone...','listening');
+  startUniversalVoiceCapture({lang:lessonRecognitionLanguage(),maxSeconds:30,label:'Resposta da aula',onText:text=>{document.getElementById('lessonTranscript').value=text;setLessonMicStatus('Resposta recebida. Corrija o texto e toque em “Analisar resposta”.','ready');if(button){button.disabled=false;button.textContent='🎙 Falar novamente';}}});
+  setTimeout(()=>{if(button&&button.disabled){button.disabled=false;button.textContent='🎙 Falar novamente';}},1500);
 }
 function listenLessonResponse(){
   const response=document.getElementById('lessonTranscript').value.trim();
@@ -2366,6 +2629,25 @@ function checkTechnicalEnvironment(){
 
   testStorage(false);
 }
+async function runMobileDiagnostics(showToast=true){
+  const container=document.getElementById('mobileDiagnosticResult');if(!container)return;
+  const secure=window.isSecureContext||location.hostname==='localhost';
+  const media=Boolean(navigator.mediaDevices?.getUserMedia);
+  const recorder=Boolean(window.MediaRecorder);
+  const recognition=Boolean(window.SpeechRecognition||window.webkitSpeechRecognition);
+  const storage=Boolean(window.indexedDB&&window.localStorage);
+  let permission='Perguntar';
+  try{if(navigator.permissions?.query){const result=await navigator.permissions.query({name:'microphone'});permission=result.state==='granted'?'Permitido':result.state==='denied'?'Bloqueado':'Perguntar';}}catch{}
+  let ai='Não testada';
+  if(showToast){
+    try{const response=await fetch('/api/transcribe',{method:'GET'});const data=await response.json();ai=data.configured?'Transcrição IA pronta':'Chave não configurada';}catch{ai='Sem resposta do servidor';}
+  }
+  const items=[
+    ['HTTPS',secure?'Pronto':'Problema'],['Microfone',media?permission:'Indisponível'],['Gravação',recorder?'Compatível':'Indisponível'],['Transcrição do navegador',recognition?'Disponível':'Usará gravação/IA'],['Armazenamento',storage?'Pronto':'Indisponível'],['Transcrição por IA',ai]
+  ];
+  container.innerHTML=items.map(([name,value])=>`<div class="diagnostic-item"><strong>${name}</strong><small>${value}</small></div>`).join('');
+  if(showToast)toast('Diagnóstico concluído.');
+}
 function testSpeech(){
   if(!('speechSynthesis' in window)){
     toast('Áudio de voz não disponível neste navegador.');
@@ -2382,8 +2664,10 @@ async function startMicTest(){
   }
   try{
     micStream=await navigator.mediaDevices.getUserMedia({audio:true});
+    if(!window.MediaRecorder){throw new Error('MediaRecorderUnavailable');}
     micChunks=[];
-    mediaRecorder=new MediaRecorder(micStream);
+    const micMime=preferredAudioMimeType();
+    mediaRecorder=new MediaRecorder(micStream,micMime?{mimeType:micMime}:{});
     mediaRecorder.ondataavailable=e=>{if(e.data.size>0)micChunks.push(e.data)};
     mediaRecorder.onstop=()=>{
       const blob=new Blob(micChunks,{type:mediaRecorder.mimeType||'audio/webm'});

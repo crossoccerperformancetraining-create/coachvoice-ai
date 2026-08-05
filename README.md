@@ -1,68 +1,68 @@
-# CoachVoice AI v3.0 — Estúdio do Treinador
+# CoachVoice AI v3.1 — revisão para celular
 
-## Novidade principal
+Esta versão corrige os principais problemas observados durante o primeiro uso no celular.
 
-A versão 3.0 acrescenta o **Estúdio do Treinador**, mantendo todas as funções da v2.3.
+## Correções principais
 
-### Modos de vídeo
+- resultados não desaparecem mais depois de tocar em **Analisar**;
+- abrir uma aba não apaga automaticamente a resposta da aba anterior;
+- todos os botões de voz usam uma janela de gravação visível;
+- o áudio é gravado mesmo quando o reconhecimento nativo do navegador falha;
+- quando a IA estiver configurada, o áudio pode ser transcrito por `api/transcribe.js`;
+- sem IA, o usuário pode ouvir a gravação e digitar o texto para continuar;
+- câmera do Estúdio grava o vídeo e um áudio separado para transcrição;
+- mensagens de erro de permissão ficaram mais claras;
+- cache alterado para **network-first**, reduzindo o risco de abrir versão antiga.
 
-- oratória em português;
-- entrevista em português;
-- entrevista em inglês;
-- explicação no quadro tático;
-- vestiário e liderança;
-- apresentação profissional.
+## Entrevistas
 
-### Recursos disponíveis
+Foram adicionados temas de:
 
-- câmera frontal ou traseira;
-- gravações de 30, 45 ou 60 segundos;
-- reprodução imediata;
-- nova tentativa e descarte;
-- transcrição pelo navegador quando disponível;
-- duração, palavras, palavras por minuto e vícios localizados;
-- checklist de autoavaliação visual;
-- salvamento local no IndexedDB;
-- biblioteca de vídeos;
-- exclusão de gravações;
-- comparação lado a lado entre duas tentativas;
-- feedback local e IA opcional sobre a transcrição.
+- sequência sem vencer;
+- derrota por placar elevado;
+- vitória com atuação ruim;
+- torcida e pressão;
+- arbitragem, VAR e expulsão;
+- jogador no banco, jovem após erro e falha do goleiro;
+- reforços e vazamento do vestiário;
+- mudança tática;
+- clássico, final, apresentação e pressão por demissão.
 
-## Limites desta primeira versão
+Também há três estilos de jornalista: profissional, insistente e provocativo.
 
-O aplicativo **não interpreta automaticamente** postura, direção do olhar, gestos ou emoções. Ele analisa a transcrição e usa a autoavaliação marcada pelo treinador. Isso evita apresentar conclusões visuais que o sistema ainda não mediu.
+## Modelo de jogo
 
-Os vídeos ficam somente no navegador atual. Eles podem ser perdidos ao limpar os dados do navegador, usar navegação anônima, trocar de computador ou reinstalar o navegador.
+A área agora explica que um princípio é um **comportamento esperado em campo**. As escolhas estão divididas em:
+
+- sem a bola;
+- com a bola;
+- transições;
+- comportamento coletivo.
+
+O botão **Usar um exemplo básico** preenche uma situação para o primeiro teste.
+
+## Transcrição por IA
+
+Para ativar a transcrição no celular, configure na Vercel:
+
+- `OPENAI_API_KEY`
+- opcional: `OPENAI_TRANSCRIBE_MODEL=gpt-4o-mini-transcribe`
+
+Sem a chave, gravação e reprodução continuam funcionando.
 
 ## Publicação
 
-Substitua os arquivos da v2.3 pelos arquivos deste pacote. Dois arquivos novos devem ficar na raiz:
+Envie todos os arquivos para o repositório. A pasta `api` deve conter:
 
-- `studio.css`
-- `studio.js`
-
-A pasta `api` continua com:
-
-- `mentor.js`
-- `english-coach.js`
 - `coach-ai.js`
+- `english-coach.js`
+- `mentor.js`
+- `transcribe.js`
 
 Commit sugerido:
 
-`Adicionar Estúdio do Treinador v3.0`
+`Revisar funções mobile e iniciar fase de treinos v3.1`
 
-Depois do deploy, abra somente o domínio oficial:
+Teste no domínio oficial:
 
-`https://coachvoice-ai.vercel.app/?v=30`
-
-## Teste inicial
-
-1. Abra **Estúdio do Treinador**.
-2. Escolha **Oratória em português**.
-3. Selecione 30 segundos.
-4. Ative câmera e microfone.
-5. Grave a primeira tentativa.
-6. Assista e marque a autoavaliação.
-7. Salve o vídeo.
-8. Grave uma segunda tentativa.
-9. Compare os dois vídeos.
+`https://coachvoice-ai.vercel.app/?v=31`

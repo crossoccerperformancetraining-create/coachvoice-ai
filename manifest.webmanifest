@@ -1,5 +1,5 @@
 {
-  "name": "CoachVoice AI v3.0",
+  "name": "CoachVoice AI v3.1",
   "short_name": "CoachVoice",
   "start_url": "/",
   "scope": "/",
@@ -21,5 +21,5 @@
       "purpose": "any maskable"
     }
   ],
-  "description": "Estúdio do Treinador com vídeo, entrevistas, oratória e comparação de tentativas."
+  "description": "Treinos de comunicação, inglês, entrevistas, modelo de jogo e vídeo com suporte mobile."
 }
