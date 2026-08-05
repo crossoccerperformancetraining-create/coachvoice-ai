@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#071225">
-<meta name="application-name" content="CoachVoice AI v3.1">
+<meta name="application-name" content="CoachVoice AI v3.2">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="CoachVoice">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<title>CoachVoice AI v3.1 — Treino individual</title>
+<title>CoachVoice AI v3.2 — Estabilidade e Enquadramento</title>
 <style>
 :root{
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -233,7 +233,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <button class="drawer-link" data-page="technical" onclick="go('technical')">⚙ Testes do aparelho</button>
     <button class="drawer-link" data-page="profile" onclick="go('profile')">◉ Preferências</button>
   </nav>
-  <div class="drawer-note">CoachVoice AI v3.1 — versão consolidada para testes. Dados salvos somente neste aparelho; IA ativada quando a chave estiver configurada na Vercel.</div>
+  <div class="drawer-note">CoachVoice AI v3.2 — estabilidade, enquadramento e testes no celular. Dados salvos somente neste aparelho; IA ativada quando a chave estiver configurada na Vercel.</div>
 </aside>
 <div id="overlay" class="overlay" onclick="closeDrawer()"></div>
 
@@ -367,7 +367,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
 <section id="studio" class="page">
   <div class="studio-hero">
-    <span class="eyebrow">COACHVOICE v3.0 — ESTÚDIO DO TREINADOR</span>
+    <span class="eyebrow">COACHVOICE v3.2 — ESTÚDIO DO TREINADOR</span>
     <h2>Grave, assista, repita e compare sua comunicação em vídeo.</h2>
     <p>Treine oratória, entrevistas, inglês, liderança, vestiário e explicações no quadro tático.</p>
   </div>
@@ -376,16 +376,45 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
       <article class="studio-panel">
         <span class="label">Configuração da sessão</span>
         <div class="studio-controls">
-          <div><label class="label" for="studioMode">Modo</label><select id="studioMode" class="select-field" onchange="loadStudioPrompt()"><option value="oratory">Oratória em português</option><option value="interview-pt">Entrevista em português</option><option value="interview-en">Entrevista em inglês</option><option value="tactical">Explicação no quadro tático</option><option value="locker">Vestiário e liderança</option><option value="presentation">Apresentação profissional</option></select></div>
+          <div><label class="label" for="studioMode">Modo</label><select id="studioMode" class="select-field" onchange="onStudioModeChange()"><option value="oratory">Oratória em português</option><option value="interview-pt">Entrevista em português</option><option value="interview-en">Entrevista em inglês</option><option value="tactical">Explicação no quadro tático</option><option value="locker">Vestiário e liderança</option><option value="presentation">Apresentação profissional</option></select></div>
           <div><label class="label" for="studioDuration">Duração máxima</label><select id="studioDuration" class="select-field"><option value="30">30 segundos</option><option value="45">45 segundos</option><option value="60" selected>60 segundos</option></select></div>
-          <div><label class="label" for="studioCamera">Câmera</label><select id="studioCamera" class="select-field" onchange="restartStudioCamera()"><option value="user">Frontal</option><option value="environment">Traseira</option></select></div>
+          <div><label class="label" for="studioCamera">Câmera</label><select id="studioCamera" class="select-field" onchange="restartStudioCamera()"><option value="user">Frontal</option><option value="environment">Traseira</option></select></div><div><label class="label" for="studioFraming">Enquadramento</label><select id="studioFraming" class="select-field" onchange="applyStudioFraming(true)"><option value="interview">Entrevista — plano próximo</option><option value="presentation">Apresentação — plano médio</option><option value="tactical">Quadro tático — plano aberto</option></select></div>
           <div><label class="label" for="studioLanguage">Idioma</label><select id="studioLanguage" class="select-field" onchange="loadStudioPrompt()"><option value="pt-BR">Português</option><option value="en-US">Inglês americano</option><option value="en-GB">Inglês britânico</option></select></div>
           <div class="wide"><label class="label" for="studioPrompt">Situação</label><textarea id="studioPrompt" class="text-input"></textarea></div>
         </div>
       </article>
       <article class="studio-panel">
-        <div class="camera-stage"><video id="studioPreview" autoplay muted playsinline></video><div class="camera-overlay"><div class="safe-frame"></div><div id="studioRecordPill" class="record-pill">Câmera desligada</div><div id="studioCountdown" class="countdown hidden"></div></div></div>
-        <div id="studioStatus" class="studio-status" style="margin-top:10px">Clique em “Ativar câmera” para começar.</div>
+        <div id="studioCameraStage" class="camera-stage">
+  <video id="studioPreview" autoplay muted playsinline></video>
+  <div class="camera-overlay">
+    <div id="studioSafeFrame" class="safe-frame frame-presentation">
+      <span id="studioFrameTitle" class="frame-title">Apresentação — plano médio</span>
+      <div id="studioPersonZone" class="person-zone"><span>Treinador</span></div>
+      <div id="studioBoardZone" class="board-zone"><span>Quadro</span></div>
+    </div>
+    <div id="studioRecordPill" class="record-pill">Câmera desligada</div>
+    <div id="studioCountdown" class="countdown hidden"></div>
+  </div>
+</div>
+<div id="studioOrientationNotice" class="orientation-notice" style="margin-top:10px">
+  <strong>📱 Modo horizontal necessário</strong>
+  <span>Gire o celular antes de gravar.</span>
+</div>
+<div id="studioCameraInfo" class="camera-info">Resolução solicitada: 1280 × 720 (720p).</div>
+        <div id="studioStatus" class="studio-status" style="margin-top:10px">Clique em “Ativar câmera” para começar.</div><div id="studioGesturePanel" class="gesture-test" style="margin-top:10px">
+  <div class="gesture-test-head">
+    <div>
+      <span class="label">Teste de enquadramento</span>
+      <strong id="studioGestureTitle">Prepare a câmera</strong>
+    </div>
+    <span id="studioGestureBadge" class="gesture-badge">Pendente</span>
+  </div>
+  <p id="studioGestureInstruction">Ative a câmera. Depois faça quatro movimentos para confirmar que cabeça, mãos e braços permanecem visíveis.</p>
+  <div id="studioGestureProgress" class="gesture-progress"></div>
+  <button id="studioGestureButton" class="secondary" onclick="advanceStudioGestureTest()" disabled>
+    Iniciar teste de gestos
+  </button>
+</div>
         <div class="record-actions" style="margin-top:10px"><button id="studioCameraBtn" class="secondary" onclick="startStudioCamera()">📷 Ativar câmera</button><button id="studioRecordBtn" class="primary" onclick="startStudioRecording()" disabled>⏺ Gravar</button><button id="studioStopBtn" class="secondary" onclick="stopStudioRecording()" disabled>⏹ Parar</button><button id="studioResetBtn" class="outline" onclick="resetStudioDraft()" disabled>↺ Nova tentativa</button><button class="outline full" onclick="readStudioPrompt()">🔊 Ouvir situação antes de gravar</button></div>
       </article>
       <article id="studioReviewPanel" class="studio-panel hidden">
@@ -397,7 +426,16 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
       </article>
     </div>
     <div>
-      <article class="studio-panel"><span class="label">Orientação da sessão</span><h3 id="studioGuideTitle">Oratória em vídeo</h3><p id="studioGuideText" class="intro"></p><div id="studioChecklist" class="studio-checklist"></div></article>
+      <article class="studio-panel"><span class="label">Orientação da sessão</span><h3 id="studioGuideTitle">Oratória em vídeo</h3><p id="studioGuideText" class="intro"></p><div id="studioChecklist" class="studio-checklist"></div></article><article class="studio-panel">
+  <span class="label">Antes de gravar</span>
+  <h3>Preparação rápida</h3>
+  <div class="studio-checklist">
+    <button class="studio-check" onclick="this.classList.toggle('active')">📱 Celular apoiado e estável</button>
+    <button class="studio-check" onclick="this.classList.toggle('active')">💡 Rosto e quadro bem iluminados</button>
+    <button class="studio-check" onclick="this.classList.toggle('active')">🎙 Ambiente sem ruído forte</button>
+    <button class="studio-check" onclick="this.classList.toggle('active')">↔ Espaço para abrir os braços</button>
+  </div>
+</article>
       <article class="studio-panel"><span class="label">Armazenamento</span><h3>Vídeos salvos neste navegador</h3><p class="intro">Os vídeos ficam no IndexedDB deste aparelho e podem ser perdidos ao limpar os dados do navegador ou trocar de dispositivo.</p><div class="studio-metrics"><div class="studio-metric"><strong id="studioSavedCount">0</strong><small>Vídeos</small></div><div class="studio-metric"><strong id="studioSavedSize">0 MB</strong><small>Espaço aproximado</small></div></div></article>
     </div>
   </div>
@@ -2843,7 +2881,8 @@ renderEnglishMode();
 updateUI();
 checkTechnicalEnvironment();
 </script>
-<script src="/studio.js"></script>
+<script src="/studio.js?v=32"></script>
+<script src="/studio-framing.js?v=32"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));

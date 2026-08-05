@@ -1,68 +1,94 @@
-# CoachVoice AI v3.1 — revisão para celular
+# CoachVoice AI v3.2 — Estabilidade e Enquadramento
 
-Esta versão corrige os principais problemas observados durante o primeiro uso no celular.
+Esta versão mantém as correções mobile da v3.1 e melhora o Estúdio do Treinador.
 
-## Correções principais
+## Novidades do Estúdio
 
-- resultados não desaparecem mais depois de tocar em **Analisar**;
-- abrir uma aba não apaga automaticamente a resposta da aba anterior;
-- todos os botões de voz usam uma janela de gravação visível;
-- o áudio é gravado mesmo quando o reconhecimento nativo do navegador falha;
-- quando a IA estiver configurada, o áudio pode ser transcrito por `api/transcribe.js`;
-- sem IA, o usuário pode ouvir a gravação e digitar o texto para continuar;
-- câmera do Estúdio grava o vídeo e um áudio separado para transcrição;
-- mensagens de erro de permissão ficaram mais claras;
-- cache alterado para **network-first**, reduzindo o risco de abrir versão antiga.
+### Orientação horizontal
 
-## Entrevistas
+O modo horizontal é obrigatório em:
 
-Foram adicionados temas de:
+- oratória em vídeo;
+- apresentação profissional;
+- quadro tático;
+- vestiário e liderança.
 
-- sequência sem vencer;
-- derrota por placar elevado;
-- vitória com atuação ruim;
-- torcida e pressão;
-- arbitragem, VAR e expulsão;
-- jogador no banco, jovem após erro e falha do goleiro;
-- reforços e vazamento do vestiário;
-- mudança tática;
-- clássico, final, apresentação e pressão por demissão.
+Entrevistas em plano próximo podem ser gravadas na vertical ou horizontal.
 
-Também há três estilos de jornalista: profissional, insistente e provocativo.
+Quando o celular está na orientação incorreta:
 
-## Modelo de jogo
+- aparece um aviso para girar;
+- a prévia recebe uma mensagem visual;
+- o botão de gravação permanece bloqueado.
 
-A área agora explica que um princípio é um **comportamento esperado em campo**. As escolhas estão divididas em:
+### Três molduras
 
-- sem a bola;
-- com a bola;
-- transições;
-- comportamento coletivo.
+- **Entrevista — plano próximo:** rosto, ombros e parte das mãos.
+- **Apresentação — plano médio:** cabeça, tronco, mãos e gestos.
+- **Quadro tático — plano aberto:** treinador de um lado e quadro completo do outro.
 
-O botão **Usar um exemplo básico** preenche uma situação para o primeiro teste.
+O aplicativo escolhe automaticamente a moldura recomendada, mas ela pode ser
+alterada manualmente.
 
-## Transcrição por IA
+### Teste de gestos
 
-Para ativar a transcrição no celular, configure na Vercel:
+Antes de gravar nos planos médio e aberto, o treinador confirma manualmente:
 
-- `OPENAI_API_KEY`
-- opcional: `OPENAI_TRANSCRIBE_MODEL=gpt-4o-mini-transcribe`
+1. levantar as duas mãos;
+2. abrir os braços;
+3. apontar para a direita;
+4. apontar para a esquerda.
 
-Sem a chave, gravação e reprodução continuam funcionando.
+Esta versão **não detecta automaticamente** cabeça, mãos ou gestos. O teste usa a
+prévia da câmera para o próprio treinador confirmar o enquadramento.
 
-## Publicação
+### Qualidade e preparação
 
-Envie todos os arquivos para o repositório. A pasta `api` deve conter:
+- solicitação de vídeo em 1280 × 720;
+- limite de 30 quadros por segundo;
+- informação da resolução entregue pelo aparelho;
+- checklist de apoio do celular, iluminação, ruído e espaço lateral;
+- enquadramento e orientação ficam registrados junto ao vídeo salvo.
+
+## Arquivos
+
+Na raiz:
+
+- `index.html`
+- `studio.css`
+- `studio.js`
+- `studio-framing.js`
+- `sw.js`
+- `manifest.webmanifest`
+- `package.json`
+- `vercel.json`
+
+Na pasta `api`:
 
 - `coach-ai.js`
 - `english-coach.js`
 - `mentor.js`
 - `transcribe.js`
 
+## Publicação
+
 Commit sugerido:
 
-`Revisar funções mobile e iniciar fase de treinos v3.1`
+`Adicionar enquadramento horizontal e teste de gestos v3.2`
 
-Teste no domínio oficial:
+Depois do deploy, abra:
 
-`https://coachvoice-ai.vercel.app/?v=31`
+`https://coachvoice-ai.vercel.app/?v=32`
+
+Faça uma atualização forçada ou use o botão de atualização do aplicativo quando
+ele estiver disponível.
+
+## Primeiro teste
+
+1. Abra **Estúdio do Treinador**.
+2. Escolha **Apresentação profissional**.
+3. Ative a câmera.
+4. Gire o celular para horizontal.
+5. Faça os quatro movimentos do teste.
+6. Grave 30 segundos.
+7. Salve e confira se aparece na biblioteca.
