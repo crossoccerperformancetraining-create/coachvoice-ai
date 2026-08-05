@@ -1,5 +1,5 @@
-const CACHE='coachvoice-v2.3-ciclo-diario-ia';
-const FILES=['/','/index.html','/manifest.webmanifest','/icon-192.png','/icon-512.png'];
+const CACHE='coachvoice-v3.0-estudio-treinador';
+const FILES=['/','/index.html','/manifest.webmanifest','/icon-192.png','/icon-512.png','/studio.css','/studio.js'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(

@@ -1,58 +1,68 @@
-# CoachVoice AI v2.3 — versão consolidada de testes
+# CoachVoice AI v3.0 — Estúdio do Treinador
 
-Esta é a versão planejada para permanecer em teste antes de novas atualizações.
+## Novidade principal
 
-## Áreas principais
+A versão 3.0 acrescenta o **Estúdio do Treinador**, mantendo todas as funções da v2.3.
 
-- Diário do Treinador:
-  - plano da manhã;
-  - inglês;
-  - oratória;
-  - entrevista, treino, reunião ou jogo;
-  - reflexão no final do dia.
-- Inglês em três níveis:
-  - iniciante: palavras, montagem, repetição e correção visual;
-  - intermediário: situações e respostas guiadas;
-  - alto nível: simulações profissionais em inglês.
-- Oratória:
-  - transcrição;
-  - contagem de palavras;
-  - duração estimada;
-  - vícios e repetições;
-  - reescrita com IA e marcação de pausas.
-- Entrevistas com IA.
-- Liderança com IA.
-- Comunicação do modelo de jogo.
-- Coach Mentor.
-- Dia de jogo, biblioteca e formação completa.
-- Pontos, sequência de dias e atividades recentes.
+### Modos de vídeo
 
-## IA
+- oratória em português;
+- entrevista em português;
+- entrevista em inglês;
+- explicação no quadro tático;
+- vestiário e liderança;
+- apresentação profissional.
 
-O aplicativo continua funcionando sem IA, usando respostas locais.
+### Recursos disponíveis
 
-Para ativar as respostas personalizadas, configure na Vercel:
+- câmera frontal ou traseira;
+- gravações de 30, 45 ou 60 segundos;
+- reprodução imediata;
+- nova tentativa e descarte;
+- transcrição pelo navegador quando disponível;
+- duração, palavras, palavras por minuto e vícios localizados;
+- checklist de autoavaliação visual;
+- salvamento local no IndexedDB;
+- biblioteca de vídeos;
+- exclusão de gravações;
+- comparação lado a lado entre duas tentativas;
+- feedback local e IA opcional sobre a transcrição.
 
-- `OPENAI_API_KEY`
-- opcional: `OPENAI_MODEL` com valor `gpt-5-mini`
+## Limites desta primeira versão
 
-Arquivos de API:
+O aplicativo **não interpreta automaticamente** postura, direção do olhar, gestos ou emoções. Ele analisa a transcrição e usa a autoavaliação marcada pelo treinador. Isso evita apresentar conclusões visuais que o sistema ainda não mediu.
 
-- `api/mentor.js`
-- `api/english-coach.js`
-- `api/coach-ai.js`
+Os vídeos ficam somente no navegador atual. Eles podem ser perdidos ao limpar os dados do navegador, usar navegação anônima, trocar de computador ou reinstalar o navegador.
 
 ## Publicação
 
-Substitua os arquivos da versão anterior pelos arquivos deste pacote.
+Substitua os arquivos da v2.3 pelos arquivos deste pacote. Dois arquivos novos devem ficar na raiz:
+
+- `studio.css`
+- `studio.js`
+
+A pasta `api` continua com:
+
+- `mentor.js`
+- `english-coach.js`
+- `coach-ai.js`
 
 Commit sugerido:
 
-`Criar versão consolidada de testes v2.3`
+`Adicionar Estúdio do Treinador v3.0`
 
-Depois do deploy, abra:
+Depois do deploy, abra somente o domínio oficial:
 
-`https://coachvoice-ai.vercel.app/?v=23`
+`https://coachvoice-ai.vercel.app/?v=30`
 
-Use somente o domínio oficial. Não use URLs antigas de deployments marcados
-como `Ready Stale`.
+## Teste inicial
+
+1. Abra **Estúdio do Treinador**.
+2. Escolha **Oratória em português**.
+3. Selecione 30 segundos.
+4. Ative câmera e microfone.
+5. Grave a primeira tentativa.
+6. Assista e marque a autoavaliação.
+7. Salve o vídeo.
+8. Grave uma segunda tentativa.
+9. Compare os dois vídeos.
