@@ -65,7 +65,7 @@ const modeInstructions = {
   },
   'game-model': {
     schema: '{"message":"...","briefing":"...","avoid":"..."}',
-    task: 'Transforme princípios de jogo em uma mensagem curta e compreensível aos jogadores. Use ações observáveis e evite excesso de jargão.'
+    task: 'Transforme fase, subfase, objetivo, gatilho, funções, critério de sucesso e alternativa em uma mensagem curta e compreensível aos jogadores. Use ações observáveis, preserve a lógica tática e evite excesso de jargão.'
   }
 };
 
