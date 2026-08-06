@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#071225">
-<meta name="application-name" content="CoachVoice AI v3.3">
+<meta name="application-name" content="CoachVoice AI v3.2">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="CoachVoice">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<title>CoachVoice AI v3.3 — Estabilidade e Enquadramento</title>
+<title>CoachVoice AI v3.2 — Estabilidade e Enquadramento</title>
 <style>
 :root{
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -233,7 +233,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <button class="drawer-link" data-page="technical" onclick="go('technical')">⚙ Testes do aparelho</button>
     <button class="drawer-link" data-page="profile" onclick="go('profile')">◉ Preferências</button>
   </nav>
-  <div class="drawer-note">CoachVoice AI v3.3 — estabilidade, enquadramento e testes no celular. Dados salvos somente neste aparelho; IA ativada quando a chave estiver configurada na Vercel.</div>
+  <div class="drawer-note">CoachVoice AI v3.2 — estabilidade, enquadramento e testes no celular. Dados salvos somente neste aparelho; IA ativada quando a chave estiver configurada na Vercel.</div>
 </aside>
 <div id="overlay" class="overlay" onclick="closeDrawer()"></div>
 
@@ -367,7 +367,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
 <section id="studio" class="page">
   <div class="studio-hero">
-    <span class="eyebrow">COACHVOICE v3.3 — ESTÚDIO DO TREINADOR</span>
+    <span class="eyebrow">COACHVOICE v3.2 — ESTÚDIO DO TREINADOR</span>
     <h2>Grave, assista, repita e compare sua comunicação em vídeo.</h2>
     <p>Treine oratória, entrevistas, inglês, liderança, vestiário e explicações no quadro tático.</p>
   </div>
@@ -378,7 +378,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
         <div class="studio-controls">
           <div><label class="label" for="studioMode">Modo</label><select id="studioMode" class="select-field" onchange="onStudioModeChange()"><option value="oratory">Oratória em português</option><option value="interview-pt">Entrevista em português</option><option value="interview-en">Entrevista em inglês</option><option value="tactical">Explicação no quadro tático</option><option value="locker">Vestiário e liderança</option><option value="presentation">Apresentação profissional</option></select></div>
           <div><label class="label" for="studioDuration">Duração máxima</label><select id="studioDuration" class="select-field"><option value="30">30 segundos</option><option value="45">45 segundos</option><option value="60" selected>60 segundos</option></select></div>
-          <div><label class="label" for="studioCamera">Câmera</label><select id="studioCamera" class="select-field" onchange="restartStudioCamera()"><option value="user">Frontal</option><option value="environment">Traseira</option></select></div><div><label class="label" for="studioFraming">Enquadramento</label><select id="studioFraming" class="select-field" onchange="applyStudioFraming(true)"><option value="interview">Entrevista — plano próximo</option><option value="fullbody">Corpo inteiro — vertical</option><option value="presentation">Apresentação — horizontal</option><option value="tactical">Quadro tático — plano aberto</option></select></div>
+          <div><label class="label" for="studioCamera">Câmera</label><select id="studioCamera" class="select-field" onchange="restartStudioCamera()"><option value="user">Frontal</option><option value="environment">Traseira</option></select></div><div><label class="label" for="studioFraming">Enquadramento</label><select id="studioFraming" class="select-field" onchange="applyStudioFraming(true)"><option value="interview">Entrevista — plano próximo</option><option value="presentation">Apresentação — plano médio</option><option value="tactical">Quadro tático — plano aberto</option></select></div>
           <div><label class="label" for="studioLanguage">Idioma</label><select id="studioLanguage" class="select-field" onchange="loadStudioPrompt()"><option value="pt-BR">Português</option><option value="en-US">Inglês americano</option><option value="en-GB">Inglês britânico</option></select></div>
           <div class="wide"><label class="label" for="studioPrompt">Situação</label><textarea id="studioPrompt" class="text-input"></textarea></div>
         </div>
@@ -398,7 +398,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 </div>
 <div id="studioOrientationNotice" class="orientation-notice" style="margin-top:10px">
   <strong>📱 Modo horizontal necessário</strong>
-  <span>O quadro tático exige horizontal. Nos outros modos, a câmera adapta a moldura para vertical ou horizontal.</span>
+  <span>Gire o celular antes de gravar.</span>
 </div>
 <div id="studioCameraInfo" class="camera-info">Resolução solicitada: 1280 × 720 (720p).</div>
         <div id="studioStatus" class="studio-status" style="margin-top:10px">Clique em “Ativar câmera” para começar.</div><div id="studioGesturePanel" class="gesture-test" style="margin-top:10px">
@@ -611,22 +611,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
   <div id="englishBasicPanel" class="level-panel">
     <div class="level-intro"><strong>Etapa 1:</strong> ouvir, entender, montar e repetir. O objetivo não é falar muito; é dominar pequenas frases usadas no campo.</div>
-    
-    <article class="beginner-step custom-phrase-coach">
-      <h3><span class="beginner-step-number">★</span>Professor de frase livre</h3>
-      <p class="intro">Digite qualquer frase curta. O CoachVoice mostra o que o celular entendeu, a frase correta e o trecho que deve ser repetido.</p>
-      <label class="label" for="customEnglishPhrase">Frase que você quer aprender</label>
-      <input id="customEnglishPhrase" class="select-field" value="My name is" maxlength="120" autocomplete="off">
-      <div class="beginner-actions" style="margin-top:10px">
-        <button class="secondary" onclick="customEnglishListen(.55)">🔊 Ouvir devagar</button>
-        <button class="secondary" onclick="customEnglishListen(.9)">▶ Ouvir natural</button>
-        <button class="primary" onclick="startCustomEnglishCoach()">🎙 Falar a frase</button>
-      </div>
-      <div id="customEnglishCoachStatus" class="beginner-status" style="margin-top:10px">Exemplo: fale “My name is”. Se disser apenas “My name”, o aplicativo pedirá para repetir “is”.</div>
-      <div id="customEnglishCoachResult" class="custom-correction hidden" style="margin-top:10px"></div>
-    </article>
-
-<div class="beginner-progress">
+    <div class="beginner-progress">
       <strong id="beginnerProgressText">Lição 1 de 12</strong>
       <div class="beginner-progress-track"><i id="beginnerProgressBar" style="width:8%"></i></div>
     </div>
@@ -882,21 +867,21 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
           <optgroup label="Arbitragem e disciplina">
             <option value="referee">Arbitragem influenciou o resultado?</option>
             <option value="var">Decisão do VAR</option>
-            <option value="red-card">Expulsão de um jogador</option><option value="penalty">Pênalti polêmico</option><option value="added-time">Acréscimos e encerramento da partida</option>
+            <option value="red-card">Expulsão de um jogador</option>
           </optgroup>
           <optgroup label="Jogadores e elenco">
             <option value="player">Jogador importante no banco</option>
             <option value="young-error">Erro de jogador jovem</option>
             <option value="goalkeeper-error">Falha do goleiro</option>
             <option value="transfer">Pedido de contratação/reforço</option>
-            <option value="locker-leak">Informação do vestiário vazou</option><option value="injury">Lesão e condição física de jogador</option><option value="captain">Escolha ou troca do capitão</option><option value="youth">Uso de atletas da base</option>
+            <option value="locker-leak">Informação do vestiário vazou</option>
           </optgroup>
           <optgroup label="Tática, carreira e jogos especiais">
-            <option value="tactical">Mudança tática durante o jogo</option><option value="build-up">Saída de bola sob pressão</option><option value="high-block">Bloco alto e pressão</option><option value="low-block">Equipe defendendo em bloco baixo</option><option value="transition">Problemas nas transições</option><option value="set-piece">Gol sofrido em bola parada</option>
+            <option value="tactical">Mudança tática durante o jogo</option>
             <option value="derby">Clássico e rivalidade</option>
             <option value="final">Final ou jogo decisivo</option>
             <option value="new-club">Apresentação em novo clube</option>
-            <option value="job-pressure">Pergunta sobre possível demissão</option><option value="contract">Renovação ou fim de contrato</option><option value="board">Relação com a diretoria</option><option value="schedule">Calendário e desgaste</option>
+            <option value="job-pressure">Pergunta sobre possível demissão</option>
           </optgroup>
         </select>
       </div>
@@ -908,26 +893,14 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
           <option value="provocative">Provocativo</option>
         </select>
       </div>
-      <div>
-        <label class="label" for="interviewResponseStyle">Padrão da resposta</label>
-        <select id="interviewResponseStyle" class="select-field">
-          <option value="direct">Direto e responsável</option>
-          <option value="protective">Protege o grupo</option>
-          <option value="tactical">Tático e simples</option>
-          <option value="calm">Calmo sob pressão</option>
-          <option value="institutional">Institucional</option>
-        </select>
-      </div>
     </div>
     <div id="interviewThemeHelp" class="scenario-help" style="margin-top:10px"></div>
     <h3 id="interviewQuestion" style="margin-top:12px"></h3>
     <div class="mentor-actions">
       <button class="secondary" onclick="speakText(document.getElementById('interviewQuestion').textContent,'pt-BR',.9)">🔊 Ouvir jornalista</button>
       <button class="outline" onclick="showInterviewStructure()">Ver estrutura sugerida</button>
-      <button class="outline" onclick="showEliteResponsePattern()">Ver padrão profissional</button>
-      <button class="outline" onclick="nextInterviewQuestionV33()">Outra pergunta do tema</button>
     </div>
-    <div id="interviewStructure" class="inline-result hidden"></div><div id="interviewElitePattern" class="inline-result hidden" style="margin-top:10px"></div>
+    <div id="interviewStructure" class="inline-result hidden"></div>
   </article>
   <article class="card">
     <span class="label">Sua resposta</span>
@@ -961,90 +934,47 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   </article>
 </section>
 
-
 <section id="gamemodel" class="page">
   <div class="hero">
-    <span class="eyebrow">MODELO DE JOGO — FASES E SUBFASES</span>
-    <h2>Organize como sua equipe deve jogar em cada momento da partida.</h2>
-    <p>Você não precisa começar por um termo abstrato. Escolha a fase, a subfase e responda perguntas simples sobre o comportamento da equipe.</p>
+    <span class="eyebrow">MODELO DE JOGO — PASSO A PASSO</span>
+    <h2>Transforme sua ideia de futebol em uma mensagem simples para os jogadores.</h2>
+    <p>Aqui, “princípio” significa um comportamento que você quer ver em campo. Escolha de um a três comportamentos.</p>
   </div>
-
   <article class="card">
     <div class="game-guide-steps">
-      <div class="game-guide-step"><b>1</b><p>Escolha a <strong>fase do jogo</strong>.</p></div>
-      <div class="game-guide-step"><b>2</b><p>Defina <strong>onde, quando e quem inicia</strong> a ação.</p></div>
-      <div class="game-guide-step"><b>3</b><p>Transforme a ideia em uma mensagem curta para treino ou jogo.</p></div>
+      <div class="game-guide-step"><b>1</b><p>Escolha <strong>o que a equipe precisa fazer</strong>, como proteger o centro ou abrir o campo.</p></div>
+      <div class="game-guide-step"><b>2</b><p>Indique <strong>quando e para quem</strong> você vai falar.</p></div>
+      <div class="game-guide-step"><b>3</b><p>O CoachVoice cria uma mensagem curta com objetivo, ações e fechamento.</p></div>
     </div>
-    <button class="outline" onclick="loadGamePhaseExample()">Carregar exemplo completo</button>
+    <button class="outline" onclick="selectBasicGameExample()">Usar um exemplo básico</button>
   </article>
-
   <article class="card">
-    <span class="label">1. Fase e subfase do jogo</span>
-    <div class="form-grid">
-      <div>
-        <label class="label" for="gamePhase">Fase</label>
-        <select id="gamePhase" class="select-field" onchange="onGamePhaseChange()"></select>
-      </div>
-      <div>
-        <label class="label" for="gameSubphase">Subfase</label>
-        <select id="gameSubphase" class="select-field" onchange="renderGamePhaseHelp()"></select>
-      </div>
-    </div>
-    <div id="gamePhaseHelp" class="scenario-help" style="margin-top:10px"></div>
+    <span class="label">1. Comportamentos que você quer ver</span>
+    <div id="gamePrinciples"></div>
+    <div id="gameSelectedSummary" class="selected-principles">Nenhum comportamento escolhido. Toque em uma ou mais opções abaixo.</div>
   </article>
-
   <article class="card">
-    <span class="label">2. Responda às perguntas do treinador</span>
-    <div class="game-question-grid">
-      <div>
-        <label class="label" for="gameObjective">Qual é o objetivo?</label>
-        <textarea id="gameObjective" class="text-input" placeholder="Ex.: progredir com segurança e encontrar o meio-campista livre."></textarea>
-      </div>
-      <div>
-        <label class="label" for="gameTrigger">Qual é o gatilho?</label>
-        <textarea id="gameTrigger" class="text-input" placeholder="Ex.: quando o adversário fechar o passe por dentro."></textarea>
-      </div>
-      <div>
-        <label class="label" for="gameRoles">Quem inicia e quem dá continuidade?</label>
-        <textarea id="gameRoles" class="text-input" placeholder="Ex.: goleiro atrai; zagueiros abrem; volante aparece atrás da primeira linha."></textarea>
-      </div>
-      <div>
-        <label class="label" for="gameSuccess">Como saber que funcionou?</label>
-        <textarea id="gameSuccess" class="text-input" placeholder="Ex.: receber de frente no meio-campo ou superar a primeira pressão."></textarea>
-      </div>
-      <div>
-        <label class="label" for="gameAlternative">O que fazer se a primeira opção fechar?</label>
-        <textarea id="gameAlternative" class="text-input" placeholder="Ex.: voltar ao goleiro, inverter ou jogar no atacante para a segunda bola."></textarea>
-      </div>
-    </div>
-  </article>
-
-  <article class="card">
-    <span class="label">3. Situação da comunicação</span>
+    <span class="label">2. Momento e público</span>
     <div class="form-grid">
       <div>
         <label class="label" for="gameMoment">Quando será a mensagem?</label>
         <select id="gameMoment" class="select-field">
-          <option>Treino</option><option>Pré-jogo</option><option>Intervalo</option><option>Pós-jogo</option><option>Reunião de vídeo</option>
+          <option>Treino</option><option>Pré-jogo</option><option>Intervalo</option><option>Pós-jogo</option>
         </select>
       </div>
       <div>
         <label class="label" for="gameAudience">Para quem?</label>
         <select id="gameAudience" class="select-field">
-          <option>Equipe completa</option><option>Goleiros e defensores</option><option>Meio-campistas</option><option>Atacantes</option><option>Comissão técnica</option>
+          <option>Equipe completa</option><option>Defensores</option><option>Meio-campistas</option><option>Atacantes</option><option>Comissão técnica</option>
         </select>
       </div>
     </div>
-    <label class="label" for="gameContext" style="margin-top:10px">Contexto do adversário ou do treino</label>
-    <textarea id="gameContext" class="text-input" placeholder="Ex.: adversário pressiona com dois atacantes e fecha nosso volante."></textarea>
+    <label class="label" for="gameContext" style="margin-top:10px">Contexto opcional</label>
+    <textarea id="gameContext" class="text-input" placeholder="Ex.: adversário sai com três jogadores; nossa equipe está deixando espaço no centro."></textarea>
   </article>
-
   <article class="card">
-    <span class="label">4. Criar a mensagem</span>
-    <div class="mentor-actions">
-      <button class="primary" onclick="generateGameMessage()">✨ Criar orientação para os jogadores</button>
-      <button class="secondary" onclick="speakGameModelResult()">🔊 Ouvir mensagem</button>
-    </div>
+    <span class="label">3. Criar a mensagem</span>
+    <button class="primary" onclick="generateGameMessage()">✨ Criar orientação para os jogadores</button>
     <div id="gameModelResult" class="ai-result hidden" style="margin-top:12px"></div>
   </article>
 </section>
@@ -2952,8 +2882,7 @@ updateUI();
 checkTechnicalEnvironment();
 </script>
 <script src="/studio.js?v=32"></script>
-<script src="/studio-framing.js?v=33"></script>
-<script src="/coachvoice-v33.js?v=33"></script>
+<script src="/studio-framing.js?v=32"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));
