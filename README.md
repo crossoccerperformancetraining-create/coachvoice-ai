@@ -1,94 +1,124 @@
-# CoachVoice AI v3.2 — Estabilidade e Enquadramento
+# CoachVoice AI v3.3 — Câmera, fases do jogo e inglês guiado
 
-Esta versão mantém as correções mobile da v3.1 e melhora o Estúdio do Treinador.
+## Câmera adaptável
 
-## Novidades do Estúdio
+- Entrevista em plano próximo.
+- Corpo inteiro no celular vertical.
+- Apresentação e gestos no celular horizontal.
+- Quadro tático no horizontal.
+- O modo vertical usa moldura 9:16 e `object-fit: contain`, evitando o corte
+  automático que mostrava apenas o rosto.
+- Para corpo inteiro, o treinador deve afastar o aparelho e manter cabeça,
+  mãos e pés dentro da moldura.
+- Somente o quadro tático bloqueia a gravação quando o celular está vertical.
 
-### Orientação horizontal
+## Modelo de jogo por fases
 
-O modo horizontal é obrigatório em:
+### Organização ofensiva
+- saída de tiro de meta;
+- primeira fase de construção;
+- segunda fase de construção;
+- último terço;
+- finalização e ocupação da área.
 
-- oratória em vídeo;
-- apresentação profissional;
-- quadro tático;
-- vestiário e liderança.
+### Organização defensiva
+- marcação no tiro de meta;
+- bloco alto;
+- bloco médio;
+- bloco baixo;
+- defesa da área.
 
-Entrevistas em plano próximo podem ser gravadas na vertical ou horizontal.
+### Transição ofensiva
+- primeiro passe;
+- contra-ataque e profundidade;
+- manutenção da posse.
 
-Quando o celular está na orientação incorreta:
+### Transição defensiva
+- pressão pós-perda;
+- proteção do centro;
+- recomposição do bloco.
 
-- aparece um aviso para girar;
-- a prévia recebe uma mensagem visual;
-- o botão de gravação permanece bloqueado.
+### Bolas paradas
+- ofensivas: escanteio, falta e lateral;
+- defensivas: escanteio, falta e segunda bola.
 
-### Três molduras
+Cada subfase pergunta:
 
-- **Entrevista — plano próximo:** rosto, ombros e parte das mãos.
-- **Apresentação — plano médio:** cabeça, tronco, mãos e gestos.
-- **Quadro tático — plano aberto:** treinador de um lado e quadro completo do outro.
+1. qual é o objetivo;
+2. qual é o gatilho;
+3. quem inicia e quem continua;
+4. como saber que funcionou;
+5. qual é a alternativa.
 
-O aplicativo escolhe automaticamente a moldura recomendada, mas ela pode ser
-alterada manualmente.
+## Entrevistas
 
-### Teste de gestos
+Foram adicionados temas sobre:
 
-Antes de gravar nos planos médio e aberto, o treinador confirma manualmente:
+- pênalti e acréscimos;
+- lesões;
+- capitão;
+- base;
+- saída de bola;
+- bloco alto e baixo;
+- transições;
+- bolas paradas;
+- contrato;
+- diretoria;
+- calendário.
 
-1. levantar as duas mãos;
-2. abrir os braços;
-3. apontar para a direita;
-4. apontar para a esquerda.
+O treinador pode escolher padrões profissionais genéricos:
 
-Esta versão **não detecta automaticamente** cabeça, mãos ou gestos. O teste usa a
-prévia da câmera para o próprio treinador confirmar o enquadramento.
+- direto e responsável;
+- proteção do grupo;
+- tático e simples;
+- calmo sob pressão;
+- institucional.
 
-### Qualidade e preparação
+O aplicativo não imita nem atribui respostas a treinadores reais.
 
-- solicitação de vídeo em 1280 × 720;
-- limite de 30 quadros por segundo;
-- informação da resolução entregue pelo aparelho;
-- checklist de apoio do celular, iluminação, ruído e espaço lateral;
-- enquadramento e orientação ficam registrados junto ao vídeo salvo.
+## Professor de frase em inglês
 
-## Arquivos
+Na etapa iniciante, o treinador pode digitar qualquer frase curta.
 
-Na raiz:
+Exemplo:
+
+- frase esperada: `My name is`;
+- fala reconhecida: `My name`;
+- correção: repetir `is`.
+
+A tela mostra:
+
+- o que o celular entendeu;
+- a frase esperada;
+- palavras verdes e vermelhas;
+- o trecho que deve ser repetido;
+- áudio lento somente da correção.
+
+## Publicação
+
+Estrutura principal:
 
 - `index.html`
 - `studio.css`
 - `studio.js`
 - `studio-framing.js`
+- `coachvoice-v33.js`
 - `sw.js`
 - `manifest.webmanifest`
 - `package.json`
 - `vercel.json`
 
-Na pasta `api`:
+Pasta `api`:
 
 - `coach-ai.js`
 - `english-coach.js`
 - `mentor.js`
 - `transcribe.js`
 
-## Publicação
-
 Commit sugerido:
 
-`Adicionar enquadramento horizontal e teste de gestos v3.2`
+`Adicionar câmera adaptável, fases do jogo e inglês guiado v3.3`
 
-Depois do deploy, abra:
+Depois do deploy:
 
-`https://coachvoice-ai.vercel.app/?v=32`
-
-Faça uma atualização forçada ou use o botão de atualização do aplicativo quando
-ele estiver disponível.
-
-## Primeiro teste
-
-1. Abra **Estúdio do Treinador**.
-2. Escolha **Apresentação profissional**.
-3. Ative a câmera.
-4. Gire o celular para horizontal.
-5. Faça os quatro movimentos do teste.
-6. Grave 30 segundos.
-7. Salve e confira se aparece na biblioteca.
+`https://coachvoice-ai.vercel.app/?v=33`

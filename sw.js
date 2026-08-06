@@ -1,5 +1,5 @@
-const CACHE='coachvoice-v3.2-enquadramento-horizontal';
-const FILES=['/','/index.html','/manifest.webmanifest','/icon-192.png','/icon-512.png','/studio.css','/studio.js','/studio-framing.js'];
+const CACHE='coachvoice-v3.3-camera-fases-ingles';
+const FILES=['/','/index.html','/manifest.webmanifest','/icon-192.png','/icon-512.png','/studio.css','/studio.js','/studio-framing.js','/coachvoice-v33.js'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting()));
