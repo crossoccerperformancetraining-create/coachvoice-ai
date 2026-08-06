@@ -1,9 +1,0 @@
-{
-  "name": "coachvoice-ai",
-  "private": true,
-  "version": "3.3.0",
-  "description": "CoachVoice AI v3.3 com câmera vertical de corpo inteiro, modelo de jogo por fases, entrevistas ampliadas e professor de frase em inglês.",
-  "engines": {
-    "node": "22.x"
-  }
-}
