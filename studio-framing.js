@@ -1,7 +1,8 @@
 (() => {
   'use strict';
 
-  const requiredLandscapeModes = new Set(['oratory', 'tactical', 'locker', 'presentation']);
+  const requiredLandscapeModes = new Set(['tactical']);
+  const adaptiveBodyModes = new Set(['oratory', 'locker', 'presentation']);
   const gestureSteps = [
     {
       title: 'Levante as duas mãos',
@@ -38,7 +39,8 @@
   function recommendedFraming(mode = currentMode()) {
     if (mode === 'interview-pt' || mode === 'interview-en') return 'interview';
     if (mode === 'tactical') return 'tactical';
-    return 'presentation';
+    if (adaptiveBodyModes.has(mode)) return isLandscape() ? 'presentation' : 'fullbody';
+    return isLandscape() ? 'presentation' : 'fullbody';
   }
 
   function currentFraming() {
@@ -47,8 +49,9 @@
 
   function framingLabel(frame = currentFraming()) {
     if (frame === 'interview') return 'Entrevista — plano próximo';
+    if (frame === 'fullbody') return 'Corpo inteiro — vertical';
     if (frame === 'tactical') return 'Quadro tático — plano aberto';
-    return 'Apresentação — plano médio';
+    return 'Apresentação — horizontal';
   }
 
   function isLandscape() {
@@ -57,7 +60,7 @@
   }
 
   function landscapeRequired() {
-    return requiredLandscapeModes.has(currentMode()) || currentFraming() !== 'interview';
+    return requiredLandscapeModes.has(currentMode()) || currentFraming() === 'tactical';
   }
 
   function gestureRequired() {
@@ -165,20 +168,24 @@
     const stage = document.getElementById('studioCameraStage');
     if (!notice || !stage) return;
 
-    const required = landscapeRequired();
+    const frame = currentFraming();
     const landscape = isLandscape();
+    const required = landscapeRequired();
 
     stage.classList.toggle('orientation-blocked', required && !landscape);
 
-    if (!required) {
-      notice.className = 'orientation-notice optional';
-      notice.innerHTML = '<strong>📱 Vertical ou horizontal</strong><span>Para entrevista, escolha o formato que usar na situação real.</span>';
-    } else if (landscape) {
-      notice.className = 'orientation-notice ok';
-      notice.innerHTML = '<strong>✓ Celular na horizontal</strong><span>Formato 16:9 pronto para mostrar postura, braços e gestos.</span>';
-    } else {
+    if (required && !landscape) {
       notice.className = 'orientation-notice';
-      notice.innerHTML = '<strong>↻ Gire o celular</strong><span>Este modo exige posição horizontal antes de liberar a gravação.</span>';
+      notice.innerHTML = '<strong>↻ Gire o celular</strong><span>O quadro tático precisa do formato horizontal para mostrar treinador e quadro completos.</span>';
+    } else if (frame === 'fullbody' || (!landscape && adaptiveBodyModes.has(currentMode()))) {
+      notice.className = 'orientation-notice ok';
+      notice.innerHTML = '<strong>✓ Vertical de corpo inteiro</strong><span>Afaste o celular e mantenha cabeça, mãos e pés dentro da moldura.</span>';
+    } else if (frame === 'interview') {
+      notice.className = 'orientation-notice optional';
+      notice.innerHTML = '<strong>📱 Entrevista adaptável</strong><span>Vertical para plano próximo; horizontal quando quiser mostrar mais gestos.</span>';
+    } else {
+      notice.className = 'orientation-notice ok';
+      notice.innerHTML = '<strong>✓ Horizontal para gestos</strong><span>Formato adequado para braços, postura e deslocamentos laterais.</span>';
     }
   }
 
@@ -228,9 +235,23 @@
     const title = document.getElementById('studioFrameTitle');
     if (!safeFrame || !title) return;
 
-    safeFrame.classList.remove('frame-interview', 'frame-presentation', 'frame-tactical');
-    safeFrame.classList.add(`frame-${frame}`);
-    title.textContent = framingLabel(frame);
+    const stage = document.getElementById('studioCameraStage');
+    const select = document.getElementById('studioFraming');
+    let effectiveFrame = frame;
+
+    if (adaptiveBodyModes.has(currentMode())) {
+      if (!isLandscape() && frame === 'presentation') effectiveFrame = 'fullbody';
+      if (isLandscape() && frame === 'fullbody') effectiveFrame = 'presentation';
+      if (select && select.value !== effectiveFrame) select.value = effectiveFrame;
+    }
+
+    safeFrame.classList.remove('frame-interview', 'frame-fullbody', 'frame-presentation', 'frame-tactical');
+    safeFrame.classList.add(`frame-${effectiveFrame}`);
+    if (stage) {
+      stage.classList.toggle('portrait-stage', effectiveFrame === 'fullbody');
+      stage.classList.toggle('landscape-stage', effectiveFrame !== 'fullbody');
+    }
+    title.textContent = framingLabel(effectiveFrame);
 
     if (resetTest) resetGestureTest();
     updateOrientationNotice();
@@ -263,12 +284,13 @@
 
     try {
       const facingMode = document.getElementById('studioCamera')?.value || 'user';
+      const portraitCapture = currentFraming() === 'fullbody' || (!isLandscape() && adaptiveBodyModes.has(currentMode()));
       studioStream = await navigator.mediaDevices.getUserMedia({
         video: {
           facingMode: { ideal: facingMode },
-          width: { ideal: 1280 },
-          height: { ideal: 720 },
-          aspectRatio: { ideal: 16 / 9 },
+          width: { ideal: portraitCapture ? 720 : 1280 },
+          height: { ideal: portraitCapture ? 1280 : 720 },
+          aspectRatio: { ideal: portraitCapture ? 9 / 16 : 16 / 9 },
           frameRate: { ideal: 30, max: 30 }
         },
         audio: {
@@ -393,12 +415,18 @@
     framingListenersBound = true;
 
     const handleOrientation = () => {
-      updateOrientationNotice();
-      updateRecordAvailability();
+      const select = document.getElementById('studioFraming');
+      if (select && adaptiveBodyModes.has(currentMode()) && ['presentation','fullbody'].includes(select.value)) {
+        select.value = isLandscape() ? 'presentation' : 'fullbody';
+        window.applyStudioFraming(true);
+      } else {
+        updateOrientationNotice();
+        updateRecordAvailability();
+      }
       updateCameraResolutionInfo();
       if (landscapeRequired() && !isLandscape() && studioStream && !recorderIsActive()) {
         if (typeof setStudioStatus === 'function') {
-          setStudioStatus('O celular está na vertical. Gire para liberar a gravação.', 'warning');
+          setStudioStatus('O quadro tático exige o celular na horizontal.', 'warning');
         }
       }
     };

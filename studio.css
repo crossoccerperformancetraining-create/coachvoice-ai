@@ -156,3 +156,74 @@
 @media(orientation:portrait) and (max-width:900px){
   .camera-stage{min-height:190px}
 }
+/* CoachVoice v3.3 */
+.camera-stage.portrait-stage{
+  aspect-ratio:9/16;
+  width:min(100%,460px);
+  min-height:520px;
+  margin-inline:auto;
+}
+.camera-stage.portrait-stage video{object-fit:contain}
+.safe-frame.frame-fullbody{inset:3% 14%}
+.safe-frame.frame-fullbody .person-zone{inset:2% 13% 1%}
+.safe-frame.frame-fullbody .board-zone{display:none}
+.safe-frame.frame-fullbody .person-zone:before{
+  content:"Corpo inteiro";
+  position:absolute;
+  top:44%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  color:rgba(255,255,255,.85);
+  font-size:.72rem;
+  font-weight:900;
+}
+.custom-phrase-coach{border-color:#8eb5e6;background:linear-gradient(145deg,#f3f7ff,#fff)}
+.custom-correction{
+  background:#eef4ff;
+  border:1px solid #a8c1e4;
+  border-radius:15px;
+  padding:14px;
+  line-height:1.55;
+}
+.custom-correction .spoken-line,.custom-correction .expected-line{
+  padding:9px 11px;
+  border-radius:12px;
+  margin-top:8px;
+}
+.custom-correction .spoken-line{background:#fff7ed}
+.custom-correction .expected-line{background:#e9f7e7}
+.custom-word-row{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}
+.custom-word{
+  border-radius:999px;
+  padding:7px 10px;
+  font-weight:900;
+  font-size:.78rem;
+}
+.custom-word.correct{background:#e9f7e7;color:#247533}
+.custom-word.wrong{background:#fff0f0;color:#b42318}
+.game-question-grid{display:grid;gap:10px}
+.game-question-grid textarea{min-height:86px}
+.phase-map{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
+.phase-chip{
+  border:1px solid #d7dee8;
+  border-radius:13px;
+  background:#fff;
+  padding:10px;
+  text-align:left;
+}
+.phase-chip strong,.phase-chip small{display:block}
+.phase-chip small{color:#667085;margin-top:4px}
+.elite-pattern-grid{display:grid;gap:8px}
+.elite-pattern-step{
+  background:#f8fafc;
+  border-left:4px solid #275b99;
+  border-radius:12px;
+  padding:10px;
+}
+.interview-controls{grid-template-columns:1fr}
+@media(min-width:760px){
+  .game-question-grid{grid-template-columns:1fr 1fr}
+  .game-question-grid>div:last-child{grid-column:1/-1}
+  .phase-map{grid-template-columns:repeat(3,1fr)}
+  .interview-controls{grid-template-columns:repeat(3,1fr)}
+}
