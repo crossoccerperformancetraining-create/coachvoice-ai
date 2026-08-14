@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#071225">
-<meta name="application-name" content="CoachVoice AI v3.3">
+<meta name="application-name" content="CoachVoice AI v4.2">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="CoachVoice">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<title>CoachVoice AI v3.3 — Estabilidade e Enquadramento</title>
+<title>CoachVoice AI v4.2 — Mentor IA por Voz</title>
 <style>
 :root{
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -207,6 +207,9 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 @media(min-width:760px){.quick-grid{grid-template-columns:repeat(4,1fr)}.block-list{grid-template-columns:1fr 1fr}.stats{grid-template-columns:repeat(4,1fr)}}
 </style>
 <link rel="stylesheet" href="/studio.css">
+<link rel="stylesheet" href="/coachday.css?v=40">
+<link rel="stylesheet" href="/coachprep.css?v=42">
+<link rel="stylesheet" href="/mentor-v42.css?v=42">
 </head>
 <body>
 <div class="app">
@@ -217,9 +220,10 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   </div>
   <nav>
     <button class="drawer-link active" data-page="home" onclick="go('home')">⌂ Início</button>
-    <button class="drawer-link" data-page="daily" onclick="go('daily')">📓 Diário do Treinador</button>
+    <button class="drawer-link" data-page="daily" onclick="go('daily')">🧭 CoachDay AI</button>
+    <button class="drawer-link" data-page="coachprep" onclick="go('coachprep')">🛡️ CoachPrep — Gestão e Liderança</button>
     <button class="drawer-link" data-page="studio" onclick="go('studio')">🎥 Estúdio do Treinador</button>
-    <button class="drawer-link" data-page="mentor" onclick="go('mentor')">🤖 Coach Mentor AI</button>
+    <button class="drawer-link" data-page="mentor" onclick="go('mentor')">🎧 Mentor IA — Voz e Gestão</button>
     <button class="drawer-link" data-page="practice" onclick="go('practice')">🎯 Central de treinos</button>
     <button class="drawer-link" data-page="english" onclick="go('english')">🇬🇧 Inglês: 3 níveis</button>
     <button class="drawer-link" data-page="oratory" onclick="go('oratory')">🗣 Oratória com IA</button>
@@ -233,7 +237,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <button class="drawer-link" data-page="technical" onclick="go('technical')">⚙ Testes do aparelho</button>
     <button class="drawer-link" data-page="profile" onclick="go('profile')">◉ Preferências</button>
   </nav>
-  <div class="drawer-note">CoachVoice AI v3.3 — estabilidade, enquadramento e testes no celular. Dados salvos somente neste aparelho; IA ativada quando a chave estiver configurada na Vercel.</div>
+  <div class="drawer-note">CoachVoice AI v4.2 — estabilidade, enquadramento e testes no celular. Dados salvos somente neste aparelho; IA ativada quando a chave estiver configurada na Vercel.</div>
 </aside>
 <div id="overlay" class="overlay" onclick="closeDrawer()"></div>
 
@@ -246,33 +250,48 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
 <section id="home" class="page active">
   <div class="hero">
-    <span class="eyebrow">CICLO DIÁRIO DO TREINADOR</span>
-    <h2>Inglês, comunicação e liderança organizados dentro da sua rotina.</h2>
-    <p>Faça um pouco pela manhã, prepare as situações profissionais do dia e termine registrando o que aprendeu.</p>
-    <button class="primary" onclick="go('daily')">Abrir meu plano de hoje</button>
+    <span class="eyebrow">COACHDAY AI — ASSISTENTE DO TREINADOR</span>
+    <h2>Planeje o que falar, acompanhe o elenco e conecte um dia ao próximo.</h2>
+    <p>Antes do treino, durante a semana e depois das atividades, o CoachDay organiza comunicação, gestão, adversário e memória profissional.</p>
+    <button class="primary" onclick="go('daily')">Abrir meu CoachDay</button>
   </div>
 
   <article class="daily-summary">
     <small id="homeDateLabel">PLANO DE HOJE</small>
     <h3 id="homeDailyTitle">Monte sua rotina de desenvolvimento.</h3>
-    <p id="homeDailyText">Escolha se terá treino, entrevista ou jogo. O CoachVoice organizará os exercícios mais úteis para o dia.</p>
+    <p id="homeDailyText">Conte o que acontecerá hoje. O CoachDay prepara a comunicação, lembra pendências e organiza o pós-atividade.</p>
     <div class="daily-meta">
       <span id="homeDailyDone">0 tarefas concluídas</span>
       <span id="homeXpBadge">0 pontos</span>
       <span id="homeStreakBadge">0 dias de sequência</span>
     </div>
-    <button class="secondary" onclick="go('daily')">Ver Diário do Treinador</button>
+    <button class="secondary" onclick="go('daily')">Abrir CoachDay AI</button>
   </article>
 
-  <div class="section-title"><h2>Acesso rápido</h2><span>10 áreas</span></div>
+  <article class="coachprep-home-card">
+    <div>
+      <small>PREPARAÇÃO PARA ASSUMIR O TRABALHO</small>
+      <h3 id="homeCoachPrepTitle">CoachPrep — Gestão e Liderança</h3>
+      <p id="homeCoachPrepText">Defina a data de início e siga um plano de estudo com conversas, decisões e simulações.</p>
+    </div>
+    <div class="coachprep-home-meta">
+      <strong id="homeCoachPrepCountdown">—</strong>
+      <small id="homeCoachPrepPhase">Preparação</small>
+    </div>
+    <button class="secondary" onclick="go('coachprep')">Abrir CoachPrep</button>
+  </article>
+
+  <div class="section-title"><h2>Acesso rápido</h2><span>11 áreas</span></div>
   <div class="quick-grid">
+    <button class="quick" onclick="go('coachprep')"><span>🛡️</span><strong>CoachPrep</strong><small>Gestão e liderança até assumir o trabalho</small></button>
+    
     <button class="quick" onclick="go('studio')"><span>🎥</span><strong>Estúdio</strong><small>Vídeo, postura e comparação</small></button>
     <button class="quick" onclick="go('english')"><span>🇬🇧</span><strong>Inglês</strong><small>Iniciante ao avançado</small></button>
     <button class="quick" onclick="go('oratory')"><span>🗣</span><strong>Oratória</strong><small>Análise e reescrita com IA</small></button>
     <button class="quick" onclick="go('interviews')"><span>🎙</span><strong>Entrevistas</strong><small>Jornalista e perguntas seguintes</small></button>
     <button class="quick" onclick="go('leadership')"><span>🔥</span><strong>Liderança</strong><small>Jogadores, comissão e diretoria</small></button>
     <button class="quick" onclick="go('gamemodel')"><span>🧠</span><strong>Modelo de jogo</strong><small>Transformar ideias em mensagem</small></button>
-    <button class="quick" onclick="go('mentor')"><span>🤖</span><strong>Coach Mentor</strong><small>Situação livre e orientação</small></button>
+    <button class="quick" onclick="go('mentor')"><span>🎧</span><strong>Mentor IA</strong><small>Conversa por voz, crítica e decisões</small></button>
     <button class="quick" onclick="go('matchday')"><span>🏟</span><strong>Dia de jogo</strong><small>Pré, intervalo e pós</small></button>
     <button class="quick" onclick="go('library')"><span>📚</span><strong>Biblioteca</strong><small>Situações para praticar</small></button>
     <button class="quick" onclick="go('practice')"><span>🎯</span><strong>Treino rápido</strong><small>Prática orientada</small></button>
@@ -289,9 +308,339 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   </article>
 
   <div class="test-banner">
-    <strong>Fase de teste:</strong> use o aplicativo durante vários dias e registre no Diário o que foi útil, confuso ou cansativo. A próxima decisão será baseada no uso real.
+    <strong>Fase de teste:</strong> use o CoachDay durante vários dias e registre o que foi útil, confuso ou cansativo. A próxima decisão será baseada no uso real.
   </div>
 </section>
+
+
+<section id="coachprep" class="page">
+  <div class="coachprep-hero">
+    <span class="eyebrow">COACHPREP — GESTÃO DE GRUPO E LIDERANÇA</span>
+    <h2>Treine sua liderança antes de assumir o grupo.</h2>
+    <p>Um plano progressivo de estudo, conversas, decisões e simulações para chegar ao primeiro dia com um método de gestão já praticado.</p>
+    <div class="coachprep-hero-grid">
+      <div>
+        <label class="label" for="coachprepStartDate">Data prevista para iniciar o trabalho</label>
+        <input id="coachprepStartDate" class="select-field" type="date" onchange="saveCoachPrepStartDate()">
+      </div>
+      <div class="coachprep-countdown">
+        <strong id="coachprepDaysRemaining">—</strong>
+        <span>dias para o início</span>
+      </div>
+      <div class="coachprep-countdown">
+        <strong id="coachprepWeeksRemaining">—</strong>
+        <span>semanas de preparação</span>
+      </div>
+    </div>
+    <div id="coachprepCurrentPhase" class="coachprep-phase-banner"></div>
+  </div>
+
+  <div class="coachprep-tabs" role="tablist" aria-label="Áreas do CoachPrep">
+    <button class="coachprep-tab active" data-coachprep-tab="journey" onclick="showCoachPrepTab('journey')">Jornada</button>
+    <button class="coachprep-tab" data-coachprep-tab="plan" onclick="showCoachPrepTab('plan')">Plano</button>
+    <button class="coachprep-tab" data-coachprep-tab="three" onclick="showCoachPrepTab('three')">3 Minutos</button>
+    <button class="coachprep-tab" data-coachprep-tab="simulations" onclick="showCoachPrepTab('simulations')">Simulações</button>
+    <button class="coachprep-tab" data-coachprep-tab="code" onclick="showCoachPrepTab('code')">Meu Código</button>
+    <button class="coachprep-tab" data-coachprep-tab="decisions" onclick="showCoachPrepTab('decisions')">Decisões</button>
+    <button class="coachprep-tab" data-coachprep-tab="firstweek" onclick="showCoachPrepTab('firstweek')">1ª Semana</button>
+    <button class="coachprep-tab" data-coachprep-tab="progress" onclick="showCoachPrepTab('progress')">Progresso</button>
+  </div>
+
+  <!-- JORNADA -->
+  <div id="coachprepPaneJourney" class="coachprep-pane active">
+    <article class="coachprep-focus-card">
+      <span class="label">Treino recomendado de hoje</span>
+      <h3 id="coachprepTodayTitle">Preparando sua sessão...</h3>
+      <p id="coachprepTodayWhy"></p>
+      <div id="coachprepTodaySteps" class="coachprep-step-list"></div>
+      <div class="coachprep-actions">
+        <button class="primary" onclick="startCoachPrepToday()">Começar sessão</button>
+        <button class="secondary" onclick="regenerateCoachPrepToday()">Trocar exercício</button>
+      </div>
+    </article>
+
+    <article class="card">
+      <span class="label">Antes de liderar</span>
+      <h3>Check-in de 2 minutos</h3>
+      <p class="intro">O objetivo é preparar seu comportamento, não medir seu estado emocional.</p>
+      <div class="coachprep-grid coachprep-grid-3">
+        <div>
+          <label class="label" for="coachprepArrival">Como você está chegando hoje?</label>
+          <textarea id="coachprepArrival" class="text-input" placeholder="Ex.: cansado, acelerado, tranquilo, preocupado com uma decisão..."></textarea>
+        </div>
+        <div>
+          <label class="label" for="coachprepTrigger">O que pode tirar você do seu padrão?</label>
+          <textarea id="coachprepTrigger" class="text-input" placeholder="Ex.: reclamação sobre escalação, treino sem intensidade, atraso..."></textarea>
+        </div>
+        <div>
+          <label class="label" for="coachprepPosture">Qual postura você quer preservar?</label>
+          <textarea id="coachprepPosture" class="text-input" placeholder="Ex.: ouvir antes de responder; corrigir sem ironia; manter o mesmo critério."></textarea>
+        </div>
+      </div>
+      <button class="secondary" style="margin-top:10px" onclick="saveCoachPrepDailyReflection('before')">Salvar preparação pessoal</button>
+    </article>
+
+    <article class="card">
+      <span class="label">Exercício guiado</span>
+      <h3 id="coachprepExerciseQuestion">Pergunta do dia</h3>
+      <div id="coachprepExerciseContext" class="coachprep-prompt"></div>
+      <textarea id="coachprepExerciseAnswer" class="text-input coachprep-large-text" placeholder="Responda como treinador. Pode falar pelo microfone."></textarea>
+      <div class="coachprep-actions">
+        <button class="secondary" onclick="dictateTo('coachprepExerciseAnswer','pt-BR',{maxSeconds:60,label:'Exercício de liderança'})">🎙 Responder por áudio</button>
+        <button class="primary" onclick="analyzeCoachPrepExercise()">✨ Receber orientação</button>
+        <button class="outline" onclick="sendCoachPrepExerciseToStudio()">🎥 Responder em vídeo</button>
+      </div>
+      <div id="coachprepExerciseResult" class="coachprep-result hidden"></div>
+    </article>
+
+    <article class="coachprep-principle-card">
+      <strong>Crítica da Sexta</strong>
+      <p>Uma vez por semana, escolha uma crítica ou decisão registrada e teste se existe fato, critério, coerência e algo que realmente depende de você.</p>
+      <button class="secondary" onclick="openMentorCriticismFromCoachPrep()">Abrir Filtro da Crítica no Mentor</button>
+    </article>
+
+    <article class="card">
+      <span class="label">Depois do treino mental</span>
+      <h3>Fechamento rápido</h3>
+      <div class="coachprep-grid coachprep-grid-2">
+        <div>
+          <label class="label" for="coachprepAfterConversation">Quem eu evitaria conversar nessa situação?</label>
+          <textarea id="coachprepAfterConversation" class="text-input" placeholder="O objetivo é reconhecer situações que você tende a adiar."></textarea>
+        </div>
+        <div>
+          <label class="label" for="coachprepAfterCriterion">Minha decisão teria critério claro?</label>
+          <textarea id="coachprepAfterCriterion" class="text-input" placeholder="Qual fato, rendimento, comportamento ou necessidade do jogo sustenta a decisão?"></textarea>
+        </div>
+      </div>
+      <button class="secondary" style="margin-top:10px" onclick="saveCoachPrepDailyReflection('after')">Salvar reflexão</button>
+    </article>
+  </div>
+
+  <!-- PLANO -->
+  <div id="coachprepPanePlan" class="coachprep-pane">
+    <article class="card">
+      <span class="label">Plano de Estudo — 12 semanas</span>
+      <h3>Segunda a sexta · 15 a 25 minutos por dia</h3>
+      <p class="intro">Semanas 1–2: identidade e processo coletivo. 3–5: conversas individuais. 6–8: conflitos e decisões difíceis. 9–10: pós-jogo, críticas e pressão. 11–12: simulação completa da chegada ao clube.</p>
+      <div class="coachprep-routine">
+        <div><strong>5 min</strong><small>reflexão e critério</small></div>
+        <div><strong>7 min</strong><small>situação prática</small></div>
+        <div><strong>5 min</strong><small>áudio ou vídeo</small></div>
+        <div><strong>3 min</strong><small>registro do aprendizado</small></div>
+      </div>
+      <div class="coachprep-actions" style="margin-top:12px">
+        <button class="primary" onclick="buildCoachPrepPlan()">Atualizar plano</button>
+        <button class="secondary" onclick="markCurrentCoachPrepWeek()">Marcar semana atual revisada</button>
+      </div>
+    </article>
+    <div id="coachprepPlanList" class="coachprep-plan-list"></div>
+  </div>
+
+  <!-- 3 MINUTOS -->
+  <div id="coachprepPaneThree" class="coachprep-pane">
+    <article class="card">
+      <span class="label">3 Minutos de Conexão</span>
+      <h3>Ouvir → alinhar critério → micro-meta → fechar com clareza</h3>
+      <p class="intro">Não é uma obrigação burocrática de falar com uma pessoa diferente todo dia. É um treino para distribuir atenção e saber conduzir conversas curtas.</p>
+
+      <div class="coachprep-grid coachprep-grid-2">
+        <div>
+          <label class="label" for="coachprepThreeProfile">Perfil da conversa</label>
+          <select id="coachprepThreeProfile" class="select-field" onchange="loadCoachPrepThreeScenario()">
+            <option value="notplaying">Atleta que não vem jogando</option>
+            <option value="starter">Titular em fase ruim</option>
+            <option value="young">Jogador jovem</option>
+            <option value="experienced">Jogador experiente</option>
+            <option value="substitute">Reserva que perdeu espaço</option>
+            <option value="returning">Atleta voltando de lesão</option>
+            <option value="positive">Atleta que respondeu positivamente</option>
+            <option value="decisive">Jogador que pode ser decisivo</option>
+          </select>
+        </div>
+        <div>
+          <label class="label" for="coachprepThreeStyle">Seu objetivo</label>
+          <select id="coachprepThreeStyle" class="select-field">
+            <option value="listen">Ouvir mais</option>
+            <option value="clarify">Dar clareza</option>
+            <option value="correct">Corrigir comportamento</option>
+            <option value="recognize">Reconhecer comportamento positivo</option>
+            <option value="microgoal">Definir micro-meta</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="coachprepThreeScenario" class="coachprep-scenario" style="margin-top:10px"></div>
+
+      <div class="coachprep-framework">
+        <div><b>1</b><strong>Ouvir</strong><small>“Como você está vendo sua semana?”</small></div>
+        <div><b>2</b><strong>Critério</strong><small>“Eu observo rendimento, atitude e necessidade do jogo.”</small></div>
+        <div><b>3</b><strong>Micro-meta</strong><small>“Nesta semana, foque neste comportamento.”</small></div>
+        <div><b>4</b><strong>Fechar</strong><small>“Eu conto com você dentro desse papel.”</small></div>
+      </div>
+
+      <textarea id="coachprepThreeAnswer" class="text-input coachprep-large-text" placeholder="Comece a conversa. A IA interpretará a outra pessoa e responderá."></textarea>
+      <div class="coachprep-actions">
+        <button class="secondary" onclick="dictateTo('coachprepThreeAnswer','pt-BR',{maxSeconds:45,label:'Conversa de três minutos'})">🎙 Falar</button>
+        <button class="primary" onclick="continueCoachPrepThree()">✨ Continuar conversa</button>
+        <button class="outline" onclick="hearCoachPrepThreeModel()">🔊 Ouvir modelo</button>
+        <button class="outline" onclick="coachPrepThreeToStudio()">🎥 Treinar em vídeo</button>
+      </div>
+      <div id="coachprepThreeResult" class="coachprep-result hidden"></div>
+      <div class="coachprep-actions" style="margin-top:10px">
+        <button class="secondary" onclick="finishCoachPrepThree()">Encerrar e registrar</button>
+        <button class="outline" onclick="resetCoachPrepThree()">Nova conversa</button>
+      </div>
+    </article>
+  </div>
+
+  <!-- SIMULAÇÕES -->
+  <div id="coachprepPaneSimulations" class="coachprep-pane">
+    <article class="card">
+      <span class="label">Simulador de Gestão</span>
+      <h3>Pratique antes de viver a situação real</h3>
+      <div class="coachprep-grid coachprep-grid-3">
+        <div>
+          <label class="label" for="coachprepSimRole">Interlocutor</label>
+          <select id="coachprepSimRole" class="select-field" onchange="loadCoachPrepSimulation()">
+            <option value="player">Jogador</option>
+            <option value="captain">Capitão</option>
+            <option value="staff">Auxiliar/comissão</option>
+            <option value="board">Diretoria</option>
+          </select>
+        </div>
+        <div>
+          <label class="label" for="coachprepSimDifficulty">Dificuldade</label>
+          <select id="coachprepSimDifficulty" class="select-field">
+            <option value="guided">Guiada</option>
+            <option value="realistic" selected>Realista</option>
+            <option value="pressure">Sob pressão</option>
+          </select>
+        </div>
+        <div>
+          <label class="label" for="coachprepSimScenario">Situação</label>
+          <select id="coachprepSimScenario" class="select-field" onchange="loadCoachPrepSimulation()"></select>
+        </div>
+      </div>
+
+      <div id="coachprepSimPrompt" class="coachprep-scenario" style="margin-top:10px"></div>
+      <textarea id="coachprepSimAnswer" class="text-input coachprep-large-text" placeholder="Responda como você responderia na conversa real."></textarea>
+      <div class="coachprep-actions">
+        <button class="secondary" onclick="dictateTo('coachprepSimAnswer','pt-BR',{maxSeconds:60,label:'Simulação de gestão'})">🎙 Responder por áudio</button>
+        <button class="primary" onclick="continueCoachPrepSimulation()">✨ Ver reação da pessoa</button>
+        <button class="outline" onclick="coachPrepSimulationToStudio()">🎥 Fazer em vídeo</button>
+      </div>
+      <div id="coachprepSimResult" class="coachprep-result hidden"></div>
+      <div class="coachprep-actions" style="margin-top:10px">
+        <button class="secondary" onclick="finishCoachPrepSimulation()">Encerrar e avaliar</button>
+        <button class="outline" onclick="resetCoachPrepSimulation()">Recomeçar</button>
+      </div>
+    </article>
+  </div>
+
+  <!-- CÓDIGO -->
+  <div id="coachprepPaneCode" class="coachprep-pane">
+    <article class="card">
+      <span class="label">Meu Código de Liderança</span>
+      <h3>Princípios que precisam aparecer nas suas decisões, não apenas no discurso</h3>
+      <p class="intro">Edite os princípios até que eles representem de verdade como você quer liderar.</p>
+      <div id="coachprepCodeList" class="coachprep-code-list"></div>
+      <div class="coachprep-actions" style="margin-top:10px">
+        <button class="primary" onclick="saveCoachPrepCode()">Salvar meu Código</button>
+        <button class="secondary" onclick="addCoachPrepCodePrinciple()">Adicionar princípio</button>
+        <button class="outline" onclick="reviewCoachPrepCode()">✨ Revisar coerência com IA</button>
+      </div>
+      <div id="coachprepCodeResult" class="coachprep-result hidden"></div>
+    </article>
+
+    <article class="coachprep-principle-card">
+      <strong>Frase de trabalho</strong>
+      <p>Ser firme sem fechar portas. Corrigir o comportamento sem condenar a pessoa.</p>
+    </article>
+  </div>
+
+  <!-- DECISÕES -->
+  <div id="coachprepPaneDecisions" class="coachprep-pane">
+    <article class="card">
+      <span class="label">Decisões difíceis</span>
+      <h3>Fato → critério → comunicação → revisão</h3>
+      <div class="coachprep-grid coachprep-grid-2">
+        <div>
+          <label class="label" for="coachprepDecisionScenario">Situação</label>
+          <select id="coachprepDecisionScenario" class="select-field" onchange="loadCoachPrepDecision()">
+            <option value="bench">Tirar um titular da equipe</option>
+            <option value="captain">Trocar ou retirar a faixa de capitão</option>
+            <option value="young-error">Jovem comete erro decisivo</option>
+            <option value="sub-reaction">Jogador reage mal à substituição</option>
+            <option value="complaint">Jogador reclama publicamente</option>
+            <option value="training">Jogador importante treina abaixo do padrão</option>
+            <option value="conflict">Conflito entre dois jogadores</option>
+            <option value="board-pressure">Dirigente pressiona por escalação</option>
+            <option value="cut">Jogador fica fora da convocação</option>
+          </select>
+        </div>
+        <div>
+          <label class="label" for="coachprepDecisionTiming">Momento da conversa</label>
+          <select id="coachprepDecisionTiming" class="select-field">
+            <option>Antes do treino</option>
+            <option>Depois do treino</option>
+            <option>Antes de divulgar a escalação</option>
+            <option>Após o jogo</option>
+            <option>Reunião individual agendada</option>
+          </select>
+        </div>
+      </div>
+      <div id="coachprepDecisionPrompt" class="coachprep-scenario" style="margin-top:10px"></div>
+
+      <div class="coachprep-grid coachprep-grid-2">
+        <div><label class="label" for="coachprepDecisionFact">Qual é o fato?</label><textarea id="coachprepDecisionFact" class="text-input"></textarea></div>
+        <div><label class="label" for="coachprepDecisionCriterion">Qual é o critério?</label><textarea id="coachprepDecisionCriterion" class="text-input"></textarea></div>
+        <div><label class="label" for="coachprepDecisionWho">Quem precisa saber?</label><textarea id="coachprepDecisionWho" class="text-input"></textarea></div>
+        <div><label class="label" for="coachprepDecisionReview">Quando a decisão será revista?</label><textarea id="coachprepDecisionReview" class="text-input"></textarea></div>
+      </div>
+      <label class="label" for="coachprepDecisionMessage" style="margin-top:10px">Como você comunicaria?</label>
+      <textarea id="coachprepDecisionMessage" class="text-input coachprep-large-text" placeholder="Fale ou escreva sua conversa."></textarea>
+      <div class="coachprep-actions">
+        <button class="secondary" onclick="dictateTo('coachprepDecisionMessage','pt-BR',{maxSeconds:60,label:'Comunicar decisão difícil'})">🎙 Falar</button>
+        <button class="primary" onclick="analyzeCoachPrepDecision()">✨ Revisar decisão e comunicação</button>
+        <button class="outline" onclick="coachPrepDecisionToStudio()">🎥 Ensaiar em vídeo</button>
+      </div>
+      <div id="coachprepDecisionResult" class="coachprep-result hidden"></div>
+    </article>
+  </div>
+
+  <!-- PRIMEIRA SEMANA -->
+  <div id="coachprepPaneFirstweek" class="coachprep-pane">
+    <article class="card">
+      <span class="label">Simulação da primeira semana</span>
+      <h3>Chegue ao início do trabalho tendo ensaiado os primeiros momentos</h3>
+      <p class="intro">As situações não representam um roteiro rígido. Elas treinam comportamentos que provavelmente aparecerão quando você assumir.</p>
+    </article>
+    <div id="coachprepFirstWeekList" class="coachprep-firstweek-list"></div>
+  </div>
+
+  <!-- PROGRESSO -->
+  <div id="coachprepPaneProgress" class="coachprep-pane">
+    <article class="card">
+      <span class="label">Progresso observável</span>
+      <h3>Sem nota artificial de liderança</h3>
+      <div id="coachprepProgressStats" class="coachprep-stat-grid"></div>
+    </article>
+
+    <article class="card">
+      <span class="label">O que você está praticando</span>
+      <div id="coachprepProgressPatterns" class="coachprep-pattern-list"></div>
+    </article>
+
+    <article class="card">
+      <div class="coachprep-section-head">
+        <div><span class="label">Histórico</span><h3>Atividades recentes</h3></div>
+        <button class="outline" onclick="exportCoachPrepData()">Exportar</button>
+      </div>
+      <div id="coachprepHistoryList" class="coachprep-history-list"></div>
+    </article>
+  </div>
+</section>
+
 
 <section id="tracks" class="page">
   <div class="hero">
@@ -367,7 +716,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
 <section id="studio" class="page">
   <div class="studio-hero">
-    <span class="eyebrow">COACHVOICE v3.3 — ESTÚDIO DO TREINADOR</span>
+    <span class="eyebrow">COACHVOICE v4.2 — ESTÚDIO DO TREINADOR</span>
     <h2>Grave, assista, repita e compare sua comunicação em vídeo.</h2>
     <p>Treine oratória, entrevistas, inglês, liderança, vestiário e explicações no quadro tático.</p>
   </div>
@@ -377,7 +726,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
         <span class="label">Configuração da sessão</span>
         <div class="studio-controls">
           <div><label class="label" for="studioMode">Modo</label><select id="studioMode" class="select-field" onchange="onStudioModeChange()"><option value="oratory">Oratória em português</option><option value="interview-pt">Entrevista em português</option><option value="interview-en">Entrevista em inglês</option><option value="tactical">Explicação no quadro tático</option><option value="locker">Vestiário e liderança</option><option value="presentation">Apresentação profissional</option></select></div>
-          <div><label class="label" for="studioDuration">Duração máxima</label><select id="studioDuration" class="select-field"><option value="30">30 segundos</option><option value="45">45 segundos</option><option value="60" selected>60 segundos</option></select></div>
+          <div><label class="label" for="studioDuration">Duração máxima</label><select id="studioDuration" class="select-field"><option value="30">30 segundos</option><option value="45">45 segundos</option><option value="60" selected>60 segundos</option><option value="120">2 minutos</option><option value="300">5 minutos — reunião</option><option value="360">6 minutos — reunião</option></select></div>
           <div><label class="label" for="studioCamera">Câmera</label><select id="studioCamera" class="select-field" onchange="restartStudioCamera()"><option value="user">Frontal</option><option value="environment">Traseira</option></select></div><div><label class="label" for="studioFraming">Enquadramento</label><select id="studioFraming" class="select-field" onchange="applyStudioFraming(true)"><option value="interview">Entrevista — plano próximo</option><option value="fullbody">Corpo inteiro — vertical</option><option value="presentation">Apresentação — horizontal</option><option value="tactical">Quadro tático — plano aberto</option></select></div>
           <div><label class="label" for="studioLanguage">Idioma</label><select id="studioLanguage" class="select-field" onchange="loadStudioPrompt()"><option value="pt-BR">Português</option><option value="en-US">Inglês americano</option><option value="en-GB">Inglês britânico</option></select></div>
           <div class="wide"><label class="label" for="studioPrompt">Situação</label><textarea id="studioPrompt" class="text-input"></textarea></div>
@@ -444,129 +793,169 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   <article class="studio-panel"><div class="studio-controls"><select id="compareVideoA" class="select-field" onchange="renderStudioComparison()"></select><select id="compareVideoB" class="select-field" onchange="renderStudioComparison()"></select></div><div id="studioCompareGrid" class="compare-grid" style="margin-top:12px"></div><div id="studioCompareDiff" class="compare-diff hidden" style="margin-top:12px"></div></article>
 </section>
 
+
 <section id="mentor" class="page">
-  <div class="hero">
-    <span class="eyebrow">ASSISTENTE PROFISSIONAL</span>
-    <h2>Como posso ajudar você hoje, professor?</h2>
-    <p>Descreva uma situação real. O Coach Mentor organizará a comunicação, uma resposta-modelo e um treino prático.</p>
+  <div class="mentor42-hero">
+    <span class="eyebrow">MENTOR IA DO TREINADOR — VOZ, GESTÃO E LIDERANÇA</span>
+    <h2>Fale comigo quando precisar pensar, decidir, ensaiar ou organizar uma situação.</h2>
+    <p>Você fala pelo microfone, o Mentor responde em texto e voz e a conversa continua quantas vezes você solicitar. O foco é ajudar você a pensar com critério — não decidir no seu lugar.</p>
+    <div class="mentor42-hero-actions">
+      <button class="primary mentor42-call-btn" onclick="mentor42StartCall()">📞 Ligar para o Mentor</button>
+      <button class="secondary" onclick="mentor42Quick('avoid')">🗣 Estou evitando essa conversa</button>
+      <button class="secondary" onclick="mentor42FocusCriticism()">✕ Recebi uma crítica</button>
+    </div>
+    <div id="mentor42PreClubBanner" class="mentor42-preclub hidden"></div>
   </div>
 
-  <div class="section-title"><h2>Exemplos rápidos</h2><span>Toque para usar</span></div>
-  <div class="prompt-suggestions">
-    <button class="prompt-suggestion" onclick="mentorExample('Perdemos três jogos seguidos e amanhã tenho uma coletiva. Como devo responder?')">
-      <strong>Pressão da imprensa</strong><small>Sequência de derrotas</small>
-    </button>
-    <button class="prompt-suggestion" onclick="mentorExample('Tenho um jogador experiente insatisfeito por estar no banco. Como conduzir a conversa?')">
-      <strong>Jogador insatisfeito</strong><small>Conversa individual</small>
-    </button>
-    <button class="prompt-suggestion" onclick="mentorExample('Preciso fazer uma palestra curta antes de uma final importante.')">
-      <strong>Discurso pré-jogo</strong><small>Final importante</small>
-    </button>
+  <!-- Compatibilidade com fluxos antigos -->
+  <div class="hidden" aria-hidden="true">
+    <textarea id="mentorSituation"></textarea>
+    <select id="mentorAudience">
+      <option>Imprensa</option><option>Jogadores</option><option>Comissão técnica</option>
+      <option>Diretoria</option><option>Torcida</option>
+    </select>
+    <select id="mentorTone"><option>Sereno</option><option>Firme</option><option>Tático</option><option>Protetor</option><option>Inspirador</option></select>
+    <select id="mentorDuration"><option>15 segundos</option><option>30 segundos</option><option>60 segundos</option></select>
+    <select id="mentorLanguage"><option>Português</option><option>Inglês</option><option>Português e inglês</option></select>
   </div>
 
-  <article class="card" style="margin-top:14px">
-    <span class="label">Preparar uma situação</span>
-    <div class="mentor-form">
-      <label for="mentorSituation">Descreva o que está acontecendo</label>
-      <textarea id="mentorSituation" placeholder="Ex.: A equipe perdeu duas partidas e a torcida está pressionando. Amanhã terei uma entrevista."></textarea>
-
-      <div class="mentor-grid">
-        <div>
-          <label for="mentorAudience">Com quem você falará?</label>
-          <select id="mentorAudience">
-            <option>Imprensa</option>
-            <option>Jogadores</option>
-            <option>Comissão técnica</option>
-            <option>Diretoria</option>
-            <option>Torcida</option>
-          </select>
-        </div>
-        <div>
-          <label for="mentorTone">Tom desejado</label>
-          <select id="mentorTone">
-            <option>Sereno</option>
-            <option>Firme</option>
-            <option>Tático</option>
-            <option>Protetor</option>
-            <option>Inspirador</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="mentor-grid">
-        <div>
-          <label for="mentorDuration">Duração</label>
-          <select id="mentorDuration">
-            <option>15 segundos</option>
-            <option selected>30 segundos</option>
-            <option>60 segundos</option>
-          </select>
-        </div>
-        <div>
-          <label for="mentorLanguage">Idioma</label>
-          <select id="mentorLanguage">
-            <option>Português</option>
-            <option>Inglês</option>
-            <option>Português e inglês</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="voice-panel">
-        <strong>Voz usada nas respostas</strong>
-        <div class="voice-options">
-          <button class="voice-option" data-voice="female" onclick="setVoicePreference('female')">👩 Feminina</button>
-          <button class="voice-option" data-voice="male" onclick="setVoicePreference('male')">👨 Masculina</button>
-          <button class="voice-option" data-voice="auto" onclick="setVoicePreference('auto')">⚙ Automática</button>
-        </div>
-        <p class="voice-note">O aparelho escolhe entre as vozes instaladas. A disponibilidade varia conforme o celular e o navegador.</p>
-      </div>
-      <button class="primary" onclick="generateMentorDemo()">Preparar orientação</button>
-      <button class="secondary" onclick="startMentorDictation()">🎙 Descrever pelo microfone</button>
+  <article id="mentor42PendingCard" class="mentor42-pending-card hidden">
+    <span class="label">Retomar</span>
+    <h3>Ficou uma pendência da última conversa</h3>
+    <p id="mentor42PendingText"></p>
+    <div class="mentor42-actions">
+      <button class="primary" onclick="mentor42ResumePending()">Continuar com o Mentor</button>
+      <button class="outline" onclick="mentor42ResolvePending()">Marcar como resolvida</button>
     </div>
   </article>
 
-  <section id="mentorResult" class="hidden">
-    <article class="card">
-      <span class="label">Plano preparado</span>
-      <div class="mentor-result">
-        <div class="mentor-section">
-          <h3>1. Leitura da situação</h3>
-          <p id="mentorAnalysis"></p>
-        </div>
-        <div class="mentor-section">
-          <h3>2. Resposta recomendada</h3>
-          <p id="mentorAnswer"></p>
-        </div>
-        <div class="mentor-section pause-text">
-          <h3>3. Versão com pausas</h3>
-          <p id="mentorPauseAnswer"></p>
-        </div>
-        <div class="mentor-section">
-          <h3>4. Evite</h3>
-          <p id="mentorAvoid"></p>
-        </div>
-        <div class="mentor-section">
-          <h3>5. Possível pergunta seguinte</h3>
-          <p id="mentorFollowup"></p>
-        </div>
-      </div>
-      <br>
-      <div class="mentor-actions">
-        <button class="secondary" onclick="speakMentor()">🔊 Ouvir resposta</button>
-        <button class="primary" onclick="startMentorPractice()">🎙 Treinar esta resposta</button>
-      </div>
-    </article>
+  <div class="mentor42-quick-grid">
+    <button onclick="mentor42Quick('free')"><span>🎙</span><strong>Conversa livre</strong><small>Conte o que está acontecendo</small></button>
+    <button onclick="mentor42Quick('mentor')"><span>🧠</span><strong>Modo Mentor</strong><small>Pergunta, orienta e pode discordar</small></button>
+    <button onclick="mentor42Quick('questions')"><span>❓</span><strong>Só perguntas</strong><small>Sem solução pronta</small></button>
+    <button onclick="mentor42Quick('simulation')"><span>🎭</span><strong>Simulação</strong><small>Jogador, capitão, comissão ou diretoria</small></button>
+    <button onclick="mentor42Quick('avoid')"><span>🚪</span><strong>Estou evitando</strong><small>Prepare a conversa que você está adiando</small></button>
+    <button onclick="mentor42Quick('challenge')"><span>⚖️</span><strong>Questione minha decisão</strong><small>Teste critério e coerência</small></button>
+    <button onclick="mentor42Quick('five')"><span>⏱️</span><strong>Me prepare em 5 min</strong><small>Antes de treino, reunião ou vestiário</small></button>
+    <button onclick="mentor42Quick('organize')"><span>📝</span><strong>Não quero conselho</strong><small>Só organize fato, interpretação e pendência</small></button>
+  </div>
 
-    <article class="card">
-      <span class="label">Conversa demonstrativa</span>
-      <div id="mentorChat">
-        <div class="chat-user" id="mentorChatUser"></div>
-        <div class="chat-ai">Preparei uma resposta inicial. Na versão conectada à IA, poderei fazer perguntas de acompanhamento e adaptar o treino ao seu desempenho.</div>
+  <article class="card mentor42-conversation-card">
+    <div class="mentor42-section-head">
+      <div>
+        <span class="label">Conversa atual</span>
+        <h3 id="mentor42ModeTitle">Conversa livre</h3>
       </div>
-      <div class="mentor-actions"><button class="outline" onclick="mentorFollowupDemo()">Pergunta de acompanhamento</button><button class="outline" onclick="saveCurrentMentorSession()">💾 Salvar sessão</button></div>
-    </article>
-  </section>
+      <div class="mentor42-voice-toggle">
+        <label><input id="mentor42AutoVoice" type="checkbox" checked onchange="mentor42SaveVoiceSetting()"> 🔊 Responder com voz</label>
+      </div>
+    </div>
+
+    <div class="mentor42-grid mentor42-grid-3">
+      <div>
+        <label class="label" for="mentor42Mode">Modo</label>
+        <select id="mentor42Mode" class="select-field" onchange="mentor42ModeChanged()">
+          <option value="free">Conversa livre</option>
+          <option value="mentor">Mentor — orientação e confronto respeitoso</option>
+          <option value="questions">Só perguntas</option>
+          <option value="simulation">Simulação</option>
+          <option value="avoid">Estou evitando essa conversa</option>
+          <option value="challenge">Questione minha decisão</option>
+          <option value="five">Me prepare em 5 minutos</option>
+          <option value="organize">Só organizar — sem conselho</option>
+        </select>
+      </div>
+      <div>
+        <label class="label" for="mentor42Role">Na simulação, quem é a outra pessoa?</label>
+        <select id="mentor42Role" class="select-field">
+          <option value="player">Jogador</option>
+          <option value="captain">Capitão</option>
+          <option value="staff">Auxiliar / comissão</option>
+          <option value="board">Diretoria</option>
+          <option value="press">Jornalista</option>
+        </select>
+      </div>
+      <div>
+        <label class="label" for="mentor42Difficulty">Intensidade</label>
+        <select id="mentor42Difficulty" class="select-field">
+          <option value="guided">Guiada</option>
+          <option value="realistic" selected>Realista</option>
+          <option value="pressure">Sob pressão</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="mentor42ModeHint" class="mentor42-mode-hint"></div>
+
+    <div id="mentor42Chat" class="mentor42-chat"></div>
+
+    <label class="label" for="mentor42Input">Fale ou escreva</label>
+    <textarea id="mentor42Input" class="text-input mentor42-input" placeholder="Ex.: Tenho um jogador importante que provavelmente vou colocar no banco e estou evitando essa conversa."></textarea>
+
+    <div class="mentor42-actions">
+      <button class="secondary" onclick="mentor42Capture(false)">🎙 Falar</button>
+      <button class="primary" onclick="mentor42Send()">Enviar ao Mentor</button>
+      <button class="outline" onclick="mentor42ReviewLastAnswer()">🔎 Corrigir minha resposta</button>
+      <button class="outline" onclick="mentor42Retry()">↻ Refazer resposta</button>
+      <button class="outline" onclick="mentor42HearModel()">🔊 Como o Mentor falaria?</button>
+    </div>
+
+    <div id="mentor42Review" class="mentor42-result hidden"></div>
+
+    <div class="mentor42-actions mentor42-session-actions">
+      <button class="secondary" onclick="mentor42SaveSession()">💾 Encerrar e salvar na memória</button>
+      <button class="outline" onclick="mentor42ClearConversation()">Nova conversa</button>
+    </div>
+  </article>
+
+  <article id="mentor42CriticismCard" class="card mentor42-criticism-card">
+    <span class="label">Filtro da Crítica</span>
+    <h3>Marque com X apenas o que merece sua energia</h3>
+    <p class="intro">Uma crítica pode conter uma parte útil sem merecer uma reação completa. O Mentor separa ação, aprendizado, controle, ruído e urgência.</p>
+
+    <textarea id="mentor42CriticismInput" class="text-input mentor42-input" placeholder="Ex.: Disseram que meu time não tem intensidade e que eu protejo alguns jogadores."></textarea>
+    <label class="mentor42-check"><input id="mentor42CriticChallenge" type="checkbox" checked> Quero que o Mentor procure também um possível ponto cego</label>
+    <div class="mentor42-actions">
+      <button class="secondary" onclick="mentor42CaptureCriticism()">🎙 Contar a crítica</button>
+      <button class="primary" onclick="mentor42AnalyzeCriticism()">✕ Filtrar crítica</button>
+      <button class="outline" onclick="mentor42FridayCriticism()">Crítica da Sexta</button>
+    </div>
+    <div id="mentor42CriticismResult" class="mentor42-result hidden"></div>
+  </article>
+
+  <article class="card">
+    <div class="mentor42-section-head">
+      <div>
+        <span class="label">Memória do Mentor</span>
+        <h3>Contexto, aprendizado e próximo passo</h3>
+      </div>
+      <button class="outline" onclick="mentor42ExportMemory()">Exportar</button>
+    </div>
+    <div id="mentor42Memory" class="mentor42-memory-list"></div>
+  </article>
+
+  <!-- interface de “ligação” por voz -->
+  <div id="mentor42CallOverlay" class="mentor42-call-overlay hidden" role="dialog" aria-modal="true" aria-label="Ligação com o Mentor IA">
+    <div class="mentor42-call-shell">
+      <div class="mentor42-call-head">
+        <div>
+          <small>MENTOR IA DO TREINADOR</small>
+          <h3 id="mentor42CallTitle">Conversa por voz</h3>
+        </div>
+        <button class="mentor42-call-close" onclick="mentor42EndCall()">✕</button>
+      </div>
+
+      <div id="mentor42CallStatus" class="mentor42-call-status">Toque no microfone para falar.</div>
+      <div id="mentor42CallChat" class="mentor42-call-chat"></div>
+
+      <div class="mentor42-call-controls">
+        <button class="mentor42-call-side" onclick="mentor42StopVoice()">🔇<small>Parar voz</small></button>
+        <button id="mentor42BigMic" class="mentor42-big-mic" onclick="mentor42Capture(true)">🎙</button>
+        <button class="mentor42-call-side" onclick="mentor42SaveSession(true)">💾<small>Salvar</small></button>
+      </div>
+      <p class="mentor42-call-note">No celular, toque no microfone a cada vez que quiser falar. O Mentor responde em voz automaticamente quando essa opção está ativada.</p>
+    </div>
+  </div>
 </section>
 
 
@@ -819,46 +1208,330 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   </div>
 </section>
 
+
 <section id="daily" class="page">
-  <div class="hero">
-    <span class="eyebrow">DIÁRIO DO TREINADOR</span>
-    <h2>Um plano simples para desenvolver comunicação dentro do seu dia real.</h2>
-    <p>O plano é salvo neste aparelho e pode ser adaptado conforme entrevista, treinamento, coletivo ou jogo.</p>
+  <div class="coachday-hero">
+    <span class="eyebrow">COACHDAY AI — ASSISTENTE DO TREINADOR</span>
+    <h2>Seu dia de trabalho com contexto, continuidade e menos comunicação repetitiva.</h2>
+    <p>Planeje o que realmente precisa ser dito, registre fatos do treino, acompanhe conversas individuais e retome amanhã sem perder o contexto.</p>
+    <div class="coachday-hero-actions">
+      <button class="primary" onclick="showCoachDayTab('today')">Preparar hoje</button>
+      <button class="secondary" onclick="refreshCoachDayRadar(true)">🧭 Atualizar Radar</button>
+    </div>
   </div>
 
-  <article class="card">
-    <span class="label">O que acontecerá hoje?</span>
-    <div class="daily-options">
-      <button class="option-check" data-daily-option="training" onclick="toggleDailyOption(this)">⚽ Treino ou coletivo</button>
-      <button class="option-check" data-daily-option="interview" onclick="toggleDailyOption(this)">🎙 Entrevista</button>
-      <button class="option-check" data-daily-option="meeting" onclick="toggleDailyOption(this)">🤝 Reunião/conversa</button>
-      <button class="option-check" data-daily-option="match" onclick="toggleDailyOption(this)">🏟 Jogo</button>
-    </div>
-    <label class="label" for="dailyContext" style="margin-top:12px">Situação principal do dia</label>
-    <textarea id="dailyContext" class="text-input" placeholder="Ex.: coletivo à tarde, jogador insatisfeito e entrevista depois do treino."></textarea>
-    <div class="mentor-actions" style="margin-top:10px">
-      <button class="secondary" onclick="buildDailyPlan(false)">Montar plano local</button>
-      <button class="primary" onclick="buildDailyPlan(true)">✨ Montar com IA</button>
-    </div>
-  </article>
+  <div class="coachday-tabs" role="tablist" aria-label="Áreas do CoachDay">
+    <button class="coachday-tab active" data-coachday-tab="today" onclick="showCoachDayTab('today')">Hoje</button>
+    <button class="coachday-tab" data-coachday-tab="week" onclick="showCoachDayTab('week')">Semana</button>
+    <button class="coachday-tab" data-coachday-tab="moments" onclick="showCoachDayTab('moments')">Momentos</button>
+    <button class="coachday-tab" data-coachday-tab="squad" onclick="showCoachDayTab('squad')">Elenco</button>
+    <button class="coachday-tab" data-coachday-tab="memory" onclick="showCoachDayTab('memory')">Memória</button>
+  </div>
 
-  <article class="card">
-    <span class="label">Plano de hoje</span>
-    <div id="dayPlanList" class="day-plan-list"></div>
-  </article>
-
-  <div class="journal-grid">
-    <article class="journal-note">
-      <span class="label">Antes das atividades</span>
-      <textarea id="journalMorning" placeholder="Qual é a comunicação mais importante de hoje?"></textarea>
+  <!-- HOJE -->
+  <div id="coachdayPaneToday" class="coachday-pane active">
+    <article class="coachday-radar">
+      <div class="coachday-section-head">
+        <div>
+          <span class="label">Radar do Treinador</span>
+          <h3>O que merece sua atenção hoje</h3>
+        </div>
+        <span id="coachdayRadarDate" class="coachday-badge">Hoje</span>
+      </div>
+      <div id="coachdayRadarList" class="coachday-attention-list"></div>
+      <div id="coachdayRadarQuestion" class="coachday-question"></div>
     </article>
-    <article class="journal-note">
-      <span class="label">Depois das atividades</span>
-      <textarea id="journalEvening" placeholder="O que funcionou? O que você faria diferente?"></textarea>
+
+    <article class="card">
+      <span class="label">Antes da atividade</span>
+      <h3>O que acontece hoje?</h3>
+      <div class="coachday-grid coachday-grid-3">
+        <div>
+          <label class="label" for="coachdayEvent">Momento</label>
+          <select id="coachdayEvent" class="select-field">
+            <option value="training">Treino</option>
+            <option value="match">Jogo</option>
+            <option value="presentation">Apresentação/reunião importante</option>
+            <option value="meeting">Reunião ou conversa coletiva</option>
+            <option value="recovery">Recuperação/atividade leve</option>
+            <option value="off">Dia sem atividade de campo</option>
+          </select>
+        </div>
+        <div>
+          <label class="label" for="coachdayAudience">Com quem você falará?</label>
+          <select id="coachdayAudience" class="select-field">
+            <option>Elenco completo</option>
+            <option>Jogadores de um setor</option>
+            <option>Jogador individual</option>
+            <option>Comissão técnica</option>
+            <option>Diretoria</option>
+            <option>Imprensa</option>
+          </select>
+        </div>
+        <div>
+          <label class="label" for="coachdayDuration">Tempo da fala</label>
+          <select id="coachdayDuration" class="select-field">
+            <option value="auto">A IA recomenda</option>
+            <option value="none">Hoje não preciso de discurso</option>
+            <option value="quick">20–40 segundos</option>
+            <option value="short">1–2 minutos</option>
+            <option value="meeting">5–6 minutos</option>
+            <option value="special">Até 10 minutos — situação especial</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="coachday-grid coachday-grid-2" style="margin-top:10px">
+        <div>
+          <label class="label" for="coachdayFocus">Foco técnico/tático do dia</label>
+          <textarea id="coachdayFocus" class="text-input" placeholder="Ex.: organização ofensiva + transição defensiva; saída de bola contra pressão alta."></textarea>
+        </div>
+        <div>
+          <label class="label" for="coachdayContext">Contexto humano e profissional</label>
+          <textarea id="coachdayContext" class="text-input" placeholder="Ex.: treino pela manhã; equipe vem de derrota; Adriano saiu da equipe titular; quero evitar uma fala repetitiva."></textarea>
+        </div>
+      </div>
+
+      <div class="coachday-grid coachday-grid-2" style="margin-top:10px">
+        <div>
+          <label class="label" for="coachdayStyle">Estilo de comunicação</label>
+          <select id="coachdayStyle" class="select-field">
+            <option value="auto">Escolher conforme o contexto</option>
+            <option value="direct">Direto e simples</option>
+            <option value="pedagogical">Pedagógico</option>
+            <option value="questions">Baseado em perguntas</option>
+            <option value="calm">Sereno e firme</option>
+            <option value="energetic">Mais energético</option>
+          </select>
+        </div>
+        <div>
+          <label class="label" for="coachdayNewInfo">O que é realmente novo hoje?</label>
+          <textarea id="coachdayNewInfo" class="text-input" placeholder="Ex.: apresentar o gatilho de pressão após perda; não repetir toda a reunião de ontem."></textarea>
+        </div>
+      </div>
+
+      <div class="coachday-actions" style="margin-top:12px">
+        <button class="primary" onclick="prepareCoachDayCommunication()">✨ Preparar minha comunicação</button>
+        <button class="secondary" onclick="saveCoachDayPreparation()">💾 Salvar preparação</button>
+        <button class="outline" onclick="practiceCoachDayInStudio()">🎥 Treinar no Estúdio</button>
+      </div>
+      <div id="coachdayPreResult" class="coachday-result hidden" style="margin-top:12px"></div>
+    </article>
+
+    <article class="card">
+      <span class="label">Depois da atividade</span>
+      <h3>Conte o que aconteceu do seu jeito</h3>
+      <p class="intro">Fale ou escreva livremente. A IA separará fatos de campo, comunicação, gestão do elenco, pendências e o que não precisa de ação imediata.</p>
+      <textarea id="coachdayPostRaw" class="text-input coachday-large-text" placeholder="Ex.: a saída de bola funcionou melhor; na transição defensiva ainda demoramos. Adriano ficou chateado após sair da equipe titular. João respondeu bem à correção. Minha fala antes do treino ficou longa..."></textarea>
+      <div class="coachday-actions" style="margin-top:10px">
+        <button class="secondary" onclick="dictateTo('coachdayPostRaw','pt-BR',{maxSeconds:90,label:'Feedback depois da atividade'})">🎙 Contar pelo microfone</button>
+        <button class="primary" onclick="organizeCoachDayPost()">✨ Organizar o pós-atividade</button>
+      </div>
+      <div id="coachdayPostResult" class="coachday-result hidden" style="margin-top:12px"></div>
+    </article>
+
+    <article class="card coachday-react-card">
+      <span class="label">Antes de reagir</span>
+      <h3>Separe o episódio da relação com a pessoa</h3>
+      <p class="intro">Registre apenas o que você observou. O CoachDay ajuda a escolher entre conversar agora, conversar em particular, observar mais ou não agir ainda.</p>
+      <div class="coachday-grid coachday-grid-2">
+        <div>
+          <label class="label" for="coachdayReactionPerson">Pessoa</label>
+          <input id="coachdayReactionPerson" class="select-field" placeholder="Ex.: Adriano">
+        </div>
+        <div>
+          <label class="label" for="coachdayReactionTiming">Quando aconteceu?</label>
+          <select id="coachdayReactionTiming" class="select-field">
+            <option>Hoje no treino</option>
+            <option>Hoje no jogo</option>
+            <option>Depois da escalação</option>
+            <option>Em conversa individual</option>
+            <option>Outro momento</option>
+          </select>
+        </div>
+      </div>
+      <label class="label" for="coachdayReactionFact" style="margin-top:10px">Fato observável</label>
+      <textarea id="coachdayReactionFact" class="text-input" placeholder="Ex.: após saber que não começaria como titular, falou pouco e saiu do grupo ao final da reunião."></textarea>
+      <div class="coachday-actions" style="margin-top:10px">
+        <button class="primary" onclick="coachDayBeforeReact()">Analisar antes de agir</button>
+        <button class="outline" onclick="addReactionToSquad()">Adicionar ao acompanhamento do elenco</button>
+      </div>
+      <div id="coachdayReactionResult" class="coachday-result hidden" style="margin-top:12px"></div>
     </article>
   </div>
-  <button class="primary" onclick="saveDailyJournal()">Salvar diário de hoje</button>
-  <div id="dailyAIInsight" class="ai-result hidden" style="margin-top:12px"></div>
+
+  <!-- SEMANA -->
+  <div id="coachdayPaneWeek" class="coachday-pane">
+    <article class="card">
+      <span class="label">Plano de comunicação da semana</span>
+      <h3>Não entregue todas as mensagens no primeiro dia</h3>
+      <p class="intro">Organize o que será treinado, quando o adversário entra na conversa e quanto você realmente precisa falar em cada dia.</p>
+      <div class="coachday-grid coachday-grid-2">
+        <div>
+          <label class="label" for="coachdayWeekTheme">Objetivo principal da semana</label>
+          <textarea id="coachdayWeekTheme" class="text-input" placeholder="Ex.: melhorar construção sob pressão e reação após perda."></textarea>
+        </div>
+        <div>
+          <label class="label" for="coachdayOpponent">Adversário / próximo jogo</label>
+          <textarea id="coachdayOpponent" class="text-input" placeholder="Ex.: equipe pressiona alto nos 15 minutos iniciais e deixa espaço atrás dos laterais."></textarea>
+        </div>
+      </div>
+      <label class="label" for="coachdayOpponentKeys" style="margin-top:10px">Pontos-chave que devem aparecer durante a semana</label>
+      <textarea id="coachdayOpponentKeys" class="text-input" placeholder="Ex.: pressão alta; lateral direito muito agressivo; transição forte pelo corredor; bola parada no primeiro poste."></textarea>
+    </article>
+
+    <div id="coachdayWeekDays" class="coachday-week-grid"></div>
+
+    <article class="card">
+      <div class="coachday-actions">
+        <button class="primary" onclick="buildCoachDayWeek()">✨ Montar cadência de comunicação</button>
+        <button class="secondary" onclick="saveCoachDayWeek()">💾 Salvar semana</button>
+      </div>
+      <div id="coachdayWeekResult" class="coachday-result hidden" style="margin-top:12px"></div>
+    </article>
+  </div>
+
+  <!-- MOMENTOS -->
+  <div id="coachdayPaneMoments" class="coachday-pane">
+    <article class="card">
+      <span class="label">Momentos do Treinador</span>
+      <h3>Prepare a mesma situação de forma diferente para cada público</h3>
+      <p class="intro">Chegada ao clube, primeiro contato com o elenco, diretoria, imprensa, início de competição, semana de trabalho ou crise durante a temporada.</p>
+
+      <div class="coachday-grid coachday-grid-3">
+        <div>
+          <label class="label" for="coachdayMomentType">Situação</label>
+          <select id="coachdayMomentType" class="select-field" onchange="loadCoachDayMomentPreset()">
+            <option value="new-coach">Chegada como novo treinador</option>
+            <option value="midseason">Assumir equipe durante a competição</option>
+            <option value="season-start">Início de temporada/competição</option>
+            <option value="squad-first">Primeiro encontro com o elenco</option>
+            <option value="board-first">Primeira reunião com a diretoria</option>
+            <option value="press-first">Primeira coletiva/apresentação à imprensa</option>
+            <option value="staff-first">Primeira reunião com a comissão</option>
+            <option value="week-opening">Abertura da semana de trabalho</option>
+            <option value="bad-run">Equipe em sequência ruim</option>
+            <option value="decisive-week">Semana de jogo decisivo</option>
+            <option value="project">Apresentação de projeto/metodologia</option>
+          </select>
+        </div>
+        <div>
+          <label class="label" for="coachdayMomentAudience">Público</label>
+          <select id="coachdayMomentAudience" class="select-field">
+            <option>Elenco</option>
+            <option>Diretoria</option>
+            <option>Imprensa</option>
+            <option>Comissão técnica</option>
+            <option>Torcedores/público</option>
+          </select>
+        </div>
+        <div>
+          <label class="label" for="coachdayMomentDuration">Duração</label>
+          <select id="coachdayMomentDuration" class="select-field">
+            <option value="auto">Recomendada pelo CoachDay</option>
+            <option value="short">1–2 minutos</option>
+            <option value="meeting" selected>5–6 minutos</option>
+            <option value="special">Até 10 minutos</option>
+          </select>
+        </div>
+      </div>
+
+      <label class="label" for="coachdayMomentContext" style="margin-top:10px">Contexto real</label>
+      <textarea id="coachdayMomentContext" class="text-input coachday-large-text" placeholder="Ex.: estou assumindo no meio do campeonato após três derrotas. Não quero criticar o treinador anterior. Quero recuperar confiança e começar pela organização defensiva."></textarea>
+      <label class="label" for="coachdayMomentGoal" style="margin-top:10px">O que você quer que as pessoas entendam ao final?</label>
+      <textarea id="coachdayMomentGoal" class="text-input" placeholder="Ex.: haverá oportunidade para todos; vamos avaliar antes de fazer mudanças; responsabilidade e organização começam hoje."></textarea>
+
+      <div class="coachday-actions" style="margin-top:12px">
+        <button class="primary" onclick="prepareCoachDayMoment()">✨ Preparar este momento</button>
+        <button class="secondary" onclick="saveCoachDayMoment()">💾 Salvar na memória</button>
+        <button class="outline" onclick="practiceMomentInStudio()">🎥 Ensaiar no Estúdio</button>
+        <button class="outline" onclick="sendMomentToMentor()">🤖 Levar ao Mentor</button>
+      </div>
+      <div id="coachdayMomentResult" class="coachday-result hidden" style="margin-top:12px"></div>
+    </article>
+  </div>
+
+  <!-- ELENCO -->
+  <div id="coachdayPaneSquad" class="coachday-pane">
+    <article class="card">
+      <span class="label">Mapa de Atenção do Elenco</span>
+      <h3>Coerência sem transformar pessoas em rótulos</h3>
+      <p class="intro">Registre conversas, fatos observáveis e próximos acompanhamentos. O sistema mostra quem está recebendo mais ou menos atenção — não quem é “bom” ou “problemático”.</p>
+
+      <div class="coachday-grid coachday-grid-2">
+        <div>
+          <label class="label" for="coachdaySquadNames">Cadastrar nomes rapidamente</label>
+          <textarea id="coachdaySquadNames" class="text-input" placeholder="Cole nomes separados por vírgula ou uma linha por jogador."></textarea>
+          <button class="secondary" style="margin-top:8px" onclick="importCoachDaySquad()">Adicionar nomes</button>
+        </div>
+        <div>
+          <label class="label">Resumo do acompanhamento</label>
+          <div id="coachdaySquadStats" class="coachday-stat-grid"></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <span class="label">Novo registro individual</span>
+      <div class="coachday-grid coachday-grid-3">
+        <div><label class="label" for="coachdayPlayerName">Jogador</label><input id="coachdayPlayerName" class="select-field" placeholder="Nome"></div>
+        <div><label class="label" for="coachdayContactType">Tipo</label>
+          <select id="coachdayContactType" class="select-field">
+            <option>Conversa individual</option>
+            <option>Feedback positivo</option>
+            <option>Correção</option>
+            <option>Checagem rápida</option>
+            <option>Observação sem conversa</option>
+          </select>
+        </div>
+        <div><label class="label" for="coachdayFollowup">Rever em</label><input id="coachdayFollowup" class="select-field" type="date"></div>
+      </div>
+      <label class="label" for="coachdayPlayerFact" style="margin-top:10px">Fato / assunto</label>
+      <textarea id="coachdayPlayerFact" class="text-input" placeholder="Ex.: saiu da equipe titular e demonstrou insatisfação depois da reunião. Evitar concluir intenção; acompanhar a resposta no treino."></textarea>
+      <label class="label" for="coachdayPlayerNext" style="margin-top:10px">Próximo passo</label>
+      <textarea id="coachdayPlayerNext" class="text-input" placeholder="Ex.: conversa privada curta amanhã; explicar expectativa sem prometer titularidade."></textarea>
+      <div class="coachday-actions" style="margin-top:10px">
+        <button class="primary" onclick="saveCoachDayPlayerRecord()">Salvar acompanhamento</button>
+      </div>
+    </article>
+
+    <div id="coachdaySquadList" class="coachday-squad-list"></div>
+  </div>
+
+  <!-- MEMÓRIA -->
+  <div id="coachdayPaneMemory" class="coachday-pane">
+    <article class="card">
+      <span class="label">Retomar o contexto</span>
+      <h3 id="coachdayYesterdayTitle">Ontem</h3>
+      <div id="coachdayYesterdaySummary" class="coachday-memory-summary"></div>
+    </article>
+
+    <article class="card">
+      <div class="coachday-section-head">
+        <div>
+          <span class="label">Revisão do treinador</span>
+          <h3>Padrões, pendências e evolução</h3>
+        </div>
+        <button class="secondary" onclick="buildCoachDayWeeklyReview()">Gerar revisão</button>
+      </div>
+      <div id="coachdayWeeklyReview" class="coachday-result"></div>
+    </article>
+
+    <article class="card">
+      <span class="label">Pergunta do treinador do dia</span>
+      <div id="coachdayReflectionQuestion" class="coachday-question coachday-question-large"></div>
+      <textarea id="coachdayReflectionAnswer" class="text-input" placeholder="Sua resposta é opcional, mas pode ajudar a reconhecer padrões."></textarea>
+      <button class="secondary" style="margin-top:8px" onclick="saveCoachDayReflection()">Salvar reflexão</button>
+    </article>
+
+    <article class="card">
+      <div class="coachday-section-head">
+        <div><span class="label">Histórico</span><h3>Memória profissional</h3></div>
+        <button class="outline" onclick="exportCoachDayData()">Exportar dados</button>
+      </div>
+      <div id="coachdayMemoryList" class="coachday-memory-list"></div>
+    </article>
+  </div>
 </section>
 
 <section id="interviews" class="page">
@@ -1308,7 +1981,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
 <nav class="bottom-nav">
   <button class="nav active" data-page="home" onclick="go('home')">⌂<span>Início</span></button>
-  <button class="nav" data-page="daily" onclick="go('daily')">📓<span>Diário</span></button>
+  <button class="nav" data-page="daily" onclick="go('daily')">🧭<span>CoachDay</span></button>
   <button class="nav" data-page="mentor" onclick="go('mentor')">🤖<span>Mentor</span></button>
   <button class="nav" data-page="practice" onclick="go('practice')">🎯<span>Treinar</span></button>
   <button class="nav" data-page="progress" onclick="go('progress')">▥<span>Evolução</span></button>
@@ -1439,14 +2112,16 @@ function go(id){
   currentPage=id;
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));
   document.querySelectorAll('.nav,.drawer-link').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
-  const titles={home:'Ciclo diário',daily:'Diário do Treinador',mentor:'Coach Mentor AI',practice:'Central de treinos',english:'Inglês em 3 níveis',oratory:'Oratória com IA',interviews:'Entrevistas',leadership:'Liderança com IA',gamemodel:'Modelo de jogo passo a passo',library:'Biblioteca de situações',matchday:'Modo dia de jogo',tracks:'Formação completa',technical:'Diagnóstico do aparelho',progress:'Evolução real',profile:'Preferências locais',blockDetail:'Conteúdo do bloco',lessonDetail:'Aula prática',studio:'Estúdio do Treinador'};
+  const titles={home:'Ciclo diário',daily:'CoachDay AI — Assistente do Treinador',mentor:'Mentor IA do Treinador — Voz e Gestão',practice:'Central de treinos',english:'Inglês em 3 níveis',oratory:'Oratória com IA',interviews:'Entrevistas',leadership:'Liderança com IA',gamemodel:'Modelo de jogo passo a passo',library:'Biblioteca de situações',matchday:'Modo dia de jogo',tracks:'Formação completa',technical:'Diagnóstico do aparelho',progress:'Evolução real',profile:'Preferências locais',blockDetail:'Conteúdo do bloco',lessonDetail:'Aula prática',studio:'Estúdio do Treinador',coachprep:'CoachPrep — Gestão e Liderança'};
   document.getElementById('topSubtitle').textContent=titles[id]||'CoachVoice AI';
   closeDrawer();window.scrollTo(0,0);preparePageForNavigation(id);refreshLiveStats();
 }
 function preparePageForNavigation(id){
   if(id==='english')renderEnglishMode();
   if(id==='library')renderLibrary();
-  if(id==='daily'){renderDailyPlan();loadDailyJournal();}
+  if(id==='daily'){renderDailyPlan();loadDailyJournal();if(typeof window.initializeCoachDay==='function')window.initializeCoachDay();}
+  if(id==='coachprep'&&typeof window.initializeCoachPrep==='function')window.initializeCoachPrep();
+  if(id==='mentor'&&typeof window.initializeMentorV42==='function')window.initializeMentorV42();
   if(id==='interviews'&&!document.getElementById('interviewQuestion').textContent.trim())loadInterviewScenario(false);
   if(id==='leadership'&&!document.getElementById('leadershipSituation').options.length)renderLeadershipRoles();
   if(id==='gamemodel')renderGamePrinciples();
@@ -2333,12 +3008,12 @@ function filterLibrary(value){libraryFilter=value;renderLibrary();}
 function useLibraryScenario(id){
   const item=libraryScenarios.find(s=>s.id===id);
   if(!item)return;
-  document.getElementById('mentorSituation').value=item.context;
-  document.getElementById('mentorAudience').value=item.audience;
-  document.getElementById('mentorTone').value=item.tone;
-  document.getElementById('mentorDuration').value=item.duration;
-  document.getElementById('mentorLanguage').value=item.language||'Português';
-  go('mentor');
+  if(typeof window.mentor42LoadSituation==='function'){
+    window.mentor42LoadSituation({situation:item.context,mode:'mentor'});
+  }else{
+    document.getElementById('mentorSituation').value=item.context;
+    go('mentor');
+  }
   toast('Situação carregada no Mentor.');
 }
 
@@ -2348,11 +3023,12 @@ const matchPrompts={
   post:'Preciso preparar uma comunicação pós-jogo equilibrada para jogadores e imprensa.'
 };
 function prepareMatchMentor(moment){
-  document.getElementById('mentorSituation').value=matchPrompts[moment];
-  document.getElementById('mentorAudience').value=moment==='post'?'Imprensa':'Jogadores';
-  document.getElementById('mentorTone').value=moment==='pre'?'Inspirador':moment==='half'?'Firme':'Sereno';
-  document.getElementById('mentorDuration').value='30 segundos';
-  go('mentor');
+  if(typeof window.mentor42LoadSituation==='function'){
+    window.mentor42LoadSituation({situation:matchPrompts[moment],mode:'mentor'});
+  }else{
+    document.getElementById('mentorSituation').value=matchPrompts[moment];
+    go('mentor');
+  }
 }
 function toggleDayMoment(button){
   button.classList.toggle('done');
@@ -2931,6 +3607,8 @@ function updateUI(){
   renderBlocks();renderProgressBlocks();renderLibrary();renderEnglishMode();updateVoiceUI();updateLocalHistory();
   loadDayMoments();loadLocalProfile();renderDailyPlan();loadDailyJournal();renderLeadershipRoles();renderGamePrinciples();
   loadInterviewScenario();loadOratoryScenario();updateProgressDashboard();updateHomeDaily();
+  if(typeof window.updateCoachDayHome==='function')window.updateCoachDayHome();
+  if(typeof window.updateCoachPrepHome==='function')window.updateCoachPrepHome();
 }
 function openFeedback(){document.getElementById('feedbackSheet').classList.add('open');document.getElementById('sheetOverlay').classList.add('show')}
 function closeFeedback(){document.getElementById('feedbackSheet').classList.remove('open');document.getElementById('sheetOverlay').classList.remove('show')}
@@ -2953,7 +3631,10 @@ checkTechnicalEnvironment();
 </script>
 <script src="/studio.js?v=32"></script>
 <script src="/studio-framing.js?v=33"></script>
-<script src="/coachvoice-v33.js?v=33"></script>
+<script src="/coachvoice-v33.js?v=40"></script>
+<script src="/coachday-v40.js?v=42"></script>
+<script src="/coachprep-v42.js?v=42"></script>
+<script src="/mentor-v42.js?v=42"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));

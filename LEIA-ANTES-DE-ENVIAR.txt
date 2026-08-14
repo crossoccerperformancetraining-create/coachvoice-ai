@@ -1,32 +1,27 @@
-COACHVOICE AI v3.3 — ENVIO LIMPO PARA O GITHUB
+COACHVOICE AI v4.2 — ENVIO PARA O GITHUB
 
-1. Extraia este ZIP.
+1. Extraia o ZIP.
 2. Abra a pasta extraída.
-3. No GitHub, use Add file > Upload files.
-4. Arraste TODOS os itens de dentro desta pasta.
-5. Não arraste a pasta externa fechada.
-6. Confirme que aparece a pasta api e os arquivos da raiz.
-7. Commit sugerido:
-   Restaurar CoachVoice AI v3.3 completo
+3. GitHub > Add file > Upload files.
+4. Arraste TODOS os itens de dentro da pasta.
+5. Confirme que existe apenas UMA pasta api.
 
-Estrutura correta:
-
-api/
+Dentro de api:
   coach-ai.js
   english-coach.js
   mentor.js
   transcribe.js
 
-.gitignore
-README.md
-icon-192.png
-icon-512.png
-index.html
-manifest.webmanifest
-package.json
-studio-framing.js
-studio.css
-studio.js
-coachvoice-v33.js
-sw.js
-vercel.json
+NUNCA:
+  api/api/
+
+Arquivos principais novos:
+  mentor-v42.js
+  mentor-v42.css
+  coachprep-v42.js
+
+Commit:
+Adicionar Mentor IA por voz e Filtro da Crítica v4.2
+
+Teste depois do Vercel Ready:
+https://coachvoice-ai.vercel.app/?v=42

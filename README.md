@@ -1,124 +1,176 @@
-# CoachVoice AI v3.3 — Câmera, fases do jogo e inglês guiado
+# CoachVoice AI v4.2 — Mentor IA por Voz
 
-## Câmera adaptável
+## Principal evolução
 
-- Entrevista em plano próximo.
-- Corpo inteiro no celular vertical.
-- Apresentação e gestos no celular horizontal.
-- Quadro tático no horizontal.
-- O modo vertical usa moldura 9:16 e `object-fit: contain`, evitando o corte
-  automático que mostrava apenas o rosto.
-- Para corpo inteiro, o treinador deve afastar o aparelho e manter cabeça,
-  mãos e pés dentro da moldura.
-- Somente o quadro tático bloqueia a gravação quando o celular está vertical.
+O **Mentor IA do Treinador** agora funciona como uma área de conversa contínua sob demanda.
 
-## Modelo de jogo por fases
+Você pode:
+- falar pelo microfone;
+- receber resposta em texto e voz;
+- continuar a conversa quantas vezes quiser;
+- pedir correção da sua resposta;
+- refazer;
+- ouvir uma alternativa do Mentor;
+- salvar resumo, aprendizado e próximo passo.
 
-### Organização ofensiva
-- saída de tiro de meta;
-- primeira fase de construção;
-- segunda fase de construção;
-- último terço;
-- finalização e ocupação da área.
+> No celular, a conversa por voz funciona em turnos: toque no microfone para falar; a resposta pode ser lida automaticamente pelo aparelho.
 
-### Organização defensiva
-- marcação no tiro de meta;
-- bloco alto;
-- bloco médio;
-- bloco baixo;
-- defesa da área.
+## Modos do Mentor
 
-### Transição ofensiva
-- primeiro passe;
-- contra-ataque e profundidade;
-- manutenção da posse.
+### Conversa livre
+Conte uma situação sem preencher formulário.
 
-### Transição defensiva
-- pressão pós-perda;
-- proteção do centro;
-- recomposição do bloco.
+### Modo Mentor
+A IA pode orientar e também questionar seu primeiro raciocínio.
 
-### Bolas paradas
-- ofensivas: escanteio, falta e lateral;
-- defensivas: escanteio, falta e segunda bola.
+### Só perguntas
+A IA não oferece solução pronta; faz uma pergunta por vez.
 
-Cada subfase pergunta:
-
-1. qual é o objetivo;
-2. qual é o gatilho;
-3. quem inicia e quem continua;
-4. como saber que funcionou;
-5. qual é a alternativa.
-
-## Entrevistas
-
-Foram adicionados temas sobre:
-
-- pênalti e acréscimos;
-- lesões;
+### Simulação
+A IA pode interpretar:
+- jogador;
 - capitão;
-- base;
-- saída de bola;
-- bloco alto e baixo;
-- transições;
-- bolas paradas;
-- contrato;
+- auxiliar/comissão;
 - diretoria;
-- calendário.
+- jornalista.
 
-O treinador pode escolher padrões profissionais genéricos:
+Níveis:
+- guiada;
+- realista;
+- sob pressão.
 
-- direto e responsável;
-- proteção do grupo;
-- tático e simples;
-- calmo sob pressão;
-- institucional.
+### Estou evitando essa conversa
+Ajuda a reduzir a conversa ao essencial:
+- fato;
+- objetivo;
+- abertura;
+- critério;
+- o que não prometer;
+- primeiro questionamento.
 
-O aplicativo não imita nem atribui respostas a treinadores reais.
+### Questione minha decisão
+Testa:
+- critério;
+- coerência;
+- aplicação do mesmo critério a pessoas diferentes;
+- possível ponto cego;
+- alternativa.
 
-## Professor de frase em inglês
+### Me prepare em 5 minutos
+Usado antes de:
+- treino;
+- reunião;
+- vestiário;
+- diretoria;
+- imprensa.
 
-Na etapa iniciante, o treinador pode digitar qualquer frase curta.
+### Não quero conselho
+Organiza:
+- fato;
+- interpretação;
+- decisão;
+- pendência.
 
-Exemplo:
+Sem tentar resolver a situação.
 
-- frase esperada: `My name is`;
-- fala reconhecida: `My name`;
-- correção: repetir `is`.
+## Filtro da Crítica
 
-A tela mostra:
+O Mentor separa a crítica usando o conceito do **X**:
 
-- o que o celular entendeu;
-- a frase esperada;
-- palavras verdes e vermelhas;
-- o trecho que deve ser repetido;
-- áudio lento somente da correção.
+- X — Posso agir sobre isso.
+- X — Existe uma parte útil.
+- — Não depende totalmente de mim.
+- — É ruído/opinião sem ação específica.
+- X/— Exige resposta agora?
 
-## Publicação
+Também pode procurar um possível ponto cego.
 
-Estrutura principal:
+Princípio:
+**Eu não controlo toda crítica. Eu escolho o que merece minha atenção.**
 
-- `index.html`
-- `studio.css`
-- `studio.js`
-- `studio-framing.js`
-- `coachvoice-v33.js`
-- `sw.js`
-- `manifest.webmanifest`
-- `package.json`
-- `vercel.json`
+## Crítica da Sexta
 
-Pasta `api`:
+O CoachPrep agora conecta a sexta-feira ao Filtro da Crítica para revisar:
+- uma crítica recebida;
+- uma decisão importante;
+- algo evitado durante a semana;
+- coerência do critério.
 
-- `coach-ai.js`
-- `english-coach.js`
-- `mentor.js`
-- `transcribe.js`
+## Memória do Mentor
+
+Ao encerrar uma conversa, são salvos:
+- resumo;
+- aprendizado;
+- próximo passo;
+- o que deve ser retomado depois.
+
+Na próxima abertura, o Mentor mostra a pendência anterior.
+
+## Modo Pré-Clube
+
+Quando faltarem até 14 dias para a data configurada no CoachPrep, o Mentor mostra uma simulação diária de chegada ao clube.
+
+## CoachPrep — programa fixo de 12 semanas
+
+Segunda a sexta, aproximadamente 15 a 25 minutos por dia.
+
+### Semanas 1–2
+Identidade do treinador e processo coletivo.
+
+### Semanas 3–5
+Conversas individuais.
+
+### Semanas 6–8
+Conflitos e decisões difíceis.
+
+### Semanas 9–10
+Pós-jogo, críticas, imprensa e diretoria.
+
+### Semanas 11–12
+Simulação completa da chegada e primeira semana.
+
+Princípio base:
+**Todos têm valor; as decisões precisam servir ao coletivo.**
+
+## Novos modos da API
+
+`api/coach-ai.js`:
+- mentor-dialogue
+- mentor-review-answer
+- mentor-filter-criticism
+- mentor-close-session
+
+Os modos do CoachDay e CoachPrep anteriores permanecem.
+
+## Publicação no GitHub
+
+Estrutura correta:
+
+```text
+api/
+├── coach-ai.js
+├── english-coach.js
+├── mentor.js
+└── transcribe.js
+```
+
+Nunca `api/api/`.
+
+Arquivos novos/atualizados:
+- mentor-v42.js
+- mentor-v42.css
+- coachprep-v42.js
+- index.html
+- sw.js
+- manifest.webmanifest
+- package.json
+- vercel.json
+- api/coach-ai.js
 
 Commit sugerido:
 
-`Adicionar câmera adaptável, fases do jogo e inglês guiado v3.3`
+`Adicionar Mentor IA por voz e Filtro da Crítica v4.2`
 
-Depois do deploy:
+Depois do deployment **Production — Ready**:
 
-`https://coachvoice-ai.vercel.app/?v=33`
+`https://coachvoice-ai.vercel.app/?v=42`
