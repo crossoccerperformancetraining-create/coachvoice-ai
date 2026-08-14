@@ -1,9 +1,0 @@
-{
-  "name": "coachvoice-ai",
-  "private": true,
-  "version": "4.1.0",
-  "description": "CoachVoice AI v4.1 com CoachPrep para desenvolvimento de gestão de grupo, liderança, conversas individuais, decisões difíceis, simulações e preparação para assumir uma equipe.",
-  "engines": {
-    "node": "22.x"
-  }
-}
