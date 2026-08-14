@@ -1,7 +1,7 @@
 {
   "name": "coachvoice-ai",
   "private": true,
-  "version": "4.2.0",
+  "version": "4.3.0",
   "description": "CoachVoice AI v4.2 com Mentor IA por voz, conversa contínua sob demanda, Filtro da Crítica, decisões questionadas, memória, Modo Pré-Clube e CoachPrep de 12 semanas.",
   "engines": {
     "node": "22.x"
