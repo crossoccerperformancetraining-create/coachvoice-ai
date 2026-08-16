@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#071225">
-<meta name="application-name" content="CoachVoice AI v4.3">
+<meta name="application-name" content="CoachVoice AI v4.4">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="CoachVoice">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<title>CoachVoice AI v4.3 — Mentor IA em Voz e Vídeo</title>
+<title>CoachVoice AI v4.4 — Mentor IA Conversa Estável</title>
 <style>
 :root{
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -208,8 +208,8 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 </style>
 <link rel="stylesheet" href="/studio.css">
 <link rel="stylesheet" href="/coachday.css?v=40">
-<link rel="stylesheet" href="/coachprep.css?v=43">
-<link rel="stylesheet" href="/mentor-v43.css?v=43">
+<link rel="stylesheet" href="/coachprep.css?v=44">
+<link rel="stylesheet" href="/mentor-v44.css?v=44">
 </head>
 <body>
 <div class="app">
@@ -237,7 +237,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <button class="drawer-link" data-page="technical" onclick="go('technical')">⚙ Testes do aparelho</button>
     <button class="drawer-link" data-page="profile" onclick="go('profile')">◉ Preferências</button>
   </nav>
-  <div class="drawer-note">CoachVoice AI v4.3 — estabilidade, enquadramento e testes no celular. Dados salvos somente neste aparelho; IA ativada quando a chave estiver configurada na Vercel.</div>
+  <div class="drawer-note">CoachVoice AI v4.4 — estabilidade, enquadramento e testes no celular. Dados salvos somente neste aparelho; IA ativada quando a chave estiver configurada na Vercel.</div>
 </aside>
 <div id="overlay" class="overlay" onclick="closeDrawer()"></div>
 
@@ -798,7 +798,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   <div class="mentor42-hero">
     <span class="eyebrow">MENTOR IA DO TREINADOR — VOZ, GESTÃO E LIDERANÇA</span>
     <h2>Fale comigo quando precisar pensar, decidir, ensaiar ou organizar uma situação.</h2>
-    <p>Escolha voz ou videochamada. Você fala pelo microfone, o Mentor responde em texto e voz, e no modo vídeo você vê sua câmera e um avatar visual animado do Mentor.</p>
+    <p>Escolha voz ou videochamada. Toque no microfone, fale normalmente e o texto entra direto na conversa. O Mentor responde em texto e voz e fica pronto para o próximo turno.</p>
     <div class="mentor42-hero-actions">
       <button class="primary mentor42-call-btn" onclick="mentor42StartCall()">📞 Ligar para o Mentor</button>
       <button class="secondary" onclick="mentor43StartVideoCall()">🎥 Videochamada</button>
@@ -840,6 +840,16 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <button onclick="mentor42Quick('five')"><span>⏱️</span><strong>Me prepare em 5 min</strong><small>Antes de treino, reunião ou vestiário</small></button>
     <button onclick="mentor42Quick('organize')"><span>📝</span><strong>Não quero conselho</strong><small>Só organize fato, interpretação e pendência</small></button>
   </div>
+
+  <article class="mentor44-diagnostic-card">
+    <div>
+      <span class="label">Diagnóstico rápido</span>
+      <h3>Antes de treinar, confirme voz e IA</h3>
+      <p>Este teste separa quatro coisas: microfone, reconhecimento de fala, voz do aparelho e conexão com a IA.</p>
+    </div>
+    <button class="secondary" onclick="mentor44RunDiagnostic()">Testar agora</button>
+    <div id="mentor44DiagnosticResult" class="mentor44-diagnostic-result hidden"></div>
+  </article>
 
   <article class="card mentor42-conversation-card">
     <div class="mentor42-section-head">
@@ -949,6 +959,11 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
       </div>
 
       <div id="mentor42CallStatus" class="mentor42-call-status">Toque no microfone para falar.</div>
+      <div id="mentor44LiveTranscript" class="mentor44-live-transcript">Sua fala aparecerá aqui enquanto você fala.</div>
+      <div class="mentor44-call-options">
+        <label><input id="mentor44AutoConversation" type="checkbox" onchange="mentor44SaveAutoConversation()"> Continuar ouvindo automaticamente depois da resposta</label>
+        <button onclick="mentor44RepeatLastAnswer()">🔊 Repetir última resposta</button>
+      </div>
 
       <div id="mentor43VideoStage" class="mentor43-video-stage hidden">
         <div class="mentor43-ai-panel">
@@ -983,7 +998,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
         <button class="mentor42-call-side" onclick="mentor42SaveSession(true)">💾<small>Salvar</small></button>
       </div>
 
-      <p id="mentor43CallNote" class="mentor42-call-note">Toque no microfone a cada vez que quiser falar.</p>
+      <p id="mentor43CallNote" class="mentor42-call-note">O modo mais estável é tocar no microfone para cada fala. Se quiser, ative a continuação automática acima.</p>
       <p id="mentor43AvatarNote" class="mentor43-avatar-note hidden">Avatar visual animado: não é vídeo humano real e não analisa emoções ou expressões.</p>
     </div>
   </div>
@@ -3663,9 +3678,9 @@ checkTechnicalEnvironment();
 <script src="/studio.js?v=32"></script>
 <script src="/studio-framing.js?v=33"></script>
 <script src="/coachvoice-v33.js?v=40"></script>
-<script src="/coachday-v40.js?v=43"></script>
-<script src="/coachprep-v42.js?v=43"></script>
-<script src="/mentor-v43.js?v=43"></script>
+<script src="/coachday-v40.js?v=44"></script>
+<script src="/coachprep-v42.js?v=44"></script>
+<script src="/mentor-v44.js?v=44"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));
