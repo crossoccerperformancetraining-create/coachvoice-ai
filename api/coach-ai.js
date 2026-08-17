@@ -179,7 +179,12 @@ Responda SOMENTE com JSON válido no formato:
 ${config.schema}
 `.trim();
 
-  const input = `${config.task}\n\nDados enviados:\n${payloadText}`;
+  const input = `${config.task}
+
+IMPORTANTE: responda somente em json válido, sem markdown, sem texto antes ou depois do objeto json.
+
+Dados enviados:
+${payloadText}`;
 
   try {
     const response = await fetch('https://api.openai.com/v1/responses', {
