@@ -132,11 +132,22 @@ const modeInstructions = {
 export default async function handler(req, res) {
   const apiKey = process.env.OPENAI_API_KEY;
 
-  // Diagnóstico seguro pelo navegador. Nunca expõe a chave.
+  // Diagnóstico seguro pelo navegador. Nunca expõe valores de segredo.
   if (req.method === 'GET') {
+    const openaiEnvKeys = Object.keys(process.env)
+      .filter((key) => /OPENAI/i.test(key))
+      .map((key) => ({
+        name: key,
+        length: key.length,
+        exact: key === 'OPENAI_API_KEY',
+        charCodes: Array.from(key).map((char) => char.charCodeAt(0))
+      }));
+
     return sendJson(res, 200, {
       ok: true,
       configured: Boolean(apiKey),
+      exactKeyPresent: Object.prototype.hasOwnProperty.call(process.env, 'OPENAI_API_KEY'),
+      openaiEnvKeys,
       model: process.env.OPENAI_MODEL || 'gpt-5-mini',
       environment: process.env.VERCEL_ENV || 'unknown'
     });
