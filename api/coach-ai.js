@@ -7,14 +7,18 @@ function sendJson(res, status, payload) {
   res.end(JSON.stringify(payload));
 }
 
-function extractText(data) {
+
+function extractGeminiText(data) {
   if (typeof data?.output_text === 'string' && data.output_text.trim()) {
     return data.output_text.trim();
   }
   const pieces = [];
-  for (const item of data?.output || []) {
-    for (const content of item?.content || []) {
-      if (typeof content?.text === 'string') pieces.push(content.text);
+  for (const step of data?.steps || []) {
+    if (step?.type !== 'model_output') continue;
+    for (const content of step?.content || []) {
+      if (content?.type === 'text' && typeof content?.text === 'string') {
+        pieces.push(content.text);
+      }
     }
   }
   return pieces.join('\n').trim();
@@ -22,9 +26,41 @@ function extractText(data) {
 
 function cleanJson(raw) {
   return JSON.parse(
-    raw.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/\s*```$/i, '').trim()
+    String(raw || '')
+      .replace(/^```json\s*/i, '')
+      .replace(/^```\s*/i, '')
+      .replace(/\s*```$/i, '')
+      .trim()
   );
 }
+
+async function callGemini({ apiKey, model, input, systemInstruction = '', schema = null }) {
+  const body = {
+    model,
+    input,
+    system_instruction: systemInstruction
+  };
+  if (schema) {
+    body.response_format = {
+      type: 'text',
+      mime_type: 'application/json',
+      schema
+    };
+  }
+
+  const response = await fetch('https://generativelanguage.googleapis.com/v1beta/interactions', {
+    method: 'POST',
+    headers: {
+      'x-goog-api-key': apiKey,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
+
+  const data = await response.json().catch(() => ({}));
+  return { response, data };
+}
+
 
 const modeInstructions = {
   health: {
@@ -130,25 +166,16 @@ const modeInstructions = {
 };
 
 export default async function handler(req, res) {
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
+  const model = process.env.GEMINI_MODEL || 'gemini-3.1-flash-lite';
 
-  // Diagnóstico seguro pelo navegador. Nunca expõe valores de segredo.
   if (req.method === 'GET') {
-    const openaiEnvKeys = Object.keys(process.env)
-      .filter((key) => /OPENAI/i.test(key))
-      .map((key) => ({
-        name: key,
-        length: key.length,
-        exact: key === 'OPENAI_API_KEY',
-        charCodes: Array.from(key).map((char) => char.charCodeAt(0))
-      }));
-
     return sendJson(res, 200, {
       ok: true,
+      provider: 'gemini',
       configured: Boolean(apiKey),
-      exactKeyPresent: Object.prototype.hasOwnProperty.call(process.env, 'OPENAI_API_KEY'),
-      openaiEnvKeys,
-      model: process.env.OPENAI_MODEL || 'gpt-5-mini',
+      exactKeyPresent: Object.prototype.hasOwnProperty.call(process.env, 'GEMINI_API_KEY'),
+      model,
       environment: process.env.VERCEL_ENV || 'unknown'
     });
   }
@@ -158,80 +185,78 @@ export default async function handler(req, res) {
     return sendJson(res, 405, { error: 'Método não permitido.' });
   }
 
-  if (!apiKey) return sendJson(res, 503, {
-    error: 'IA não configurada.',
-    code: 'missing_openai_api_key'
-  });
+  if (!apiKey) {
+    return sendJson(res, 503, {
+      error: 'GEMINI_API_KEY não configurada na Vercel.',
+      code: 'missing_gemini_api_key'
+    });
+  }
 
   const { mode = '', payload = {} } = req.body || {};
   const config = modeInstructions[mode];
   if (!config) return sendJson(res, 400, { error: 'Modo inválido.' });
 
   const payloadText = JSON.stringify(payload);
-  if (payloadText.length > MAX_TEXT) return sendJson(res, 400, { error: 'Conteúdo muito longo.' });
+  if (payloadText.length > MAX_TEXT) {
+    return sendJson(res, 400, { error: 'Conteúdo muito longo.' });
+  }
 
-  const instructions = `
+  const schema = cleanJson(config.schema);
+
+  const systemInstruction = `
 Você faz parte do CoachVoice AI, plataforma para treinadores de futebol.
 Seja profissional, paciente, respeitoso e aplicável à situação.
 Não invente fatos, não diagnostique estados mentais e não imite pessoas reais.
 Dê poucas melhorias por vez.
-Responda SOMENTE com JSON válido no formato:
-${config.schema}
+Responda em português do Brasil, salvo quando o exercício pedir inglês.
+Siga exatamente o esquema JSON solicitado.
 `.trim();
 
   const input = `${config.task}
-
-IMPORTANTE: responda somente em json válido, sem markdown, sem texto antes ou depois do objeto json.
 
 Dados enviados:
 ${payloadText}`;
 
   try {
-    const response = await fetch('https://api.openai.com/v1/responses', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: process.env.OPENAI_MODEL || 'gpt-5-mini',
-        instructions,
-        input,
-        text: {
-          format: {
-            type: 'json_object'
-          }
-        }
-      })
+    const { response, data } = await callGemini({
+      apiKey,
+      model,
+      systemInstruction,
+      input,
+      schema
     });
 
-    const data = await response.json();
     if (!response.ok) {
-      console.error('OpenAI Coach AI error:', data);
+      console.error('Gemini Coach AI error:', data);
       return sendJson(res, 502, {
-        error: data?.error?.message || 'A IA não respondeu.',
-        code: data?.error?.code || data?.error?.type || 'openai_error',
+        error: data?.error?.message || 'O Gemini não respondeu.',
+        code: data?.error?.status || data?.error?.code || 'gemini_error',
         upstreamStatus: response.status
       });
     }
 
-    const raw = extractText(data);
-    if (!raw) return sendJson(res, 502, { error: 'A OpenAI respondeu sem texto.', code: 'empty_response' });
+    const raw = extractGeminiText(data);
+    if (!raw) {
+      return sendJson(res, 502, {
+        error: 'O Gemini respondeu sem texto.',
+        code: 'empty_response'
+      });
+    }
 
     try {
       return sendJson(res, 200, cleanJson(raw));
     } catch (parseError) {
-      console.error('Coach AI JSON parse error:', parseError, raw);
+      console.error('Gemini JSON parse error:', parseError, raw);
       return sendJson(res, 502, {
-        error: 'A resposta da IA não veio no formato esperado. Tente novamente.',
+        error: 'O Gemini respondeu, mas o formato não pôde ser interpretado.',
         code: 'invalid_json'
       });
     }
   } catch (error) {
-    console.error('Coach AI route error:', error);
+    console.error('Gemini Coach AI route error:', error);
     return sendJson(res, 500, {
-      error: 'Erro interno ao chamar a IA.',
-      code: 'coach_ai_internal_error'
+      error: 'Erro interno ao chamar o Gemini.',
+      code: 'gemini_internal_error'
     });
   }
 }
