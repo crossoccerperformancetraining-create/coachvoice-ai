@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="CoachVoice">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<title>CoachVoice AI v4.6 — Gemini</title>
+<title>CoachVoice AI v4.6.1 — Gemini + Voz iPhone</title>
 <style>
 :root{
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -962,7 +962,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
       <div id="mentor44LiveTranscript" class="mentor44-live-transcript">Sua fala aparecerá aqui enquanto você fala.</div>
       <div class="mentor44-call-options">
         <label><input id="mentor44AutoConversation" type="checkbox" onchange="mentor44SaveAutoConversation()"> Continuar ouvindo automaticamente depois da resposta</label>
-        <button onclick="mentor44RepeatLastAnswer()">🔊 Repetir última resposta</button>
+        <button onclick="mentor44RepeatLastAnswer()">🔊 Ouvir / repetir resposta</button>
       </div>
 
       <div id="mentor43VideoStage" class="mentor43-video-stage hidden">
@@ -3698,7 +3698,7 @@ checkTechnicalEnvironment();
 <script src="/coachvoice-v33.js?v=40"></script>
 <script src="/coachday-v40.js?v=46"></script>
 <script src="/coachprep-v42.js?v=46"></script>
-<script src="/mentor-v46.js?v=46"></script>
+<script src="/mentor-v461.js?v=461"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));
