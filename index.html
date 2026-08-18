@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#071225">
-<meta name="application-name" content="CoachVoice AI v4.5">
+<meta name="application-name" content="CoachVoice AI v4.6">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="CoachVoice">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<title>CoachVoice AI v4.5 — Mentor IA Real</title>
+<title>CoachVoice AI v4.6 — Gemini</title>
 <style>
 :root{
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -208,8 +208,8 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 </style>
 <link rel="stylesheet" href="/studio.css">
 <link rel="stylesheet" href="/coachday.css?v=40">
-<link rel="stylesheet" href="/coachprep.css?v=45">
-<link rel="stylesheet" href="/mentor-v45.css?v=45">
+<link rel="stylesheet" href="/coachprep.css?v=46">
+<link rel="stylesheet" href="/mentor-v46.css?v=46">
 </head>
 <body>
 <div class="app">
@@ -237,7 +237,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <button class="drawer-link" data-page="technical" onclick="go('technical')">⚙ Testes do aparelho</button>
     <button class="drawer-link" data-page="profile" onclick="go('profile')">◉ Preferências</button>
   </nav>
-  <div class="drawer-note">CoachVoice AI v4.5 — estabilidade, enquadramento e testes no celular. Dados salvos somente neste aparelho; IA ativada quando a chave estiver configurada na Vercel.</div>
+  <div class="drawer-note">CoachVoice AI v4.6 — estabilidade, enquadramento e testes no celular. Dados salvos somente neste aparelho; IA ativada quando a chave estiver configurada na Vercel.</div>
 </aside>
 <div id="overlay" class="overlay" onclick="closeDrawer()"></div>
 
@@ -2010,7 +2010,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   <article class="card">
     <span class="label">Inteligência artificial</span>
     <h3 id="aiStatusTitle">Modo local com IA opcional</h3>
-    <p class="intro">Sem chave configurada, todas as áreas continuam com orientações locais. Com a variável OPENAI_API_KEY na Vercel, entrevistas, liderança, oratória, inglês e diário recebem respostas personalizadas.</p>
+    <p class="intro">Sem chave configurada, todas as áreas continuam com orientações locais. Com a variável GEMINI_API_KEY na Vercel, entrevistas, liderança, oratória, inglês, Mentor e diário recebem respostas personalizadas pelo Gemini.</p>
     <button class="outline" onclick="testAIConnection()">Testar conexão da IA</button>
     <div id="aiStatusResult" class="beginner-status hidden" style="margin-top:10px"></div>
   </article>
@@ -2575,7 +2575,7 @@ let universalVoiceCallback=null;
 let universalVoiceOptions={};
 
 function preferredAudioMimeType(){
-  const types=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'];
+  const types=['audio/mp4','audio/ogg;codecs=opus','audio/webm;codecs=opus','audio/webm'];
   return types.find(type=>window.MediaRecorder&&MediaRecorder.isTypeSupported(type))||'';
 }
 function formatVoiceTime(seconds){return `00:${String(Math.max(0,seconds)).padStart(2,'0')}`;}
@@ -2727,7 +2727,7 @@ async function testAIConnection(){
   const result=await callCoachAI('health',{message:'teste'});
   if(result.ok){
     box.className='beginner-status success';
-    box.textContent='✓ IA REAL conectada e pronta para uso.';
+    box.textContent='✓ Gemini conectado e pronto para uso.';
   }else{
     box.className='beginner-status retry';
     box.textContent='✕ IA não conectada: '+(result.__message||'erro desconhecido')+(result.__code?' ['+result.__code+']':'');
@@ -3696,9 +3696,9 @@ checkTechnicalEnvironment();
 <script src="/studio.js?v=32"></script>
 <script src="/studio-framing.js?v=33"></script>
 <script src="/coachvoice-v33.js?v=40"></script>
-<script src="/coachday-v40.js?v=45"></script>
-<script src="/coachprep-v42.js?v=45"></script>
-<script src="/mentor-v45.js?v=45"></script>
+<script src="/coachday-v40.js?v=46"></script>
+<script src="/coachprep-v42.js?v=46"></script>
+<script src="/mentor-v46.js?v=46"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));

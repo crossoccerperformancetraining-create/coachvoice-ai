@@ -1,5 +1,5 @@
-const CACHE='coachvoice-v4.5-mentor-ia-real';
-const FILES=['/','/index.html','/manifest.webmanifest','/icon-192.png','/icon-512.png','/studio.css','/studio.js','/studio-framing.js','/coachvoice-v33.js','/coachday.css','/coachday-v40.js','/coachprep.css','/coachprep-v42.js','/mentor-v45.css','/mentor-v45.js'];
+const CACHE='coachvoice-v4.6-gemini';
+const FILES=['/','/index.html','/manifest.webmanifest','/icon-192.png','/icon-512.png','/studio.css','/studio.js','/studio-framing.js','/coachvoice-v33.js','/coachday.css','/coachday-v40.js','/coachprep.css','/coachprep-v42.js','/mentor-v46.css','/mentor-v46.js'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting()));
