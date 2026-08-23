@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="CoachVoice">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<title>CoachVoice AI v4.6.1 — Gemini + Voz iPhone</title>
+<title>CoachVoice AI v4.7 — Conversa Fluida + Memória por Dia</title>
 <style>
 :root{
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -209,7 +209,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <link rel="stylesheet" href="/studio.css">
 <link rel="stylesheet" href="/coachday.css?v=40">
 <link rel="stylesheet" href="/coachprep.css?v=46">
-<link rel="stylesheet" href="/mentor-v46.css?v=46">
+<link rel="stylesheet" href="/mentor-v47.css?v=47">
 </head>
 <body>
 <div class="app">
@@ -795,15 +795,16 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
 
 <section id="mentor" class="page">
-  <div class="mentor42-hero">
-    <span class="eyebrow">MENTOR IA DO TREINADOR — VOZ, GESTÃO E LIDERANÇA</span>
-    <h2>Fale comigo quando precisar pensar, decidir, ensaiar ou organizar uma situação.</h2>
-    <p>Escolha voz ou videochamada. Toque no microfone, fale normalmente e o texto entra direto na conversa. O Mentor responde em texto e voz e fica pronto para o próximo turno.</p>
-    <div class="mentor42-hero-actions">
-      <button class="primary mentor42-call-btn" onclick="mentor42StartCall()">📞 Ligar para o Mentor</button>
-      <button class="secondary" onclick="mentor43StartVideoCall()">🎥 Videochamada</button>
-      <button class="secondary" onclick="mentor42Quick('avoid')">🗣 Estou evitando essa conversa</button>
-      <button class="secondary" onclick="mentor42FocusCriticism()">✕ Recebi uma crítica</button>
+  <div class="mentor42-hero mentor47-hero">
+    <span class="eyebrow">MENTOR IA DO TREINADOR — CONVERSA, VOZ E MEMÓRIA POR DIA</span>
+    <h2>Converse normalmente. O Mentor responde primeiro e pergunta só quando isso realmente ajuda.</h2>
+    <p>O dia começa limpo. Conversas anteriores só entram quando você escolher. Ao terminar, toque em <b>Salvar o dia</b> para guardar a conversa completa e gerar um resumo.</p>
+    <div class="mentor42-hero-actions mentor47-main-actions">
+      <button class="primary" onclick="mentor47NewConversation()">＋ Nova conversa</button>
+      <button class="secondary" onclick="mentor47ShowYesterday()">📅 Resumo de ontem</button>
+      <button class="secondary" onclick="mentor47OpenHistory()">🗂 Histórico</button>
+      <button class="secondary" onclick="mentor42StartCall()">🎙 Conversar por voz</button>
+      <button class="secondary" onclick="mentor43StartVideoCall()">🎥 Vídeo</button>
     </div>
     <div id="mentor42PreClubBanner" class="mentor42-preclub hidden"></div>
   </div>
@@ -820,38 +821,15 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <select id="mentorLanguage"><option>Português</option><option>Inglês</option><option>Português e inglês</option></select>
   </div>
 
-  <article id="mentor42PendingCard" class="mentor42-pending-card hidden">
-    <span class="label">Retomar</span>
-    <h3>Ficou uma pendência da última conversa</h3>
-    <p id="mentor42PendingText"></p>
-    <div class="mentor42-actions">
-      <button class="primary" onclick="mentor42ResumePending()">Continuar com o Mentor</button>
-      <button class="outline" onclick="mentor42ResolvePending()">Marcar como resolvida</button>
+  <article id="mentor47DailyPanel" class="card mentor47-daily-panel hidden">
+    <div class="mentor42-section-head">
+      <div><span class="label">Memória por dia</span><h3>Resumo e conversa</h3></div>
+      <button class="outline" onclick="mentor47CloseDailyPanel()">Fechar</button>
     </div>
+    <div id="mentor47DailyPanelBody"></div>
   </article>
 
-  <div class="mentor42-quick-grid">
-    <button onclick="mentor42Quick('free')"><span>🎙</span><strong>Conversa livre</strong><small>Conte o que está acontecendo</small></button>
-    <button onclick="mentor42Quick('mentor')"><span>🧠</span><strong>Modo Mentor</strong><small>Pergunta, orienta e pode discordar</small></button>
-    <button onclick="mentor42Quick('questions')"><span>❓</span><strong>Só perguntas</strong><small>Sem solução pronta</small></button>
-    <button onclick="mentor42Quick('simulation')"><span>🎭</span><strong>Simulação</strong><small>Jogador, capitão, comissão ou diretoria</small></button>
-    <button onclick="mentor42Quick('avoid')"><span>🚪</span><strong>Estou evitando</strong><small>Prepare a conversa que você está adiando</small></button>
-    <button onclick="mentor42Quick('challenge')"><span>⚖️</span><strong>Questione minha decisão</strong><small>Teste critério e coerência</small></button>
-    <button onclick="mentor42Quick('five')"><span>⏱️</span><strong>Me prepare em 5 min</strong><small>Antes de treino, reunião ou vestiário</small></button>
-    <button onclick="mentor42Quick('organize')"><span>📝</span><strong>Não quero conselho</strong><small>Só organize fato, interpretação e pendência</small></button>
-  </div>
-
-  <article class="mentor44-diagnostic-card">
-    <div>
-      <span class="label">Diagnóstico rápido</span>
-      <h3>Antes de treinar, confirme voz e IA</h3>
-      <p>Este teste separa quatro coisas: microfone, reconhecimento de fala, voz do aparelho e conexão com a IA.</p>
-    </div>
-    <button class="secondary" onclick="mentor44RunDiagnostic()">Testar agora</button>
-    <div id="mentor44DiagnosticResult" class="mentor44-diagnostic-result hidden"></div>
-  </article>
-
-  <article class="card mentor42-conversation-card">
+  <article class="card mentor42-conversation-card mentor47-conversation-card">
     <div class="mentor42-section-head">
       <div>
         <span class="label">Conversa atual</span>
@@ -862,94 +840,132 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
       </div>
     </div>
 
-    <div class="mentor42-grid mentor42-grid-3">
-      <div>
-        <label class="label" for="mentor42Mode">Modo</label>
-        <select id="mentor42Mode" class="select-field" onchange="mentor42ModeChanged()">
-          <option value="free">Conversa livre</option>
-          <option value="mentor">Mentor — orientação e confronto respeitoso</option>
-          <option value="questions">Só perguntas</option>
-          <option value="simulation">Simulação</option>
-          <option value="avoid">Estou evitando essa conversa</option>
-          <option value="challenge">Questione minha decisão</option>
-          <option value="five">Me prepare em 5 minutos</option>
-          <option value="organize">Só organizar — sem conselho</option>
-        </select>
-      </div>
-      <div>
-        <label class="label" for="mentor42Role">Na simulação, quem é a outra pessoa?</label>
-        <select id="mentor42Role" class="select-field">
-          <option value="player">Jogador</option>
-          <option value="captain">Capitão</option>
-          <option value="staff">Auxiliar / comissão</option>
-          <option value="board">Diretoria</option>
-          <option value="press">Jornalista</option>
-        </select>
-      </div>
-      <div>
-        <label class="label" for="mentor42Difficulty">Intensidade</label>
-        <select id="mentor42Difficulty" class="select-field">
-          <option value="guided">Guiada</option>
-          <option value="realistic" selected>Realista</option>
-          <option value="pressure">Sob pressão</option>
-        </select>
-      </div>
-    </div>
-
     <div id="mentor42ModeHint" class="mentor42-mode-hint"></div>
-
     <div id="mentor42Chat" class="mentor42-chat"></div>
 
-    <label class="label" for="mentor42Input">Fale ou escreva</label>
-    <textarea id="mentor42Input" class="text-input mentor42-input" placeholder="Ex.: Tenho um jogador importante que provavelmente vou colocar no banco e estou evitando essa conversa."></textarea>
+    <label class="label" for="mentor42Input">Fale ou escreva normalmente</label>
+    <textarea id="mentor42Input" class="text-input mentor42-input" placeholder="Ex.: Hoje aconteceu uma situação no treino e eu queria conversar sobre isso..."></textarea>
 
-    <div class="mentor42-actions">
-      <button class="secondary" onclick="mentor42Capture(false)">🎙 Falar</button>
-      <button class="primary" onclick="mentor42Send()">Enviar ao Mentor</button>
-      <button class="outline" onclick="mentor42ReviewLastAnswer()">🔎 Corrigir minha resposta</button>
-      <button class="outline" onclick="mentor42Retry()">↻ Refazer resposta</button>
-      <button class="outline" onclick="mentor42HearModel()">🔊 Como o Mentor falaria?</button>
+    <div class="mentor42-actions mentor47-conversation-actions">
+      <button class="secondary" onclick="mentor42Capture(true)">🎙 Falar e enviar</button>
+      <button class="primary" onclick="mentor42Send()">Enviar</button>
+      <button class="outline" onclick="mentor44RepeatLastAnswer()">🔊 Ouvir resposta</button>
+      <button class="outline" onclick="mentor47UsePreviousContext()">🧠 Usar contexto anterior</button>
+      <button class="secondary mentor47-save-day" onclick="mentor47SaveDay()">💾 Salvar o dia</button>
     </div>
 
     <div id="mentor42Review" class="mentor42-result hidden"></div>
 
-    <div class="mentor42-actions mentor42-session-actions">
-      <button class="secondary" onclick="mentor42SaveSession()">💾 Encerrar e salvar na memória</button>
-      <button class="outline" onclick="mentor42ClearConversation()">Nova conversa</button>
-    </div>
+    <details class="mentor47-guided">
+      <summary>Treinos guiados e simulações</summary>
+      <div class="mentor42-grid mentor42-grid-3 mentor47-mode-controls">
+        <div>
+          <label class="label" for="mentor42Mode">Modo</label>
+          <select id="mentor42Mode" class="select-field" onchange="mentor42ModeChanged()">
+            <option value="free">Conversa livre</option>
+            <option value="mentor">Mentor — orientação e confronto respeitoso</option>
+            <option value="questions">Só perguntas</option>
+            <option value="simulation">Simulação</option>
+            <option value="avoid">Estou evitando essa conversa</option>
+            <option value="challenge">Questione minha decisão</option>
+            <option value="five">Me prepare em 5 minutos</option>
+            <option value="organize">Só organizar — sem conselho</option>
+          </select>
+        </div>
+        <div>
+          <label class="label" for="mentor42Role">Na simulação, quem é a outra pessoa?</label>
+          <select id="mentor42Role" class="select-field">
+            <option value="player">Jogador</option>
+            <option value="captain">Capitão</option>
+            <option value="staff">Auxiliar / comissão</option>
+            <option value="board">Diretoria</option>
+            <option value="press">Jornalista</option>
+          </select>
+        </div>
+        <div>
+          <label class="label" for="mentor42Difficulty">Intensidade</label>
+          <select id="mentor42Difficulty" class="select-field">
+            <option value="guided">Guiada</option>
+            <option value="realistic" selected>Realista</option>
+            <option value="pressure">Sob pressão</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mentor42-quick-grid">
+        <button onclick="mentor42Quick('mentor')"><span>🧠</span><strong>Modo Mentor</strong><small>Orienta e testa seu critério</small></button>
+        <button onclick="mentor42Quick('questions')"><span>❓</span><strong>Só perguntas</strong><small>Use quando quiser treinar reflexão</small></button>
+        <button onclick="mentor42Quick('simulation')"><span>🎭</span><strong>Simulação</strong><small>Jogador, capitão, comissão ou diretoria</small></button>
+        <button onclick="mentor42Quick('avoid')"><span>🚪</span><strong>Estou evitando</strong><small>Prepare uma conversa difícil</small></button>
+        <button onclick="mentor42Quick('challenge')"><span>⚖️</span><strong>Questione minha decisão</strong><small>Teste critério e coerência</small></button>
+        <button onclick="mentor42Quick('five')"><span>⏱️</span><strong>Me prepare em 5 min</strong><small>Antes de treino ou reunião</small></button>
+        <button onclick="mentor42Quick('organize')"><span>📝</span><strong>Só organizar</strong><small>Sem conselho</small></button>
+      </div>
+
+      <div class="mentor42-actions">
+        <button class="outline" onclick="mentor42ReviewLastAnswer()">🔎 Corrigir minha resposta</button>
+        <button class="outline" onclick="mentor42Retry()">↻ Refazer resposta</button>
+        <button class="outline" onclick="mentor42HearModel()">🔊 Alternativa do Mentor</button>
+      </div>
+    </details>
   </article>
 
-  <article id="mentor42CriticismCard" class="card mentor42-criticism-card">
-    <span class="label">Filtro da Crítica</span>
-    <h3>Marque com X apenas o que merece sua energia</h3>
-    <p class="intro">Uma crítica pode conter uma parte útil sem merecer uma reação completa. O Mentor separa ação, aprendizado, controle, ruído e urgência.</p>
-
-    <textarea id="mentor42CriticismInput" class="text-input mentor42-input" placeholder="Ex.: Disseram que meu time não tem intensidade e que eu protejo alguns jogadores."></textarea>
-    <label class="mentor42-check"><input id="mentor42CriticChallenge" type="checkbox" checked> Quero que o Mentor procure também um possível ponto cego</label>
-    <div class="mentor42-actions">
-      <button class="secondary" onclick="mentor42CaptureCriticism()">🎙 Contar a crítica</button>
-      <button class="primary" onclick="mentor42AnalyzeCriticism()">✕ Filtrar crítica</button>
-      <button class="outline" onclick="mentor42FridayCriticism()">Crítica da Sexta</button>
-    </div>
-    <div id="mentor42CriticismResult" class="mentor42-result hidden"></div>
-  </article>
-
-  <article class="card">
+  <article id="mentor47HistoryCard" class="card mentor47-history-card">
     <div class="mentor42-section-head">
       <div>
-        <span class="label">Memória do Mentor</span>
-        <h3>Contexto, aprendizado e próximo passo</h3>
+        <span class="label">Histórico</span>
+        <h3>Memória do treinador organizada por dia</h3>
       </div>
-      <button class="outline" onclick="mentor42ExportMemory()">Exportar</button>
+      <button class="outline" onclick="mentor47ExportHistory()">Exportar</button>
     </div>
-    <div id="mentor42Memory" class="mentor42-memory-list"></div>
+    <p class="intro">Busque por data, nome de jogador, assunto ou palavra. O Mentor não usa um dia anterior automaticamente.</p>
+    <div class="mentor47-history-filters">
+      <input id="mentor47HistorySearch" class="text-input" placeholder="Ex.: Diogo, treino, apresentação..." oninput="mentor47HistorySearch()">
+      <input id="mentor47HistoryDate" type="date" class="select-field" onchange="mentor47HistorySearch()">
+      <button class="outline" onclick="mentor47ClearHistory()">Limpar</button>
+    </div>
+    <div id="mentor47HistoryList" class="mentor47-history-list"></div>
   </article>
+
+  <details class="card mentor47-profile-card">
+    <summary><strong>🧠 Memória permanente — Perfil do treinador</strong></summary>
+    <p class="intro">Use para princípios que devem continuar entre os dias: sua forma de liderar, critérios, estilo de comunicação e identidade. As conversas diárias ficam separadas no Histórico.</p>
+    <textarea id="mentor47ProfileText" class="text-input mentor42-input" placeholder="Ex.: Quero ser direto, coerente e tratar todos com o mesmo critério. Prefiro falas curtas antes do treino..."></textarea>
+    <div class="mentor42-actions"><button class="secondary" onclick="mentor47SaveProfile()">Salvar perfil permanente</button></div>
+  </details>
+
+  <details class="card mentor47-tools-card">
+    <summary><strong>Ferramentas extras</strong></summary>
+    <article class="mentor44-diagnostic-card">
+      <div>
+        <span class="label">Diagnóstico rápido</span>
+        <h3>Voz e IA</h3>
+        <p>Teste microfone, reconhecimento de fala, voz do aparelho, transcrição e Gemini.</p>
+      </div>
+      <button class="secondary" onclick="mentor44RunDiagnostic()">Testar agora</button>
+      <div id="mentor44DiagnosticResult" class="mentor44-diagnostic-result hidden"></div>
+    </article>
+
+    <article id="mentor42CriticismCard" class="mentor42-criticism-card">
+      <span class="label">Filtro da Crítica</span>
+      <h3>Marque com X apenas o que merece sua energia</h3>
+      <p class="intro">Separe ação, aprendizado, controle, ruído e urgência.</p>
+      <textarea id="mentor42CriticismInput" class="text-input mentor42-input" placeholder="Ex.: Disseram que meu time não tem intensidade e que eu protejo alguns jogadores."></textarea>
+      <label class="mentor42-check"><input id="mentor42CriticChallenge" type="checkbox" checked> Procurar também um possível ponto cego</label>
+      <div class="mentor42-actions">
+        <button class="secondary" onclick="mentor42CaptureCriticism()">🎙 Contar a crítica</button>
+        <button class="primary" onclick="mentor42AnalyzeCriticism()">✕ Filtrar crítica</button>
+        <button class="outline" onclick="mentor42FridayCriticism()">Crítica da Sexta</button>
+      </div>
+      <div id="mentor42CriticismResult" class="mentor42-result hidden"></div>
+    </article>
+  </details>
 
   <!-- interface de ligação por voz e vídeo -->
   <div id="mentor42CallOverlay" class="mentor42-call-overlay hidden" role="dialog" aria-modal="true" aria-label="Conversa com o Mentor IA">
     <div class="mentor42-call-shell mentor43-call-shell">
       <div class="mentor42-call-head">
-        <div><small>MENTOR IA DO TREINADOR</small><h3 id="mentor42CallTitle">Conversa por voz</h3></div>
+        <div><small>MENTOR IA DO TREINADOR</small><h3 id="mentor42CallTitle">Conversa livre · voz</h3></div>
         <button class="mentor42-call-close" onclick="mentor42EndCall()">✕</button>
       </div>
 
@@ -958,11 +974,11 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
         <button id="mentor43VideoModeBtn" onclick="mentor43SetCallMode('video')">🎥 Vídeo</button>
       </div>
 
-      <div id="mentor42CallStatus" class="mentor42-call-status">Toque no microfone para falar.</div>
+      <div id="mentor42CallStatus" class="mentor42-call-status">A conversa contínua fica ligada por padrão. Se o iPhone bloquear, toque no microfone.</div>
       <div id="mentor44LiveTranscript" class="mentor44-live-transcript">Sua fala aparecerá aqui enquanto você fala.</div>
       <div class="mentor44-call-options">
-        <label><input id="mentor44AutoConversation" type="checkbox" onchange="mentor44SaveAutoConversation()"> Continuar ouvindo automaticamente depois da resposta</label>
-        <button onclick="mentor44RepeatLastAnswer()">🔊 Ouvir / repetir resposta</button>
+        <label><input id="mentor44AutoConversation" type="checkbox" checked onchange="mentor44SaveAutoConversation()"> Conversa contínua — ouvir novamente depois da resposta</label>
+        <button onclick="mentor44RepeatLastAnswer()">🔊 Ouvir resposta</button>
       </div>
 
       <div id="mentor43VideoStage" class="mentor43-video-stage hidden">
@@ -981,7 +997,6 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
           <div id="mentor43Wave" class="mentor43-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
           <div id="mentor43Caption" class="mentor43-caption">Estou pronto para conversar.</div>
         </div>
-
         <div class="mentor43-self-view">
           <video id="mentor43SelfVideo" autoplay muted playsinline></video>
           <div id="mentor43CameraPlaceholder" class="mentor43-camera-placeholder">Sua câmera</div>
@@ -992,18 +1007,18 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
       <div id="mentor42CallChat" class="mentor42-call-chat"></div>
 
       <div class="mentor42-call-controls">
-        <button class="mentor42-call-side" onclick="mentor42StopVoice()">🔇<small>Parar voz</small></button>
+        <button class="mentor42-call-side" onclick="mentor47NewConversation()">＋<small>Nova</small></button>
         <button id="mentor42BigMic" class="mentor42-big-mic" onclick="mentor42Capture(true)">🎙</button>
+        <button class="mentor42-call-side" onclick="mentor44RepeatLastAnswer()">🔊<small>Ouvir</small></button>
+        <button class="mentor42-call-side" onclick="mentor47SaveDay(true)">💾<small>Salvar dia</small></button>
         <button id="mentor43CameraBtn" class="mentor42-call-side hidden" onclick="mentor43ToggleCamera()">📷<small>Câmera</small></button>
-        <button class="mentor42-call-side" onclick="mentor42SaveSession(true)">💾<small>Salvar</small></button>
       </div>
 
-      <p id="mentor43CallNote" class="mentor42-call-note">O modo mais estável é tocar no microfone para cada fala. Se quiser, ative a continuação automática acima.</p>
+      <p id="mentor43CallNote" class="mentor42-call-note">Você fala → o Mentor responde em voz → o microfone tenta ouvir de novo. O botão do microfone continua disponível como segurança.</p>
       <p id="mentor43AvatarNote" class="mentor43-avatar-note hidden">Avatar visual animado: não é vídeo humano real e não analisa emoções ou expressões.</p>
     </div>
   </div>
 </section>
-
 
 <section id="english" class="page">
   <div class="hero">
@@ -3698,7 +3713,7 @@ checkTechnicalEnvironment();
 <script src="/coachvoice-v33.js?v=40"></script>
 <script src="/coachday-v40.js?v=46"></script>
 <script src="/coachprep-v42.js?v=46"></script>
-<script src="/mentor-v461.js?v=461"></script>
+<script src="/mentor-v47.js?v=47"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));

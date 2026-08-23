@@ -1,27 +1,24 @@
-COACHVOICE AI v4.6 — GEMINI
+COACHVOICE AI v4.7
 
 1. Extraia o ZIP.
-2. Na raiz do GitHub: Add file > Upload files.
-3. Arraste todos os itens de dentro da pasta.
-4. Confirme que api/ contém SOMENTE:
+2. GitHub > raiz > Add file > Upload files.
+3. Envie todos os itens de dentro da pasta.
+4. Confirme api/ com somente:
    coach-ai.js
    english-coach.js
    mentor.js
    transcribe.js
+5. NÃO altere GEMINI_API_KEY.
+6. Commit:
+   Adicionar conversa fluida e memória por dia v4.7
+7. Aguarde Vercel Production Ready.
+8. Teste:
+   https://coachvoice-ai.vercel.app/?v=47
 
-5. Na Vercel, crie:
-   GEMINI_API_KEY = sua chave completa do Google AI Studio
-
-6. Environment: Production
-7. Sensitive: ligado
-8. Save
-9. Faça novo Redeploy.
-
-Commit:
-Migrar CoachVoice para Gemini v4.6
-
-Teste de API:
-https://coachvoice-ai.vercel.app/api/coach-ai
-
-Teste do app:
-https://coachvoice-ai.vercel.app/?v=46
+Teste recomendado:
+- Nova conversa
+- Fale normalmente
+- Salvar o dia
+- Abra Histórico
+- Veja conversa completa
+- No dia seguinte, Resumo de ontem

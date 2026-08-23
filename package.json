@@ -1,8 +1,8 @@
 {
   "name": "coachvoice-ai",
   "private": true,
-  "version": "4.6.0",
-  "description": "CoachVoice AI v4.6 com Gemini como IA principal e fallback de transcrição por Gemini.",
+  "version": "4.7.0",
+  "description": "CoachVoice AI v4.7 com conversa fluida, memória por dia, resumo de ontem, histórico pesquisável e contexto anterior opcional.",
   "engines": {
     "node": "22.x"
   }

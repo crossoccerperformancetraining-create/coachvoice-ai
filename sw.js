@@ -1,5 +1,5 @@
-const CACHE='coachvoice-v4.6.1-voz-iphone';
-const FILES=['/','/index.html','/manifest.webmanifest','/icon-192.png','/icon-512.png','/studio.css','/studio.js','/studio-framing.js','/coachvoice-v33.js','/coachday.css','/coachday-v40.js','/coachprep.css','/coachprep-v42.js','/mentor-v46.css','/mentor-v461.js'];
+const CACHE='coachvoice-v4.7-conversa-memoria-dia';
+const FILES=['/','/index.html','/manifest.webmanifest','/icon-192.png','/icon-512.png','/studio.css','/studio.js','/studio-framing.js','/coachvoice-v33.js','/coachday.css','/coachday-v40.js','/coachprep.css','/coachprep-v42.js','/mentor-v47.css','/mentor-v47.js'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting()));
