@@ -1,0 +1,12 @@
+CoachVoice AI v4.6.1 — correção de voz no iPhone
+
+- Gemini e GEMINI_API_KEY não mudam.
+- Dentro da chamada, o Mentor tenta falar mesmo se a preferência antiga de voz estiver desligada.
+- O botão “Ouvir / repetir resposta” força a fala por gesto do usuário (fallback importante no iPhone).
+- Novo cache do Service Worker evita carregar o JavaScript antigo.
+
+Commit sugerido:
+Corrigir voz do Mentor no iPhone v4.6.1
+
+Teste:
+https://coachvoice-ai.vercel.app/?v=461

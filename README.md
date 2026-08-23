@@ -1,48 +1,26 @@
-# CoachVoice AI v4.7 — Conversa Fluida + Memória por Dia
+# CoachVoice AI v4.8 — Dia a Dia + Entrevistas mais reais
 
-## O que mudou no Mentor
+## Novidades
 
-### Conversa livre é o padrão
-O Mentor responde primeiro ao que você realmente disse. Ele não é obrigado a terminar cada resposta com uma pergunta. Pergunta apenas quando isso ajuda a conversa.
+- **☕ Dia a Dia**: nova aba para conversar sobre rotina, horários, prioridades, estudo, viagem, cansaço ou qualquer assunto do cotidiano.
+- **Mentor com mais modos**, organizados em grupos: conversa, decisão, gestão, preparação e reflexão.
+- **Entrevistas** com botão **Responder próxima pergunta**, pular pergunta e encerrar coletiva.
+- **Coletiva contínua** opcional com 5 ou 10 perguntas.
+- Mais cenários, incluindo **Vitória na estreia**, derrota/empate na estreia, clássicos, classificação, eliminação, liderança, acesso, risco de rebaixamento, título e outros.
+- Jornalistas: amigável, neutro, insistente, provocador e hostil-profissional.
+- Mantida a memória por dia da v4.7 e a voz estável no iPhone da v4.6.1.
 
-### O dia começa limpo
-Conversas de dias anteriores não entram automaticamente. O histórico anterior só é usado quando você toca em **Usar contexto anterior** ou **Retomar** em um dia salvo.
+## Vercel
 
-### Salvar o dia
-Um único botão **💾 Salvar o dia**:
-- guarda a conversa completa do dia neste aparelho;
-- combina, quando existir, o registro do CoachDay do mesmo dia;
-- usa Gemini para criar resumo, destaques, decisões, pessoas citadas, pendências e aprendizados.
+A variável continua sendo:
 
-### Resumo de ontem
-O botão **📅 Resumo de ontem** mostra o resumo sem começar automaticamente uma conversa sobre ele.
-
-### Histórico pesquisável
-Busca por data, nome, assunto ou palavra. Cada dia pode abrir:
-- Resumo
-- Conversa completa
-- Retomar contexto
-
-### Memória permanente separada
-O **Perfil do treinador** guarda princípios que devem atravessar os dias. Ele é separado das conversas diárias.
-
-### Voz mais fluida
-A conversa contínua vem ativada por padrão:
-**você fala → Mentor responde em voz → o microfone tenta ouvir novamente**.
-O botão do microfone continua disponível como fallback no iPhone.
-
-## Armazenamento
-Nesta versão, histórico e perfil continuam armazenados localmente no navegador/aparelho. Use **Exportar** para gerar um backup JSON. Login e nuvem ficam para uma etapa posterior.
-
-## Gemini
-A integração continua usando:
 `GEMINI_API_KEY`
 
-Não é necessário alterar a chave que já está funcionando.
+Não é necessário trocar a chave se a v4.7 já estava funcionando.
 
-## Publicação
-Commit sugerido:
-`Adicionar conversa fluida e memória por dia v4.7`
+## Teste recomendado
 
-Teste:
-`https://coachvoice-ai.vercel.app/?v=47`
+1. Abra `Dia a Dia` e diga: “Hoje meu dia vai ser bastante corrido...”.
+2. Abra `Entrevistas` → `Vitória na estreia`.
+3. Responda e toque em `Responder próxima pergunta`.
+4. Ligue `Coletiva contínua` e faça uma sequência de 5 perguntas.

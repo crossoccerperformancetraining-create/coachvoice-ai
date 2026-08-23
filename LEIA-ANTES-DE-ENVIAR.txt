@@ -1,24 +1,16 @@
-COACHVOICE AI v4.7
+COACHVOICE AI v4.8 — ANTES DE ENVIAR
 
-1. Extraia o ZIP.
-2. GitHub > raiz > Add file > Upload files.
-3. Envie todos os itens de dentro da pasta.
-4. Confirme api/ com somente:
-   coach-ai.js
-   english-coach.js
-   mentor.js
-   transcribe.js
-5. NÃO altere GEMINI_API_KEY.
-6. Commit:
-   Adicionar conversa fluida e memória por dia v4.7
-7. Aguarde Vercel Production Ready.
-8. Teste:
-   https://coachvoice-ai.vercel.app/?v=47
+Atualização recomendada:
+1. Envie os arquivos da raiz do pacote v4.8 para a raiz do GitHub.
+2. Entre na pasta api/ e substitua apenas coach-ai.js.
+3. Não altere a GEMINI_API_KEY.
+4. Aguarde Vercel Production — Ready.
+5. Abra: https://coachvoice-ai.vercel.app/?v=48
 
-Teste recomendado:
-- Nova conversa
-- Fale normalmente
-- Salvar o dia
-- Abra Histórico
-- Veja conversa completa
-- No dia seguinte, Resumo de ontem
+Novidades principais:
+- Nova aba Dia a Dia.
+- Mais modos do Mentor.
+- Entrevistas com Responder próxima pergunta.
+- Coletiva contínua de 5 ou 10 perguntas.
+- Vitória na estreia e muitos novos cenários.
+- Mais perfis de jornalista.

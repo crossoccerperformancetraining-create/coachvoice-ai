@@ -1,8 +1,8 @@
 {
   "name": "coachvoice-ai",
   "private": true,
-  "version": "4.7.0",
-  "description": "CoachVoice AI v4.7 com conversa fluida, memória por dia, resumo de ontem, histórico pesquisável e contexto anterior opcional.",
+  "version": "4.8.0",
+  "description": "CoachVoice AI v4.8 com Dia a Dia, conversa livre, mais modos do Mentor, entrevistas contínuas, mais cenários e memória por dia.",
   "engines": {
     "node": "22.x"
   }

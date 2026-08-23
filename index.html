@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="CoachVoice">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<title>CoachVoice AI v4.7 — Conversa Fluida + Memória por Dia</title>
+<title>CoachVoice AI v4.8 — Dia a Dia + Entrevistas</title>
 <style>
 :root{
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -45,8 +45,8 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 .timeline{display:grid;gap:9px}.timeline-item{display:grid;grid-template-columns:36px 1fr auto;gap:10px;align-items:center;background:#f8fafc;border-radius:14px;padding:11px}.timeline-item span:first-child{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#e5e7eb;font-weight:900}.timeline-item.done span:first-child{background:#319444;color:#fff}.timeline-item small{color:var(--muted)}
 .profile-card{display:flex;align-items:center;gap:13px}.avatar{width:62px;height:62px;border-radius:50%;background:#dbe5f1;color:#071225;display:grid;place-items:center;font-weight:900;font-size:1.08rem}.profile-card strong,.profile-card small{display:block}.profile-card small{margin-top:4px;color:var(--muted)}
 .settings{display:grid;gap:10px}.setting{background:#fff;border-radius:15px;padding:14px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow)}.setting small{display:block;color:var(--muted);margin-top:3px}.switch{width:45px;height:26px;border-radius:999px;background:#319444;position:relative}.switch:after{content:"";position:absolute;width:20px;height:20px;border-radius:50%;background:#fff;right:3px;top:3px}
-.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:35;background:#08162a;display:grid;grid-template-columns:repeat(5,1fr);padding:8px 4px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -6px 20px rgba(15,23,42,.14)}
-.nav{border:0;background:transparent;color:#b8c4d2;display:grid;place-items:center;gap:3px;font-size:1.08rem}.nav span{font-size:.61rem}.nav.active{color:var(--green)}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:35;background:#08162a;display:grid;grid-template-columns:repeat(6,1fr);padding:8px 2px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -6px 20px rgba(15,23,42,.14)}
+.nav{border:0;background:transparent;color:#b8c4d2;display:grid;place-items:center;gap:3px;font-size:1.08rem}.nav span{font-size:.55rem}.nav.active{color:var(--green)}
 .drawer{position:fixed;inset:0 auto 0 0;width:min(86vw,330px);z-index:60;background:linear-gradient(180deg,#071225,#10213c);color:#fff;padding:24px 17px;transform:translateX(-105%);transition:.24s;display:flex;flex-direction:column}.drawer.open{transform:translateX(0)}.drawer-profile{display:flex;gap:11px;align-items:center;padding-bottom:17px;border-bottom:1px solid rgba(255,255,255,.13)}.drawer-profile .avatar{width:52px;height:52px}.drawer-profile small{display:block;color:var(--green);margin-top:3px}.drawer nav{display:grid;gap:5px;margin-top:15px}.drawer-link{border:0;background:transparent;color:#fff;text-align:left;padding:13px;border-radius:12px}.drawer-link.active{background:rgba(255,255,255,.09);color:var(--green)}.drawer-note{margin-top:auto;color:#b7c4d5;font-size:.76rem;line-height:1.5}.overlay{position:fixed;inset:0;background:rgba(2,6,23,.57);z-index:50;opacity:0;pointer-events:none;transition:.2s}.overlay.show{opacity:1;pointer-events:auto}
 .sheet{position:fixed;left:0;right:0;bottom:0;z-index:80;background:#fff;border-radius:24px 24px 0 0;padding:14px 18px calc(22px + env(safe-area-inset-bottom));transform:translateY(105%);transition:.24s;max-height:87vh;overflow:auto}.sheet.open{transform:translateY(0)}.sheet-handle{width:45px;height:5px;border-radius:999px;background:#d0d5dd;margin:0 auto 14px}.sheet h2{margin:0}.feedback-options{display:grid;gap:9px}.feedback-options button{border:1px solid var(--line);border-radius:13px;background:#fff;padding:13px;text-align:left;font-weight:750}.feedback-options button.selected{border-color:#319444;background:#ecf8eb;color:#247533}.sheet textarea{width:100%;min-height:88px;border:1px solid var(--line);border-radius:13px;padding:12px;font:inherit;margin:12px 0}.sheet-overlay{position:fixed;inset:0;background:rgba(2,6,23,.57);z-index:70;opacity:0;pointer-events:none;transition:.2s}.sheet-overlay.show{opacity:1;pointer-events:auto}
 .toast{position:fixed;left:16px;right:16px;bottom:94px;background:#101828;color:#fff;border-radius:14px;padding:13px;opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s;z-index:90;text-align:center}.toast.show{opacity:1;transform:none}
@@ -209,7 +209,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <link rel="stylesheet" href="/studio.css">
 <link rel="stylesheet" href="/coachday.css?v=40">
 <link rel="stylesheet" href="/coachprep.css?v=46">
-<link rel="stylesheet" href="/mentor-v47.css?v=47">
+<link rel="stylesheet" href="/mentor-v48.css?v=48">
 </head>
 <body>
 <div class="app">
@@ -221,6 +221,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   <nav>
     <button class="drawer-link active" data-page="home" onclick="go('home')">⌂ Início</button>
     <button class="drawer-link" data-page="daily" onclick="go('daily')">🧭 CoachDay AI</button>
+    <button class="drawer-link" data-page="daytoday" onclick="go('daytoday')">☕ Dia a Dia — conversa livre</button>
     <button class="drawer-link" data-page="coachprep" onclick="go('coachprep')">🛡️ CoachPrep — Gestão e Liderança</button>
     <button class="drawer-link" data-page="studio" onclick="go('studio')">🎥 Estúdio do Treinador</button>
     <button class="drawer-link" data-page="mentor" onclick="go('mentor')">🎧 Mentor IA — Voz e Gestão</button>
@@ -237,7 +238,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <button class="drawer-link" data-page="technical" onclick="go('technical')">⚙ Testes do aparelho</button>
     <button class="drawer-link" data-page="profile" onclick="go('profile')">◉ Preferências</button>
   </nav>
-  <div class="drawer-note">CoachVoice AI v4.6 — estabilidade, enquadramento e testes no celular. Dados salvos somente neste aparelho; IA ativada quando a chave estiver configurada na Vercel.</div>
+  <div class="drawer-note">CoachVoice AI v4.8 — conversa fluida, Dia a Dia, entrevistas contínuas e memória por dia. Dados salvos somente neste aparelho; IA ativada quando a chave estiver configurada na Vercel.</div>
 </aside>
 <div id="overlay" class="overlay" onclick="closeDrawer()"></div>
 
@@ -281,9 +282,10 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <button class="secondary" onclick="go('coachprep')">Abrir CoachPrep</button>
   </article>
 
-  <div class="section-title"><h2>Acesso rápido</h2><span>11 áreas</span></div>
+  <div class="section-title"><h2>Acesso rápido</h2><span>12 áreas</span></div>
   <div class="quick-grid">
     <button class="quick" onclick="go('coachprep')"><span>🛡️</span><strong>CoachPrep</strong><small>Gestão e liderança até assumir o trabalho</small></button>
+    <button class="quick" onclick="go('daytoday')"><span>☕</span><strong>Dia a Dia</strong><small>Rotina, horários, prioridades e conversa livre</small></button>
     
     <button class="quick" onclick="go('studio')"><span>🎥</span><strong>Estúdio</strong><small>Vídeo, postura e comparação</small></button>
     <button class="quick" onclick="go('english')"><span>🇬🇧</span><strong>Inglês</strong><small>Iniciante ao avançado</small></button>
@@ -794,6 +796,49 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 </section>
 
 
+<section id="daytoday" class="page">
+  <div class="hero mentor48-daytoday-hero">
+    <span class="eyebrow">☕ DIA A DIA — CONVERSA ABERTA</span>
+    <h2 id="mentor48DayGreeting">Bom dia, Coach.</h2>
+    <p>Use esta área para qualquer assunto do seu dia — horários, prioridades, estudo, viagem, cansaço, decisões pessoais de rotina ou simplesmente conversar. O Mentor não vai transformar tudo em futebol.</p>
+    <div class="mentor42-hero-actions">
+      <button class="primary" onclick="mentor48OpenDayToDay()">💬 Conversar livremente</button>
+      <button class="secondary" onclick="mentor48StartDayPrompt('organize')">🗓️ Organizar meu dia</button>
+      <button class="secondary" onclick="mentor48ShowYesterdayFromDay()">📅 Ver ontem</button>
+    </div>
+  </div>
+
+  <article class="card mentor48-day-card">
+    <span class="label">Como está seu dia?</span>
+    <h3>Comece do seu jeito</h3>
+    <textarea id="mentor48DailyInput" class="text-input mentor42-input" placeholder="Ex.: Hoje meu dia vai ser bastante corrido. Tenho treino, reunião, estudo e preciso organizar meus horários..."></textarea>
+    <div class="mentor42-actions" style="margin-top:10px">
+      <button class="secondary" onclick="dictateTo('mentor48DailyInput','pt-BR',{maxSeconds:60,label:'Conversa do Dia a Dia'})">🎙 Falar</button>
+      <button class="primary" onclick="mentor48SendDailyInput()">Abrir conversa</button>
+    </div>
+  </article>
+
+  <article class="card">
+    <span class="label">Atalhos do cotidiano</span>
+    <h3>Escolha apenas se ajudar</h3>
+    <div class="mentor48-day-grid">
+      <button onclick="mentor48StartDayPrompt('organize')"><span>🗓️</span><strong>Organizar meu dia</strong><small>Horários, compromissos e blocos livres</small></button>
+      <button onclick="mentor48StartDayPrompt('headfull')"><span>🧠</span><strong>Muita coisa na cabeça</strong><small>Colocar tudo em ordem sem interrogatório</small></button>
+      <button onclick="mentor48StartDayPrompt('priority')"><span>⚡</span><strong>Definir prioridade</strong><small>O que precisa acontecer primeiro</small></button>
+      <button onclick="mentor48StartDayPrompt('travel')"><span>✈️</span><strong>Dia de viagem</strong><small>Organizar energia, horários e pendências</small></button>
+      <button onclick="mentor48StartDayPrompt('tired')"><span>😴</span><strong>Estou cansado</strong><small>Reorganizar o plano de forma realista</small></button>
+      <button onclick="mentor48StartDayPrompt('decision')"><span>⚖️</span><strong>Preciso decidir</strong><small>Pesar opções sem complicar</small></button>
+      <button onclick="mentor48StartDayPrompt('unload')"><span>💭</span><strong>Só quero conversar</strong><small>Falar livremente e organizar as ideias</small></button>
+      <button onclick="mentor48StartDayPrompt('close')"><span>🌙</span><strong>Fechar meu dia</strong><small>Resumo, pendências e salvar quando quiser</small></button>
+    </div>
+  </article>
+
+  <article class="card mentor48-day-note">
+    <strong>Como esta aba funciona</strong>
+    <p>O dia começa limpo. O que foi salvo ontem só aparece se você pedir. Quando quiser guardar o que aconteceu hoje, use <b>💾 Salvar o dia</b> dentro da conversa.</p>
+  </article>
+</section>
+
 <section id="mentor" class="page">
   <div class="mentor42-hero mentor47-hero">
     <span class="eyebrow">MENTOR IA DO TREINADOR — CONVERSA, VOZ E MEMÓRIA POR DIA</span>
@@ -862,14 +907,38 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
         <div>
           <label class="label" for="mentor42Mode">Modo</label>
           <select id="mentor42Mode" class="select-field" onchange="mentor42ModeChanged()">
-            <option value="free">Conversa livre</option>
-            <option value="mentor">Mentor — orientação e confronto respeitoso</option>
-            <option value="questions">Só perguntas</option>
-            <option value="simulation">Simulação</option>
-            <option value="avoid">Estou evitando essa conversa</option>
-            <option value="challenge">Questione minha decisão</option>
-            <option value="five">Me prepare em 5 minutos</option>
-            <option value="organize">Só organizar — sem conselho</option>
+            <optgroup label="Conversa">
+              <option value="free">Conversa livre</option>
+              <option value="daylife">☕ Dia a Dia — rotina e conversa aberta</option>
+              <option value="questions">Só perguntas</option>
+              <option value="organize">Só organizar — sem conselho</option>
+              <option value="unload">Desabafar / organizar a cabeça</option>
+            </optgroup>
+            <optgroup label="Decisão">
+              <option value="mentor">Mentor — orientação e confronto respeitoso</option>
+              <option value="challenge">Questione minha decisão</option>
+              <option value="decide">Preciso decidir agora</option>
+              <option value="proscons">Prós e contras</option>
+            </optgroup>
+            <optgroup label="Gestão">
+              <option value="simulation">Simulação</option>
+              <option value="avoid">Estou evitando essa conversa</option>
+              <option value="hardtalk">Conversa difícil</option>
+              <option value="unhappy">Jogador insatisfeito</option>
+              <option value="captainmode">Conversa com capitão</option>
+            </optgroup>
+            <optgroup label="Preparação">
+              <option value="five">Me prepare em 5 minutos</option>
+              <option value="pretraining">Preparar pré-treino</option>
+              <option value="pregame">Preparar pré-jogo</option>
+              <option value="boardmeeting">Reunião com diretoria</option>
+              <option value="pressprep">Preparar entrevista</option>
+            </optgroup>
+            <optgroup label="Reflexão">
+              <option value="reflectday">Como foi meu dia?</option>
+              <option value="improve">O que eu poderia ter feito melhor?</option>
+              <option value="closeday">Fechar o dia</option>
+            </optgroup>
           </select>
         </div>
         <div>
@@ -900,6 +969,11 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
         <button onclick="mentor42Quick('challenge')"><span>⚖️</span><strong>Questione minha decisão</strong><small>Teste critério e coerência</small></button>
         <button onclick="mentor42Quick('five')"><span>⏱️</span><strong>Me prepare em 5 min</strong><small>Antes de treino ou reunião</small></button>
         <button onclick="mentor42Quick('organize')"><span>📝</span><strong>Só organizar</strong><small>Sem conselho</small></button>
+        <button onclick="mentor42Quick('daylife')"><span>☕</span><strong>Dia a Dia</strong><small>Rotina e conversa aberta</small></button>
+        <button onclick="mentor42Quick('decide')"><span>⚡</span><strong>Preciso decidir</strong><small>Organizar uma decisão agora</small></button>
+        <button onclick="mentor42Quick('hardtalk')"><span>💬</span><strong>Conversa difícil</strong><small>Preparar sem criar interrogatório</small></button>
+        <button onclick="mentor42Quick('pretraining')"><span>🧩</span><strong>Pré-treino</strong><small>Mensagem e foco do dia</small></button>
+        <button onclick="mentor42Quick('reflectday')"><span>🌙</span><strong>Como foi meu dia?</strong><small>Reflexão curta e prática</small></button>
       </div>
 
       <div class="mentor42-actions">
@@ -1606,40 +1680,79 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
       <div>
         <label class="label" for="interviewScenario">Tema da entrevista</label>
         <select id="interviewScenario" class="select-field" onchange="loadInterviewScenario(true)">
+          <optgroup label="Estreia e começo de trabalho">
+            <option value="debut-win">Vitória na estreia</option>
+            <option value="debut-draw">Empate na estreia</option>
+            <option value="debut-defeat">Derrota na estreia</option>
+            <option value="new-club">Apresentação em novo clube</option>
+            <option value="after-break">Retorno após pausa / pré-temporada</option>
+          </optgroup>
           <optgroup label="Resultados e pressão">
             <option value="defeat">Sequência sem vencer</option>
+            <option value="three-losses">Três derrotas seguidas</option>
+            <option value="unbeaten">Sequência invicta</option>
             <option value="heavy-defeat">Derrota por placar elevado</option>
             <option value="poor-win">Vitória com desempenho ruim</option>
+            <option value="good-loss">Derrota jogando bem</option>
+            <option value="comeback-win">Vitória de virada</option>
+            <option value="late-loss">Derrota nos acréscimos</option>
             <option value="victory">Vitória e expectativa de título</option>
             <option value="fan-pressure">Protesto e cobrança da torcida</option>
+          </optgroup>
+          <optgroup label="Clássicos, decisões e tabela">
+            <option value="derby-win">Vitória em clássico</option>
+            <option value="derby">Derrota em clássico</option>
+            <option value="hard-qualification">Classificação sofrida</option>
+            <option value="unexpected-elimination">Eliminação inesperada</option>
+            <option value="final">Final ou jogo decisivo</option>
+            <option value="title-lead">Liderança do campeonato</option>
+            <option value="lost-lead">Perda da liderança</option>
+            <option value="promotion">Acesso / promoção</option>
+            <option value="relegation-risk">Risco de rebaixamento</option>
+            <option value="champion">Título conquistado</option>
+            <option value="runner-up">Vice-campeonato</option>
           </optgroup>
           <optgroup label="Arbitragem e disciplina">
             <option value="referee">Arbitragem influenciou o resultado?</option>
             <option value="var">Decisão do VAR</option>
-            <option value="red-card">Expulsão de um jogador</option><option value="penalty">Pênalti polêmico</option><option value="added-time">Acréscimos e encerramento da partida</option>
+            <option value="red-card">Expulsão de um jogador</option>
+            <option value="penalty">Pênalti polêmico</option>
+            <option value="added-time">Acréscimos e encerramento da partida</option>
           </optgroup>
           <optgroup label="Jogadores e elenco">
             <option value="player">Jogador importante no banco</option>
             <option value="young-error">Erro de jogador jovem</option>
+            <option value="youth-debut">Estreia de jogador da base</option>
             <option value="goalkeeper-error">Falha do goleiro</option>
             <option value="transfer">Pedido de contratação/reforço</option>
-            <option value="locker-leak">Informação do vestiário vazou</option><option value="injury">Lesão e condição física de jogador</option><option value="captain">Escolha ou troca do capitão</option><option value="youth">Uso de atletas da base</option>
+            <option value="locker-leak">Informação do vestiário vazou</option>
+            <option value="injury">Lesão e condição física de jogador</option>
+            <option value="captain">Escolha ou troca do capitão</option>
+            <option value="youth">Uso de atletas da base</option>
           </optgroup>
-          <optgroup label="Tática, carreira e jogos especiais">
-            <option value="tactical">Mudança tática durante o jogo</option><option value="build-up">Saída de bola sob pressão</option><option value="high-block">Bloco alto e pressão</option><option value="low-block">Equipe defendendo em bloco baixo</option><option value="transition">Problemas nas transições</option><option value="set-piece">Gol sofrido em bola parada</option>
-            <option value="derby">Clássico e rivalidade</option>
-            <option value="final">Final ou jogo decisivo</option>
-            <option value="new-club">Apresentação em novo clube</option>
-            <option value="job-pressure">Pergunta sobre possível demissão</option><option value="contract">Renovação ou fim de contrato</option><option value="board">Relação com a diretoria</option><option value="schedule">Calendário e desgaste</option>
+          <optgroup label="Tática, carreira e clube">
+            <option value="tactical">Mudança tática durante o jogo</option>
+            <option value="tactical-change-win">Mudança de esquema com resultado positivo</option>
+            <option value="build-up">Saída de bola sob pressão</option>
+            <option value="high-block">Bloco alto e pressão</option>
+            <option value="low-block">Equipe defendendo em bloco baixo</option>
+            <option value="transition">Problemas nas transições</option>
+            <option value="set-piece">Gol sofrido em bola parada</option>
+            <option value="job-pressure">Pergunta sobre possível demissão</option>
+            <option value="contract">Renovação ou fim de contrato</option>
+            <option value="board">Relação com a diretoria</option>
+            <option value="schedule">Calendário e desgaste</option>
           </optgroup>
         </select>
       </div>
       <div>
         <label class="label" for="interviewPressure">Estilo do jornalista</label>
         <select id="interviewPressure" class="select-field" onchange="updateInterviewHelp()">
-          <option value="normal">Profissional</option>
+          <option value="friendly">Amigável</option>
+          <option value="normal" selected>Neutro / profissional</option>
           <option value="insistent">Insistente</option>
-          <option value="provocative">Provocativo</option>
+          <option value="provocative">Provocador</option>
+          <option value="hostile">Hostil, mas profissional</option>
         </select>
       </div>
       <div>
@@ -1653,6 +1766,15 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
         </select>
       </div>
     </div>
+    <div class="mentor-actions interview48-session-controls" style="margin-top:10px">
+      <label class="interview48-toggle"><input id="interviewContinuous" type="checkbox" onchange="interview48ContinuousChanged()"> 🔁 Coletiva contínua</label>
+      <select id="interviewSessionLength" class="select-field interview48-length" aria-label="Quantidade de perguntas">
+        <option value="5">5 perguntas</option>
+        <option value="10">10 perguntas</option>
+      </select>
+      <button class="outline" onclick="interview48ResetSession()">Reiniciar coletiva</button>
+    </div>
+    <div id="interviewContinuousStatus" class="interview48-status hidden"></div>
     <div id="interviewThemeHelp" class="scenario-help" style="margin-top:10px"></div>
     <h3 id="interviewQuestion" style="margin-top:12px"></h3>
     <div class="mentor-actions">
@@ -1671,6 +1793,12 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
       <button class="primary" onclick="analyzeInterview()">✨ Analisar e continuar</button>
     </div>
     <div id="interviewResult" class="ai-result hidden" style="margin-top:12px"></div>
+    <div id="interviewNextActions" class="mentor-actions interview48-next-actions hidden" style="margin-top:10px">
+      <button class="primary" onclick="interview48AnswerNext()">🎙 Responder próxima pergunta</button>
+      <button class="secondary" onclick="interview48ShowNext()">➡️ Ver próxima pergunta</button>
+      <button class="outline" onclick="interview48SkipQuestion()">⏭️ Pular pergunta</button>
+      <button class="outline" onclick="interview48EndSession()">✅ Encerrar entrevista</button>
+    </div>
   </article>
 </section>
 
@@ -2043,6 +2171,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <nav class="bottom-nav">
   <button class="nav active" data-page="home" onclick="go('home')">⌂<span>Início</span></button>
   <button class="nav" data-page="daily" onclick="go('daily')">🧭<span>CoachDay</span></button>
+  <button class="nav" data-page="daytoday" onclick="go('daytoday')">☕<span>Dia a Dia</span></button>
   <button class="nav" data-page="mentor" onclick="go('mentor')">🤖<span>Mentor</span></button>
   <button class="nav" data-page="practice" onclick="go('practice')">🎯<span>Treinar</span></button>
   <button class="nav" data-page="progress" onclick="go('progress')">▥<span>Evolução</span></button>
@@ -2173,7 +2302,7 @@ function go(id){
   currentPage=id;
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));
   document.querySelectorAll('.nav,.drawer-link').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
-  const titles={home:'Ciclo diário',daily:'CoachDay AI — Assistente do Treinador',mentor:'Mentor IA do Treinador — Voz e Gestão',practice:'Central de treinos',english:'Inglês em 3 níveis',oratory:'Oratória com IA',interviews:'Entrevistas',leadership:'Liderança com IA',gamemodel:'Modelo de jogo passo a passo',library:'Biblioteca de situações',matchday:'Modo dia de jogo',tracks:'Formação completa',technical:'Diagnóstico do aparelho',progress:'Evolução real',profile:'Preferências locais',blockDetail:'Conteúdo do bloco',lessonDetail:'Aula prática',studio:'Estúdio do Treinador',coachprep:'CoachPrep — Gestão e Liderança'};
+  const titles={home:'Ciclo diário',daily:'CoachDay AI — Assistente do Treinador',daytoday:'Dia a Dia — conversa aberta',mentor:'Mentor IA do Treinador — Voz e Gestão',practice:'Central de treinos',english:'Inglês em 3 níveis',oratory:'Oratória com IA',interviews:'Entrevistas',leadership:'Liderança com IA',gamemodel:'Modelo de jogo passo a passo',library:'Biblioteca de situações',matchday:'Modo dia de jogo',tracks:'Formação completa',technical:'Diagnóstico do aparelho',progress:'Evolução real',profile:'Preferências locais',blockDetail:'Conteúdo do bloco',lessonDetail:'Aula prática',studio:'Estúdio do Treinador',coachprep:'CoachPrep — Gestão e Liderança'};
   document.getElementById('topSubtitle').textContent=titles[id]||'CoachVoice AI';
   closeDrawer();window.scrollTo(0,0);preparePageForNavigation(id);refreshLiveStats();
 }
@@ -2182,6 +2311,7 @@ function preparePageForNavigation(id){
   if(id==='library')renderLibrary();
   if(id==='daily'){renderDailyPlan();loadDailyJournal();if(typeof window.initializeCoachDay==='function')window.initializeCoachDay();}
   if(id==='coachprep'&&typeof window.initializeCoachPrep==='function')window.initializeCoachPrep();
+  if(id==='daytoday'&&typeof window.mentor48UpdateDayToDayGreeting==='function')window.mentor48UpdateDayToDayGreeting();
   if(id==='mentor'&&typeof window.initializeMentorV42==='function')window.initializeMentorV42();
   if(id==='interviews'&&!document.getElementById('interviewQuestion').textContent.trim())loadInterviewScenario(false);
   if(id==='leadership'&&!document.getElementById('leadershipSituation').options.length)renderLeadershipRoles();
@@ -2884,6 +3014,26 @@ async function improveOratoryWithAI(){
 }
 
 const interviewScenarios={
+  'debut-win':{question:'Vitória na estreia. O resultado confirma que sua ideia já foi assimilada pelo grupo?',help:'Valorize o começo sem tirar conclusões definitivas após um jogo.',model:'Começar vencendo é importante, mas ainda estamos construindo relações, comportamentos e entendimento do modelo. O resultado ajuda, e agora precisamos dar continuidade ao trabalho.',avoid:'Dizer que o time já está pronto ou transformar uma vitória em prova definitiva.'},
+  'debut-draw':{question:'Depois do empate na estreia, o que faltou para o início ser melhor?',help:'Faça uma leitura simples do jogo e preserve a ideia de processo inicial.',model:'Tivemos pontos positivos e situações que ainda precisam de ajuste. O início serve para entender melhor a equipe, corrigir detalhes e crescer a partir do próximo treino.',avoid:'Usar falta de tempo como desculpa para tudo ou prometer resposta imediata.'},
+  'debut-defeat':{question:'Você estreia com derrota. A equipe ainda não entendeu o que você quer?',help:'Assuma o resultado sem transformar um jogo em julgamento total do trabalho.',model:'A derrota nos incomoda, mas um trabalho não se define por noventa minutos. Temos comportamentos para corrigir e precisamos acelerar o entendimento sem perder clareza.',avoid:'Culpar o pouco tempo de trabalho ou atacar a herança do treinador anterior.'},
+  'after-break':{question:'Depois da pausa, a equipe voltou abaixo do ritmo esperado?',help:'Explique o que faltou sem usar a interrupção como justificativa completa.',model:'A pausa muda a rotina, mas nossa responsabilidade é voltar preparados. Faltou ritmo em alguns momentos e vamos ajustar carga, tomada de decisão e intensidade.',avoid:'Culpar somente a pausa ou dizer que o rendimento não importa.'},
+  'three-losses':{question:'São três derrotas consecutivas. O que ainda sustenta a confiança no trabalho?',help:'Reconheça a sequência e cite um critério concreto de correção.',model:'A sequência exige responsabilidade e resposta. Nossa confiança precisa vir do trabalho e das correções que conseguimos executar, não de discurso. O próximo jogo precisa mostrar evolução concreta.',avoid:'Pedir paciência de forma genérica ou fingir que a sequência não pesa.'},
+  unbeaten:{question:'A equipe está invicta há vários jogos. Você teme que o grupo relaxe?',help:'Valorize a consistência e mantenha foco em comportamentos.',model:'A sequência mostra consistência, mas não muda nossos critérios. Precisamos continuar exigindo os mesmos comportamentos e preparar cada jogo como um novo problema.',avoid:'Tratar invencibilidade como garantia ou criar medo artificial de relaxamento.'},
+  'good-loss':{question:'Sua equipe jogou bem, mas perdeu. Até que ponto o bom desempenho consola?',help:'Separe satisfação com comportamentos da responsabilidade pelo resultado.',model:'O desempenho mostra caminhos que queremos preservar, mas o resultado também importa. Precisamos manter o que funcionou e ser mais eficientes nos momentos decisivos.',avoid:'Usar o bom jogo para minimizar a derrota ou dizer que o resultado foi injusto.'},
+  'comeback-win':{question:'A vitória de virada mostra força mental ou vocês entraram mal no jogo?',help:'Reconheça reação e também o problema inicial.',model:'A reação foi importante e mostra capacidade de competir até o fim. Ao mesmo tempo, precisamos entender por que começamos abaixo do nível e evitar depender de uma reação.',avoid:'Romantizar a virada e ignorar os erros do início.'},
+  'late-loss':{question:'Perder nos acréscimos revela falta de concentração?',help:'Evite rótulos amplos. Fale do comportamento específico do fim da partida.',model:'Precisamos revisar as decisões e a organização dos minutos finais. Não quero resumir tudo a “falta de concentração”; vamos identificar o comportamento que falhou e corrigi-lo.',avoid:'Chamar o grupo de desconcentrado ou emocionalmente fraco sem evidência.'},
+  'derby-win':{question:'Depois de vencer o clássico, esta é a vitória que muda o patamar da equipe?',help:'Reconheça o significado emocional sem aumentar artificialmente a expectativa.',model:'Vencer um clássico tem peso para o clube e para a torcida. Vamos valorizar, mas nosso patamar será definido pela regularidade e pela forma como continuamos trabalhando.',avoid:'Transformar o clássico em título ou provocar o rival.'},
+  'hard-qualification':{question:'A classificação veio com muito sofrimento. Isso preocupa para a próxima fase?',help:'Valorize a classificação e identifique o principal ajuste.',model:'Classificar era o objetivo e conseguimos. Também houve momentos em que poderíamos ter controlado melhor o jogo. Vamos levar a experiência e corrigir isso para a próxima fase.',avoid:'Desprezar o sofrimento ou vender a classificação como atuação perfeita.'},
+  'unexpected-elimination':{question:'Como explicar uma eliminação que ninguém esperava?',help:'Assuma sem procurar culpados e sinalize revisão concreta.',model:'É uma eliminação dolorosa e abaixo do que esperávamos. A responsabilidade é nossa. Precisamos revisar as decisões, entender onde falhamos e responder no trabalho seguinte.',avoid:'Atacar jogadores, arbitragem ou sorte como explicação central.'},
+  'title-lead':{question:'Na liderança, sua equipe agora tem obrigação de ser campeã?',help:'Proteja o foco no processo sem fugir da ambição.',model:'Estar na liderança mostra o que construímos até aqui, mas não encerra nada. Temos ambição e também a responsabilidade de preparar o próximo jogo com o mesmo critério.',avoid:'Negar a ambição ou declarar obrigação absoluta de título.'},
+  'lost-lead':{question:'Depois de perder a liderança, a equipe sentiu a pressão?',help:'Foque nos comportamentos e no que precisa ser recuperado.',model:'Perder a liderança incomoda, mas nossa resposta precisa estar nas ações. Vamos revisar o último desempenho, recuperar nossos padrões e competir pelo que ainda está aberto.',avoid:'Diagnosticar medo ou ansiedade do grupo sem base.'},
+  promotion:{question:'O acesso foi conquistado. O que muda a partir de agora?',help:'Celebre e conecte a conquista ao próximo nível de exigência.',model:'É uma conquista importante para todos que trabalharam por ela. Vamos comemorar, reconhecer o caminho e depois começar a preparar o clube e a equipe para um nível de exigência maior.',avoid:'Pular a celebração ou prometer desempenho futuro antes do planejamento.'},
+  'relegation-risk':{question:'Com a equipe perto da zona de rebaixamento, como impedir que a pressão paralise o grupo?',help:'Não diagnostique emoções. Dê foco a ações controláveis.',model:'A tabela exige atenção e responsabilidade. Vamos reduzir o problema ao próximo jogo, aos comportamentos que controlamos e às decisões que precisam ser melhores.',avoid:'Usar medo como motivação ou dizer que o grupo está “travado”.'},
+  champion:{question:'Depois do título, qual é a mensagem principal para o grupo e para a torcida?',help:'Celebre com clareza, reconheça pessoas e evite promessas imediatas.',model:'Hoje é dia de reconhecer o grupo, a comissão, o clube e a torcida. O título é consequência de muito trabalho. Vamos comemorar com responsabilidade e depois pensar no próximo ciclo.',avoid:'Transformar a conquista em promessa de domínio futuro.'},
+  'runner-up':{question:'Depois de ficar com o vice, como evitar que a temporada seja vista como fracasso?',help:'Não imponha uma narrativa. Reconheça a dor e avalie o caminho com equilíbrio.',model:'Perder uma decisão dói e precisamos respeitar isso. Depois, vamos avaliar toda a trajetória com honestidade, reconhecer o que construímos e corrigir o que faltou para vencer.',avoid:'Dizer que o vice “não importa” ou declarar sucesso automático.'},
+  'youth-debut':{question:'O jovem estreou hoje. O que você espera dele depois dessa oportunidade?',help:'Proteja o processo de desenvolvimento e evite criar expectativa pública excessiva.',model:'A estreia é um passo importante, não uma conclusão. Queremos que ele continue treinando, aprendendo e competindo por espaço com os mesmos critérios do grupo.',avoid:'Prometer sequência de jogos ou colocá-lo como solução imediata.'},
+  'tactical-change-win':{question:'A mudança de esquema funcionou e trouxe a vitória. Esse será o novo sistema da equipe?',help:'Explique adaptação sem transformar uma solução de jogo em regra permanente.',model:'A mudança respondeu às necessidades deste jogo e os jogadores executaram bem. Vamos continuar avaliando o que cada adversário e cada momento pedem, sem ficar presos a uma única estrutura.',avoid:'Anunciar mudança definitiva por causa de um resultado.'},
   defeat:{question:'A equipe está há quatro jogos sem vencer. Por que a torcida deveria acreditar na recuperação?',help:'Reconheça a sequência, assuma responsabilidade e apresente uma correção concreta.',model:'Entendemos a cobrança. Identificamos os principais problemas e estamos trabalhando em correções específicas. Nossa resposta precisa aparecer no próximo jogo.',avoid:'Prometer vitória, procurar culpados ou fazer uma explicação muito longa.'},
   'heavy-defeat':{question:'Depois de uma derrota por placar elevado, como você explica uma atuação tão abaixo do esperado?',help:'Assuma o resultado sem expor jogadores. Separe o que aconteceu do que será corrigido.',model:'O desempenho ficou muito abaixo do que representamos. A responsabilidade começa por mim. Vamos analisar com clareza, corrigir os comportamentos que falharam e exigir uma resposta imediata.',avoid:'Minimizar o placar, atacar atletas individualmente ou dizer que “foi apenas um dia ruim”.'},
   'poor-win':{question:'Mesmo com a vitória, sua equipe jogou mal. O resultado esconde os problemas?',help:'Valorize o resultado, mas demonstre que a análise não depende apenas do placar.',model:'A vitória é importante, mas nossa avaliação precisa ser honesta. Tivemos dificuldades que devem ser corrigidas. Vamos aproveitar o resultado sem deixar de evoluir no desempenho.',avoid:'Fingir que a atuação foi boa ou desvalorizar completamente a vitória.'},
@@ -2906,19 +3056,21 @@ const interviewScenarios={
 function currentInterviewData(){return interviewScenarios[document.getElementById('interviewScenario').value]||interviewScenarios.defeat;}
 function pressureInterviewQuestion(question){
   const pressure=document.getElementById('interviewPressure')?.value||'normal';
+  if(pressure==='friendly')return question+' Se puder, explique com um exemplo concreto.';
   if(pressure==='insistent')return question+' Preciso de uma resposta mais objetiva, treinador.';
   if(pressure==='provocative')return question+' A impressão é que você está evitando assumir o problema. O que responde?';
+  if(pressure==='hostile')return question+' A cobrança é direta: por que o torcedor deveria confiar na sua resposta agora?';
   return question;
 }
 function updateInterviewHelp(){
   const data=currentInterviewData(),pressure=document.getElementById('interviewPressure')?.value||'normal';
-  const label=pressure==='provocative'?'Pergunta provocativa':pressure==='insistent'?'Jornalista insistente':'Entrevista profissional';
-  document.getElementById('interviewThemeHelp').innerHTML=`<strong>${label}:</strong> ${data.help}`;
+  const labels={friendly:'Jornalista amigável',normal:'Jornalista neutro',insistent:'Jornalista insistente',provocative:'Jornalista provocador',hostile:'Jornalista hostil, mas profissional'};
+  document.getElementById('interviewThemeHelp').innerHTML=`<strong>${labels[pressure]||'Entrevista profissional'}:</strong> ${data.help}`;
   document.getElementById('interviewQuestion').textContent=pressureInterviewQuestion(data.question);
 }
 function loadInterviewScenario(reset=true){
   updateInterviewHelp();
-  if(reset){document.getElementById('interviewResponse').value='';document.getElementById('interviewResult').classList.add('hidden');document.getElementById('interviewStructure').classList.add('hidden');}
+  if(reset){interview48CancelTimer?.();document.getElementById('interviewResponse').value='';document.getElementById('interviewResult').classList.add('hidden');document.getElementById('interviewStructure').classList.add('hidden');document.getElementById('interviewNextActions')?.classList.add('hidden');}
 }
 function showInterviewStructure(){
   const box=document.getElementById('interviewStructure');box.classList.toggle('hidden');
@@ -2933,15 +3085,106 @@ function interviewLocalAssessment(response){
   const direction=action?100:50;
   return {words,objective,protection,direction,score:Math.round(objective*.35+protection*.3+direction*.35)};
 }
+let interview48NextQuestion='';
+let interview48Session={startedAt:0,count:0,scores:[],timer:null};
+
+function interview48SessionTarget(){
+  return Number(document.getElementById('interviewSessionLength')?.value||5);
+}
+function interview48SetStatus(text,show=true){
+  const el=document.getElementById('interviewContinuousStatus');
+  if(!el)return;
+  el.textContent=text||'';
+  el.classList.toggle('hidden',!show);
+}
+function interview48CancelTimer(){
+  if(interview48Session.timer){clearTimeout(interview48Session.timer);interview48Session.timer=null;}
+}
+function interview48ResetSession(){
+  interview48CancelTimer();
+  interview48Session={startedAt:Date.now(),count:0,scores:[],timer:null};
+  interview48NextQuestion='';
+  document.getElementById('interviewNextActions')?.classList.add('hidden');
+  interview48SetStatus('Nova coletiva iniciada: 0/'+interview48SessionTarget()+' perguntas respondidas.');
+  loadInterviewScenario(true);
+}
+function interview48ContinuousChanged(){
+  interview48CancelTimer();
+  const enabled=Boolean(document.getElementById('interviewContinuous')?.checked);
+  if(enabled){
+    if(!interview48Session.startedAt)interview48ResetSession();
+    interview48SetStatus(`Coletiva contínua ligada · ${interview48Session.count}/${interview48SessionTarget()} respostas.`);
+  }else{
+    interview48SetStatus('Coletiva contínua desligada.',false);
+  }
+}
+function interview48MoveToQuestion(question,listen=false){
+  const data=currentInterviewData();
+  const clean=String(question||'').trim()||data.question;
+  document.getElementById('interviewQuestion').textContent=pressureInterviewQuestion(clean);
+  document.getElementById('interviewThemeHelp').innerHTML=`<strong>Pergunta seguinte:</strong> ${data.help}`;
+  document.getElementById('interviewResponse').value='';
+  document.getElementById('interviewResult').classList.add('hidden');
+  document.getElementById('interviewNextActions')?.classList.add('hidden');
+  window.scrollTo({top:document.getElementById('interviews').offsetTop||0,behavior:'smooth'});
+  if(listen){
+    setTimeout(()=>dictateTo('interviewResponse','pt-BR',{maxSeconds:35,label:'Resposta da entrevista'}),50);
+  }
+}
+function interview48ShowNext(){
+  interview48CancelTimer();
+  interview48MoveToQuestion(interview48NextQuestion||'Qual mudança concreta o torcedor verá no próximo compromisso?',false);
+}
+function interview48AnswerNext(){
+  interview48CancelTimer();
+  interview48MoveToQuestion(interview48NextQuestion||'Qual mudança concreta o torcedor verá no próximo compromisso?',true);
+}
+function interview48SkipQuestion(){
+  interview48CancelTimer();
+  if(typeof nextInterviewQuestionV33==='function')nextInterviewQuestionV33();
+  else interview48MoveToQuestion('Qual é a principal correção que será feita no próximo treino?',false);
+  document.getElementById('interviewNextActions')?.classList.add('hidden');
+}
+function interview48EndSession(){
+  interview48CancelTimer();
+  const box=document.getElementById('interviewResult');
+  const avg=interview48Session.scores.length?Math.round(interview48Session.scores.reduce((a,b)=>a+b,0)/interview48Session.scores.length):0;
+  box.classList.remove('hidden');
+  box.textContent=`Coletiva encerrada.\\n\\nPerguntas respondidas: ${interview48Session.count}.\\nMédia local: ${avg||'—'}/100.\\n\\nRevise principalmente: objetividade na primeira frase, proteção do grupo e um próximo passo concreto.`;
+  document.getElementById('interviewNextActions')?.classList.add('hidden');
+  interview48SetStatus('Coletiva encerrada.');
+}
 async function analyzeInterview(){
   const data=currentInterviewData(),question=document.getElementById('interviewQuestion').textContent,response=document.getElementById('interviewResponse').value.trim(),box=document.getElementById('interviewResult');
   if(!response){toast('Responda à pergunta primeiro.');return;}
+  if(!interview48Session.startedAt)interview48Session.startedAt=Date.now();
   const local=interviewLocalAssessment(response);box.classList.remove('hidden');
   box.innerHTML=`<strong>Análise local: ${local.score}/100</strong><div class="interview-local-score"><div><strong>${local.objective}</strong><small>Objetividade</small></div><div><strong>${local.protection}</strong><small>Proteção do grupo</small></div><div><strong>${local.direction}</strong><small>Próximo passo</small></div></div><p>Buscando orientação adicional...</p>`;
-  const result=await callCoachAI('interview',{theme:document.getElementById('interviewScenario').value,pressure:document.getElementById('interviewPressure').value,question,response,local});
-  box.textContent=`Leitura: ${result.feedback||data.help}\n\nResposta-modelo: ${result.model||data.model}\n\nEvite: ${result.avoid||data.avoid}\n\nPróxima pergunta: ${result.nextQuestion||'Qual mudança concreta o torcedor verá no próximo compromisso?'}`;
-  const history=getJSON('coachvoice-interview-history',[]);history.unshift({date:new Date().toLocaleString('pt-BR'),day:dateKey(),theme:document.getElementById('interviewScenario').value,question,response,score:local.score});
+  const result=await callCoachAI('interview',{theme:document.getElementById('interviewScenario').value,pressure:document.getElementById('interviewPressure').value,question,response,local,sessionCount:interview48Session.count+1});
+  interview48NextQuestion=result.nextQuestion||'Qual mudança concreta o torcedor verá no próximo compromisso?';
+  box.textContent=`Leitura: ${result.feedback||data.help}\\n\\nResposta-modelo: ${result.model||data.model}\\n\\nEvite: ${result.avoid||data.avoid}\\n\\nPróxima pergunta: ${interview48NextQuestion}`;
+  interview48Session.count+=1;
+  interview48Session.scores.push(local.score);
+  const history=getJSON('coachvoice-interview-history',[]);history.unshift({date:new Date().toLocaleString('pt-BR'),day:dateKey(),theme:document.getElementById('interviewScenario').value,pressure:document.getElementById('interviewPressure').value,question,response,score:local.score});
   localStorage.setItem('coachvoice-interview-history',JSON.stringify(history.slice(0,100)));addXP(12,'Simulação de entrevista');
+  document.getElementById('interviewNextActions')?.classList.remove('hidden');
+
+  const continuous=Boolean(document.getElementById('interviewContinuous')?.checked);
+  const target=interview48SessionTarget();
+  if(continuous){
+    if(interview48Session.count>=target){
+      interview48SetStatus(`Coletiva concluída: ${interview48Session.count}/${target} respostas.`);
+      interview48Session.timer=setTimeout(()=>interview48EndSession(),1800);
+    }else{
+      interview48SetStatus(`Resposta ${interview48Session.count}/${target} concluída. Próxima pergunta em alguns segundos — ou use os botões abaixo.`);
+      interview48Session.timer=setTimeout(()=>{
+        interview48MoveToQuestion(interview48NextQuestion,false);
+        const q=document.getElementById('interviewQuestion')?.textContent||'';
+        if(q && typeof speakText==='function')speakText(q,'pt-BR',.9);
+        interview48SetStatus(`Pergunta ${interview48Session.count+1}/${target}. Responda por voz ou texto.`);
+      },6500);
+    }
+  }
 }
 
 const leadershipData={
@@ -3713,7 +3956,7 @@ checkTechnicalEnvironment();
 <script src="/coachvoice-v33.js?v=40"></script>
 <script src="/coachday-v40.js?v=46"></script>
 <script src="/coachprep-v42.js?v=46"></script>
-<script src="/mentor-v47.js?v=47"></script>
+<script src="/mentor-v48.js?v=48"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));
