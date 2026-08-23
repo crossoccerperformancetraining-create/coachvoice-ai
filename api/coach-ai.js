@@ -1,4 +1,4 @@
-const MAX_TEXT = 5000;
+const MAX_TEXT = 14000;
 
 function sendJson(res, status, payload) {
   res.statusCode = status;
@@ -145,7 +145,11 @@ const modeInstructions = {
   },
   'mentor-dialogue': {
     schema: '{"spoken":"...","reflection":"...","nextQuestion":"...","savePoint":"..."}',
-    task: 'Converse como Mentor IA de um treinador de futebol. O campo dialogueMode define o comportamento. free: compreenda antes de aconselhar. mentor: questione com respeito e ofereça orientação quando houver contexto. questions: NÃO dê solução, faça somente uma pergunta útil por resposta. simulation: interprete o papel indicado e reaja de forma realista ao que o treinador disse. avoid: ajude a preparar uma conversa que o treinador está evitando. challenge: teste critério, coerência e possíveis pontos cegos. five: prepare o treinador em poucos minutos com no máximo duas perguntas essenciais antes de estruturar. organize: apenas organize fato, interpretação, decisão e pendência, sem aconselhar. spoken deve soar natural quando lido em voz alta. Não bajule, não rotule pessoas e não diagnostique emoções.'
+    task: 'Converse como Mentor IA de um treinador de futebol, de forma natural e fluida. O campo dialogueMode define o comportamento. free: RESPONDA primeiro ao que o treinador realmente disse, como numa conversa aberta; não transforme toda resposta em exercício, não use roteiro fixo e não faça pergunta por obrigação. Faça no máximo UMA pergunta no final e somente quando ela realmente ajudar a conversa; nextQuestion pode ser vazio. mentor: responda e oriente primeiro, depois questione com respeito quando houver um ponto que vale testar; no máximo uma pergunta. questions: NÃO dê solução, faça somente uma pergunta útil por resposta. simulation: interprete o papel indicado e reaja de forma natural ao que o treinador disse. avoid: ajude a preparar uma conversa evitada, mas responda antes de perguntar. challenge: teste critério e coerência sem interrogatório. five: seja objetivo e faça no máximo uma pergunta essencial antes de estruturar. organize: apenas organize fato, interpretação, decisão e pendência, sem aconselhar. Use history para continuidade da conversa atual e todayEarlierContext apenas quando for relevante. NUNCA traga dias anteriores espontaneamente. Só use previousDayContext quando specialContext indicar que o treinador escolheu explicitamente retomar aquele dia. coachProfile é memória permanente e deve orientar discretamente o estilo, sem ser recitado. spoken deve soar natural quando lido em voz alta. Não bajule, não rotule pessoas e não diagnostique emoções.'
+  },
+  'mentor-daily-summary': {
+    schema: '{"summary":"...","highlights":["..."],"decisions":["..."],"people":[{"name":"...","context":"..."}],"pending":["..."],"learning":["..."]}',
+    task: 'Resuma o dia do treinador de forma factual e útil. Use a conversa e, quando existir, o registro CoachDay. Não invente acontecimentos. summary deve ter no máximo 5 frases. highlights: fatos e temas relevantes. decisions: decisões ou critérios realmente mencionados. people: somente pessoas citadas e o contexto, sem diagnosticar emoção. pending: apenas assuntos que ficaram claramente abertos. learning: aprendizados observáveis do próprio treinador. Não planeje o dia seguinte e não faça sermão.'
   },
   'mentor-review-answer': {
     schema: '{"didWell":"...","improve":"...","retryPrompt":"...","model":"..."}',
