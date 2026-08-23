@@ -209,7 +209,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <link rel="stylesheet" href="/studio.css">
 <link rel="stylesheet" href="/coachday.css?v=40">
 <link rel="stylesheet" href="/coachprep.css?v=46">
-<link rel="stylesheet" href="/mentor-v48.css?v=48">
+<link rel="stylesheet" href="/mentor-v481.css?v=481">
 </head>
 <body>
 <div class="app">
@@ -892,7 +892,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <textarea id="mentor42Input" class="text-input mentor42-input" placeholder="Ex.: Hoje aconteceu uma situação no treino e eu queria conversar sobre isso..."></textarea>
 
     <div class="mentor42-actions mentor47-conversation-actions">
-      <button class="secondary" onclick="mentor42Capture(true)">🎙 Falar e enviar</button>
+      <button id="mentor481MainMicBtn" class="secondary" onclick="mentor42Capture(true)">🎙 Falar sem interrupção</button>
       <button class="primary" onclick="mentor42Send()">Enviar</button>
       <button class="outline" onclick="mentor44RepeatLastAnswer()">🔊 Ouvir resposta</button>
       <button class="outline" onclick="mentor47UsePreviousContext()">🧠 Usar contexto anterior</button>
@@ -1048,10 +1048,10 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
         <button id="mentor43VideoModeBtn" onclick="mentor43SetCallMode('video')">🎥 Vídeo</button>
       </div>
 
-      <div id="mentor42CallStatus" class="mentor42-call-status">A conversa contínua fica ligada por padrão. Se o iPhone bloquear, toque no microfone.</div>
-      <div id="mentor44LiveTranscript" class="mentor44-live-transcript">Sua fala aparecerá aqui enquanto você fala.</div>
+      <div id="mentor42CallStatus" class="mentor42-call-status">Modo manual: toque no microfone para falar e toque novamente somente quando terminar.</div>
+      <div id="mentor44LiveTranscript" class="mentor44-live-transcript">Faça pausas à vontade. A mensagem só será enviada quando você finalizar a fala.</div>
       <div class="mentor44-call-options">
-        <label><input id="mentor44AutoConversation" type="checkbox" checked onchange="mentor44SaveAutoConversation()"> Conversa contínua — ouvir novamente depois da resposta</label>
+        <label><input id="mentor44AutoConversation" type="checkbox" onchange="mentor44SaveAutoConversation()"> ⚡ Modo automático (opcional) — pode responder quando detectar uma pausa</label>
         <button onclick="mentor44RepeatLastAnswer()">🔊 Ouvir resposta</button>
       </div>
 
@@ -1082,13 +1082,13 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
       <div class="mentor42-call-controls">
         <button class="mentor42-call-side" onclick="mentor47NewConversation()">＋<small>Nova</small></button>
-        <button id="mentor42BigMic" class="mentor42-big-mic" onclick="mentor42Capture(true)">🎙</button>
+        <button id="mentor42BigMic" class="mentor42-big-mic" onclick="mentor42Capture(true)" aria-label="Começar a falar" title="Toque para começar a falar">🎙</button>
         <button class="mentor42-call-side" onclick="mentor44RepeatLastAnswer()">🔊<small>Ouvir</small></button>
         <button class="mentor42-call-side" onclick="mentor47SaveDay(true)">💾<small>Salvar dia</small></button>
         <button id="mentor43CameraBtn" class="mentor42-call-side hidden" onclick="mentor43ToggleCamera()">📷<small>Câmera</small></button>
       </div>
 
-      <p id="mentor43CallNote" class="mentor42-call-note">Você fala → o Mentor responde em voz → o microfone tenta ouvir de novo. O botão do microfone continua disponível como segurança.</p>
+      <p id="mentor43CallNote" class="mentor42-call-note"><strong>Sem interrupção:</strong> toque 🎙 para começar, fale com pausas normalmente e toque ⏹ somente quando terminar. Aí o Mentor responde.</p>
       <p id="mentor43AvatarNote" class="mentor43-avatar-note hidden">Avatar visual animado: não é vídeo humano real e não analisa emoções ou expressões.</p>
     </div>
   </div>
@@ -1789,7 +1789,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <span class="label">Sua resposta</span>
     <textarea id="interviewResponse" class="text-input" placeholder="Responda como treinador. Você pode falar ou escrever."></textarea>
     <div class="mentor-actions" style="margin-top:10px">
-      <button class="secondary" onclick="dictateTo('interviewResponse','pt-BR',{maxSeconds:35,label:'Resposta da entrevista'})">🎙 Responder por voz</button>
+      <button class="secondary" onclick="dictateTo('interviewResponse','pt-BR',{maxSeconds:120,label:'Resposta da entrevista — toque em Parar quando terminar'})">🎙 Responder por voz</button>
       <button class="primary" onclick="analyzeInterview()">✨ Analisar e continuar</button>
     </div>
     <div id="interviewResult" class="ai-result hidden" style="margin-top:12px"></div>
@@ -2723,7 +2723,7 @@ function preferredAudioMimeType(){
   const types=['audio/mp4','audio/ogg;codecs=opus','audio/webm;codecs=opus','audio/webm'];
   return types.find(type=>window.MediaRecorder&&MediaRecorder.isTypeSupported(type))||'';
 }
-function formatVoiceTime(seconds){return `00:${String(Math.max(0,seconds)).padStart(2,'0')}`;}
+function formatVoiceTime(seconds){const v=Math.max(0,Number(seconds)||0),m=Math.floor(v/60),s=v%60;return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;}
 function openVoiceCaptureSheet(){
   document.getElementById('voiceCaptureOverlay').classList.add('open');
   document.getElementById('voiceFallbackBox').classList.add('hidden');
@@ -3128,7 +3128,7 @@ function interview48MoveToQuestion(question,listen=false){
   document.getElementById('interviewNextActions')?.classList.add('hidden');
   window.scrollTo({top:document.getElementById('interviews').offsetTop||0,behavior:'smooth'});
   if(listen){
-    setTimeout(()=>dictateTo('interviewResponse','pt-BR',{maxSeconds:35,label:'Resposta da entrevista'}),50);
+    setTimeout(()=>dictateTo('interviewResponse','pt-BR',{maxSeconds:120,label:'Resposta da entrevista — toque em Parar quando terminar'}),50);
   }
 }
 function interview48ShowNext(){
@@ -3956,7 +3956,7 @@ checkTechnicalEnvironment();
 <script src="/coachvoice-v33.js?v=40"></script>
 <script src="/coachday-v40.js?v=46"></script>
 <script src="/coachprep-v42.js?v=46"></script>
-<script src="/mentor-v48.js?v=48"></script>
+<script src="/mentor-v481.js?v=481"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));

@@ -1,0 +1,17 @@
+CoachVoice AI v4.8.1 — Fala sem interrupção
+
+O que mudou:
+- Mentor em modo manual por padrão.
+- 1º toque: começa a gravar.
+- Pausas naturais NÃO enviam a mensagem.
+- 2º toque: finaliza a fala, transcreve e envia ao Mentor.
+- Limite de segurança: 3 minutos por fala.
+- Modo automático continua disponível, mas é opcional.
+- Entrevistas permitem até 2 minutos por resposta e usam o botão Parar.
+- Gemini e GEMINI_API_KEY não mudam.
+
+Commit sugerido:
+Corrigir fala sem interrupção v4.8.1
+
+Teste:
+https://coachvoice-ai.vercel.app/?v=481
