@@ -209,7 +209,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <link rel="stylesheet" href="/studio.css">
 <link rel="stylesheet" href="/coachday.css?v=40">
 <link rel="stylesheet" href="/coachprep.css?v=46">
-<link rel="stylesheet" href="/mentor-v481.css?v=481">
+<link rel="stylesheet" href="/mentor-v49.css?v=49">
 </head>
 <body>
 <div class="app">
@@ -842,8 +842,8 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <section id="mentor" class="page">
   <div class="mentor42-hero mentor47-hero">
     <span class="eyebrow">MENTOR IA DO TREINADOR — CONVERSA, VOZ E MEMÓRIA POR DIA</span>
-    <h2>Converse normalmente. O Mentor responde primeiro e pergunta só quando isso realmente ajuda.</h2>
-    <p>O dia começa limpo. Conversas anteriores só entram quando você escolher. Ao terminar, toque em <b>Salvar o dia</b> para guardar a conversa completa e gerar um resumo.</p>
+    <h2>Converse normalmente. O Mentor responde, evita perguntas repetidas e sabe quando concluir.</h2>
+    <p>Quando sentir que já falou o suficiente, use <b>Quero uma conclusão</b>. Ao terminar de verdade, toque em <b>Encerrar conversa</b> para fechar e salvar o dia.</p>
     <div class="mentor42-hero-actions mentor47-main-actions">
       <button class="primary" onclick="mentor47NewConversation()">＋ Nova conversa</button>
       <button class="secondary" onclick="mentor47ShowYesterday()">📅 Resumo de ontem</button>
@@ -893,12 +893,15 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
     <div class="mentor42-actions mentor47-conversation-actions">
       <button id="mentor481MainMicBtn" class="secondary" onclick="mentor42Capture(true)">🎙 Falar sem interrupção</button>
-      <button class="primary" onclick="mentor42Send()">Enviar</button>
+      <button id="mentor49SendBtn" class="primary" onclick="mentor42Send()">Enviar</button>
+      <button class="mentor49-conclude" onclick="mentor49Conclude()">✅ Quero uma conclusão</button>
+      <button class="mentor49-end" onclick="mentor49PrepareEndConversation()">🔴 Encerrar conversa</button>
       <button class="outline" onclick="mentor44RepeatLastAnswer()">🔊 Ouvir resposta</button>
       <button class="outline" onclick="mentor47UsePreviousContext()">🧠 Usar contexto anterior</button>
       <button class="secondary mentor47-save-day" onclick="mentor47SaveDay()">💾 Salvar o dia</button>
     </div>
 
+    <div id="mentor49ClosurePanel" class="mentor49-closure-panel hidden"></div>
     <div id="mentor42Review" class="mentor42-result hidden"></div>
 
     <details class="mentor47-guided">
@@ -1084,11 +1087,14 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
         <button class="mentor42-call-side" onclick="mentor47NewConversation()">＋<small>Nova</small></button>
         <button id="mentor42BigMic" class="mentor42-big-mic" onclick="mentor42Capture(true)" aria-label="Começar a falar" title="Toque para começar a falar">🎙</button>
         <button class="mentor42-call-side" onclick="mentor44RepeatLastAnswer()">🔊<small>Ouvir</small></button>
+        <button class="mentor42-call-side" onclick="mentor49Conclude(true)">✅<small>Conclusão</small></button>
+        <button class="mentor42-call-side mentor49-call-end" onclick="mentor49PrepareEndConversation(true)">🔴<small>Encerrar</small></button>
         <button class="mentor42-call-side" onclick="mentor47SaveDay(true)">💾<small>Salvar dia</small></button>
         <button id="mentor43CameraBtn" class="mentor42-call-side hidden" onclick="mentor43ToggleCamera()">📷<small>Câmera</small></button>
       </div>
 
-      <p id="mentor43CallNote" class="mentor42-call-note"><strong>Sem interrupção:</strong> toque 🎙 para começar, fale com pausas normalmente e toque ⏹ somente quando terminar. Aí o Mentor responde.</p>
+      <div id="mentor49CallClosurePanel" class="mentor49-closure-panel mentor49-call-closure hidden"></div>
+      <p id="mentor43CallNote" class="mentor42-call-note"><strong>Sem interrupção:</strong> toque 🎙 para começar, fale com pausas normalmente e toque ⏹ somente quando terminar. Quando quiser parar de explorar o assunto, use ✅ Conclusão ou 🔴 Encerrar.</p>
       <p id="mentor43AvatarNote" class="mentor43-avatar-note hidden">Avatar visual animado: não é vídeo humano real e não analisa emoções ou expressões.</p>
     </div>
   </div>
@@ -3956,7 +3962,7 @@ checkTechnicalEnvironment();
 <script src="/coachvoice-v33.js?v=40"></script>
 <script src="/coachday-v40.js?v=46"></script>
 <script src="/coachprep-v42.js?v=46"></script>
-<script src="/mentor-v481.js?v=481"></script>
+<script src="/mentor-v49.js?v=49"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));

@@ -1,8 +1,8 @@
 {
   "name": "coachvoice-ai",
   "private": true,
-  "version": "4.8.1",
-  "description": "CoachVoice AI v4.8.1: fala manual sem interrupção, Gemini, Dia a Dia e entrevistas.",
+  "version": "4.9.0",
+  "description": "CoachVoice AI v4.9: conversa mais humana, conclusão sem interrogatório e encerramento com salvamento.",
   "engines": {
     "node": "22.x"
   }

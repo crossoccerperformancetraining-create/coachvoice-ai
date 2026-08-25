@@ -1,0 +1,20 @@
+CoachVoice AI v4.9 — Conversa Humana + Encerramento
+
+Principais mudanças:
+- ✅ Quero uma conclusão: o Mentor conclui sem abrir uma nova pergunta.
+- 🔴 Encerrar conversa: gera fechamento, permite Encerrar e salvar ou Continuar conversa.
+- Ao confirmar, a conversa fica encerrada e o dia é salvo.
+- Nova conversa começa limpa, mantendo o registro diário.
+- Perguntas repetidas são filtradas.
+- A mesma pergunta não aparece duas vezes entre spoken e nextQuestion.
+- Conversa livre / Dia a Dia perguntam menos e respondem primeiro.
+- Formatação **texto** agora aparece em negrito, sem mostrar os asteriscos.
+- Voz manual sem interrupção continua igual.
+- GEMINI_API_KEY não muda.
+
+Publicação:
+1. Envie o patch da raiz para a raiz do GitHub.
+2. Entre na pasta api e substitua apenas coach-ai.js pelo patch da API.
+3. Commit sugerido: Humanizar conversa e adicionar encerramento v4.9
+4. Aguarde Production — Ready.
+5. Teste: https://coachvoice-ai.vercel.app/?v=49

@@ -1,4 +1,4 @@
-# CoachVoice AI v4.8 — Dia a Dia + Entrevistas mais reais
+# CoachVoice AI v4.9 — Conversa Humana + Encerramentontrevistas mais reais
 
 ## Novidades
 
