@@ -1,0 +1,20 @@
+CoachVoice AI v5.0 — Dashboard + Inglês e Espanhol
+
+Novidades:
+- Dashboard com tarefas do dia, prioridade, horário, categoria e rotinas recorrentes.
+- Marcar tarefa concluída e registrar feedback de como foi.
+- Notas rápidas que podem virar tarefas.
+- Painel “Precisa da minha atenção” com no máximo 3 itens.
+- Finalizar o dia com resumo Gemini, pendências e uma prioridade para amanhã.
+- Opção de levar pendências para amanhã.
+- Aba Idiomas com Inglês e Espanhol.
+- Espanhol em 3 níveis e 30 frases essenciais para o primeiro mês.
+- Prática de espanhol por voz com correção Gemini.
+- Mentor, fala sem interrupção e encerramento da conversa preservados.
+- GEMINI_API_KEY não muda.
+
+Commit sugerido:
+Adicionar Dashboard e Espanhol v5.0
+
+Teste:
+https://coachvoice-ai.vercel.app/?v=50

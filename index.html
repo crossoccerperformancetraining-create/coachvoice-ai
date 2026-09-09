@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="CoachVoice">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<title>CoachVoice AI v4.8 — Dia a Dia + Entrevistas</title>
+<title>CoachVoice AI v5.0 — Dashboard + Inglês e Espanhol</title>
 <style>
 :root{
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -210,6 +210,8 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <link rel="stylesheet" href="/coachday.css?v=40">
 <link rel="stylesheet" href="/coachprep.css?v=46">
 <link rel="stylesheet" href="/mentor-v49.css?v=49">
+<link rel="stylesheet" href="/dashboard-v50.css?v=50">
+<link rel="stylesheet" href="/languages-v50.css?v=50">
 </head>
 <body>
 <div class="app">
@@ -220,13 +222,14 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   </div>
   <nav>
     <button class="drawer-link active" data-page="home" onclick="go('home')">⌂ Início</button>
+    <button class="drawer-link" data-page="dashboard" onclick="go('dashboard')">✅ Dashboard — Hoje</button>
     <button class="drawer-link" data-page="daily" onclick="go('daily')">🧭 CoachDay AI</button>
     <button class="drawer-link" data-page="daytoday" onclick="go('daytoday')">☕ Dia a Dia — conversa livre</button>
     <button class="drawer-link" data-page="coachprep" onclick="go('coachprep')">🛡️ CoachPrep — Gestão e Liderança</button>
     <button class="drawer-link" data-page="studio" onclick="go('studio')">🎥 Estúdio do Treinador</button>
     <button class="drawer-link" data-page="mentor" onclick="go('mentor')">🎧 Mentor IA — Voz e Gestão</button>
     <button class="drawer-link" data-page="practice" onclick="go('practice')">🎯 Central de treinos</button>
-    <button class="drawer-link" data-page="english" onclick="go('english')">🇬🇧 Inglês: 3 níveis</button>
+    <button class="drawer-link" data-page="languages" onclick="go('languages')">🌎 Idiomas — Inglês e Espanhol</button>
     <button class="drawer-link" data-page="oratory" onclick="go('oratory')">🗣 Oratória com IA</button>
     <button class="drawer-link" data-page="interviews" onclick="go('interviews')">🎙 Entrevistas com IA</button>
     <button class="drawer-link" data-page="leadership" onclick="go('leadership')">🔥 Liderança com IA</button>
@@ -238,7 +241,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <button class="drawer-link" data-page="technical" onclick="go('technical')">⚙ Testes do aparelho</button>
     <button class="drawer-link" data-page="profile" onclick="go('profile')">◉ Preferências</button>
   </nav>
-  <div class="drawer-note">CoachVoice AI v4.8 — conversa fluida, Dia a Dia, entrevistas contínuas e memória por dia. Dados salvos somente neste aparelho; IA ativada quando a chave estiver configurada na Vercel.</div>
+  <div class="drawer-note">CoachVoice AI v5.0 — Dashboard diário, encerramento do dia, Mentor humanizado e idiomas profissionais em inglês e espanhol. Dados salvos neste aparelho; IA via Gemini quando configurada na Vercel.</div>
 </aside>
 <div id="overlay" class="overlay" onclick="closeDrawer()"></div>
 
@@ -254,7 +257,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <span class="eyebrow">COACHDAY AI — ASSISTENTE DO TREINADOR</span>
     <h2>Planeje o que falar, acompanhe o elenco e conecte um dia ao próximo.</h2>
     <p>Antes do treino, durante a semana e depois das atividades, o CoachDay organiza comunicação, gestão, adversário e memória profissional.</p>
-    <button class="primary" onclick="go('daily')">Abrir meu CoachDay</button>
+    <button class="primary" onclick="go('dashboard')">Abrir meu Dashboard</button>
   </div>
 
   <article class="daily-summary">
@@ -282,13 +285,14 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <button class="secondary" onclick="go('coachprep')">Abrir CoachPrep</button>
   </article>
 
-  <div class="section-title"><h2>Acesso rápido</h2><span>12 áreas</span></div>
+  <div class="section-title"><h2>Acesso rápido</h2><span>14 áreas</span></div>
   <div class="quick-grid">
     <button class="quick" onclick="go('coachprep')"><span>🛡️</span><strong>CoachPrep</strong><small>Gestão e liderança até assumir o trabalho</small></button>
     <button class="quick" onclick="go('daytoday')"><span>☕</span><strong>Dia a Dia</strong><small>Rotina, horários, prioridades e conversa livre</small></button>
     
     <button class="quick" onclick="go('studio')"><span>🎥</span><strong>Estúdio</strong><small>Vídeo, postura e comparação</small></button>
-    <button class="quick" onclick="go('english')"><span>🇬🇧</span><strong>Inglês</strong><small>Iniciante ao avançado</small></button>
+    <button class="quick" onclick="go('dashboard')"><span>✅</span><strong>Dashboard</strong><small>Tarefas, prioridades e fechamento do dia</small></button>
+    <button class="quick" onclick="go('languages')"><span>🌎</span><strong>Idiomas</strong><small>Inglês e espanhol para treinador</small></button>
     <button class="quick" onclick="go('oratory')"><span>🗣</span><strong>Oratória</strong><small>Análise e reescrita com IA</small></button>
     <button class="quick" onclick="go('interviews')"><span>🎙</span><strong>Entrevistas</strong><small>Jornalista e perguntas seguintes</small></button>
     <button class="quick" onclick="go('leadership')"><span>🔥</span><strong>Liderança</strong><small>Jogadores, comissão e diretoria</small></button>
@@ -311,6 +315,69 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
   <div class="test-banner">
     <strong>Fase de teste:</strong> use o CoachDay durante vários dias e registre o que foi útil, confuso ou cansativo. A próxima decisão será baseada no uso real.
+  </div>
+</section>
+
+
+<section id="dashboard" class="page">
+  <div class="dashboard-hero">
+    <span class="eyebrow">DASHBOARD — HOJE</span>
+    <h2>Veja o que precisa ser feito, marque o que aconteceu e feche o dia sem carregar tudo na cabeça.</h2>
+    <p id="dashboardDate">Hoje</p>
+    <div class="dashboard-stats">
+      <div class="dashboard-stat"><strong id="dashboardDone">0</strong><small>concluídas</small></div>
+      <div class="dashboard-stat"><strong id="dashboardPending">0</strong><small>pendentes</small></div>
+      <div class="dashboard-stat"><strong id="dashboardTotal">0</strong><small>tarefas</small></div>
+    </div>
+    <div class="dashboard-progress"><div id="dashboardProgress"></div></div>
+  </div>
+
+  <div id="dashboardClosedDay" class="hidden" style="margin-bottom:14px"></div>
+
+  <div class="dashboard-grid">
+    <article class="dashboard-card">
+      <h3>＋ Nova tarefa</h3>
+      <p class="sub">Adicione só o que realmente merece atenção hoje. Rotinas podem se repetir automaticamente.</p>
+      <div class="dashboard-form">
+        <div class="dashboard-form-actions"><input id="dashboardTaskTitle" placeholder="Ex.: preparar conversa com o capitão"><button class="outline" onclick="dashboardVoiceTask()">🎙</button></div>
+        <div class="dashboard-form-row"><input id="dashboardTaskTime" type="time"><select id="dashboardTaskCategory"><option>Trabalho</option><option>Treino</option><option>Jogador</option><option>Estudo</option><option>Idioma</option><option>Pessoal</option></select></div>
+        <div class="dashboard-form-row"><select id="dashboardTaskPriority"><option value="normal">Prioridade normal</option><option value="high">Alta prioridade</option><option value="low">Pode esperar</option></select><select id="dashboardTaskRepeat"><option value="none">Só hoje</option><option value="weekdays">Segunda a sexta</option><option value="daily">Todos os dias</option></select></div>
+        <button class="primary" onclick="dashboardAddTask()">Adicionar ao dia</button>
+      </div>
+    </article>
+
+    <article class="dashboard-card">
+      <h3>⚠ Precisa da minha atenção</h3>
+      <p class="sub">No máximo três itens para não transformar o Dashboard em outra fonte de pressão.</p>
+      <div id="dashboardAttention" class="dashboard-attention"></div>
+    </article>
+
+    <article class="dashboard-card full">
+      <h3>📋 Tarefas de hoje</h3>
+      <p class="sub">Ao concluir, registre em poucas palavras como foi. Esse feedback entra no fechamento do dia.</p>
+      <div id="dashboardTaskList" class="dashboard-task-list"></div>
+    </article>
+
+    <article class="dashboard-card">
+      <h3>📝 Nota rápida</h3>
+      <p class="sub">Uma ideia, uma conversa para lembrar ou algo que aconteceu. Depois ela pode virar tarefa.</p>
+      <div class="dashboard-form-actions"><input id="dashboardQuickNote" class="dashboard-note-input" placeholder="Ex.: falar amanhã com o lateral"><button class="outline" onclick="dashboardVoiceNote()">🎙</button></div>
+      <button class="secondary" style="margin-top:9px" onclick="dashboardAddNote()">Salvar nota</button>
+      <div id="dashboardNotes" class="dashboard-task-list" style="margin-top:10px"></div>
+    </article>
+
+    <article class="dashboard-card">
+      <h3>📊 Últimos 7 dias</h3>
+      <div id="dashboardWeek" class="dashboard-week"></div>
+      <p class="sub" style="margin-top:9px">*O histórico antigo de inglês pode não ter data em todas as práticas.</p>
+    </article>
+
+    <article class="dashboard-card full">
+      <h3>🌙 Finalizar o dia</h3>
+      <p class="sub">Junta tarefas, feedbacks, notas e o resumo salvo pelo Mentor. A IA faz um fechamento curto, sem questionário.</p>
+      <label style="display:flex;gap:9px;align-items:flex-start;margin-bottom:12px"><input id="dashboardCarryPending" type="checkbox" checked> <span>Levar tarefas pendentes não recorrentes para amanhã</span></label>
+      <button id="dashboardCloseDayBtn" class="primary" onclick="dashboardCloseDay()">🌙 Finalizar o dia</button>
+    </article>
   </div>
 </section>
 
@@ -1100,6 +1167,20 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   </div>
 </section>
 
+
+<section id="languages" class="page">
+  <div class="language-hero">
+    <span class="eyebrow">🌎 IDIOMAS DO TREINADOR</span>
+    <h2>Treine a língua que você realmente usaria no campo, no vestiário e nas entrevistas.</h2>
+    <p>Não é curso escolar. O foco é comunicação profissional, frases úteis e situações reais do futebol.</p>
+  </div>
+  <div class="language-choice-grid">
+    <button class="language-choice" onclick="go('english')"><span class="flag">🇬🇧</span><strong>English</strong><small>3 níveis: base, respostas guiadas e situações profissionais.</small></button>
+    <button class="language-choice" onclick="go('spanish')"><span class="flag">🇪🇸</span><strong>Español</strong><small>3 níveis + 30 frases essenciais para o primeiro mês.</small></button>
+  </div>
+  <article class="card" style="margin-top:14px"><h3>🎯 Sobreviver no primeiro mês</h3><p class="intro">Comece por comandos, conversas individuais e frases de coletiva. Depois avance para respostas livres.</p><div class="row-actions"><button class="secondary" onclick="go('english')">🇬🇧 Praticar inglês</button><button class="secondary" onclick="go('spanish')">🇪🇸 Praticar espanhol</button></div></article>
+</section>
+
 <section id="english" class="page">
   <div class="hero">
     <span class="eyebrow">INGLÊS PARA TREINADORES — 3 ETAPAS</span>
@@ -1333,6 +1414,36 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   </article>
 </section>
 
+
+<section id="spanish" class="page">
+  <div class="language-hero">
+    <span class="eyebrow">🇪🇸 ESPAÑOL PARA ENTRENADORES</span>
+    <h2>Do comando simples à conversa profissional.</h2>
+    <p>Fale, escute, receba correção e construa uma linguagem natural para treino, gestão, diretoria e imprensa.</p>
+  </div>
+  <article class="spanish-card">
+    <label class="label" for="spanishLevel">Nível</label>
+    <select id="spanishLevel" class="select-field" onchange="setSpanishLevel(this.value)"><option value="basic">1. Básico — comandos e frases</option><option value="intermediate">2. Intermediário — respostas guiadas</option><option value="advanced">3. Profissional — conversa e imprensa</option></select>
+    <div class="spanish-level-buttons"><button data-spanish-level="basic" onclick="setSpanishLevel('basic')">1 · Básico</button><button data-spanish-level="intermediate" onclick="setSpanishLevel('intermediate')">2 · Intermediário</button><button data-spanish-level="advanced" onclick="setSpanishLevel('advanced')">3 · Profissional</button></div>
+    <label class="label" for="spanishAccent" style="margin-top:12px">Variante</label>
+    <select id="spanishAccent" class="select-field" onchange="setSpanishAccent(this.value)"><option value="es-ES">Espanha</option><option value="es-MX">Latino / México</option></select>
+  </article>
+
+  <div id="spanish-basic">
+    <article class="spanish-card"><small id="spanishBasicContext" class="label"></small><h3 id="spanishBasicTitle"></h3><div id="spanishBasicPhrase" class="spanish-phrase"></div><div id="spanishBasicMeaning" class="spanish-meaning"></div><div class="spanish-actions"><button class="secondary" onclick="spanishListenBasic(.62)">🔊 Devagar</button><button class="secondary" onclick="spanishListenBasic(.9)">▶ Natural</button><button class="primary" onclick="spanishSpeakBasic()">🎙 Repetir</button><button class="outline" onclick="spanishNextBasic()">Próxima →</button></div><div id="spanishBasicResult" class="spanish-result hidden"></div></article>
+  </div>
+
+  <div id="spanish-intermediate" class="hidden">
+    <article class="spanish-card"><h3 id="spanishIntermediateTitle"></h3><div id="spanishIntermediatePrompt" class="spanish-scenario"></div><textarea id="spanishIntermediateResponse" placeholder="Responda em espanhol..."></textarea><div class="spanish-actions"><button class="secondary" onclick="spanishDictateIntermediate()">🎙 Responder por voz</button><button class="primary" onclick="spanishAnalyzeIntermediate()">✨ Analisar</button><button class="outline" onclick="spanishNextIntermediate()">Nova situação</button></div><div id="spanishIntermediateResult" class="spanish-result hidden"></div></article>
+  </div>
+
+  <div id="spanish-advanced" class="hidden">
+    <article class="spanish-card"><h3 id="spanishAdvancedTitle"></h3><div id="spanishAdvancedPrompt" class="spanish-scenario"></div><textarea id="spanishAdvancedResponse" placeholder="Responda como treinador, em espanhol..."></textarea><div class="spanish-actions"><button class="secondary" onclick="spanishDictateAdvanced()">🎙 Responder por voz</button><button class="primary" onclick="spanishAnalyzeAdvanced()">✨ Feedback profissional</button><button class="outline" onclick="spanishNextAdvanced()">Nova situação</button></div><div id="spanishAdvancedResult" class="spanish-result hidden"></div></article>
+  </div>
+
+  <article class="spanish-card"><h3>🧳 30 frases essenciais — primeiro mês</h3><p class="intro">Comandos de treino, gestão, cobrança, imprensa e rotina. Toque para ouvir e repetir no seu ritmo.</p><div id="spanishEssentials" class="spanish-essential-grid"></div></article>
+</section>
+
 <section id="practice" class="page">
   <div class="hero">
     <span class="eyebrow">CENTRAL DE TREINOS</span>
@@ -1340,7 +1451,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <p>Cada área combina orientação local, voz e IA opcional.</p>
   </div>
   <div class="hub-grid">
-    <button class="practice-card" onclick="go('english')"><span class="practice-icon">🇬🇧</span><span><strong>Inglês em 3 níveis</strong><small>Palavras, respostas guiadas e simulações.</small></span><b>→</b></button>
+    <button class="practice-card" onclick="go('languages')"><span class="practice-icon">🌎</span><span><strong>Idiomas do treinador</strong><small>Inglês e espanhol em situações profissionais.</small></span><b>→</b></button>
     <button class="practice-card" onclick="go('oratory')"><span class="practice-icon">🗣</span><span><strong>Oratória com IA</strong><small>Estrutura, pausas e reescrita.</small></span><b>→</b></button>
     <button class="practice-card" onclick="go('interviews')"><span class="practice-icon">🎙</span><span><strong>Entrevistas</strong><small>Jornalista, feedback e nova pergunta.</small></span><b>→</b></button>
     <button class="practice-card" onclick="go('leadership')"><span class="practice-icon">🔥</span><span><strong>Liderança</strong><small>Jogador, comissão e diretoria.</small></span><b>→</b></button>
@@ -2175,7 +2286,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 </section>
 
 <nav class="bottom-nav">
-  <button class="nav active" data-page="home" onclick="go('home')">⌂<span>Início</span></button>
+  <button class="nav" data-page="dashboard" onclick="go('dashboard')">✅<span>Dashboard</span></button>
   <button class="nav" data-page="daily" onclick="go('daily')">🧭<span>CoachDay</span></button>
   <button class="nav" data-page="daytoday" onclick="go('daytoday')">☕<span>Dia a Dia</span></button>
   <button class="nav" data-page="mentor" onclick="go('mentor')">🤖<span>Mentor</span></button>
@@ -2308,12 +2419,15 @@ function go(id){
   currentPage=id;
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));
   document.querySelectorAll('.nav,.drawer-link').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
-  const titles={home:'Ciclo diário',daily:'CoachDay AI — Assistente do Treinador',daytoday:'Dia a Dia — conversa aberta',mentor:'Mentor IA do Treinador — Voz e Gestão',practice:'Central de treinos',english:'Inglês em 3 níveis',oratory:'Oratória com IA',interviews:'Entrevistas',leadership:'Liderança com IA',gamemodel:'Modelo de jogo passo a passo',library:'Biblioteca de situações',matchday:'Modo dia de jogo',tracks:'Formação completa',technical:'Diagnóstico do aparelho',progress:'Evolução real',profile:'Preferências locais',blockDetail:'Conteúdo do bloco',lessonDetail:'Aula prática',studio:'Estúdio do Treinador',coachprep:'CoachPrep — Gestão e Liderança'};
+  const titles={home:'Ciclo diário',dashboard:'Dashboard — Tarefas e Fechamento do Dia',daily:'CoachDay AI — Assistente do Treinador',daytoday:'Dia a Dia — conversa aberta',mentor:'Mentor IA do Treinador — Voz e Gestão',practice:'Central de treinos',languages:'Idiomas do Treinador',english:'English — 3 níveis',spanish:'Español — 3 níveis',oratory:'Oratória com IA',interviews:'Entrevistas',leadership:'Liderança com IA',gamemodel:'Modelo de jogo passo a passo',library:'Biblioteca de situações',matchday:'Modo dia de jogo',tracks:'Formação completa',technical:'Diagnóstico do aparelho',progress:'Evolução real',profile:'Preferências locais',blockDetail:'Conteúdo do bloco',lessonDetail:'Aula prática',studio:'Estúdio do Treinador',coachprep:'CoachPrep — Gestão e Liderança'};
   document.getElementById('topSubtitle').textContent=titles[id]||'CoachVoice AI';
   closeDrawer();window.scrollTo(0,0);preparePageForNavigation(id);refreshLiveStats();
 }
 function preparePageForNavigation(id){
+  if(id==='dashboard'&&typeof window.dashboardOpen==='function')window.dashboardOpen();
+  if(id==='languages'){}
   if(id==='english')renderEnglishMode();
+  if(id==='spanish'&&typeof window.renderSpanishMode==='function')window.renderSpanishMode();
   if(id==='library')renderLibrary();
   if(id==='daily'){renderDailyPlan();loadDailyJournal();if(typeof window.initializeCoachDay==='function')window.initializeCoachDay();}
   if(id==='coachprep'&&typeof window.initializeCoachPrep==='function')window.initializeCoachPrep();
@@ -3963,6 +4077,8 @@ checkTechnicalEnvironment();
 <script src="/coachday-v40.js?v=46"></script>
 <script src="/coachprep-v42.js?v=46"></script>
 <script src="/mentor-v49.js?v=49"></script>
+<script src="/dashboard-v50.js?v=50"></script>
+<script src="/languages-v50.js?v=50"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));

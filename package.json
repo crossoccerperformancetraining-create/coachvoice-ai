@@ -1,8 +1,8 @@
 {
   "name": "coachvoice-ai",
   "private": true,
-  "version": "4.9.0",
-  "description": "CoachVoice AI v4.9: conversa mais humana, conclusão sem interrogatório e encerramento com salvamento.",
+  "version": "5.0.0",
+  "description": "CoachVoice AI v5.0: Dashboard diário, fechamento do dia e idiomas profissionais em inglês e espanhol.",
   "engines": {
     "node": "22.x"
   }
