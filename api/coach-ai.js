@@ -171,6 +171,10 @@ const modeInstructions = {
     schema: '{"summary":"...","doneHighlights":["..."],"pending":["..."],"tomorrowPriority":"..."}',
     task: 'Faça o fechamento do dia do treinador sem interrogatório. Use somente tarefas, notas e eventual resumo do Mentor enviados. summary deve ter no máximo 4 frases, factual e humano. doneHighlights: até 5 coisas realmente concluídas ou relevantes. pending: somente o que ficou aberto. tomorrowPriority: escolha no máximo UMA prioridade concreta para amanhã; se nada estiver pendente, deixe vazio. Não invente eventos e não faça julgamento emocional.'
   },
+  'dashboard-weekly-review': {
+    schema: '{"summary":"...","wins":["..."],"patterns":["..."],"pending":["..."],"nextWeekFocus":"...","languageFocus":"..."}',
+    task: 'Faça uma revisão profissional dos últimos 7 dias do treinador usando SOMENTE os dados enviados de tarefas, fechamentos do dia, registros do Mentor e prática de idiomas. Não invente acontecimentos nem emoções. summary: no máximo 5 frases, claro e humano. wins: até 5 avanços concretos realmente registrados. patterns: até 3 padrões OBSERVÁVEIS nos dados (por exemplo tarefas frequentemente adiadas ou foco recorrente), sem diagnóstico psicológico. pending: até 5 assuntos ainda abertos. nextWeekFocus: escolha no máximo UMA prioridade concreta para a próxima semana; se não houver base suficiente, deixe vazio. languageFocus: uma recomendação curta baseada somente nas contagens disponíveis de inglês/espanhol; se não houver dados, vazio. Não faça sermão e não transforme a revisão em lista de perguntas.'
+  },
   'spanish-beginner': {
     schema: '{"feedback":"...","natural":"...","focus":"..."}',
     task: 'Atue como professor de espanhol para treinador brasileiro iniciante. Compare target e spoken. feedback em português, curto e encorajador sem elogio automático. natural deve trazer a frase espanhola correta e natural. focus deve indicar no máximo um ponto de pronúncia ou palavra para repetir. Não exija perfeição de sotaque.'
