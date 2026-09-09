@@ -167,6 +167,22 @@ const modeInstructions = {
     schema: '{"summary":"...","learning":"...","nextAction":"...","carryForward":"..."}',
     task: 'Resuma uma conversa de desenvolvimento do treinador em quatro campos curtos. Registre o contexto sem rotular pessoas. learning deve ser um aprendizado observável. nextAction deve ser concreto e revisável. carryForward deve indicar o que perguntar ou verificar na próxima conversa.'
   },
+  'dashboard-day-summary': {
+    schema: '{"summary":"...","doneHighlights":["..."],"pending":["..."],"tomorrowPriority":"..."}',
+    task: 'Faça o fechamento do dia do treinador sem interrogatório. Use somente tarefas, notas e eventual resumo do Mentor enviados. summary deve ter no máximo 4 frases, factual e humano. doneHighlights: até 5 coisas realmente concluídas ou relevantes. pending: somente o que ficou aberto. tomorrowPriority: escolha no máximo UMA prioridade concreta para amanhã; se nada estiver pendente, deixe vazio. Não invente eventos e não faça julgamento emocional.'
+  },
+  'spanish-beginner': {
+    schema: '{"feedback":"...","natural":"...","focus":"..."}',
+    task: 'Atue como professor de espanhol para treinador brasileiro iniciante. Compare target e spoken. feedback em português, curto e encorajador sem elogio automático. natural deve trazer a frase espanhola correta e natural. focus deve indicar no máximo um ponto de pronúncia ou palavra para repetir. Não exija perfeição de sotaque.'
+  },
+  'spanish-intermediate': {
+    schema: '{"feedback":"...","natural":"...","focus":"..."}',
+    task: 'Atue como coach de espanhol profissional para futebol. Analise a resposta em espanhol no cenário enviado. feedback em português: clareza, gramática e naturalidade, no máximo 3 pontos. natural: uma alternativa espanhola curta que um treinador realmente usaria. focus: uma prioridade para a próxima tentativa.'
+  },
+  'spanish-advanced': {
+    schema: '{"feedback":"...","natural":"...","risk":"..."}',
+    task: 'Atue como coach de espanhol de alto nível para treinador de futebol. Avalie se a resposta é profissional, clara e natural para vestiário, diretoria ou imprensa. feedback em português, objetivo. natural: alternativa em espanhol sem soar traduzida literalmente. risk: indique apenas se houver uma expressão que possa soar ambígua, agressiva ou pouco natural; caso contrário, vazio.'
+  },
   'game-model': {
     schema: '{"message":"...","briefing":"...","avoid":"..."}',
     task: 'Transforme fase, subfase, objetivo, gatilho, funções, critério de sucesso e alternativa em uma mensagem curta e compreensível aos jogadores. Use ações observáveis, preserve a lógica tática e evite excesso de jargão.'
@@ -216,7 +232,7 @@ Você faz parte do CoachVoice AI, plataforma para treinadores de futebol.
 Seja profissional, paciente, respeitoso e aplicável à situação.
 Não invente fatos, não diagnostique estados mentais e não imite pessoas reais.
 Dê poucas melhorias por vez.
-Responda em português do Brasil, salvo quando o exercício pedir inglês.
+Responda em português do Brasil, salvo quando o exercício pedir inglês ou espanhol.
 Siga exatamente o esquema JSON solicitado.
 `.trim();
 
