@@ -1,5 +1,5 @@
-const CACHE='coachvoice-v5.0-dashboard-idiomas';
-const FILES=['/','/index.html','/manifest.webmanifest','/icon-192.png','/icon-512.png','/studio.css','/studio.js','/studio-framing.js','/coachvoice-v33.js','/coachday.css','/coachday-v40.js','/coachprep.css','/coachprep-v42.js','/mentor-v49.css','/mentor-v49.js','/dashboard-v50.css','/dashboard-v50.js','/languages-v50.css','/languages-v50.js'];
+const CACHE='coachvoice-v5.1-dashboard-integrado';
+const FILES=['/','/index.html','/manifest.webmanifest','/icon-192.png','/icon-512.png','/studio.css','/studio.js','/studio-framing.js','/coachvoice-v33.js','/coachday.css','/coachday-v40.js','/coachprep.css','/coachprep-v42.js','/mentor-v51.css','/mentor-v51.js','/dashboard-v51.css','/dashboard-v51.js','/languages-v50.css','/languages-v50.js'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting()));

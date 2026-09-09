@@ -1,3 +1,5 @@
+## CoachVoice AI v5.1 — Dashboard Integrado
+
 # CoachVoice AI v5.0 — Dashboard + Inglês e Espanhol
 
 Versão v5.0: Dashboard diário com tarefas e fechamento do dia, Mentor humanizado com voz manual sem interrupção, CoachDay, CoachPrep, Dia a Dia, entrevistas e treino profissional de inglês e espanhol.

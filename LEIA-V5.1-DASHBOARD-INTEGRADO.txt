@@ -1,0 +1,37 @@
+CoachVoice AI v5.1 — Dashboard Integrado
+
+NOVO
+1. Dashboard → Mentor
+   - Uma tarefa abre uma conversa nova já com o contexto da tarefa.
+   - Ao encerrar a conversa, o resumo/decisão do Mentor fica salvo na própria tarefa.
+   - Depois do encerramento aparece o botão “Marcar tarefa como concluída”.
+   - O usuário decide quando a tarefa foi realmente concluída.
+
+2. Dashboard → módulo certo
+   - Tarefas de espanhol/inglês, entrevistas, oratória, modelo de jogo e treino ganham botão para abrir o módulo relacionado.
+
+3. Pendências do Mentor → amanhã
+   - Depois de encerrar uma conversa com pendência, aparece:
+     “Adicionar pendência ao Dashboard de amanhã”.
+   - Evita criar tarefa duplicada.
+
+4. Revisão semanal
+   - Usa os últimos 7 dias de tarefas, fechamentos e histórico salvo do Mentor.
+   - Mostra avanços, padrões observáveis, pendências, um foco para a próxima semana e idiomas.
+   - Não inventa fatos e não faz diagnóstico pessoal.
+
+PRESERVADO
+- Tarefas, rotinas, notas e dias da v5.0 continuam usando as mesmas chaves locais.
+- Mentor humanizado v4.9.
+- Fala sem interrupção.
+- Inglês + Espanhol.
+- GEMINI_API_KEY não muda.
+
+PUBLICAÇÃO
+1. Enviar o patch da raiz para a raiz do GitHub.
+2. Entrar em api/ e substituir somente coach-ai.js pelo patch da API.
+3. Commit sugerido:
+   Integrar Dashboard Mentor e revisão semanal v5.1
+4. Aguardar Vercel Production — Ready.
+5. Testar:
+   https://coachvoice-ai.vercel.app/?v=51

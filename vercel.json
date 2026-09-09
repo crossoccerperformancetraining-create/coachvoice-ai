@@ -94,7 +94,7 @@
       ]
     },
     {
-      "source": "/mentor-v49.css",
+      "source": "/mentor-v51.css",
       "headers": [
         {
           "key": "Cache-Control",
@@ -103,7 +103,7 @@
       ]
     },
     {
-      "source": "/mentor-v49.js",
+      "source": "/mentor-v51.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -112,7 +112,7 @@
       ]
     },
     {
-      "source": "/dashboard-v50.css",
+      "source": "/dashboard-v51.css",
       "headers": [
         {
           "key": "Cache-Control",
@@ -121,7 +121,7 @@
       ]
     },
     {
-      "source": "/dashboard-v50.js",
+      "source": "/dashboard-v51.js",
       "headers": [
         {
           "key": "Cache-Control",

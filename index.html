@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="CoachVoice">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<title>CoachVoice AI v5.0 — Dashboard + Inglês e Espanhol</title>
+<title>CoachVoice AI v5.1 — Dashboard Integrado</title>
 <style>
 :root{
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -209,8 +209,8 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <link rel="stylesheet" href="/studio.css">
 <link rel="stylesheet" href="/coachday.css?v=40">
 <link rel="stylesheet" href="/coachprep.css?v=46">
-<link rel="stylesheet" href="/mentor-v49.css?v=49">
-<link rel="stylesheet" href="/dashboard-v50.css?v=50">
+<link rel="stylesheet" href="/mentor-v51.css?v=51">
+<link rel="stylesheet" href="/dashboard-v51.css?v=51">
 <link rel="stylesheet" href="/languages-v50.css?v=50">
 </head>
 <body>
@@ -241,7 +241,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <button class="drawer-link" data-page="technical" onclick="go('technical')">⚙ Testes do aparelho</button>
     <button class="drawer-link" data-page="profile" onclick="go('profile')">◉ Preferências</button>
   </nav>
-  <div class="drawer-note">CoachVoice AI v5.0 — Dashboard diário, encerramento do dia, Mentor humanizado e idiomas profissionais em inglês e espanhol. Dados salvos neste aparelho; IA via Gemini quando configurada na Vercel.</div>
+  <div class="drawer-note">CoachVoice AI v5.1 — Dashboard integrado ao Mentor, pendências para amanhã, revisão semanal e idiomas profissionais em inglês e espanhol. Dados salvos neste aparelho; IA via Gemini quando configurada na Vercel.</div>
 </aside>
 <div id="overlay" class="overlay" onclick="closeDrawer()"></div>
 
@@ -324,6 +324,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <span class="eyebrow">DASHBOARD — HOJE</span>
     <h2>Veja o que precisa ser feito, marque o que aconteceu e feche o dia sem carregar tudo na cabeça.</h2>
     <p id="dashboardDate">Hoje</p>
+    <div class="dashboard-integration-note">Agora as tarefas podem abrir o módulo certo e ficar vinculadas ao Mentor. Ao encerrar uma conversa vinculada, o resumo volta para a própria tarefa.</div>
     <div class="dashboard-stats">
       <div class="dashboard-stat"><strong id="dashboardDone">0</strong><small>concluídas</small></div>
       <div class="dashboard-stat"><strong id="dashboardPending">0</strong><small>pendentes</small></div>
@@ -369,7 +370,16 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <article class="dashboard-card">
       <h3>📊 Últimos 7 dias</h3>
       <div id="dashboardWeek" class="dashboard-week"></div>
+      <div class="dashboard-week-actions">
+        <button id="dashboardWeeklyBtn" class="secondary" onclick="dashboardGenerateWeeklyReview()">📊 Gerar revisão semanal</button>
+      </div>
       <p class="sub" style="margin-top:9px">*O histórico antigo de inglês pode não ter data em todas as práticas.</p>
+    </article>
+
+    <article class="dashboard-card full">
+      <h3>🧭 Revisão semanal</h3>
+      <p class="sub">Tarefas, decisões, pendências e registros do Mentor viram uma leitura curta da semana. A IA não inventa fatos nem faz julgamento pessoal.</p>
+      <div id="dashboardWeeklyReview"></div>
     </article>
 
     <article class="dashboard-card full">
@@ -4076,8 +4086,8 @@ checkTechnicalEnvironment();
 <script src="/coachvoice-v33.js?v=40"></script>
 <script src="/coachday-v40.js?v=46"></script>
 <script src="/coachprep-v42.js?v=46"></script>
-<script src="/mentor-v49.js?v=49"></script>
-<script src="/dashboard-v50.js?v=50"></script>
+<script src="/mentor-v51.js?v=51"></script>
+<script src="/dashboard-v51.js?v=51"></script>
 <script src="/languages-v50.js?v=50"></script>
 <script>
 if ('serviceWorker' in navigator) {

@@ -1,0 +1,35 @@
+
+/* CoachVoice AI v5.0 — Dashboard */
+.dashboard-hero{background:linear-gradient(145deg,#0c2343,#173e6b);color:#fff;border-radius:22px;padding:20px;margin-bottom:14px;box-shadow:0 14px 34px rgba(12,35,67,.2)}
+.dashboard-hero .eyebrow{color:#8ee58c}.dashboard-hero h2{margin:7px 0 6px}.dashboard-hero p{color:#d7e4f3;line-height:1.5}
+.dashboard-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}.dashboard-stat{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);border-radius:15px;padding:11px}.dashboard-stat strong,.dashboard-stat small{display:block}.dashboard-stat strong{font-size:1.25rem}.dashboard-stat small{color:#d7e4f3;margin-top:3px}
+.dashboard-progress{height:10px;background:rgba(255,255,255,.14);border-radius:999px;overflow:hidden;margin-top:12px}.dashboard-progress>div{height:100%;background:#68d963;width:0;transition:.25s}
+.dashboard-grid{display:grid;gap:14px}.dashboard-card{background:#fff;border:1px solid #e1e7ef;border-radius:19px;padding:16px;box-shadow:0 8px 22px rgba(15,39,73,.06)}.dashboard-card h3{margin:0 0 10px}.dashboard-card .sub{color:#667085;line-height:1.45;margin:-2px 0 12px}
+.dashboard-form{display:grid;gap:9px}.dashboard-form-row{display:grid;grid-template-columns:1.2fr .9fr;gap:9px}.dashboard-form input,.dashboard-form select,.dashboard-note-input{width:100%;border:1px solid #d5dce5;border-radius:13px;padding:12px;background:#fff;font:inherit}.dashboard-form-actions{display:grid;grid-template-columns:1fr auto;gap:8px}
+.dashboard-attention{display:grid;gap:8px}.dashboard-attention-item{background:#fff7e7;border:1px solid #f0d49d;border-radius:13px;padding:11px}.dashboard-attention-item.high{background:#fff0f0;border-color:#efb5b5}.dashboard-attention-item strong,.dashboard-attention-item small{display:block}.dashboard-attention-item small{color:#667085;margin-top:3px}
+.dashboard-task-list{display:grid;gap:9px}.dashboard-task{border:1px solid #e0e6ee;border-radius:15px;padding:11px;background:#fff}.dashboard-task.done{background:#f2fbf4;border-color:#b9dec3}.dashboard-task-top{display:grid;grid-template-columns:auto 1fr auto;gap:9px;align-items:start}.dashboard-task-check{width:27px;height:27px;border-radius:8px;border:2px solid #98a6b6;background:#fff;display:grid;place-items:center;font-weight:900}.dashboard-task.done .dashboard-task-check{background:#42ad50;border-color:#42ad50;color:#fff}.dashboard-task-title{font-weight:850;color:#1d3553}.dashboard-task.done .dashboard-task-title{text-decoration:line-through;color:#667085}.dashboard-task-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px}.dashboard-chip{font-size:.68rem;border-radius:999px;padding:4px 7px;background:#eef3f8;color:#4b6077}.dashboard-chip.high{background:#ffe4e4;color:#9f1d1d}.dashboard-chip.low{background:#f3f4f6;color:#667085}.dashboard-task-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.dashboard-task-actions button{border:1px solid #d6dde6;background:#fff;border-radius:10px;padding:7px 9px;font:inherit;font-size:.78rem}.dashboard-task-note{margin-top:8px;padding-top:8px;border-top:1px dashed #d8dfe8}.dashboard-task-note textarea{width:100%;min-height:58px;border:1px solid #d8dfe8;border-radius:10px;padding:9px;font:inherit}
+.dashboard-empty{padding:18px;text-align:center;color:#667085;border:1px dashed #cfd7e2;border-radius:14px;background:#fafbfc}.dashboard-close-box{background:#f5fbf6;border:1px solid #b9dec3;border-radius:16px;padding:14px;line-height:1.5}.dashboard-close-box h4{margin:0 0 7px}.dashboard-close-grid{display:grid;gap:8px;margin-top:10px}.dashboard-close-row{background:#fff;border:1px solid #dfe8e2;border-radius:12px;padding:10px}.dashboard-close-row strong{display:block;color:#264d34;margin-bottom:3px}
+.dashboard-week{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.dashboard-week div{background:#f7f9fc;border-radius:12px;padding:10px;text-align:center}.dashboard-week strong,.dashboard-week small{display:block}.dashboard-week small{color:#667085;margin-top:3px;font-size:.7rem}
+@media(min-width:780px){.dashboard-grid{grid-template-columns:1.25fr .75fr}.dashboard-card.full{grid-column:1/-1}}
+@media(max-width:520px){.dashboard-stats{grid-template-columns:repeat(3,1fr)}.dashboard-form-row{grid-template-columns:1fr}.dashboard-week{grid-template-columns:repeat(3,1fr)}}
+
+
+/* CoachVoice AI v5.1 — Dashboard integrado */
+.dashboard-chip.mentor{background:#eaf3ff;color:#285c91}
+.dashboard-mentor-outcome{margin-top:10px;padding:10px 11px;border-radius:12px;background:#f3f8ff;border:1px solid #cfdef1}
+.dashboard-mentor-outcome strong{display:block;color:#214b78;margin-bottom:4px}
+.dashboard-mentor-outcome p{margin:0;color:#425d78;line-height:1.45}
+.dashboard-mentor-outcome small{display:block;margin-top:5px;color:#52677c}
+.dashboard-week-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.dashboard-weekly-review{margin-top:12px;border:1px solid #dce5ef;background:#f8fafc;border-radius:16px;padding:13px}
+.dashboard-weekly-head{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;margin-bottom:9px}
+.dashboard-weekly-head span,.dashboard-weekly-head strong{display:block}
+.dashboard-weekly-head span{font-size:.68rem;letter-spacing:.06em;color:#667085;font-weight:850}
+.dashboard-weekly-head strong{margin-top:3px;color:#1d3553}
+.dashboard-review-section{padding:9px 0;border-top:1px solid #e3e9f0}
+.dashboard-review-section:first-of-type{border-top:0}
+.dashboard-review-section>strong{display:block;color:#244461;margin-bottom:4px}
+.dashboard-review-section p{margin:0;color:#506276;line-height:1.45}
+.dashboard-review-section ul{margin:5px 0 0;padding-left:20px;color:#506276}
+.dashboard-review-section li{margin:3px 0;line-height:1.4}
+.dashboard-integration-note{background:#eef7ff;border:1px solid #c8e0f5;border-radius:14px;padding:11px 12px;color:#345a7f;line-height:1.45;margin-bottom:12px}
