@@ -1,0 +1,30 @@
+CoachVoice AI v5.1.1 — Áudio Resiliente
+
+CORREÇÃO PRINCIPAL
+- /api/transcribe não usa mais a antiga chamada de Interactions para enviar áudio inline.
+- A transcrição agora usa generateContent com inline_data.
+- Mantém a mesma GEMINI_API_KEY.
+- Corrigido audio/webm: agora é tratado como áudio, não vídeo.
+- Compatibilidade melhor com audio/mp4 do iPhone (normalizado como M4A).
+- Tenta mais de um modelo Gemini se um modelo não responder.
+- Gravações novas usam bitrate menor para reduzir falhas de upload.
+
+NÃO PERDE MAIS A FALA
+- Se o Mentor falhar ao transcrever, o áudio fica preservado.
+- Aparece “Tentar transcrever novamente”.
+- Você não precisa repetir toda a fala.
+- O mesmo retry foi adicionado à gravação universal usada em entrevistas/idiomas.
+
+PUBLICAÇÃO
+1. Envie o patch da raiz para a raiz do GitHub.
+2. Entre em api/ e substitua SOMENTE transcribe.js pelo patch da API.
+3. Não altere coach-ai.js nem GEMINI_API_KEY.
+4. Commit sugerido:
+   Corrigir transcrição de áudio v5.1.1
+5. Aguarde Vercel Production — Ready.
+6. Teste:
+   https://coachvoice-ai.vercel.app/?v=511
+
+TESTE RECOMENDADO
+- Mentor → Falar sem interrupção → fale por 15–30 s → Finalizar.
+- Depois teste uma resposta por voz em Entrevistas ou Espanhol.

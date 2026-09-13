@@ -209,7 +209,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <link rel="stylesheet" href="/studio.css">
 <link rel="stylesheet" href="/coachday.css?v=40">
 <link rel="stylesheet" href="/coachprep.css?v=46">
-<link rel="stylesheet" href="/mentor-v51.css?v=51">
+<link rel="stylesheet" href="/mentor-v511.css?v=511">
 <link rel="stylesheet" href="/dashboard-v51.css?v=51">
 <link rel="stylesheet" href="/languages-v50.css?v=50">
 </head>
@@ -970,6 +970,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
     <div class="mentor42-actions mentor47-conversation-actions">
       <button id="mentor481MainMicBtn" class="secondary" onclick="mentor42Capture(true)">🎙 Falar sem interrupção</button>
+      <button id="mentor511RetryMain" class="secondary hidden" onclick="mentor511RetryTranscription()">↻ Tentar transcrever novamente</button>
       <button id="mentor49SendBtn" class="primary" onclick="mentor42Send()">Enviar</button>
       <button class="mentor49-conclude" onclick="mentor49Conclude()">✅ Quero uma conclusão</button>
       <button class="mentor49-end" onclick="mentor49PrepareEndConversation()">🔴 Encerrar conversa</button>
@@ -1133,6 +1134,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
       <div class="mentor44-call-options">
         <label><input id="mentor44AutoConversation" type="checkbox" onchange="mentor44SaveAutoConversation()"> ⚡ Modo automático (opcional) — pode responder quando detectar uma pausa</label>
         <button onclick="mentor44RepeatLastAnswer()">🔊 Ouvir resposta</button>
+        <button id="mentor511RetryCall" class="hidden" onclick="mentor511RetryTranscription()">↻ Tentar transcrever novamente</button>
       </div>
 
       <div id="mentor43VideoStage" class="mentor43-video-stage hidden">
@@ -1171,7 +1173,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
       </div>
 
       <div id="mentor49CallClosurePanel" class="mentor49-closure-panel mentor49-call-closure hidden"></div>
-      <p id="mentor43CallNote" class="mentor42-call-note"><strong>Sem interrupção:</strong> toque 🎙 para começar, fale com pausas normalmente e toque ⏹ somente quando terminar. Quando quiser parar de explorar o assunto, use ✅ Conclusão ou 🔴 Encerrar.</p>
+      <p id="mentor43CallNote" class="mentor42-call-note"><strong>Sem interrupção:</strong> toque 🎙 para começar, fale com pausas normalmente e toque ⏹ somente quando terminar. Se a internet/transcrição falhar, sua última gravação fica preservada para tentar de novo.</p>
       <p id="mentor43AvatarNote" class="mentor43-avatar-note hidden">Avatar visual animado: não é vídeo humano real e não analisa emoções ou expressões.</p>
     </div>
   </div>
@@ -2315,12 +2317,13 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <p id="voiceCaptureStatus" class="voice-capture-status">Preparando o microfone...</p>
     <audio id="voiceCapturePlayback" controls style="width:100%;display:none"></audio>
     <div id="voiceFallbackBox" class="voice-fallback hidden">
-      <label class="label" for="voiceFallbackText">A gravação funcionou, mas a transcrição automática não ficou disponível.</label>
+      <label class="label" for="voiceFallbackText">A gravação ficou salva. Se a transcrição falhar, você pode tentar novamente sem precisar repetir a fala.</label>
       <textarea id="voiceFallbackText" class="text-input" placeholder="Digite a frase que você falou para continuar o exercício."></textarea>
       <button class="primary" style="margin-top:8px" onclick="useVoiceFallbackText()">Usar este texto</button>
     </div>
     <div class="voice-capture-actions" style="margin-top:12px">
       <button id="voiceStopBtn" class="primary" onclick="stopUniversalVoiceCapture()">⏹ Parar e transcrever</button>
+      <button id="voiceRetryBtn" class="secondary hidden" onclick="retryUniversalVoiceTranscription()">↻ Tentar transcrever novamente</button>
       <button id="voiceCancelBtn" class="secondary" onclick="cancelUniversalVoiceCapture()">Cancelar</button>
       <button id="voiceCloseBtn" class="outline full hidden" onclick="closeVoiceCapture()">Fechar</button>
     </div>
@@ -2854,10 +2857,20 @@ function preferredAudioMimeType(){
   return types.find(type=>window.MediaRecorder&&MediaRecorder.isTypeSupported(type))||'';
 }
 function formatVoiceTime(seconds){const v=Math.max(0,Number(seconds)||0),m=Math.floor(v/60),s=v%60;return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;}
+function createVoiceMediaRecorder(stream,mime=''){
+  const rich={audioBitsPerSecond:64000};
+  if(mime)rich.mimeType=mime;
+  try{return new MediaRecorder(stream,rich);}
+  catch{
+    try{return new MediaRecorder(stream,mime?{mimeType:mime}:{})}
+    catch{return new MediaRecorder(stream);}
+  }
+}
 function openVoiceCaptureSheet(){
   document.getElementById('voiceCaptureOverlay').classList.add('open');
   document.getElementById('voiceFallbackBox').classList.add('hidden');
   document.getElementById('voiceCloseBtn').classList.add('hidden');
+  document.getElementById('voiceRetryBtn')?.classList.add('hidden');
   document.getElementById('voiceStopBtn').classList.remove('hidden');
   document.getElementById('voiceCancelBtn').classList.remove('hidden');
   document.getElementById('voiceCapturePlayback').style.display='none';
@@ -2880,7 +2893,7 @@ async function startUniversalVoiceCapture(options={}){
     universalVoiceStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
     if(!window.MediaRecorder){stopUniversalVoiceTracks();startRecognitionOnlyFallback();return;}
     const mime=preferredAudioMimeType();
-    universalVoiceRecorder=new MediaRecorder(universalVoiceStream,mime?{mimeType:mime}:{});
+    universalVoiceRecorder=createVoiceMediaRecorder(universalVoiceStream,mime);
     universalVoiceRecorder.ondataavailable=event=>{if(event.data&&event.data.size)universalVoiceChunks.push(event.data);};
     universalVoiceRecorder.onstop=finalizeUniversalVoiceCapture;
     universalVoiceRecorder.start(500);
@@ -2925,17 +2938,73 @@ function stopUniversalVoiceCapture(){
   if(universalVoiceRecorder&&universalVoiceRecorder.state==='recording')universalVoiceRecorder.stop();
   else if(universalVoiceRecognizedText)deliverUniversalVoiceText(universalVoiceRecognizedText);else showVoiceManualFallback();
 }
+async function transcribeUniversalVoiceBlob(){
+  if(!universalVoiceBlob?.size){
+    setVoiceCaptureStatus('Não encontrei a gravação para reenviar.');
+    showVoiceManualFallback(false);
+    return;
+  }
+
+  const retry=document.getElementById('voiceRetryBtn');
+  if(retry){retry.disabled=true;retry.textContent='⏳ Tentando novamente...';}
+  setVoiceCaptureStatus('Enviando a gravação para transcrição...');
+
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),45000);
+
+  try{
+    const response=await fetch(`/api/transcribe?lang=${encodeURIComponent(universalVoiceOptions.lang||'pt-BR')}`,{
+      method:'POST',
+      headers:{'Content-Type':universalVoiceBlob.type||'application/octet-stream'},
+      body:universalVoiceBlob,
+      signal:controller.signal
+    });
+    const payload=await response.json().catch(()=>({}));
+    if(!response.ok||!String(payload.text||'').trim()){
+      const error=new Error(payload.error||'Transcrição indisponível');
+      error.detail=payload.detail||'';
+      throw error;
+    }
+    deliverUniversalVoiceText(String(payload.text).trim());
+  }catch(error){
+    console.info('Transcrição do servidor indisponível:',error);
+    const timedOut=error?.name==='AbortError';
+    setVoiceCaptureStatus(
+      timedOut
+        ? 'A transcrição demorou demais. O áudio foi preservado; você pode tentar novamente.'
+        : 'O áudio foi preservado. Não consegui transcrever agora; tente novamente sem precisar gravar de novo.'
+    );
+    showVoiceManualFallback(true);
+  }finally{
+    clearTimeout(timeout);
+    if(retry){retry.disabled=false;retry.textContent='↻ Tentar transcrever novamente';}
+  }
+}
+
+async function retryUniversalVoiceTranscription(){
+  document.getElementById('voiceFallbackBox')?.classList.add('hidden');
+  document.getElementById('voiceRetryBtn')?.classList.remove('hidden');
+  await transcribeUniversalVoiceBlob();
+}
+
 async function finalizeUniversalVoiceCapture(){
   clearInterval(universalVoiceTimer);universalVoiceTimer=null;
   const mime=universalVoiceRecorder?.mimeType||universalVoiceChunks[0]?.type||'audio/webm';
   universalVoiceBlob=new Blob(universalVoiceChunks,{type:mime});stopUniversalVoiceTracks();
-  const player=document.getElementById('voiceCapturePlayback');if(universalVoiceUrl)URL.revokeObjectURL(universalVoiceUrl);universalVoiceUrl=URL.createObjectURL(universalVoiceBlob);player.src=universalVoiceUrl;player.style.display='block';
-  if(universalVoiceRecognizedText.trim()){setVoiceCaptureStatus('Fala reconhecida. Inserindo o texto...');setTimeout(()=>deliverUniversalVoiceText(universalVoiceRecognizedText.trim()),350);return;}
-  setVoiceCaptureStatus('Gravação concluída. Tentando transcrever...');
-  try{
-    const response=await fetch(`/api/transcribe?lang=${encodeURIComponent(universalVoiceOptions.lang||'pt-BR')}`,{method:'POST',headers:{'Content-Type':universalVoiceBlob.type||'application/octet-stream'},body:universalVoiceBlob});
-    const payload=await response.json().catch(()=>({}));if(!response.ok||!payload.text)throw new Error(payload.error||'Transcrição indisponível');deliverUniversalVoiceText(payload.text.trim());
-  }catch(error){console.info('Transcrição do servidor indisponível:',error);setVoiceCaptureStatus('O áudio foi gravado, mas a transcrição automática não está disponível. Ouça e digite abaixo para continuar.');showVoiceManualFallback();}
+  const player=document.getElementById('voiceCapturePlayback');
+  if(universalVoiceUrl)URL.revokeObjectURL(universalVoiceUrl);
+  universalVoiceUrl=URL.createObjectURL(universalVoiceBlob);
+  player.src=universalVoiceUrl;
+  player.style.display='block';
+
+  if(universalVoiceRecognizedText.trim()){
+    setVoiceCaptureStatus('Fala reconhecida. Inserindo o texto...');
+    setTimeout(()=>deliverUniversalVoiceText(universalVoiceRecognizedText.trim()),350);
+    return;
+  }
+
+  setVoiceCaptureStatus('Gravação concluída. Transcrevendo...');
+  await transcribeUniversalVoiceBlob();
 }
 function deliverUniversalVoiceText(text){
   const value=String(text||'').trim();if(!value){showVoiceManualFallback();return;}
@@ -2943,7 +3012,13 @@ function deliverUniversalVoiceText(text){
   setVoiceCaptureStatus('✓ Texto inserido.');setTimeout(closeVoiceCapture,400);
 }
 function useVoiceFallbackText(){const value=document.getElementById('voiceFallbackText').value.trim();if(!value){toast('Digite uma frase para continuar.');return;}deliverUniversalVoiceText(value);}
-function showVoiceManualFallback(){document.getElementById('voiceFallbackBox').classList.remove('hidden');document.getElementById('voiceStopBtn').classList.add('hidden');document.getElementById('voiceCancelBtn').classList.add('hidden');document.getElementById('voiceCloseBtn').classList.remove('hidden');}
+function showVoiceManualFallback(canRetry=false){
+  document.getElementById('voiceFallbackBox').classList.remove('hidden');
+  document.getElementById('voiceStopBtn').classList.add('hidden');
+  document.getElementById('voiceCancelBtn').classList.add('hidden');
+  document.getElementById('voiceRetryBtn')?.classList.toggle('hidden',!canRetry||!universalVoiceBlob?.size);
+  document.getElementById('voiceCloseBtn').classList.remove('hidden');
+}
 function cancelUniversalVoiceCapture(){if(universalVoiceRecorder&&universalVoiceRecorder.state==='recording'){try{universalVoiceRecorder.onstop=null;universalVoiceRecorder.stop();}catch{}}if(universalVoiceRecognition){try{universalVoiceRecognition.abort();}catch{}universalVoiceRecognition=null;}stopUniversalVoiceTracks();closeVoiceCapture();}
 function stopUniversalVoiceTracks(){if(universalVoiceStream){universalVoiceStream.getTracks().forEach(track=>track.stop());universalVoiceStream=null;}}
 function closeVoiceCapture(){clearInterval(universalVoiceTimer);universalVoiceTimer=null;stopUniversalVoiceTracks();document.getElementById('voiceCaptureOverlay').classList.remove('open');document.getElementById('voiceStopBtn').disabled=false;universalVoiceCallback=null;universalVoiceOptions={};}
@@ -4086,7 +4161,7 @@ checkTechnicalEnvironment();
 <script src="/coachvoice-v33.js?v=40"></script>
 <script src="/coachday-v40.js?v=46"></script>
 <script src="/coachprep-v42.js?v=46"></script>
-<script src="/mentor-v51.js?v=51"></script>
+<script src="/mentor-v511.js?v=511"></script>
 <script src="/dashboard-v51.js?v=51"></script>
 <script src="/languages-v50.js?v=50"></script>
 <script>

@@ -94,7 +94,7 @@
       ]
     },
     {
-      "source": "/mentor-v51.css",
+      "source": "/mentor-v511.css",
       "headers": [
         {
           "key": "Cache-Control",
@@ -103,7 +103,7 @@
       ]
     },
     {
-      "source": "/mentor-v51.js",
+      "source": "/mentor-v511.js",
       "headers": [
         {
           "key": "Cache-Control",
