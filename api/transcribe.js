@@ -1,6 +1,7 @@
 export const config = { api: { bodyParser: false } };
 
-const MAX_AUDIO_BYTES = 4 * 1024 * 1024;
+const MAX_AUDIO_BYTES = 10 * 1024 * 1024;
+const ROUTE_VERSION = '5.1.1-generate-content';
 
 function sendJson(res, status, payload) {
   res.statusCode = status;
@@ -12,6 +13,7 @@ function sendJson(res, status, payload) {
 async function readBody(req) {
   if (Buffer.isBuffer(req.body)) return req.body;
   if (req.body instanceof Uint8Array) return Buffer.from(req.body);
+
   const chunks = [];
   let size = 0;
   for await (const chunk of req) {
@@ -23,47 +25,100 @@ async function readBody(req) {
   return Buffer.concat(chunks);
 }
 
-function extractGeminiText(data) {
-  if (typeof data?.output_text === 'string' && data.output_text.trim()) {
-    return data.output_text.trim();
-  }
+function normalizeMime(value) {
+  const raw = String(value || '').toLowerCase().split(';')[0].trim();
+
+  // Safari/iPhone costuma gravar AAC dentro de MP4.
+  if (raw === 'audio/mp4' || raw === 'video/mp4' || raw === 'audio/x-m4a') return 'audio/m4a';
+
+  // Gravação somente de áudio em WebM deve continuar sendo enviada como áudio.
+  if (raw === 'video/webm' || raw.includes('webm')) return 'audio/webm';
+
+  if (raw.includes('ogg')) return 'audio/ogg';
+  if (raw.includes('wav')) return 'audio/wav';
+  if (raw.includes('mpeg') || raw.includes('mp3')) return 'audio/mpeg';
+  if (raw.includes('aac')) return 'audio/aac';
+  if (raw.includes('aiff')) return 'audio/aiff';
+  if (raw.includes('flac')) return 'audio/flac';
+  if (raw.includes('opus')) return 'audio/opus';
+
+  return raw.startsWith('audio/') ? raw : 'audio/m4a';
+}
+
+function extractGenerateContentText(data) {
   const pieces = [];
-  for (const step of data?.steps || []) {
-    if (step?.type !== 'model_output') continue;
-    for (const content of step?.content || []) {
-      if (content?.type === 'text' && typeof content?.text === 'string') pieces.push(content.text);
+  for (const candidate of data?.candidates || []) {
+    for (const part of candidate?.content?.parts || []) {
+      if (typeof part?.text === 'string' && part.text.trim()) pieces.push(part.text.trim());
     }
   }
   return pieces.join('\n').trim();
 }
 
-function geminiMediaBlock(contentType, base64) {
-  const type = String(contentType || '').toLowerCase().split(';')[0];
+function uniqueModels() {
+  const configured = process.env.GEMINI_TRANSCRIBE_MODEL || '';
+  return [...new Set([
+    configured,
+    'gemini-3.1-flash-lite',
+    'gemini-3.8-flash',
+    'gemini-3.7-flash'
+  ].filter(Boolean))];
+}
 
-  if (type.includes('webm')) {
-    return { type: 'video', data: base64, mime_type: 'video/webm' };
-  }
-  if (type.includes('mp4') || type.includes('m4a')) {
-    return { type: 'audio', data: base64, mime_type: 'audio/m4a' };
-  }
-  if (type.includes('wav')) return { type: 'audio', data: base64, mime_type: 'audio/wav' };
-  if (type.includes('mpeg') || type.includes('mp3')) return { type: 'audio', data: base64, mime_type: 'audio/mp3' };
-  if (type.includes('aiff')) return { type: 'audio', data: base64, mime_type: 'audio/aiff' };
-  if (type.includes('aac')) return { type: 'audio', data: base64, mime_type: 'audio/aac' };
-  if (type.includes('ogg')) return { type: 'audio', data: base64, mime_type: 'audio/ogg' };
-  if (type.includes('flac')) return { type: 'audio', data: base64, mime_type: 'audio/flac' };
-  return null;
+async function generateTranscript({ apiKey, model, mimeType, base64, language, authMode }) {
+  const baseUrl = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
+  const url = authMode === 'query'
+    ? `${baseUrl}?key=${encodeURIComponent(apiKey)}`
+    : baseUrl;
+
+  const headers = { 'Content-Type': 'application/json' };
+  if (authMode === 'header') headers['x-goog-api-key'] = apiKey;
+
+  const prompt = [
+    `Transcreva fielmente esta fala em ${language}.`,
+    'Retorne somente a transcrição, sem comentários, sem aspas e sem explicações.',
+    'Preserve nomes próprios, termos de futebol e mudanças de idioma quando forem audíveis.',
+    'Use pontuação natural, mas não resuma nem invente palavras.'
+  ].join(' ');
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      contents: [{
+        role: 'user',
+        parts: [
+          {
+            inline_data: {
+              mime_type: mimeType,
+              data: base64
+            }
+          },
+          { text: prompt }
+        ]
+      }],
+      generationConfig: {
+        temperature: 0,
+        maxOutputTokens: 4096
+      }
+    })
+  });
+
+  const data = await response.json().catch(() => ({}));
+  return { response, data, text: extractGenerateContentText(data) };
 }
 
 export default async function handler(req, res) {
   const apiKey = process.env.GEMINI_API_KEY;
-  const model = process.env.GEMINI_TRANSCRIBE_MODEL || process.env.GEMINI_MODEL || 'gemini-3.1-flash-lite';
+  const models = uniqueModels();
 
   if (req.method === 'GET') {
     return sendJson(res, 200, {
       configured: Boolean(apiKey),
       provider: 'gemini',
-      model
+      routeVersion: ROUTE_VERSION,
+      model: models[0],
+      fallbackModels: models.slice(1)
     });
   }
 
@@ -74,57 +129,89 @@ export default async function handler(req, res) {
 
   if (!apiKey) {
     return sendJson(res, 503, {
-      error: 'GEMINI_API_KEY ainda não foi configurada. O reconhecimento direto do navegador continua disponível.'
+      error: 'GEMINI_API_KEY ainda não foi configurada para a transcrição.'
     });
   }
 
   try {
     const audio = await readBody(req);
     if (!audio.length) return sendJson(res, 400, { error: 'O áudio recebido está vazio.' });
-    if (audio.length > MAX_AUDIO_BYTES) return sendJson(res, 413, { error: 'O áudio está muito grande.' });
-
-    const contentType = String(req.headers['content-type'] || 'audio/mp4').split(';')[0];
-    const media = geminiMediaBlock(contentType, audio.toString('base64'));
-    if (!media) {
-      return sendJson(res, 415, {
-        error: `Formato de áudio não suportado pelo fallback Gemini: ${contentType}`
-      });
+    if (audio.length > MAX_AUDIO_BYTES) {
+      return sendJson(res, 413, { error: 'O áudio ficou grande demais. Grave uma fala um pouco mais curta.' });
     }
 
+    const mimeType = normalizeMime(req.headers['content-type']);
     const language = String(req.query?.lang || 'pt-BR');
-    const prompt = `Transcreva fielmente esta fala em ${language}. Retorne somente a transcrição, sem explicações. Preserve termos de futebol, nomes próprios e vícios de linguagem quando forem audíveis.`;
+    const base64 = audio.toString('base64');
 
-    const response = await fetch('https://generativelanguage.googleapis.com/v1beta/interactions', {
-      method: 'POST',
-      headers: {
-        'x-goog-api-key': apiKey,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model,
-        input: [
-          { type: 'text', text: prompt },
-          media
-        ]
-      })
-    });
+    let lastStatus = 502;
+    let lastMessage = 'A transcrição Gemini não respondeu.';
 
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) {
-      console.error('Gemini transcription error:', data);
-      return sendJson(res, 502, {
-        error: data?.error?.message || 'A transcrição Gemini não respondeu.'
-      });
+    // Primeiro usa ?key=, documentado para generateContent. Se houver problema,
+    // tenta também x-goog-api-key antes de mudar de modelo.
+    for (const model of models) {
+      for (const authMode of ['query', 'header']) {
+        try {
+          const { response, data, text } = await generateTranscript({
+            apiKey, model, mimeType, base64, language, authMode
+          });
+
+          if (response.ok && text) {
+            return sendJson(res, 200, {
+              text,
+              provider: 'gemini',
+              model,
+              routeVersion: ROUTE_VERSION
+            });
+          }
+
+          lastStatus = response.status || 502;
+          lastMessage =
+            data?.error?.message ||
+            (response.ok ? 'A transcrição retornou um texto vazio.' : 'A transcrição Gemini não respondeu.');
+
+          console.error('Gemini transcription attempt failed:', {
+            status: lastStatus,
+            model,
+            authMode,
+            mimeType,
+            message: lastMessage
+          });
+
+          // Erros de quota/limite não melhoram trocando apenas a forma de autenticação.
+          if (lastStatus === 429) break;
+        } catch (error) {
+          lastMessage = error?.message || 'Falha de rede ao chamar o Gemini.';
+          console.error('Gemini transcription request error:', {
+            model, authMode, mimeType, message: lastMessage
+          });
+        }
+      }
     }
 
-    const text = extractGeminiText(data);
-    if (!text) return sendJson(res, 502, { error: 'A transcrição retornou um texto vazio.' });
-    return sendJson(res, 200, { text });
+    const clientStatus =
+      lastStatus === 429 ? 429 :
+      lastStatus === 401 || lastStatus === 403 ? 502 :
+      lastStatus >= 400 && lastStatus < 500 ? 422 :
+      502;
+
+    return sendJson(res, clientStatus, {
+      error: lastStatus === 429
+        ? 'O serviço de transcrição atingiu o limite temporário. Tente novamente em instantes.'
+        : 'Não foi possível transcrever este áudio agora. A gravação pode ser reenviada sem você falar novamente.',
+      detail: lastMessage,
+      routeVersion: ROUTE_VERSION
+    });
   } catch (error) {
     console.error('Gemini transcription route error:', error);
     if (error?.message === 'AUDIO_TOO_LARGE') {
-      return sendJson(res, 413, { error: 'O áudio ultrapassou o limite desta versão.' });
+      return sendJson(res, 413, {
+        error: 'O áudio ficou grande demais. Grave uma fala um pouco mais curta.'
+      });
     }
-    return sendJson(res, 500, { error: 'Não foi possível processar o áudio.' });
+    return sendJson(res, 500, {
+      error: 'Não foi possível processar o áudio.',
+      routeVersion: ROUTE_VERSION
+    });
   }
 }
