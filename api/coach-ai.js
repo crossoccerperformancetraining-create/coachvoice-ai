@@ -9,15 +9,11 @@ function sendJson(res, status, payload) {
 
 
 function extractGeminiText(data) {
-  if (typeof data?.output_text === 'string' && data.output_text.trim()) {
-    return data.output_text.trim();
-  }
   const pieces = [];
-  for (const step of data?.steps || []) {
-    if (step?.type !== 'model_output') continue;
-    for (const content of step?.content || []) {
-      if (content?.type === 'text' && typeof content?.text === 'string') {
-        pieces.push(content.text);
+  for (const candidate of data?.candidates || []) {
+    for (const part of candidate?.content?.parts || []) {
+      if (typeof part?.text === 'string' && part.text.trim()) {
+        pieces.push(part.text.trim());
       }
     }
   }
@@ -34,33 +30,107 @@ function cleanJson(raw) {
   );
 }
 
-async function callGemini({ apiKey, model, input, systemInstruction = '', schema = null }) {
-  const body = {
-    model,
-    input,
-    system_instruction: systemInstruction
-  };
-  if (schema) {
-    body.response_format = {
-      type: 'text',
-      mime_type: 'application/json',
-      schema
-    };
-  }
+function uniqueModels(primary) {
+  return [...new Set([
+    primary,
+    'gemini-3.1-flash-lite',
+    'gemini-3.7-flash'
+  ].filter(Boolean))];
+}
 
-  const response = await fetch('https://generativelanguage.googleapis.com/v1beta/interactions', {
+async function callGenerateContent({ apiKey, model, input, systemInstruction = '', authMode = 'header' }) {
+  const base = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
+  const url = authMode === 'query'
+    ? `${base}?key=${encodeURIComponent(apiKey)}`
+    : base;
+
+  const headers = { 'Content-Type': 'application/json' };
+  if (authMode === 'header') headers['x-goog-api-key'] = apiKey;
+
+  const response = await fetch(url, {
     method: 'POST',
-    headers: {
-      'x-goog-api-key': apiKey,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body)
+    headers,
+    body: JSON.stringify({
+      system_instruction: {
+        parts: [{ text: systemInstruction }]
+      },
+      contents: [{
+        role: 'user',
+        parts: [{ text: input }]
+      }],
+      generationConfig: {
+        responseMimeType: 'application/json',
+        temperature: 0.35,
+        maxOutputTokens: 4096
+      }
+    })
   });
 
   const data = await response.json().catch(() => ({}));
   return { response, data };
 }
 
+async function callGemini({ apiKey, model, input, systemInstruction = '' }) {
+  const models = uniqueModels(model);
+  let last = null;
+
+  // generateContent aceita API key. Tentamos primeiro o header oficial;
+  // se houver uma incompatibilidade de autenticação, tentamos ?key=.
+  for (const candidateModel of models) {
+    for (const authMode of ['header', 'query']) {
+      try {
+        const result = await callGenerateContent({
+          apiKey,
+          model: candidateModel,
+          input,
+          systemInstruction,
+          authMode
+        });
+
+        if (result.response.ok) {
+          return { ...result, modelUsed: candidateModel, authMode };
+        }
+
+        last = { ...result, modelUsed: candidateModel, authMode };
+
+        const status = result.response.status;
+        const message = String(result.data?.error?.message || '');
+
+        console.error('Gemini Coach AI attempt failed:', {
+          status,
+          model: candidateModel,
+          authMode,
+          code: result.data?.error?.status || result.data?.error?.code || '',
+          message
+        });
+
+        // Quota não melhora trocando autenticação/modelo muitas vezes.
+        if (status === 429) return last;
+
+        // Se o modelo não existir/estiver indisponível, passa para o próximo.
+        if (status === 404 || /model|not found|not supported/i.test(message)) break;
+      } catch (error) {
+        last = {
+          response: { ok: false, status: 502 },
+          data: { error: { message: error?.message || 'Falha de rede ao chamar Gemini.', status: 'NETWORK_ERROR' } },
+          modelUsed: candidateModel,
+          authMode
+        };
+        console.error('Gemini Coach AI network attempt failed:', {
+          model: candidateModel,
+          authMode,
+          message: error?.message || String(error)
+        });
+      }
+    }
+  }
+
+  return last || {
+    response: { ok: false, status: 502 },
+    data: { error: { message: 'O Gemini não respondeu.', status: 'GEMINI_ERROR' } },
+    modelUsed: model
+  };
+}
 
 const modeInstructions = {
   health: {
@@ -204,6 +274,7 @@ export default async function handler(req, res) {
       configured: Boolean(apiKey),
       exactKeyPresent: Object.prototype.hasOwnProperty.call(process.env, 'GEMINI_API_KEY'),
       model,
+      routeVersion: '5.1.2-generate-content',
       environment: process.env.VERCEL_ENV || 'unknown'
     });
   }
@@ -229,7 +300,7 @@ export default async function handler(req, res) {
     return sendJson(res, 400, { error: 'Conteúdo muito longo.' });
   }
 
-  const schema = cleanJson(config.schema);
+  const expectedShape = cleanJson(config.schema);
 
   const systemInstruction = `
 Você faz parte do CoachVoice AI, plataforma para treinadores de futebol.
@@ -242,24 +313,30 @@ Siga exatamente o esquema JSON solicitado.
 
   const input = `${config.task}
 
+FORMATO OBRIGATÓRIO:
+Retorne SOMENTE um objeto JSON válido.
+Use exatamente estas chaves/estrutura como referência:
+${JSON.stringify(expectedShape)}
+
 Dados enviados:
 ${payloadText}`;
 
   try {
-    const { response, data } = await callGemini({
+    const { response, data, modelUsed } = await callGemini({
       apiKey,
       model,
       systemInstruction,
-      input,
-      schema
+      input
     });
 
     if (!response.ok) {
       console.error('Gemini Coach AI error:', data);
-      return sendJson(res, 502, {
+      const upstreamStatus = response.status || 502;
+      return sendJson(res, upstreamStatus === 429 ? 429 : 502, {
         error: data?.error?.message || 'O Gemini não respondeu.',
         code: data?.error?.status || data?.error?.code || 'gemini_error',
-        upstreamStatus: response.status
+        upstreamStatus,
+        modelUsed
       });
     }
 
