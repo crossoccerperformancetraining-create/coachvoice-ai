@@ -209,7 +209,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <link rel="stylesheet" href="/studio.css">
 <link rel="stylesheet" href="/coachday.css?v=40">
 <link rel="stylesheet" href="/coachprep.css?v=46">
-<link rel="stylesheet" href="/mentor-v511.css?v=511">
+<link rel="stylesheet" href="/mentor-v512.css?v=512">
 <link rel="stylesheet" href="/dashboard-v51.css?v=51">
 <link rel="stylesheet" href="/languages-v50.css?v=50">
 </head>
@@ -3045,12 +3045,15 @@ function saveEnglishSession(item,response,score){
 
 
 async function callCoachAI(mode,payload={}){
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),45000);
   try{
     const response=await fetch('/api/coach-ai',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       cache:'no-store',
-      body:JSON.stringify({mode,payload})
+      body:JSON.stringify({mode,payload}),
+      signal:controller.signal
     });
     const data=await response.json().catch(()=>({}));
     if(!response.ok){
@@ -3058,7 +3061,8 @@ async function callCoachAI(mode,payload={}){
         __error:true,
         __status:response.status,
         __code:data.code||'api_error',
-        __message:data.error||'A IA não respondeu.'
+        __message:data.error||'A IA não respondeu.',
+        __model:data.modelUsed||''
       };
     }
     return data;
@@ -3067,9 +3071,13 @@ async function callCoachAI(mode,payload={}){
     return {
       __error:true,
       __status:0,
-      __code:'network_error',
-      __message:'Não foi possível conectar à API do Mentor.'
+      __code:error?.name==='AbortError'?'timeout':'network_error',
+      __message:error?.name==='AbortError'
+        ?'O Mentor demorou demais para responder. Tente a mesma resposta novamente.'
+        :'Não foi possível conectar à API do Mentor.'
     };
+  }finally{
+    clearTimeout(timeout);
   }
 }
 async function testAIConnection(){
@@ -4161,7 +4169,7 @@ checkTechnicalEnvironment();
 <script src="/coachvoice-v33.js?v=40"></script>
 <script src="/coachday-v40.js?v=46"></script>
 <script src="/coachprep-v42.js?v=46"></script>
-<script src="/mentor-v511.js?v=511"></script>
+<script src="/mentor-v512.js?v=512"></script>
 <script src="/dashboard-v51.js?v=51"></script>
 <script src="/languages-v50.js?v=50"></script>
 <script>

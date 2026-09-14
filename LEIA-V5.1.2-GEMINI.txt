@@ -1,0 +1,37 @@
+CoachVoice AI v5.1.2 — Gemini Resiliente
+
+CORREÇÃO DO ERRO DA IMAGEM
+- /api/coach-ai não usa mais a rota antiga /v1beta/interactions.
+- Agora usa /v1beta/models/{model}:generateContent.
+- Mantém GEMINI_API_KEY.
+- Tenta autenticação por x-goog-api-key e, se necessário, ?key=.
+- Mantém gemini-3.1-flash-lite como principal e tem fallback de modelo.
+
+NOVAS PROTEÇÕES
+1. Se o Gemini falhar depois que você falou:
+   aparece “Tentar resposta novamente”.
+   A sua fala/mensagem não precisa ser repetida.
+
+2. Se a transcrição vier com repetição anormal:
+   o CoachVoice NÃO envia automaticamente ao Mentor.
+   Ele coloca o texto no campo para você revisar e tocar em Enviar.
+
+3. Timeout:
+   se a resposta demorar demais, o app permite tentar novamente.
+
+PUBLICAÇÃO
+1. Envie o patch da raiz para a raiz do GitHub.
+2. Entre em api/ e substitua SOMENTE coach-ai.js.
+3. NÃO altere transcribe.js (a correção v5.1.1 continua correta).
+4. NÃO altere GEMINI_API_KEY.
+5. Commit sugerido:
+   Corrigir resposta Gemini e retry v5.1.2
+6. Aguarde Vercel Production — Ready.
+7. Teste:
+   https://coachvoice-ai.vercel.app/?v=512
+
+DIAGNÓSTICO
+Depois do deploy, abrir:
+https://coachvoice-ai.vercel.app/api/coach-ai
+
+Deve aparecer routeVersion: "5.1.2-generate-content".

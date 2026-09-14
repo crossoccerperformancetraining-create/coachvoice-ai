@@ -1,8 +1,8 @@
 {
   "name": "coachvoice-ai",
   "private": true,
-  "version": "5.1.1",
-  "description": "CoachVoice AI v5.1.1: transcrição de áudio resiliente, retry sem regravar e Dashboard integrado.",
+  "version": "5.1.2",
+  "description": "CoachVoice AI v5.1.2: Gemini generateContent, retry da resposta e proteção contra transcrição repetitiva.",
   "engines": {
     "node": "22.x"
   }
