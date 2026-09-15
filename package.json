@@ -1,8 +1,8 @@
 {
   "name": "coachvoice-ai",
   "private": true,
-  "version": "5.1.2",
-  "description": "CoachVoice AI v5.1.2: Gemini generateContent, retry da resposta e proteção contra transcrição repetitiva.",
+  "version": "5.1.3",
+  "description": "CoachVoice AI v5.1.3: fala manual protegida, sem interrupção por pausas.",
   "engines": {
     "node": "22.x"
   }

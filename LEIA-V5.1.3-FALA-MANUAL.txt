@@ -1,0 +1,32 @@
+CoachVoice AI v5.1.3 — Fala Manual Protegida
+
+FLUXO
+1. Toque 🎙 para iniciar sua fala.
+2. Fale o tempo que precisar e faça pausas normalmente.
+3. Uma pausa NÃO envia e NÃO encerra sua fala.
+4. Toque ⏹ Finalizar minha fala e enviar.
+5. Só então o áudio é transcrito e enviado ao Mentor.
+6. Depois da resposta, o microfone fica fechado aguardando seu próximo toque.
+
+MODO AUTOMÁTICO
+- Continua disponível apenas como Automático experimental.
+- Não fica salvo entre conversas.
+- Toda nova conversa e toda nova chamada começam em Manual protegido.
+- Se você tocar manualmente no microfone, o automático é desligado naquele turno.
+
+PRESERVADO
+- Retry da transcrição sem regravar.
+- Retry da resposta Gemini.
+- Detector de transcrição repetitiva.
+- Dashboard integrado.
+- Inglês e Espanhol.
+- APIs v5.1.2/v5.1.1 não mudam.
+- GEMINI_API_KEY não muda.
+
+PUBLICAÇÃO
+- Este update é SOMENTE da raiz.
+- Não mexer em api/.
+- Commit sugerido:
+  Proteger fala manual contra interrupções v5.1.3
+- Teste:
+  https://coachvoice-ai.vercel.app/?v=513

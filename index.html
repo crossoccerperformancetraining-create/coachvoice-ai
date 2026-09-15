@@ -209,7 +209,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <link rel="stylesheet" href="/studio.css">
 <link rel="stylesheet" href="/coachday.css?v=40">
 <link rel="stylesheet" href="/coachprep.css?v=46">
-<link rel="stylesheet" href="/mentor-v512.css?v=512">
+<link rel="stylesheet" href="/mentor-v513.css?v=513">
 <link rel="stylesheet" href="/dashboard-v51.css?v=51">
 <link rel="stylesheet" href="/languages-v50.css?v=50">
 </head>
@@ -969,7 +969,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <textarea id="mentor42Input" class="text-input mentor42-input" placeholder="Ex.: Hoje aconteceu uma situação no treino e eu queria conversar sobre isso..."></textarea>
 
     <div class="mentor42-actions mentor47-conversation-actions">
-      <button id="mentor481MainMicBtn" class="secondary" onclick="mentor42Capture(true)">🎙 Falar sem interrupção</button>
+      <button id="mentor481MainMicBtn" class="secondary" onclick="mentor42Capture(true)">🎙 Iniciar minha fala</button>
       <button id="mentor511RetryMain" class="secondary hidden" onclick="mentor511RetryTranscription()">↻ Tentar transcrever novamente</button>
       <button id="mentor49SendBtn" class="primary" onclick="mentor42Send()">Enviar</button>
       <button class="mentor49-conclude" onclick="mentor49Conclude()">✅ Quero uma conclusão</button>
@@ -1129,10 +1129,11 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
         <button id="mentor43VideoModeBtn" onclick="mentor43SetCallMode('video')">🎥 Vídeo</button>
       </div>
 
-      <div id="mentor42CallStatus" class="mentor42-call-status">Modo manual: toque no microfone para falar e toque novamente somente quando terminar.</div>
-      <div id="mentor44LiveTranscript" class="mentor44-live-transcript">Faça pausas à vontade. A mensagem só será enviada quando você finalizar a fala.</div>
+      <div id="mentor513ManualBadge" class="mentor513-manual-badge">🛡️ Modo manual protegido</div>
+      <div id="mentor42CallStatus" class="mentor42-call-status">Toque 🎙 para começar. O Mentor só recebe sua fala depois que você tocar em ⏹.</div>
+      <div id="mentor44LiveTranscript" class="mentor44-live-transcript">Pode pensar, respirar e fazer pausas. Uma pausa não encerra sua fala.</div>
       <div class="mentor44-call-options">
-        <label><input id="mentor44AutoConversation" type="checkbox" onchange="mentor44SaveAutoConversation()"> ⚡ Modo automático (opcional) — pode responder quando detectar uma pausa</label>
+        <label class="mentor513-auto-option"><input id="mentor44AutoConversation" type="checkbox" onchange="mentor44SaveAutoConversation()"> ⚡ Automático experimental — pode interpretar uma pausa como fim da fala</label>
         <button onclick="mentor44RepeatLastAnswer()">🔊 Ouvir resposta</button>
         <button id="mentor511RetryCall" class="hidden" onclick="mentor511RetryTranscription()">↻ Tentar transcrever novamente</button>
       </div>
@@ -1164,7 +1165,10 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
       <div class="mentor42-call-controls">
         <button class="mentor42-call-side" onclick="mentor47NewConversation()">＋<small>Nova</small></button>
-        <button id="mentor42BigMic" class="mentor42-big-mic" onclick="mentor42Capture(true)" aria-label="Começar a falar" title="Toque para começar a falar">🎙</button>
+        <div class="mentor513-mic-wrap">
+          <button id="mentor42BigMic" class="mentor42-big-mic" onclick="mentor42Capture(true)" aria-label="Iniciar minha fala" title="Toque para começar a falar">🎙</button>
+          <small id="mentor513MicLabel">Iniciar fala</small>
+        </div>
         <button class="mentor42-call-side" onclick="mentor44RepeatLastAnswer()">🔊<small>Ouvir</small></button>
         <button class="mentor42-call-side" onclick="mentor49Conclude(true)">✅<small>Conclusão</small></button>
         <button class="mentor42-call-side mentor49-call-end" onclick="mentor49PrepareEndConversation(true)">🔴<small>Encerrar</small></button>
@@ -1173,7 +1177,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
       </div>
 
       <div id="mentor49CallClosurePanel" class="mentor49-closure-panel mentor49-call-closure hidden"></div>
-      <p id="mentor43CallNote" class="mentor42-call-note"><strong>Sem interrupção:</strong> toque 🎙 para começar, fale com pausas normalmente e toque ⏹ somente quando terminar. Se a internet/transcrição falhar, sua última gravação fica preservada para tentar de novo.</p>
+      <p id="mentor43CallNote" class="mentor42-call-note"><strong>Manual protegido:</strong> toque 🎙 uma vez para começar. Fale o tempo que precisar, inclusive com pausas. O CoachVoice só finaliza e envia quando você tocar em ⏹.</p>
       <p id="mentor43AvatarNote" class="mentor43-avatar-note hidden">Avatar visual animado: não é vídeo humano real e não analisa emoções ou expressões.</p>
     </div>
   </div>
@@ -4169,7 +4173,7 @@ checkTechnicalEnvironment();
 <script src="/coachvoice-v33.js?v=40"></script>
 <script src="/coachday-v40.js?v=46"></script>
 <script src="/coachprep-v42.js?v=46"></script>
-<script src="/mentor-v512.js?v=512"></script>
+<script src="/mentor-v513.js?v=513"></script>
 <script src="/dashboard-v51.js?v=51"></script>
 <script src="/languages-v50.js?v=50"></script>
 <script>
