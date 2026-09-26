@@ -1,16 +1,13 @@
-COACHVOICE AI v4.8 — ANTES DE ENVIAR
+CoachVoice AI v5.2 — antes de publicar
 
-Atualização recomendada:
-1. Envie os arquivos da raiz do pacote v4.8 para a raiz do GitHub.
-2. Entre na pasta api/ e substitua apenas coach-ai.js.
-3. Não altere a GEMINI_API_KEY.
-4. Aguarde Vercel Production — Ready.
-5. Abra: https://coachvoice-ai.vercel.app/?v=48
+1. Use o patch da raiz na raiz do GitHub.
+2. Entre em api/ e substitua somente coach-ai.js pelo patch da API.
+3. NÃO altere transcribe.js.
+4. NÃO altere GEMINI_API_KEY.
+5. Commit sugerido:
+   Finalizar experiencia CoachVoice v5.2
+6. Aguarde Vercel Production — Ready.
+7. Teste:
+   https://coachvoice-ai.vercel.app/?v=52
 
-Novidades principais:
-- Nova aba Dia a Dia.
-- Mais modos do Mentor.
-- Entrevistas com Responder próxima pergunta.
-- Coletiva contínua de 5 ou 10 perguntas.
-- Vitória na estreia e muitos novos cenários.
-- Mais perfis de jornalista.
+Depois desta versão, entre em fase de estabilização por 10–15 dias.

@@ -1,5 +1,5 @@
 {
-  "name": "CoachVoice AI v5.1.3",
+  "name": "CoachVoice AI v5.2",
   "short_name": "CoachVoice",
   "start_url": "/",
   "scope": "/",
@@ -21,5 +21,5 @@
       "purpose": "any maskable"
     }
   ],
-  "description": "Mentor Gemini com conversa fluida, voz, memória por dia, histórico e CoachDay."
+  "description": "Assistente profissional do treinador: agenda, comunicação, IA, idiomas e evolução."
 }

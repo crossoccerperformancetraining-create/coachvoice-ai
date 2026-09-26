@@ -94,7 +94,7 @@
       ]
     },
     {
-      "source": "/mentor-v513.css",
+      "source": "/mentor-v52.css",
       "headers": [
         {
           "key": "Cache-Control",
@@ -103,7 +103,7 @@
       ]
     },
     {
-      "source": "/mentor-v513.js",
+      "source": "/mentor-v52.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -140,6 +140,24 @@
     },
     {
       "source": "/languages-v50.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/today-v52.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/ui-v52.css",
       "headers": [
         {
           "key": "Cache-Control",

@@ -1,0 +1,94 @@
+CoachVoice AI v5.2 — Experiência Final
+
+OBJETIVO
+Esta versão fecha o ciclo de produto antes da fase de estabilização. O foco deixa de ser adicionar módulos e passa a ser usar o CoachVoice diariamente por 10–15 dias.
+
+1. HOJE COMO TELA PRINCIPAL
+- O antigo Dashboard passa a ser “Hoje”.
+- Mostra agenda, tarefas, prioridades e fechamento do dia.
+- Ao abrir o app, começa em Hoje.
+
+2. AGENDA INTERNA
+- Visões Hoje, Semana e Calendário.
+- Compromissos com horário, duração, categoria e lembrete.
+- Preparar compromisso diretamente no Mentor.
+- Marcar compromisso concluído.
+
+3. BOTÃO UNIVERSAL +
+- Criar Tarefa, Compromisso, Nota, Conversa ou Lembrete.
+- Entrada por texto ou voz.
+
+4. BUSCA GERAL
+- Busca tarefas, agenda, notas, conversas do Mentor e pessoas.
+- A lupa fica no topo do app.
+
+5. BOM DIA / ORGANIZAR MEU DIA
+- Mostra compromissos, tarefas e até três prioridades.
+- Botão opcional de briefing com Gemini.
+- Não lota o dia automaticamente.
+
+6. AGENDA + MENTOR
+- Compromisso pode abrir uma conversa já contextualizada.
+- Ao encerrar, o resumo volta para o compromisso.
+
+7. PESSOAS
+- Área em Evolução para jogador, comissão, diretoria e contatos.
+- Pode ser alimentada manualmente ou pelo histórico salvo do Mentor.
+
+8. REVISÃO SEMANAL VISUAL
+- Cards com resumo, foco, pendências e idiomas.
+- Mantém a revisão semanal já existente com Gemini.
+
+9. NAVEGAÇÃO FINAL
+- Barra inferior reduzida para 5 áreas:
+  Hoje · CoachDay · Mentor · Treinar · Evolução.
+- Dia a Dia fica acessível por Hoje e pelo menu.
+- Idiomas, Entrevistas, Oratória e demais práticas continuam em Treinar.
+
+10. MENTOR MAIS HUMANO
+- Prompt revisto para responder antes de perguntar.
+- Evita “Entendi...” em toda resposta.
+- Evita repetir a fala do treinador.
+- Evita perguntas em respostas consecutivas sem necessidade.
+- Respeita estilo e tamanho configurados em “Meu CoachVoice”.
+- Conversa livre e Dia a Dia não transformam tudo em plano ou futebol.
+
+11. MEU COACHVOICE
+- Estilo do Mentor: Direto / Equilibrado / Reflexivo.
+- Respostas: Curtas / Naturais / Detalhadas quando necessário.
+- Velocidade da voz.
+- Janela preferida do dia.
+- Idioma principal.
+- Lembretes internos.
+
+12. BACKUP
+- Exporta dados locais do CoachVoice para JSON.
+- Importa backup posteriormente.
+
+13. LEMBRETES
+- In-app quando o CoachVoice estiver aberto.
+- Notificação do navegador quando houver permissão.
+
+14. LAYOUT MODERNO
+- Cards mais leves, mais espaço em branco e menos caixas.
+- Barra inferior com cinco destinos.
+- Cores fixas por significado.
+- Agenda em linha do tempo.
+- Melhor adaptação celular/desktop.
+- Mentor com visual mais limpo.
+
+15. FASE DE ESTABILIZAÇÃO
+- Use por 10–15 dias.
+- Registrar apenas bugs, atritos e respostas artificiais.
+- Próxima grande fase: login/nuvem/sincronização e calendário externo, somente depois da estabilidade.
+
+PUBLICAÇÃO
+1. Envie o patch da raiz para a raiz do GitHub.
+2. Entre em api/ e substitua somente coach-ai.js pelo patch da API.
+3. Não altere transcribe.js.
+4. Não altere GEMINI_API_KEY.
+5. Commit sugerido:
+   Finalizar experiencia CoachVoice v5.2
+6. Aguarde Vercel Production — Ready.
+7. Abra:
+   https://coachvoice-ai.vercel.app/?v=52

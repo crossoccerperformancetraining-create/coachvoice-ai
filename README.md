@@ -1,3 +1,7 @@
+## CoachVoice AI v5.2 — Experiência Final
+
+Hoje · Agenda · CoachDay · Mentor humanizado · Treinar · Evolução · Backup local
+
 ## CoachVoice AI v5.1 — Dashboard Integrado
 
 # CoachVoice AI v5.0 — Dashboard + Inglês e Espanhol

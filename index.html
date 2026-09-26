@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#071225">
-<meta name="application-name" content="CoachVoice AI v4.6">
+<meta name="application-name" content="CoachVoice AI v5.2">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="CoachVoice">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<title>CoachVoice AI v5.1 — Dashboard Integrado</title>
+<title>CoachVoice AI v5.2 — Experiência Final</title>
 <style>
 :root{
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -209,9 +209,10 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <link rel="stylesheet" href="/studio.css">
 <link rel="stylesheet" href="/coachday.css?v=40">
 <link rel="stylesheet" href="/coachprep.css?v=46">
-<link rel="stylesheet" href="/mentor-v513.css?v=513">
+<link rel="stylesheet" href="/mentor-v52.css?v=52">
 <link rel="stylesheet" href="/dashboard-v51.css?v=51">
 <link rel="stylesheet" href="/languages-v50.css?v=50">
+<link rel="stylesheet" href="/ui-v52.css?v=52">
 </head>
 <body>
 <div class="app">
@@ -221,8 +222,8 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <div><strong>Professor Andrade</strong><small>Treinador</small></div>
   </div>
   <nav>
-    <button class="drawer-link active" data-page="home" onclick="go('home')">⌂ Início</button>
-    <button class="drawer-link" data-page="dashboard" onclick="go('dashboard')">✅ Dashboard — Hoje</button>
+    <button class="drawer-link" data-page="home" onclick="go('home')">⌂ Visão geral</button>
+    <button class="drawer-link active" data-page="dashboard" onclick="go('dashboard')">☀️ Hoje — Agenda e prioridades</button>
     <button class="drawer-link" data-page="daily" onclick="go('daily')">🧭 CoachDay AI</button>
     <button class="drawer-link" data-page="daytoday" onclick="go('daytoday')">☕ Dia a Dia — conversa livre</button>
     <button class="drawer-link" data-page="coachprep" onclick="go('coachprep')">🛡️ CoachPrep — Gestão e Liderança</button>
@@ -241,18 +242,18 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <button class="drawer-link" data-page="technical" onclick="go('technical')">⚙ Testes do aparelho</button>
     <button class="drawer-link" data-page="profile" onclick="go('profile')">◉ Preferências</button>
   </nav>
-  <div class="drawer-note">CoachVoice AI v5.1 — Dashboard integrado ao Mentor, pendências para amanhã, revisão semanal e idiomas profissionais em inglês e espanhol. Dados salvos neste aparelho; IA via Gemini quando configurada na Vercel.</div>
+  <div class="drawer-note">CoachVoice AI v5.2 — Hoje, Agenda, Mentor humanizado, Treinar, Evolução e busca geral. Dados locais com backup/exportação. Dados salvos neste aparelho; IA via Gemini quando configurada na Vercel.</div>
 </aside>
 <div id="overlay" class="overlay" onclick="closeDrawer()"></div>
 
 <main>
 <header class="topbar">
   <button class="icon-btn" onclick="openDrawer()">☰</button>
-  <div class="brand"><h1>CoachVoice <span>AI</span></h1><p id="topSubtitle">Plataforma integrada</p></div>
-  <button class="icon-btn" onclick="go('profile')">◉</button>
+  <div class="brand"><h1>CoachVoice <span>AI</span></h1><p id="topSubtitle">Hoje — agenda e prioridades</p></div>
+  <button class="icon-btn" onclick="today52OpenSearch()" aria-label="Buscar">⌕</button>
 </header>
 
-<section id="home" class="page active">
+<section id="home" class="page">
   <div class="hero">
     <span class="eyebrow">COACHDAY AI — ASSISTENTE DO TREINADOR</span>
     <h2>Planeje o que falar, acompanhe o elenco e conecte um dia ao próximo.</h2>
@@ -319,10 +320,10 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 </section>
 
 
-<section id="dashboard" class="page">
+<section id="dashboard" class="page active">
   <div class="dashboard-hero">
-    <span class="eyebrow">DASHBOARD — HOJE</span>
-    <h2>Veja o que precisa ser feito, marque o que aconteceu e feche o dia sem carregar tudo na cabeça.</h2>
+    <span class="eyebrow">HOJE — COACHVOICE</span>
+    <h2>Agenda, prioridades, conversas e tarefas em uma única visão. Comece o dia, acompanhe o que importa e feche sem carregar tudo na cabeça.</h2>
     <p id="dashboardDate">Hoje</p>
     <div class="dashboard-integration-note">Agora as tarefas podem abrir o módulo certo e ficar vinculadas ao Mentor. Ao encerrar uma conversa vinculada, o resumo volta para a própria tarefa.</div>
     <div class="dashboard-stats">
@@ -333,11 +334,24 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <div class="dashboard-progress"><div id="dashboardProgress"></div></div>
   </div>
 
+  <div class="today52-morning">
+    <article id="today52Morning" class="today52-morning-card"></article>
+  </div>
+
+  <section class="today52-agenda-shell">
+    <div class="today52-agenda-tabs" role="tablist" aria-label="Agenda">
+      <button class="active" data-today52-view="today" onclick="today52SetView('today')">Hoje</button>
+      <button data-today52-view="week" onclick="today52SetView('week')">Semana</button>
+      <button data-today52-view="calendar" onclick="today52SetView('calendar')">Calendário</button>
+    </div>
+    <div id="today52AgendaContent"></div>
+  </section>
+
   <div id="dashboardClosedDay" class="hidden" style="margin-bottom:14px"></div>
 
   <div class="dashboard-grid">
     <article class="dashboard-card">
-      <h3>＋ Nova tarefa</h3>
+      <h3>＋ Tarefa rápida</h3>
       <p class="sub">Adicione só o que realmente merece atenção hoje. Rotinas podem se repetir automaticamente.</p>
       <div class="dashboard-form">
         <div class="dashboard-form-actions"><input id="dashboardTaskTitle" placeholder="Ex.: preparar conversa com o capitão"><button class="outline" onclick="dashboardVoiceTask()">🎙</button></div>
@@ -1132,11 +1146,6 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
       <div id="mentor513ManualBadge" class="mentor513-manual-badge">🛡️ Modo manual protegido</div>
       <div id="mentor42CallStatus" class="mentor42-call-status">Toque 🎙 para começar. O Mentor só recebe sua fala depois que você tocar em ⏹.</div>
       <div id="mentor44LiveTranscript" class="mentor44-live-transcript">Pode pensar, respirar e fazer pausas. Uma pausa não encerra sua fala.</div>
-      <div class="mentor44-call-options">
-        <label class="mentor513-auto-option"><input id="mentor44AutoConversation" type="checkbox" onchange="mentor44SaveAutoConversation()"> ⚡ Automático experimental — pode interpretar uma pausa como fim da fala</label>
-        <button onclick="mentor44RepeatLastAnswer()">🔊 Ouvir resposta</button>
-        <button id="mentor511RetryCall" class="hidden" onclick="mentor511RetryTranscription()">↻ Tentar transcrever novamente</button>
-      </div>
 
       <div id="mentor43VideoStage" class="mentor43-video-stage hidden">
         <div class="mentor43-ai-panel">
@@ -1163,18 +1172,26 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
       <div id="mentor42CallChat" class="mentor42-call-chat"></div>
 
-      <div class="mentor42-call-controls">
-        <button class="mentor42-call-side" onclick="mentor47NewConversation()">＋<small>Nova</small></button>
+      <div class="mentor52-primary-controls">
+        <button class="mentor52-main-action conclude" onclick="mentor49Conclude(true)">✅<small>Conclusão</small></button>
         <div class="mentor513-mic-wrap">
           <button id="mentor42BigMic" class="mentor42-big-mic" onclick="mentor42Capture(true)" aria-label="Iniciar minha fala" title="Toque para começar a falar">🎙</button>
           <small id="mentor513MicLabel">Iniciar fala</small>
         </div>
-        <button class="mentor42-call-side" onclick="mentor44RepeatLastAnswer()">🔊<small>Ouvir</small></button>
-        <button class="mentor42-call-side" onclick="mentor49Conclude(true)">✅<small>Conclusão</small></button>
-        <button class="mentor42-call-side mentor49-call-end" onclick="mentor49PrepareEndConversation(true)">🔴<small>Encerrar</small></button>
-        <button class="mentor42-call-side" onclick="mentor47SaveDay(true)">💾<small>Salvar dia</small></button>
-        <button id="mentor43CameraBtn" class="mentor42-call-side hidden" onclick="mentor43ToggleCamera()">📷<small>Câmera</small></button>
+        <button class="mentor52-main-action end" onclick="mentor49PrepareEndConversation(true)">🔴<small>Encerrar</small></button>
       </div>
+
+      <details class="mentor52-call-advanced">
+        <summary>••• Mais opções</summary>
+        <div class="mentor52-advanced-grid">
+          <button onclick="mentor47NewConversation()">＋ Nova conversa</button>
+          <button onclick="mentor44RepeatLastAnswer()">🔊 Ouvir resposta</button>
+          <button id="mentor511RetryCall" class="hidden" onclick="mentor511RetryTranscription()">↻ Tentar transcrever novamente</button>
+          <button onclick="mentor47SaveDay(true)">💾 Salvar dia</button>
+          <button id="mentor43CameraBtn" class="hidden" onclick="mentor43ToggleCamera()">📷 Câmera</button>
+        </div>
+        <label class="mentor513-auto-option mentor52-auto-option"><input id="mentor44AutoConversation" type="checkbox" onchange="mentor44SaveAutoConversation()"> ⚡ Automático experimental — pode interpretar uma pausa como fim da fala</label>
+      </details>
 
       <div id="mentor49CallClosurePanel" class="mentor49-closure-panel mentor49-call-closure hidden"></div>
       <p id="mentor43CallNote" class="mentor42-call-note"><strong>Manual protegido:</strong> toque 🎙 uma vez para começar. Fale o tempo que precisar, inclusive com pausas. O CoachVoice só finaliza e envia quando você tocar em ⏹.</p>
@@ -2218,8 +2235,35 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <div id="progressActivities" class="activity-list"></div>
   </article>
 
+  <article class="card">
+    <span class="label">Revisão semanal visual</span>
+    <h3>O que a semana está mostrando</h3>
+    <div id="today52EvolutionWeek"></div>
+    <button class="outline" style="margin-top:10px" onclick="go('dashboard');setTimeout(()=>dashboardGenerateWeeklyReview(),120)">Atualizar revisão semanal</button>
+  </article>
+
+  <article class="card">
+    <span class="label">Pessoas</span>
+    <h3>Jogadores, comissão, diretoria e contatos importantes</h3>
+    <p class="intro">O histórico do Mentor pode alimentar esta área sem transformar o CoachVoice em um CRM pesado.</p>
+    <div class="today52-people-tools">
+      <input id="today52PersonName" placeholder="Nome">
+      <input id="today52PersonRole" placeholder="Função / relação">
+      <textarea id="today52PersonNotes" placeholder="Observação curta"></textarea>
+      <button class="secondary" onclick="today52AddPerson()">Adicionar pessoa</button>
+    </div>
+    <input id="today52PeopleSearch" class="select-field" placeholder="Buscar pessoa..." oninput="today52FilterPeople(this.value)">
+    <div id="today52PeopleList" class="today52-person-list" style="margin-top:10px"></div>
+  </article>
+
+  <article class="card today52-stabilize">
+    <span class="label">FASE FINAL</span>
+    <h3>Modo estabilização — 10 a 15 dias</h3>
+    <p>Depois desta versão, a prioridade deixa de ser adicionar funções. Use o app em rotina real e registre somente bugs, atritos de navegação e respostas da IA que ainda soem artificiais.</p>
+  </article>
+
   <div class="test-banner">
-    Durante esta fase, observe principalmente: facilidade de navegação, utilidade do feedback, duração ideal das sessões e situações profissionais que ainda faltam.
+    Nesta fase final, observe principalmente: naturalidade da conversa, confiabilidade da voz, utilidade da Agenda e rapidez para registrar o dia.
   </div>
 </section>
 
@@ -2292,23 +2336,96 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   </article>
 
   <article class="card">
+    <span class="label">Meu CoachVoice</span>
+    <h3>Como você prefere que o app converse e organize seu dia</h3>
+    <div class="today52-settings-grid">
+      <div class="today52-setting"><label for="today52MentorTone">Estilo do Mentor</label><select id="today52MentorTone"><option value="direct">Direto</option><option value="balanced">Equilibrado e humano</option><option value="reflective">Reflexivo</option></select></div>
+      <div class="today52-setting"><label for="today52ResponseLength">Tamanho das respostas</label><select id="today52ResponseLength"><option value="short">Curtas</option><option value="normal">Naturais</option><option value="detailed">Detalhadas quando necessário</option></select></div>
+      <div class="today52-setting"><label for="today52VoiceRate">Velocidade da voz</label><select id="today52VoiceRate"><option value="0.82">Calma</option><option value="0.92">Natural</option><option value="1.03">Mais rápida</option></select></div>
+      <div class="today52-setting"><label for="today52MainLanguage">Idioma principal</label><select id="today52MainLanguage"><option value="pt-BR">Português</option><option value="en-US">English</option><option value="es">Español</option></select></div>
+      <div class="today52-setting"><label for="today52WorkStart">Início do seu dia</label><input id="today52WorkStart" type="time"></div>
+      <div class="today52-setting"><label for="today52WorkEnd">Limite preferido</label><input id="today52WorkEnd" type="time"></div>
+    </div>
+    <label style="display:flex;gap:9px;align-items:center;margin:14px 0"><input id="today52Notifications" type="checkbox"> Lembretes da agenda quando o app estiver aberto</label>
+    <div class="today52-data-actions">
+      <button class="primary" onclick="today52SaveSettings()">Salvar Meu CoachVoice</button>
+      <button class="outline" onclick="today52RequestNotifications()">🔔 Permitir notificações</button>
+    </div>
+  </article>
+
+  <article class="card">
+    <span class="label">Backup e portabilidade</span>
+    <h3>Seus dados continuam seus</h3>
+    <p class="intro">Exporte tarefas, agenda, histórico, pessoas e preferências para um arquivo. A importação substitui somente as chaves presentes no backup.</p>
+    <div class="today52-data-actions">
+      <button class="secondary" onclick="today52ExportBackup()">⬇ Exportar meus dados</button>
+      <button class="outline" onclick="document.getElementById('today52ImportFile').click()">⬆ Importar backup</button>
+    </div>
+    <input id="today52ImportFile" class="hidden" type="file" accept="application/json,.json" onchange="today52ImportBackup(this)">
+  </article>
+
+  <article class="card">
     <span class="label">Planejamento técnico</span>
     <div class="structure">
-      <div><b>1</b><p><strong>Agora</strong><small>Validar conteúdo, navegação, voz e rotina de treino.</small></p></div>
-      <div><b>2</b><p><strong>Depois</strong><small>Ativar IA conversacional, transcrição e análise real da voz.</small></p></div>
-      <div><b>3</b><p><strong>Fase de usuários</strong><small>Retomar Firebase, login e sincronização entre aparelhos.</small></p></div>
+      <div><b>1</b><p><strong>Agora</strong><small>Usar a v5.2 por 10–15 dias e estabilizar experiência, voz, agenda e IA.</small></p></div>
+      <div><b>2</b><p><strong>Depois</strong><small>Somente correções encontradas no uso real; evitar novos módulos por enquanto.</small></p></div>
+      <div><b>3</b><p><strong>Próxima grande fase</strong><small>Login, nuvem, sincronização entre aparelhos e calendário externo quando a experiência estiver estável.</small></p></div>
     </div>
   </article>
 </section>
 
 <nav class="bottom-nav">
-  <button class="nav" data-page="dashboard" onclick="go('dashboard')">✅<span>Dashboard</span></button>
+  <button class="nav active" data-page="dashboard" onclick="go('dashboard')">☀️<span>Hoje</span></button>
   <button class="nav" data-page="daily" onclick="go('daily')">🧭<span>CoachDay</span></button>
-  <button class="nav" data-page="daytoday" onclick="go('daytoday')">☕<span>Dia a Dia</span></button>
   <button class="nav" data-page="mentor" onclick="go('mentor')">🤖<span>Mentor</span></button>
   <button class="nav" data-page="practice" onclick="go('practice')">🎯<span>Treinar</span></button>
   <button class="nav" data-page="progress" onclick="go('progress')">▥<span>Evolução</span></button>
 </nav>
+<button class="today52-fab" onclick="today52OpenQuickCreate('task')" aria-label="Criar">＋</button>
+<div id="today52ModalOverlay" class="today52-modal-overlay" onclick="today52CloseQuick();today52CloseSearch();today52CloseInfo();today52CloseEventFeedback()"></div>
+
+<div id="today52QuickModal" class="today52-modal" role="dialog" aria-modal="true">
+  <div class="today52-modal-head"><h3>Criar no CoachVoice</h3><button class="today52-close" onclick="today52CloseQuick()">×</button></div>
+  <div class="today52-type-tabs">
+    <button class="active" data-quick-type="task" onclick="today52SelectQuickType('task')">✓ Tarefa</button>
+    <button data-quick-type="event" onclick="today52SelectQuickType('event')">🗓 Compromisso</button>
+    <button data-quick-type="note" onclick="today52SelectQuickType('note')">📝 Nota</button>
+    <button data-quick-type="conversation" onclick="today52SelectQuickType('conversation')">💬 Conversa</button>
+    <button data-quick-type="reminder" onclick="today52SelectQuickType('reminder')">🔔 Lembrete</button>
+  </div>
+  <div class="today52-form">
+    <label id="today52QuickTitleLabel">Tarefa</label>
+    <div class="today52-input-with-mic"><input id="today52QuickTitle" placeholder="O que você precisa registrar?"><button onclick="today52VoiceQuick()">🎙</button></div>
+    <div id="today52QuickSchedule" class="today52-form">
+      <div class="today52-form-row"><div><label>Data</label><input id="today52QuickDate" type="date"></div><div><label>Horário</label><input id="today52QuickTime" type="time"></div></div>
+      <div class="today52-form-row"><div><label>Duração</label><select id="today52QuickDuration"><option value="15">15 min</option><option value="30" selected>30 min</option><option value="45">45 min</option><option value="60">1 hora</option><option value="90">1h30</option></select></div><div><label>Lembrete</label><select id="today52QuickReminder"><option value="0">No horário</option><option value="10">10 min antes</option><option value="30">30 min antes</option><option value="60">1h antes</option></select></div></div>
+    </div>
+    <label>Categoria</label>
+    <select id="today52QuickCategory"><option>Trabalho</option><option>Treino</option><option>Jogador</option><option>Reunião</option><option>Estudo</option><option>Idioma</option><option>Viagem</option><option>Pessoal</option></select>
+    <label>Pessoa relacionada (opcional)</label>
+    <input id="today52QuickPerson" placeholder="Ex.: Diogo, capitão, diretor">
+    <button id="today52QuickSave" class="primary" onclick="today52SaveQuick()">Salvar</button>
+  </div>
+</div>
+
+<div id="today52SearchModal" class="today52-modal" role="dialog" aria-modal="true">
+  <div class="today52-modal-head"><h3>Buscar no CoachVoice</h3><button class="today52-close" onclick="today52CloseSearch()">×</button></div>
+  <input id="today52SearchInput" class="today52-search-input select-field" placeholder="Diogo, espanhol, pressão alta, semana passada..." oninput="today52Search(this.value)">
+  <div id="today52SearchResults" class="today52-search-results" style="margin-top:10px"></div>
+</div>
+
+<div id="today52InfoModal" class="today52-modal" role="dialog" aria-modal="true">
+  <div class="today52-modal-head"><h3 id="today52InfoTitle">Resumo</h3><button class="today52-close" onclick="today52CloseInfo()">×</button></div>
+  <p id="today52InfoText" class="intro"></p>
+</div>
+
+<div id="today52FeedbackModal" class="today52-modal" role="dialog" aria-modal="true">
+  <div class="today52-modal-head"><h3 id="today52FeedbackTitle">Como foi?</h3><button class="today52-close" onclick="today52CloseEventFeedback()">×</button></div>
+  <p class="intro">Registre em poucas palavras o que aconteceu, o que foi decidido ou o que precisa continuar.</p>
+  <textarea id="today52FeedbackText" class="select-field" style="min-height:120px" placeholder="Ex.: conversa objetiva; ficou pendente revisar o papel dele amanhã."></textarea>
+  <button class="primary" style="margin-top:10px" onclick="today52SaveEventFeedback()">Salvar registro</button>
+</div>
+
 </main>
 
 
@@ -2421,7 +2538,7 @@ b5:{
 }
 };
 
-let currentPage='home',currentBlock='b1',currentLesson=null,selectedFeedback='';
+let currentPage='dashboard',currentBlock='b1',currentLesson=null,selectedFeedback='';
 const completed=new Set(JSON.parse(localStorage.getItem('coachvoice-completed')||'[]'));
 
 function allLessons(){return Object.values(blocks).flatMap(b=>b.lessons)}
@@ -2435,13 +2552,20 @@ function go(id){
   if(!document.getElementById(id)){toast('Esta área não foi encontrada. Atualize o aplicativo.');return;}
   currentPage=id;
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));
-  document.querySelectorAll('.nav,.drawer-link').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
-  const titles={home:'Ciclo diário',dashboard:'Dashboard — Tarefas e Fechamento do Dia',daily:'CoachDay AI — Assistente do Treinador',daytoday:'Dia a Dia — conversa aberta',mentor:'Mentor IA do Treinador — Voz e Gestão',practice:'Central de treinos',languages:'Idiomas do Treinador',english:'English — 3 níveis',spanish:'Español — 3 níveis',oratory:'Oratória com IA',interviews:'Entrevistas',leadership:'Liderança com IA',gamemodel:'Modelo de jogo passo a passo',library:'Biblioteca de situações',matchday:'Modo dia de jogo',tracks:'Formação completa',technical:'Diagnóstico do aparelho',progress:'Evolução real',profile:'Preferências locais',blockDetail:'Conteúdo do bloco',lessonDetail:'Aula prática',studio:'Estúdio do Treinador',coachprep:'CoachPrep — Gestão e Liderança'};
+  const parentNav={
+    home:'dashboard',daytoday:'dashboard',
+    languages:'practice',english:'practice',spanish:'practice',oratory:'practice',interviews:'practice',leadership:'practice',gamemodel:'practice',library:'practice',matchday:'practice',studio:'practice',tracks:'practice',
+    profile:'progress',technical:'progress',coachprep:'daily'
+  };
+  const navId=parentNav[id]||id;
+  document.querySelectorAll('.nav').forEach(b=>b.classList.toggle('active',b.dataset.page===navId));
+  document.querySelectorAll('.drawer-link').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
+  const titles={home:'Visão geral',dashboard:'Hoje — Agenda e prioridades',daily:'CoachDay AI — Assistente do Treinador',daytoday:'Dia a Dia — conversa aberta',mentor:'Mentor IA do Treinador — Voz e Gestão',practice:'Central de treinos',languages:'Idiomas do Treinador',english:'English — 3 níveis',spanish:'Español — 3 níveis',oratory:'Oratória com IA',interviews:'Entrevistas',leadership:'Liderança com IA',gamemodel:'Modelo de jogo passo a passo',library:'Biblioteca de situações',matchday:'Modo dia de jogo',tracks:'Formação completa',technical:'Diagnóstico do aparelho',progress:'Evolução real',profile:'Preferências locais',blockDetail:'Conteúdo do bloco',lessonDetail:'Aula prática',studio:'Estúdio do Treinador',coachprep:'CoachPrep — Gestão e Liderança'};
   document.getElementById('topSubtitle').textContent=titles[id]||'CoachVoice AI';
   closeDrawer();window.scrollTo(0,0);preparePageForNavigation(id);refreshLiveStats();
 }
 function preparePageForNavigation(id){
-  if(id==='dashboard'&&typeof window.dashboardOpen==='function')window.dashboardOpen();
+  if(id==='dashboard'){if(typeof window.dashboardOpen==='function')window.dashboardOpen();if(typeof window.today52Open==='function')window.today52Open();}
   if(id==='languages'){}
   if(id==='english')renderEnglishMode();
   if(id==='spanish'&&typeof window.renderSpanishMode==='function')window.renderSpanishMode();
@@ -2454,7 +2578,8 @@ function preparePageForNavigation(id){
   if(id==='leadership'&&!document.getElementById('leadershipSituation').options.length)renderLeadershipRoles();
   if(id==='gamemodel')renderGamePrinciples();
   if(id==='oratory'&&!document.getElementById('oratoryText').textContent.trim())loadOratoryScenario();
-  if(id==='progress')updateProgressDashboard();
+  if(id==='progress'){updateProgressDashboard();setTimeout(()=>window.today52Render?.(),50);}
+  if(id==='profile')setTimeout(()=>window.today52Render?.(),50);
   if(id==='technical'){checkTechnicalEnvironment();runMobileDiagnostics(false);}
   if(id==='studio'&&typeof initializeStudio==='function')initializeStudio();
 }
@@ -4173,9 +4298,10 @@ checkTechnicalEnvironment();
 <script src="/coachvoice-v33.js?v=40"></script>
 <script src="/coachday-v40.js?v=46"></script>
 <script src="/coachprep-v42.js?v=46"></script>
-<script src="/mentor-v513.js?v=513"></script>
+<script src="/mentor-v52.js?v=52"></script>
 <script src="/dashboard-v51.js?v=51"></script>
 <script src="/languages-v50.js?v=50"></script>
+<script src="/today-v52.js?v=52"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));
