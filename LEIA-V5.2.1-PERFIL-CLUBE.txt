@@ -1,0 +1,28 @@
+CoachVoice AI v5.2.1 — Perfil do Treinador + Clube
+
+NOVO
+- Nome do treinador totalmente editável.
+- Remove os nomes fixos antigos do layout.
+- Foto opcional do treinador.
+- Nome da equipe editável.
+- Escudo opcional da equipe.
+- Foto e escudo aparecem no perfil, no menu lateral e na tela Hoje.
+- O Mentor recebe somente nome e equipe como contexto; as imagens nunca são enviadas para a IA.
+- Imagens são reduzidas antes de salvar para ocupar menos espaço.
+- Tudo continua armazenado localmente neste aparelho.
+- Backup da v5.2 já inclui o novo perfil porque a chave começa com coachvoice.
+
+COMPATIBILIDADE
+- Migra automaticamente o nome salvo nas versões anteriores.
+- Mantém coachvoice-name e coachvoice-coach-name sincronizados.
+- APIs, Gemini, transcrição, Dashboard, Agenda e fala manual não mudam.
+
+PUBLICAÇÃO
+1. Envie o patch da raiz para a raiz do GitHub.
+2. NÃO mexa em api/.
+3. NÃO altere GEMINI_API_KEY.
+4. Commit sugerido:
+   Adicionar perfil treinador e escudo equipe v5.2.1
+5. Aguarde Vercel Production — Ready.
+6. Teste:
+   https://coachvoice-ai.vercel.app/?v=521

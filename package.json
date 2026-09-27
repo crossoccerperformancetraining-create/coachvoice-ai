@@ -1,8 +1,8 @@
 {
   "name": "coachvoice-ai",
   "private": true,
-  "version": "5.2.0",
-  "description": "CoachVoice AI v5.2: experiência final com Hoje, Agenda, busca, pessoas, IA humanizada e visual moderno.",
+  "version": "5.2.1",
+  "description": "CoachVoice AI v5.2.1: perfil do treinador, foto, equipe e escudo personalizados.",
   "engines": {
     "node": "22.x"
   }

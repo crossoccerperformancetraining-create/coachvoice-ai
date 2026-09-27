@@ -66,11 +66,26 @@ function greeting(){
 function renderMorning(){
   const box=document.getElementById('today52Morning');if(!box)return;
   const p=nextPriorities(),ev=todayEvents(todayKey()).filter(e=>!e.done),tk=dayTasks(todayKey()).filter(t=>!t.done);
-  const name=(document.getElementById('coachName')?.value||localStorage.getItem('coachvoice-coach-name')||'Coach').trim();
+  const identity=typeof window.getCoachIdentity==='function'
+    ? window.getCoachIdentity()
+    : {name:String(localStorage.getItem('coachvoice-name')||'Coach'),teamName:'',photo:'',crest:''};
+  const name=String(identity.name||'Coach').trim()||'Coach';
+  const safePhoto=/^data:image\//i.test(identity.photo||'')?identity.photo:'';
+  const safeCrest=/^data:image\//i.test(identity.crest||'')?identity.crest:'';
+  const initials=name.split(/\s+/).filter(Boolean).map(x=>x[0]).join('').slice(0,2).toUpperCase()||'C';
+
   box.innerHTML=`
     <div class="today52-morning-copy">
-      <span>${greeting().toUpperCase()}</span>
-      <h2>${esc(name)}. Hoje tem ${ev.length} compromisso(s) e ${tk.length} tarefa(s) pendente(s).</h2>
+      <div class="today521-identity-strip">
+        <div class="today521-coach-photo">${safePhoto?`<img src="${safePhoto}" alt="">`:esc(initials)}</div>
+        <div class="today521-identity-text">
+          <span>${greeting().toUpperCase()}</span>
+          <strong>${esc(name)}</strong>
+          ${identity.teamName?`<small>${esc(identity.teamName)}</small>`:''}
+        </div>
+        <div class="today521-club-crest">${safeCrest?`<img src="${safeCrest}" alt="">`:(identity.teamName?'🛡️':'')}</div>
+      </div>
+      <h2>Hoje tem ${ev.length} compromisso(s) e ${tk.length} tarefa(s) pendente(s).</h2>
       <p>${p.length?'Suas prioridades agora: '+p.map(x=>esc(x.title)).join(' · '):'Nenhuma prioridade crítica registrada. Você pode começar o dia com calma.'}</p>
     </div>
     <div class="today52-morning-actions">
@@ -92,7 +107,11 @@ window.today52GenerateBrief=async function(){
     date:todayKey(),
     tasks:dayTasks(todayKey()).map(t=>({title:t.title,time:t.time,priority:t.priority,done:t.done,category:t.category})),
     events:todayEvents(todayKey()).map(e=>({title:e.title,time:e.time,duration:e.duration,done:e.done,category:e.category,person:e.person||''})),
-    workWindow:{start:prefs().workStart,end:prefs().workEnd}
+    workWindow:{start:prefs().workStart,end:prefs().workEnd},
+    identity:(()=>{
+      const i=typeof window.getCoachIdentity==='function'?window.getCoachIdentity():{};
+      return {coachName:i.name||'',teamName:i.teamName||''};
+    })()
   };
   let text='';
   if(typeof callCoachAI==='function'){
@@ -505,6 +524,8 @@ function renderAll(){
 }
 window.today52Open=function(){renderAll()};
 window.today52Render=renderAll;
+
+window.addEventListener('coachvoice:identity',()=>setTimeout(()=>{renderMorning();renderAgenda();},0));
 
 document.addEventListener('DOMContentLoaded',()=>{
   selectedDate=todayKey();

@@ -209,17 +209,21 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <link rel="stylesheet" href="/studio.css">
 <link rel="stylesheet" href="/coachday.css?v=40">
 <link rel="stylesheet" href="/coachprep.css?v=46">
-<link rel="stylesheet" href="/mentor-v52.css?v=52">
+<link rel="stylesheet" href="/mentor-v52.css?v=521">
 <link rel="stylesheet" href="/dashboard-v51.css?v=51">
 <link rel="stylesheet" href="/languages-v50.css?v=50">
-<link rel="stylesheet" href="/ui-v52.css?v=52">
+<link rel="stylesheet" href="/ui-v52.css?v=521">
 </head>
 <body>
 <div class="app">
 <aside id="drawer" class="drawer">
   <div class="drawer-profile">
-    <div class="avatar">PA</div>
-    <div><strong>Professor Andrade</strong><small>Treinador</small></div>
+    <div id="drawerCoachAvatar" class="avatar coach-identity-avatar">C</div>
+    <div class="drawer-profile-copy">
+      <strong>Coach</strong>
+      <small id="drawerTeamName">Treinador</small>
+    </div>
+    <div id="drawerTeamCrest" class="drawer-team-crest" aria-label="Escudo da equipe"></div>
   </div>
   <nav>
     <button class="drawer-link" data-page="home" onclick="go('home')">⌂ Visão geral</button>
@@ -2276,11 +2280,44 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   </div>
 
   <article class="card">
-    <span class="label">Identificação no aplicativo</span>
-    <label class="label" for="coachName">Como deseja ser chamado?</label>
-    <input id="coachName" class="select-field" value="Professor Andrade" placeholder="Ex.: Professor Andrade">
-    <br><br>
-    <button class="primary" onclick="saveLocalProfile()">Salvar nome e preferências</button>
+    <span class="label">Perfil e equipe</span>
+    <h3>Personalize como o CoachVoice identifica você e seu clube</h3>
+    <p class="intro">Foto e escudo são opcionais e ficam armazenados somente neste aparelho. O Mentor recebe apenas seu nome e o nome da equipe como contexto.</p>
+
+    <div class="coach521-identity-grid">
+      <section class="coach521-identity-card">
+        <span class="coach521-kicker">👤 PERFIL DO TREINADOR</span>
+        <div class="coach521-image-row">
+          <div id="coachPhotoPreview" class="coach521-image-preview coach">C</div>
+          <div class="coach521-image-actions">
+            <button class="secondary" type="button" onclick="document.getElementById('coachPhotoFile').click()">Alterar foto</button>
+            <button class="outline" type="button" onclick="clearCoachIdentityImage('photo')">Remover foto</button>
+          </div>
+        </div>
+        <input id="coachPhotoFile" class="hidden" type="file" accept="image/*" onchange="handleCoachIdentityImage('photo',this)">
+        <label class="label" for="coachName">Nome de exibição</label>
+        <input id="coachName" class="select-field" value="Coach" placeholder="Ex.: Adriana Silva">
+      </section>
+
+      <section class="coach521-identity-card">
+        <span class="coach521-kicker">🛡️ MINHA EQUIPE</span>
+        <div class="coach521-image-row">
+          <div id="teamCrestPreview" class="coach521-image-preview crest">🛡️</div>
+          <div class="coach521-image-actions">
+            <button class="secondary" type="button" onclick="document.getElementById('teamCrestFile').click()">Alterar escudo</button>
+            <button class="outline" type="button" onclick="clearCoachIdentityImage('crest')">Remover escudo</button>
+          </div>
+        </div>
+        <input id="teamCrestFile" class="hidden" type="file" accept="image/*" onchange="handleCoachIdentityImage('crest',this)">
+        <label class="label" for="coachTeamName">Nome da equipe</label>
+        <input id="coachTeamName" class="select-field" placeholder="Ex.: Clube Atlético">
+      </section>
+    </div>
+
+    <div class="coach521-save-profile">
+      <button class="primary" onclick="saveLocalProfile()">Salvar perfil e equipe</button>
+      <small>Você pode trocar nome, foto, equipe e escudo a qualquer momento.</small>
+    </div>
   </article>
 
   <article class="card">
@@ -3740,17 +3777,183 @@ function updateLocalHistory(){
     recent.innerHTML=activities.length?activities.slice(0,6).map(x=>`<div class="history-item"><strong>${x.title}</strong><small>${x.date}</small></div>`).join(''):'<p class="intro">Ainda não há sessões salvas.</p>';
   }
 }
+const COACH_IDENTITY_KEY='coachvoice-profile-v521';
+
+function identityInitials(name='Coach'){
+  const words=String(name||'Coach').trim().split(/\s+/).filter(Boolean);
+  if(!words.length)return 'C';
+  return (words.length===1?words[0].slice(0,2):words[0][0]+words[words.length-1][0]).toUpperCase();
+}
+function safeIdentityImage(value){
+  const s=String(value||'');
+  return /^data:image\//i.test(s)?s:'';
+}
+function getCoachIdentity(){
+  let saved={};
+  try{saved=JSON.parse(localStorage.getItem(COACH_IDENTITY_KEY)||'{}')||{};}catch{}
+  const legacyName=String(localStorage.getItem('coachvoice-name')||'').trim();
+  return {
+    name:String(saved.name||legacyName||'Coach').trim()||'Coach',
+    teamName:String(saved.teamName||localStorage.getItem('coachvoice-team-name')||'').trim(),
+    photo:safeIdentityImage(saved.photo),
+    crest:safeIdentityImage(saved.crest)
+  };
+}
+window.getCoachIdentity=getCoachIdentity;
+
+function saveCoachIdentity(identity){
+  const data={
+    name:String(identity.name||'Coach').trim()||'Coach',
+    teamName:String(identity.teamName||'').trim(),
+    photo:safeIdentityImage(identity.photo),
+    crest:safeIdentityImage(identity.crest)
+  };
+  localStorage.setItem(COACH_IDENTITY_KEY,JSON.stringify(data));
+
+  // Compatibilidade com versões anteriores.
+  localStorage.setItem('coachvoice-name',data.name);
+  localStorage.setItem('coachvoice-coach-name',data.name);
+  localStorage.setItem('coachvoice-team-name',data.teamName);
+
+  return data;
+}
+
+function renderIdentityImage(el,image,fallback){
+  if(!el)return;
+  const safe=safeIdentityImage(image);
+  if(safe){
+    el.innerHTML=`<img src="${safe}" alt="">`;
+    el.classList.add('has-image');
+  }else{
+    el.textContent=fallback;
+    el.classList.remove('has-image');
+  }
+}
+
+function applyCoachIdentity(){
+  const identity=getCoachIdentity();
+
+  document.querySelectorAll('.drawer-profile strong').forEach(el=>el.textContent=identity.name);
+  const team=document.getElementById('drawerTeamName');
+  if(team)team.textContent=identity.teamName||'Treinador';
+
+  renderIdentityImage(
+    document.getElementById('drawerCoachAvatar'),
+    identity.photo,
+    identityInitials(identity.name)
+  );
+  renderIdentityImage(
+    document.getElementById('drawerTeamCrest'),
+    identity.crest,
+    identity.teamName?'🛡️':''
+  );
+
+  renderIdentityImage(
+    document.getElementById('coachPhotoPreview'),
+    identity.photo,
+    identityInitials(identity.name)
+  );
+  renderIdentityImage(
+    document.getElementById('teamCrestPreview'),
+    identity.crest,
+    '🛡️'
+  );
+
+  const nameInput=document.getElementById('coachName');
+  if(nameInput)nameInput.value=identity.name;
+  const teamInput=document.getElementById('coachTeamName');
+  if(teamInput)teamInput.value=identity.teamName;
+
+  window.dispatchEvent(new CustomEvent('coachvoice:identity',{detail:identity}));
+  return identity;
+}
+
+function resizeCoachIdentityImage(file,kind='photo'){
+  return new Promise((resolve,reject)=>{
+    if(!file||!String(file.type||'').startsWith('image/')){
+      reject(new Error('Escolha uma imagem válida.'));
+      return;
+    }
+    if(file.size>12*1024*1024){
+      reject(new Error('A imagem é muito grande. Escolha um arquivo menor que 12 MB.'));
+      return;
+    }
+
+    const reader=new FileReader();
+    reader.onerror=()=>reject(new Error('Não consegui ler a imagem.'));
+    reader.onload=()=>{
+      const img=new Image();
+      img.onerror=()=>reject(new Error('Não consegui abrir a imagem.'));
+      img.onload=()=>{
+        const size=kind==='crest'?320:360;
+        const canvas=document.createElement('canvas');
+        canvas.width=size;canvas.height=size;
+        const ctx=canvas.getContext('2d');
+
+        if(kind==='crest'){
+          // Escudo: preserva a imagem inteira e possíveis transparências.
+          ctx.clearRect(0,0,size,size);
+          const scale=Math.min(size/img.width,size/img.height);
+          const w=img.width*scale,h=img.height*scale;
+          ctx.drawImage(img,(size-w)/2,(size-h)/2,w,h);
+        }else{
+          // Foto: recorte quadrado central para ficar bem no avatar.
+          const side=Math.min(img.width,img.height);
+          const sx=(img.width-side)/2,sy=(img.height-side)/2;
+          ctx.drawImage(img,sx,sy,side,side,0,0,size,size);
+        }
+
+        let data='';
+        try{data=canvas.toDataURL('image/webp',kind==='crest'?.9:.84);}catch{}
+        if(!data||data==='data:,')data=canvas.toDataURL('image/jpeg',.84);
+        resolve(data);
+      };
+      img.src=reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+window.handleCoachIdentityImage=async function(kind,input){
+  const file=input?.files?.[0];
+  if(!file)return;
+  try{
+    const data=await resizeCoachIdentityImage(file,kind);
+    const identity=getCoachIdentity();
+    identity[kind]=data;
+    saveCoachIdentity(identity);
+    applyCoachIdentity();
+    toast(kind==='photo'?'Foto do treinador atualizada.':'Escudo da equipe atualizado.');
+  }catch(error){
+    toast(error?.message||'Não consegui salvar esta imagem.');
+  }finally{
+    if(input)input.value='';
+  }
+};
+
+window.clearCoachIdentityImage=function(kind){
+  const identity=getCoachIdentity();
+  identity[kind]='';
+  saveCoachIdentity(identity);
+  applyCoachIdentity();
+  toast(kind==='photo'?'Foto removida.':'Escudo removido.');
+};
+
 function saveLocalProfile(){
-  const name=document.getElementById('coachName').value.trim()||'Professor';
-  localStorage.setItem('coachvoice-name',name);
-  document.querySelectorAll('.drawer-profile strong').forEach(el=>el.textContent=name);
-  toast('Preferências salvas neste aparelho.');
+  const identity=getCoachIdentity();
+  identity.name=document.getElementById('coachName')?.value.trim()||'Coach';
+  identity.teamName=document.getElementById('coachTeamName')?.value.trim()||'';
+
+  try{
+    saveCoachIdentity(identity);
+    applyCoachIdentity();
+    toast('Perfil e equipe salvos neste aparelho.');
+  }catch(error){
+    toast('Não consegui salvar o perfil. Tente usar uma foto ou escudo menor.');
+  }
 }
 function loadLocalProfile(){
-  const name=localStorage.getItem('coachvoice-name')||'Professor Andrade';
-  const input=document.getElementById('coachName');
-  if(input)input.value=name;
-  document.querySelectorAll('.drawer-profile strong').forEach(el=>el.textContent=name);
+  applyCoachIdentity();
 }
 function clearLocalHistory(){
   [
@@ -4298,10 +4501,10 @@ checkTechnicalEnvironment();
 <script src="/coachvoice-v33.js?v=40"></script>
 <script src="/coachday-v40.js?v=46"></script>
 <script src="/coachprep-v42.js?v=46"></script>
-<script src="/mentor-v52.js?v=52"></script>
+<script src="/mentor-v52.js?v=521"></script>
 <script src="/dashboard-v51.js?v=51"></script>
 <script src="/languages-v50.js?v=50"></script>
-<script src="/today-v52.js?v=52"></script>
+<script src="/today-v52.js?v=521"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));

@@ -323,11 +323,20 @@
     try{prefs=JSON.parse(localStorage.getItem('coachvoice-v52-settings')||'{}');}catch{}
     const toneMap={direct:'direto e objetivo',balanced:'equilibrado, humano e prático',reflective:'reflexivo sem ser interrogatório'};
     const lengthMap={short:'curtas',normal:'médias e naturais',detailed:'mais detalhadas quando necessário'};
+    let identity={};
+    try{identity=JSON.parse(localStorage.getItem('coachvoice-profile-v521')||'{}')||{};}catch{}
+    const identityContext=[
+      identity.name?`Nome de exibição do treinador: ${String(identity.name).slice(0,80)}.`:'',
+      identity.teamName?`Equipe atual: ${String(identity.teamName).slice(0,120)}.`:'',
+      'Use nome e equipe apenas quando isso deixar a conversa mais natural ou evitar ambiguidade; não repita essas informações em toda resposta.'
+    ].filter(Boolean).join(' ');
+
     const extra=[
+      identityContext,
       `Preferência de tom: ${toneMap[prefs.mentorTone]||'equilibrado, humano e prático'}.`,
       `Preferência de tamanho: respostas ${lengthMap[prefs.responseLength]||'médias e naturais'}.`,
       'Evite perguntas por hábito; responda primeiro e só pergunte se isso realmente mudar a orientação.'
-    ].join(' ');
+    ].filter(Boolean).join(' ');
     return [base,extra].filter(Boolean).join('\n');
   }
 

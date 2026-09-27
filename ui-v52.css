@@ -226,3 +226,76 @@ main{padding-bottom:104px}
 #mentor42CallStatus[data-state="processing"]{border-color:#ecd69e!important;background:#fff8e7!important;color:#74591a!important}
 #mentor42CallStatus[data-state="ai"]{border-color:#bdd8f0!important;background:#eef7ff!important;color:#285b87!important}
 #mentor42CallStatus[data-state="error"]{border-color:#efbdc1!important;background:#fff0f1!important;color:#9d2830!important}
+
+
+/* v5.2.1 — Perfil do treinador + equipe */
+.drawer-profile{position:relative}
+.drawer-profile-copy{min-width:0;flex:1}
+.drawer-profile-copy strong,.drawer-profile-copy small{max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.coach-identity-avatar,.drawer-team-crest,.coach521-image-preview,.today521-coach-photo,.today521-club-crest{
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.coach-identity-avatar img,.drawer-team-crest img,.coach521-image-preview img,.today521-coach-photo img,.today521-club-crest img{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+.drawer-team-crest{
+  width:34px;height:34px;border-radius:10px;
+  margin-left:auto;background:rgba(255,255,255,.08);
+  font-size:1rem;flex:0 0 auto;
+}
+.drawer-team-crest img{object-fit:contain;padding:3px}
+.coach521-identity-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px;
+}
+.coach521-identity-card{
+  border:1px solid var(--line,#dce5ef);
+  border-radius:18px;
+  padding:15px;
+  background:linear-gradient(180deg,#fff,#f8fafc);
+}
+.coach521-kicker{
+  display:block;font-size:.7rem;letter-spacing:.07em;font-weight:900;color:#667085;margin-bottom:12px;
+}
+.coach521-image-row{
+  display:flex;align-items:center;gap:13px;margin-bottom:14px;
+}
+.coach521-image-preview{
+  width:82px;height:82px;border-radius:24px;
+  background:#edf3f8;border:1px solid #d4e0ea;
+  color:#24415f;font-size:1.25rem;font-weight:900;flex:0 0 auto;
+}
+.coach521-image-preview.crest{border-radius:20px;font-size:1.8rem}
+.coach521-image-preview.crest img{object-fit:contain;padding:7px}
+.coach521-image-actions{display:grid;gap:7px;min-width:0}
+.coach521-image-actions button{width:100%}
+.coach521-save-profile{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px;
+}
+.coach521-save-profile small{color:#667085;line-height:1.4}
+.today521-identity-strip{
+  display:flex;align-items:center;gap:10px;margin-bottom:10px;
+}
+.today521-coach-photo{
+  width:48px;height:48px;border-radius:16px;
+  background:#eaf2f8;border:1px solid #d3e0e9;
+  color:#23415e;font-weight:900;flex:0 0 auto;
+}
+.today521-identity-text{min-width:0;flex:1}
+.today521-identity-text>span{display:block;font-size:.67rem;letter-spacing:.07em;font-weight:900;color:#6b7c8f}
+.today521-identity-text>strong{display:block;margin-top:2px;font-size:1rem;color:#183651;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.today521-identity-text>small{display:block;margin-top:2px;color:#6a7a8b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.today521-club-crest{
+  width:44px;height:44px;border-radius:14px;
+  background:#f6f8fb;border:1px solid #dce4ec;
+  font-size:1.25rem;flex:0 0 auto;
+}
+.today521-club-crest img{object-fit:contain;padding:5px}
+
+@media (max-width:680px){
+  .coach521-identity-grid{grid-template-columns:1fr}
+  .coach521-image-preview{width:74px;height:74px}
+  .coach521-save-profile .primary{width:100%}
+}
