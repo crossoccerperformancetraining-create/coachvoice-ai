@@ -1,0 +1,172 @@
+
+/* CoachVoice AI v5.2.2 — Mobile & Estabilidade */
+
+.topbar-actions{display:flex;align-items:center;gap:7px}
+
+/* Drawer: perfil fixo, conteúdo rolável e Configurações fixa */
+.drawer{
+  padding:0!important;
+  overflow:hidden!important;
+  height:100dvh!important;
+  max-height:100dvh!important;
+}
+.drawer-profile{
+  flex:0 0 auto;
+  padding:calc(18px + env(safe-area-inset-top)) 17px 16px!important;
+  border-bottom:1px solid rgba(255,255,255,.12)!important;
+}
+.drawer-scroll{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+  padding:12px 13px 22px;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,.22) transparent;
+}
+.drawer-overview-link{width:100%;margin-bottom:7px}
+.drawer-group{border-bottom:1px solid rgba(255,255,255,.08);padding:2px 0}
+.drawer-group summary{
+  list-style:none;cursor:pointer;padding:12px 10px;border-radius:11px;
+  color:#dbe6f2;font-weight:850;font-size:.88rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.drawer-group summary::-webkit-details-marker{display:none}
+.drawer-group summary::after{content:'›';font-size:1.2rem;transition:.18s;color:#8fa4bb}
+.drawer-group[open] summary::after{transform:rotate(90deg)}
+.drawer-group[open] summary{color:#9ce9a6;background:rgba(255,255,255,.035)}
+.drawer-group-links{display:grid;gap:3px;padding:2px 0 8px 12px}
+.drawer-group-links .drawer-link{font-size:.92rem;padding:10px 11px!important}
+.drawer-note{margin:16px 7px 6px!important}
+.drawer-footer{
+  flex:0 0 auto;
+  padding:10px 13px calc(10px + env(safe-area-inset-bottom));
+  background:#08162a;
+  border-top:1px solid rgba(255,255,255,.13);
+  box-shadow:0 -12px 30px rgba(0,0,0,.16);
+}
+.drawer-settings{
+  width:100%;border:1px solid rgba(255,255,255,.13);border-radius:14px;
+  background:rgba(255,255,255,.07);color:#fff;padding:11px 12px;
+  display:grid;grid-template-columns:34px 1fr;gap:9px;align-items:center;text-align:left;
+}
+.drawer-settings>span{font-size:1.25rem}
+.drawer-settings strong,.drawer-settings small{display:block}
+.drawer-settings small{color:#aebfd0;margin-top:2px;font-size:.72rem}
+
+/* Voice state */
+.mentor522-voice-state{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  width:max-content;max-width:94%;margin:0 auto 8px;padding:7px 12px;
+  border-radius:999px;font-size:.8rem;border:1px solid #d5e2eb;background:#f6f9fb;color:#34516b;
+}
+.mentor522-voice-state.recording{background:#fff0f0;border-color:#efbaba;color:#9e2929}
+.mentor522-voice-state.transcribing{background:#fff8e8;border-color:#ecd295;color:#765510}
+.mentor522-voice-state.responding{background:#edf5ff;border-color:#c7daf0;color:#24588b}
+.mentor522-voice-state.error{background:#fff3df;border-color:#edc477;color:#7a5410}
+.mentor522-wake-state{
+  margin:0 auto 8px;width:max-content;max-width:92%;padding:6px 10px;border-radius:10px;
+  background:rgba(255,255,255,.08);color:#cfe2f2;font-size:.72rem;text-align:center;
+}
+
+/* Sticky action bars */
+.coach522-sticky-actions{
+  position:sticky;
+  bottom:calc(72px + env(safe-area-inset-bottom));
+  z-index:15;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(13px);
+  -webkit-backdrop-filter:blur(13px);
+  padding:9px;
+  border:1px solid #dce5ed;
+  border-radius:15px;
+  box-shadow:0 10px 26px rgba(22,41,62,.12);
+}
+#mentor .mentor47-conversation-actions{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:7px!important;
+}
+.coach522-more-actions{margin-top:10px;border:1px solid #e1e8ef;border-radius:13px;padding:9px 11px;background:#fafcfe}
+.coach522-more-actions>summary{cursor:pointer;font-weight:800;color:#53687c}
+.coach522-more-actions-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:9px}
+#interviewQuestion{
+  position:sticky;top:76px;z-index:8;
+  background:#fff;border-radius:12px;padding:9px 10px;
+  box-shadow:0 7px 18px rgba(28,49,69,.07);
+}
+
+/* Resume / recovery / offline */
+.coach522-resume-card{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin:-4px 0 14px;padding:13px 14px;border:1px solid #cfe0ee;
+  border-radius:16px;background:linear-gradient(135deg,#f4f9ff,#f7fff8);
+}
+.coach522-resume-card>div{min-width:0}
+.coach522-resume-card span,.coach522-resume-card strong,.coach522-resume-card small{display:block}
+.coach522-resume-card span{font-size:.64rem;letter-spacing:.08em;color:#648096;font-weight:900}
+.coach522-resume-card strong{margin-top:2px;color:#1f4463}
+.coach522-resume-card small{margin-top:2px;color:#728294}
+.coach522-resume-card button{border:0;border-radius:11px;background:#113c65;color:#fff;padding:9px 12px;font-weight:850}
+.coach522-recovery-banner{
+  position:fixed;left:12px;right:12px;bottom:calc(82px + env(safe-area-inset-bottom));
+  z-index:130;background:#0c2743;color:#fff;border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;padding:12px;display:grid;grid-template-columns:1fr auto auto;
+  gap:9px;align-items:center;box-shadow:0 18px 40px rgba(0,0,0,.28);
+}
+.coach522-recovery-banner strong,.coach522-recovery-banner small{display:block}
+.coach522-recovery-banner small{margin-top:3px;color:#c8d7e5}
+.coach522-recovery-banner button{border:0;border-radius:10px;padding:9px 11px;font-weight:850;background:#47c95b;color:#092617}
+.coach522-recovery-banner button.discard{background:rgba(255,255,255,.1);color:#fff}
+.coach522-offline{
+  position:fixed;top:calc(68px + env(safe-area-inset-top));left:10px;right:10px;z-index:125;
+  background:#fff3d9;color:#735113;border:1px solid #e7c67c;border-radius:12px;padding:9px 12px;
+  font-size:.78rem;font-weight:750;text-align:center;box-shadow:0 7px 20px rgba(56,43,15,.12);
+}
+
+/* Focus mode */
+.coach522-focus .bottom-nav,
+.coach522-focus .today52-fab,
+.coach522-focus .topbar .icon-btn:first-child,
+.coach522-focus .topbar-actions{display:none!important}
+.coach522-focus .topbar{
+  grid-template-columns:1fr!important;
+  justify-items:center;
+}
+.coach522-focus .page.active>.hero,
+.coach522-focus #mentor>.mentor42-hero,
+.coach522-focus #mentor>.mentor47-hero{display:none!important}
+.coach522-focus main{padding-bottom:28px!important}
+.coach522-focus-exit{
+  position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:160;
+  border:1px solid #d8e1e9;background:#fff;color:#29465e;border-radius:999px;padding:8px 11px;
+  font-weight:850;box-shadow:0 8px 24px rgba(22,40,58,.12);
+}
+
+/* Better mobile forms */
+@media (max-width:680px){
+  .topbar-actions{gap:4px}
+  .topbar-actions .icon-btn{width:42px;height:42px}
+  .drawer{width:min(88vw,360px)!important}
+  .drawer-profile{padding-left:16px!important;padding-right:16px!important}
+  .drawer-link{min-height:44px}
+  .coach522-sticky-actions{bottom:calc(70px + env(safe-area-inset-bottom))}
+  .coach522-more-actions-grid{grid-template-columns:1fr}
+  .coach522-recovery-banner{
+    grid-template-columns:1fr 1fr;
+    bottom:calc(77px + env(safe-area-inset-bottom))
+  }
+  .coach522-recovery-banner>div{grid-column:1/-1}
+  .coach522-resume-card{align-items:flex-start}
+  .coach522-resume-card button{flex:0 0 auto}
+  #interviews .interview48-session-controls{overflow-x:auto;flex-wrap:nowrap;padding-bottom:5px}
+  #interviews .interview48-session-controls>*{flex:0 0 auto}
+  .sheet,.today52-modal{max-height:90dvh!important}
+}
+
+/* Larger tap targets throughout mobile */
+@media (pointer:coarse){
+  button,.drawer-link,summary{min-height:44px}
+}

@@ -1,0 +1,32 @@
+CoachVoice AI v5.2.2 — Mobile & Estabilidade
+
+CORREÇÕES PRINCIPAIS
+- Menu lateral agora tem rolagem própria no celular.
+- Meu CoachVoice / Configurações fica fixo no rodapé do menu.
+- Menu agrupado em Hoje, Gestão, Treinar, Evolução e Mais.
+- Durante gravações, o app tenta manter a tela ligada usando Screen Wake Lock.
+- Partes do áudio são preservadas localmente durante a gravação.
+- Se o navegador interromper, aparece “Encontramos uma gravação interrompida”.
+- Recuperação disponível para Mentor e gravações de Entrevistas/Idiomas.
+- Rascunhos de textareas são preservados por até 24h.
+- Card “Continuar de onde parei” na tela Hoje.
+- Estado de voz mais claro: pronto, gravando, transcrevendo, respondendo, erro.
+- Modo Foco no topo para esconder distrações.
+- Aviso offline sem apagar o conteúdo.
+- Ações principais do Mentor simplificadas e fixas no celular.
+- Pergunta da entrevista fica mais fácil de acompanhar em telas longas.
+
+IMPORTANTE
+- O bloqueio de tela depende do suporte do navegador/SO. Se o aparelho não permitir Wake Lock,
+  o CoachVoice mostra um aviso e continua preservando os pedaços de áudio já gravados.
+- Nenhuma API foi alterada.
+- GEMINI_API_KEY não muda.
+
+PUBLICAÇÃO
+1. Envie o patch da raiz para a raiz do GitHub.
+2. NÃO mexa em api/.
+3. Commit sugerido:
+   Melhorar mobile e proteger gravações v5.2.2
+4. Aguarde Vercel Production — Ready.
+5. Teste:
+   https://coachvoice-ai.vercel.app/?v=522

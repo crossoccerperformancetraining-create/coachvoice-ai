@@ -698,6 +698,8 @@
     }
     addTurn('user',text);
     if(input)input.value='';
+    window.coach522ClearDraft?.('mentor42Input');
+    window.coach522SetVoiceState?.('responding','Mentor respondendo');
     setCallStatus('Mentor pensando na sua resposta...');
     const result=await askDialogue(text);
 
@@ -709,6 +711,8 @@
       setCallStatus('A IA não conseguiu responder. Veja o erro na conversa.');
       const live=document.getElementById('mentor44LiveTranscript');
       if(live)live.textContent='Erro de conexão com a IA.';
+      window.coach522InteractionComplete?.('mentor');
+      window.coach522SetVoiceState?.('error','Falhou — tentar novamente');
       return;
     }
 
@@ -820,6 +824,7 @@
   let mentor511LastAudioBlob=null;
   let mentor511LastAutoSend=true;
   let mentor511Retrying=false;
+  let mentor522LastPersistAt=0;
 
   function mentor481PreferredMime(){
     const types=['audio/mp4','audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus'];
@@ -893,6 +898,9 @@
 
   function mentor481CancelPushToTalk(){
     mentor481CancelRequested=true;
+    window.coach522ClearRecording?.('mentor');
+    window.coach522InteractionComplete?.('mentor');
+    window.coach522SetVoiceState?.('ready','Pronto para falar');
     mentor481ClearTimer();
     try{
       if(mentor481Recorder&&mentor481Recorder.state==='recording'){
@@ -948,6 +956,7 @@
     mentor481SetMicUI('idle');
     mentor511ShowRetry(false);
     mentor511LastAudioBlob=null;
+    window.coach522ClearRecording?.('mentor');
 
     const suspicious=mentor512TranscriptLooksSuspicious(text);
     if(suspicious){
@@ -955,15 +964,20 @@
       setCallStatus('Detectei repetição anormal na transcrição. Revise o texto e toque em Enviar; não vou mandar automaticamente.');
       if(typeof toast==='function')toast('A transcrição parece repetitiva. Revise antes de enviar.');
       input?.focus();
+      window.coach522InteractionComplete?.('mentor');
+      window.coach522SetVoiceState?.('ready','Pronto para falar');
       return;
     }
 
     if(live)live.textContent=`Entendi sua fala completa: ${text}`;
 
     if(autoSend){
+      window.coach522SetVoiceState?.('responding','Mentor respondendo');
       setCallStatus('Fala completa recebida. Agora o Mentor vai responder...');
       await mentor42Send(true);
     }else{
+      window.coach522InteractionComplete?.('mentor');
+      window.coach522SetVoiceState?.('ready','Pronto para falar');
       setCallStatus('Fala completa recebida. Revise o texto e toque em Enviar quando quiser.');
     }
   }
@@ -1023,6 +1037,10 @@
 
     const mime=mentor481Recorder?.mimeType||mentor481Chunks[0]?.type||'audio/webm';
     const blob=new Blob(mentor481Chunks,{type:mime});
+    try{
+      await window.coach522PersistRecordingBlob?.('mentor',blob,{label:'Conversa com o Mentor',lang:'pt-BR',page:'mentor'});
+    }catch{}
+    window.coach522SetVoiceState?.('transcribing','Transcrevendo sua fala');
     mentor481StopTracks();
     mentor481Recorder=null;
     mentor481Chunks=[];
@@ -1039,6 +1057,8 @@
       mentor481Processing=false;
       mentor481SetMicUI('idle');
       mentor511ShowRetry(true);
+      window.coach522RecordingFailed?.('mentor');
+      window.coach522SetVoiceState?.('error','Falhou — áudio preservado');
       setCallStatus('O áudio foi preservado. Toque em “Tentar transcrever novamente” sem precisar repetir sua fala.');
       if(live)live.textContent='Áudio preservado. A transcrição falhou, mas você pode reenviar a mesma gravação.';
       if(typeof toast==='function')toast('Não perdi seu áudio. Toque em “Tentar transcrever novamente”.');
@@ -1101,7 +1121,21 @@
         mentor481Recorder=new MediaRecorder(mentor481Stream,mime?{mimeType:mime}:{});
       }
       mentor481Recorder.ondataavailable=e=>{
-        if(e.data&&e.data.size)mentor481Chunks.push(e.data);
+        if(e.data&&e.data.size){
+          mentor481Chunks.push(e.data);
+          const now=Date.now();
+          if(now-mentor522LastPersistAt>4000){
+            mentor522LastPersistAt=now;
+            try{
+              const draftBlob=new Blob(mentor481Chunks,{type:mentor481Recorder?.mimeType||e.data.type||'audio/webm'});
+              window.coach522PersistRecordingBlob?.('mentor',draftBlob,{
+                label:'Conversa com o Mentor',
+                lang:'pt-BR',
+                page:'mentor'
+              });
+            }catch{}
+          }
+        }
       };
       mentor481Recorder.onstop=mentor481FinalizeRecording;
       mentor481Recorder.onerror=()=>{
@@ -1109,7 +1143,10 @@
         mentor481CancelPushToTalk();
       };
 
-      mentor481Recorder.start(500);
+      mentor481Recorder.start(750);
+      mentor522LastPersistAt=0;
+      window.coach522RecordingStarted?.('mentor',{label:'Conversa com o Mentor',lang:'pt-BR',page:'mentor'});
+      window.coach522SetVoiceState?.('recording','Gravando — toque para finalizar');
       mentor481Recording=true;
       mentor481StartedAt=Date.now();
       mentor481SetMicUI('recording');
@@ -1147,6 +1184,26 @@
       }
     }
   }
+
+  window.mentor522RecoverAudioBlob=function mentor522RecoverAudioBlob(blob,meta={}){
+    if(!blob?.size)return;
+    mentor511LastAudioBlob=blob;
+    mentor511LastAutoSend=true;
+    mentor511ShowRetry(true);
+    window.coach522SetVoiceState?.('error','Gravação recuperada — transcrever');
+    setCallStatus('Recuperamos uma gravação interrompida. Toque em “Tentar transcrever novamente”.');
+    const live=document.getElementById('mentor44LiveTranscript');
+    if(live)live.textContent='✓ Áudio recuperado. Você não precisa falar de novo.';
+  };
+
+  document.addEventListener('visibilitychange',()=>{
+    if(document.visibilityState==='hidden' && mentor481Recording && mentor481Chunks.length){
+      try{
+        const blob=new Blob(mentor481Chunks,{type:mentor481Recorder?.mimeType||mentor481Chunks[0]?.type||'audio/webm'});
+        window.coach522PersistRecordingBlob?.('mentor',blob,{label:'Conversa com o Mentor',lang:'pt-BR',page:'mentor'});
+      }catch{}
+    }
+  });
 
   window.mentor42Capture=function mentor42Capture(autoSend=false){
     mentor481StartPushToTalk(autoSend);
@@ -2101,6 +2158,8 @@
         }
       },900);
     }else if(state.isCallOpen){
+      window.coach522InteractionComplete?.('mentor');
+      window.coach522SetVoiceState?.('ready','Pronto para falar');
       setCallStatus('Sua vez. Toque 🎙 quando quiser falar; o Mentor vai esperar seu comando.');
     }
   }

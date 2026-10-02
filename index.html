@@ -209,10 +209,11 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <link rel="stylesheet" href="/studio.css">
 <link rel="stylesheet" href="/coachday.css?v=40">
 <link rel="stylesheet" href="/coachprep.css?v=46">
-<link rel="stylesheet" href="/mentor-v52.css?v=521">
+<link rel="stylesheet" href="/mentor-v52.css?v=522">
 <link rel="stylesheet" href="/dashboard-v51.css?v=51">
 <link rel="stylesheet" href="/languages-v50.css?v=50">
-<link rel="stylesheet" href="/ui-v52.css?v=521">
+<link rel="stylesheet" href="/ui-v52.css?v=522">
+<link rel="stylesheet" href="/mobile-v522.css?v=522">
 </head>
 <body>
 <div class="app">
@@ -225,36 +226,77 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     </div>
     <div id="drawerTeamCrest" class="drawer-team-crest" aria-label="Escudo da equipe"></div>
   </div>
-  <nav>
-    <button class="drawer-link" data-page="home" onclick="go('home')">⌂ Visão geral</button>
-    <button class="drawer-link active" data-page="dashboard" onclick="go('dashboard')">☀️ Hoje — Agenda e prioridades</button>
-    <button class="drawer-link" data-page="daily" onclick="go('daily')">🧭 CoachDay AI</button>
-    <button class="drawer-link" data-page="daytoday" onclick="go('daytoday')">☕ Dia a Dia — conversa livre</button>
-    <button class="drawer-link" data-page="coachprep" onclick="go('coachprep')">🛡️ CoachPrep — Gestão e Liderança</button>
-    <button class="drawer-link" data-page="studio" onclick="go('studio')">🎥 Estúdio do Treinador</button>
-    <button class="drawer-link" data-page="mentor" onclick="go('mentor')">🎧 Mentor IA — Voz e Gestão</button>
-    <button class="drawer-link" data-page="practice" onclick="go('practice')">🎯 Central de treinos</button>
-    <button class="drawer-link" data-page="languages" onclick="go('languages')">🌎 Idiomas — Inglês e Espanhol</button>
-    <button class="drawer-link" data-page="oratory" onclick="go('oratory')">🗣 Oratória com IA</button>
-    <button class="drawer-link" data-page="interviews" onclick="go('interviews')">🎙 Entrevistas com IA</button>
-    <button class="drawer-link" data-page="leadership" onclick="go('leadership')">🔥 Liderança com IA</button>
-    <button class="drawer-link" data-page="gamemodel" onclick="go('gamemodel')">🧠 Modelo de jogo</button>
-    <button class="drawer-link" data-page="library" onclick="go('library')">📚 Biblioteca de situações</button>
-    <button class="drawer-link" data-page="matchday" onclick="go('matchday')">🏟 Dia de jogo</button>
-    <button class="drawer-link" data-page="tracks" onclick="go('tracks')">▦ Formação completa</button>
-    <button class="drawer-link" data-page="progress" onclick="go('progress')">▥ Evolução real</button>
-    <button class="drawer-link" data-page="technical" onclick="go('technical')">⚙ Testes do aparelho</button>
-    <button class="drawer-link" data-page="profile" onclick="go('profile')">◉ Preferências</button>
-  </nav>
-  <div class="drawer-note">CoachVoice AI v5.2 — Hoje, Agenda, Mentor humanizado, Treinar, Evolução e busca geral. Dados locais com backup/exportação. Dados salvos neste aparelho; IA via Gemini quando configurada na Vercel.</div>
+
+  <div class="drawer-scroll" aria-label="Menu principal">
+    <button class="drawer-link drawer-overview-link" data-page="home" onclick="go('home')">⌂ Visão geral</button>
+
+    <details class="drawer-group" open>
+      <summary>☀️ Hoje</summary>
+      <div class="drawer-group-links">
+        <button class="drawer-link active" data-page="dashboard" onclick="go('dashboard')">Agenda e prioridades</button>
+        <button class="drawer-link" data-page="daily" onclick="go('daily')">🧭 CoachDay AI</button>
+        <button class="drawer-link" data-page="daytoday" onclick="go('daytoday')">☕ Dia a Dia</button>
+      </div>
+    </details>
+
+    <details class="drawer-group">
+      <summary>🧠 Gestão</summary>
+      <div class="drawer-group-links">
+        <button class="drawer-link" data-page="mentor" onclick="go('mentor')">🎧 Mentor IA</button>
+        <button class="drawer-link" data-page="coachprep" onclick="go('coachprep')">🛡️ CoachPrep</button>
+        <button class="drawer-link" data-page="studio" onclick="go('studio')">🎥 Estúdio do Treinador</button>
+        <button class="drawer-link" data-page="matchday" onclick="go('matchday')">🏟 Dia de jogo</button>
+      </div>
+    </details>
+
+    <details class="drawer-group">
+      <summary>🎯 Treinar</summary>
+      <div class="drawer-group-links">
+        <button class="drawer-link" data-page="practice" onclick="go('practice')">Central de treinos</button>
+        <button class="drawer-link" data-page="languages" onclick="go('languages')">🌎 Inglês e Espanhol</button>
+        <button class="drawer-link" data-page="oratory" onclick="go('oratory')">🗣 Oratória</button>
+        <button class="drawer-link" data-page="interviews" onclick="go('interviews')">🎙 Entrevistas</button>
+        <button class="drawer-link" data-page="leadership" onclick="go('leadership')">🔥 Liderança</button>
+        <button class="drawer-link" data-page="gamemodel" onclick="go('gamemodel')">🧠 Modelo de jogo</button>
+        <button class="drawer-link" data-page="library" onclick="go('library')">📚 Biblioteca de situações</button>
+      </div>
+    </details>
+
+    <details class="drawer-group">
+      <summary>📈 Evolução</summary>
+      <div class="drawer-group-links">
+        <button class="drawer-link" data-page="tracks" onclick="go('tracks')">▦ Formação completa</button>
+        <button class="drawer-link" data-page="progress" onclick="go('progress')">▥ Evolução real</button>
+      </div>
+    </details>
+
+    <details class="drawer-group">
+      <summary>••• Mais</summary>
+      <div class="drawer-group-links">
+        <button class="drawer-link" data-page="technical" onclick="go('technical')">⚙ Testes do aparelho</button>
+      </div>
+    </details>
+
+    <div class="drawer-note">CoachVoice AI v5.2.2 — experiência móvel, gravação protegida e recuperação automática.</div>
+  </div>
+
+  <div class="drawer-footer">
+    <button class="drawer-settings" data-page="profile" onclick="go('profile')">
+      <span>⚙️</span>
+      <div><strong>Meu CoachVoice</strong><small>Perfil, equipe, voz e backup</small></div>
+    </button>
+  </div>
 </aside>
 <div id="overlay" class="overlay" onclick="closeDrawer()"></div>
 
 <main>
 <header class="topbar">
-  <button class="icon-btn" onclick="openDrawer()">☰</button>
+  <button class="icon-btn" onclick="openDrawer()" aria-label="Abrir menu">☰</button>
   <div class="brand"><h1>CoachVoice <span>AI</span></h1><p id="topSubtitle">Hoje — agenda e prioridades</p></div>
-  <button class="icon-btn" onclick="today52OpenSearch()" aria-label="Buscar">⌕</button>
+  <div class="topbar-actions">
+    <button id="coach522FocusBtn" class="icon-btn" onclick="coach522ToggleFocus()" aria-label="Modo foco" title="Modo foco">◎</button>
+    <button class="icon-btn" onclick="today52OpenSearch()" aria-label="Buscar">⌕</button>
+  </div>
 </header>
 
 <section id="home" class="page">
@@ -986,16 +1028,22 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <label class="label" for="mentor42Input">Fale ou escreva normalmente</label>
     <textarea id="mentor42Input" class="text-input mentor42-input" placeholder="Ex.: Hoje aconteceu uma situação no treino e eu queria conversar sobre isso..."></textarea>
 
-    <div class="mentor42-actions mentor47-conversation-actions">
-      <button id="mentor481MainMicBtn" class="secondary" onclick="mentor42Capture(true)">🎙 Iniciar minha fala</button>
-      <button id="mentor511RetryMain" class="secondary hidden" onclick="mentor511RetryTranscription()">↻ Tentar transcrever novamente</button>
+    <div class="mentor42-actions mentor47-conversation-actions coach522-sticky-actions">
+      <button id="mentor481MainMicBtn" class="secondary" onclick="mentor42Capture(true)">🎙 Iniciar fala</button>
       <button id="mentor49SendBtn" class="primary" onclick="mentor42Send()">Enviar</button>
-      <button class="mentor49-conclude" onclick="mentor49Conclude()">✅ Quero uma conclusão</button>
-      <button class="mentor49-end" onclick="mentor49PrepareEndConversation()">🔴 Encerrar conversa</button>
-      <button class="outline" onclick="mentor44RepeatLastAnswer()">🔊 Ouvir resposta</button>
-      <button class="outline" onclick="mentor47UsePreviousContext()">🧠 Usar contexto anterior</button>
-      <button class="secondary mentor47-save-day" onclick="mentor47SaveDay()">💾 Salvar o dia</button>
+      <button class="mentor49-conclude" onclick="mentor49Conclude()">✅ Conclusão</button>
+      <button class="mentor49-end" onclick="mentor49PrepareEndConversation()">🔴 Encerrar</button>
     </div>
+
+    <details class="coach522-more-actions">
+      <summary>••• Mais opções da conversa</summary>
+      <div class="coach522-more-actions-grid">
+        <button id="mentor511RetryMain" class="secondary hidden" onclick="mentor511RetryTranscription()">↻ Tentar transcrever novamente</button>
+        <button class="outline" onclick="mentor44RepeatLastAnswer()">🔊 Ouvir resposta</button>
+        <button class="outline" onclick="mentor47UsePreviousContext()">🧠 Usar contexto anterior</button>
+        <button class="secondary mentor47-save-day" onclick="mentor47SaveDay()">💾 Salvar o dia</button>
+      </div>
+    </details>
 
     <div id="mentor49ClosurePanel" class="mentor49-closure-panel hidden"></div>
     <div id="mentor42Review" class="mentor42-result hidden"></div>
@@ -1148,6 +1196,8 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
       </div>
 
       <div id="mentor513ManualBadge" class="mentor513-manual-badge">🛡️ Modo manual protegido</div>
+      <div id="mentor522VoiceState" class="mentor522-voice-state ready"><span></span><strong>Pronto para falar</strong></div>
+      <div id="mentor522WakeState" class="mentor522-wake-state hidden">🔒 Tela ativa durante a gravação</div>
       <div id="mentor42CallStatus" class="mentor42-call-status">Toque 🎙 para começar. O Mentor só recebe sua fala depois que você tocar em ⏹.</div>
       <div id="mentor44LiveTranscript" class="mentor44-live-transcript">Pode pensar, respirar e fazer pausas. Uma pausa não encerra sua fala.</div>
 
@@ -1942,7 +1992,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
   <article class="card">
     <span class="label">Sua resposta</span>
     <textarea id="interviewResponse" class="text-input" placeholder="Responda como treinador. Você pode falar ou escrever."></textarea>
-    <div class="mentor-actions" style="margin-top:10px">
+    <div class="mentor-actions coach522-sticky-actions interview522-response-actions" style="margin-top:10px">
       <button class="secondary" onclick="dictateTo('interviewResponse','pt-BR',{maxSeconds:120,label:'Resposta da entrevista — toque em Parar quando terminar'})">🎙 Responder por voz</button>
       <button class="primary" onclick="analyzeInterview()">✨ Analisar e continuar</button>
     </div>
@@ -3017,6 +3067,7 @@ let universalVoiceRecognition=null;
 let universalVoiceRecognizedText='';
 let universalVoiceCallback=null;
 let universalVoiceOptions={};
+let universal522LastPersistAt=0;
 
 function preferredAudioMimeType(){
   const types=['audio/mp4','audio/ogg;codecs=opus','audio/webm;codecs=opus','audio/webm'];
@@ -3060,9 +3111,33 @@ async function startUniversalVoiceCapture(options={}){
     if(!window.MediaRecorder){stopUniversalVoiceTracks();startRecognitionOnlyFallback();return;}
     const mime=preferredAudioMimeType();
     universalVoiceRecorder=createVoiceMediaRecorder(universalVoiceStream,mime);
-    universalVoiceRecorder.ondataavailable=event=>{if(event.data&&event.data.size)universalVoiceChunks.push(event.data);};
+    universalVoiceRecorder.ondataavailable=event=>{
+      if(event.data&&event.data.size){
+        universalVoiceChunks.push(event.data);
+        const now=Date.now();
+        if(now-universal522LastPersistAt>4000){
+          universal522LastPersistAt=now;
+          try{
+            const draftBlob=new Blob(universalVoiceChunks,{type:universalVoiceRecorder?.mimeType||event.data.type||'audio/webm'});
+            window.coach522PersistRecordingBlob?.('universal',draftBlob,{
+              label:universalVoiceOptions.label||'Resposta por voz',
+              lang:universalVoiceOptions.lang||'pt-BR',
+              targetId:universalVoiceOptions.targetId||'',
+              page:typeof currentPage!=='undefined'?currentPage:''
+            });
+          }catch{}
+        }
+      }
+    };
     universalVoiceRecorder.onstop=finalizeUniversalVoiceCapture;
-    universalVoiceRecorder.start(500);
+    universalVoiceRecorder.start(750);
+    universal522LastPersistAt=0;
+    window.coach522RecordingStarted?.('universal',{
+      label:universalVoiceOptions.label||'Resposta por voz',
+      lang:universalVoiceOptions.lang||'pt-BR',
+      targetId:universalVoiceOptions.targetId||'',
+      page:typeof currentPage!=='undefined'?currentPage:''
+    });
     startParallelBrowserRecognition();
     universalVoiceStartedAt=Date.now();
     setVoiceCaptureStatus('🔴 Microfone ativo. Fale com calma e toque em parar.','live');
@@ -3140,6 +3215,7 @@ async function transcribeUniversalVoiceBlob(){
         ? 'A transcrição demorou demais. O áudio foi preservado; você pode tentar novamente.'
         : 'O áudio foi preservado. Não consegui transcrever agora; tente novamente sem precisar gravar de novo.'
     );
+    window.coach522RecordingFailed?.('universal');
     showVoiceManualFallback(true);
   }finally{
     clearTimeout(timeout);
@@ -3156,7 +3232,17 @@ async function retryUniversalVoiceTranscription(){
 async function finalizeUniversalVoiceCapture(){
   clearInterval(universalVoiceTimer);universalVoiceTimer=null;
   const mime=universalVoiceRecorder?.mimeType||universalVoiceChunks[0]?.type||'audio/webm';
-  universalVoiceBlob=new Blob(universalVoiceChunks,{type:mime});stopUniversalVoiceTracks();
+  universalVoiceBlob=new Blob(universalVoiceChunks,{type:mime});
+  try{
+    await window.coach522PersistRecordingBlob?.('universal',universalVoiceBlob,{
+      label:universalVoiceOptions.label||'Resposta por voz',
+      lang:universalVoiceOptions.lang||'pt-BR',
+      targetId:universalVoiceOptions.targetId||'',
+      page:typeof currentPage!=='undefined'?currentPage:''
+    });
+  }catch{}
+  window.coach522SetVoiceState?.('transcribing','Transcrevendo sua fala');
+  stopUniversalVoiceTracks();
   const player=document.getElementById('voiceCapturePlayback');
   if(universalVoiceUrl)URL.revokeObjectURL(universalVoiceUrl);
   universalVoiceUrl=URL.createObjectURL(universalVoiceBlob);
@@ -3175,6 +3261,8 @@ async function finalizeUniversalVoiceCapture(){
 function deliverUniversalVoiceText(text){
   const value=String(text||'').trim();if(!value){showVoiceManualFallback();return;}
   if(universalVoiceCallback)universalVoiceCallback(value);else if(universalVoiceOptions.targetId){const target=document.getElementById(universalVoiceOptions.targetId);if(target)target.value=value;}
+  window.coach522ClearRecording?.('universal');
+  window.coach522InteractionComplete?.('universal');
   setVoiceCaptureStatus('✓ Texto inserido.');setTimeout(closeVoiceCapture,400);
 }
 function useVoiceFallbackText(){const value=document.getElementById('voiceFallbackText').value.trim();if(!value){toast('Digite uma frase para continuar.');return;}deliverUniversalVoiceText(value);}
@@ -3185,9 +3273,44 @@ function showVoiceManualFallback(canRetry=false){
   document.getElementById('voiceRetryBtn')?.classList.toggle('hidden',!canRetry||!universalVoiceBlob?.size);
   document.getElementById('voiceCloseBtn').classList.remove('hidden');
 }
-function cancelUniversalVoiceCapture(){if(universalVoiceRecorder&&universalVoiceRecorder.state==='recording'){try{universalVoiceRecorder.onstop=null;universalVoiceRecorder.stop();}catch{}}if(universalVoiceRecognition){try{universalVoiceRecognition.abort();}catch{}universalVoiceRecognition=null;}stopUniversalVoiceTracks();closeVoiceCapture();}
+function cancelUniversalVoiceCapture(){if(universalVoiceRecorder&&universalVoiceRecorder.state==='recording'){try{universalVoiceRecorder.onstop=null;universalVoiceRecorder.stop();}catch{}}if(universalVoiceRecognition){try{universalVoiceRecognition.abort();}catch{}universalVoiceRecognition=null;}window.coach522ClearRecording?.('universal');window.coach522InteractionComplete?.('universal');stopUniversalVoiceTracks();closeVoiceCapture();}
 function stopUniversalVoiceTracks(){if(universalVoiceStream){universalVoiceStream.getTracks().forEach(track=>track.stop());universalVoiceStream=null;}}
 function closeVoiceCapture(){clearInterval(universalVoiceTimer);universalVoiceTimer=null;stopUniversalVoiceTracks();document.getElementById('voiceCaptureOverlay').classList.remove('open');document.getElementById('voiceStopBtn').disabled=false;universalVoiceCallback=null;universalVoiceOptions={};}
+window.coach522RecoverUniversalAudio=function(blob,meta={}){
+  if(!blob?.size)return;
+  universalVoiceBlob=blob;
+  universalVoiceOptions={
+    lang:meta.lang||'pt-BR',
+    maxSeconds:meta.maxSeconds||120,
+    label:meta.label||'Gravação recuperada',
+    targetId:meta.targetId||''
+  };
+  universalVoiceCallback=null;
+  openVoiceCaptureSheet();
+  document.getElementById('voiceCaptureTitle').textContent='Gravação recuperada';
+  const player=document.getElementById('voiceCapturePlayback');
+  if(universalVoiceUrl)URL.revokeObjectURL(universalVoiceUrl);
+  universalVoiceUrl=URL.createObjectURL(blob);
+  player.src=universalVoiceUrl;
+  player.style.display='block';
+  setVoiceCaptureStatus('✓ Recuperamos sua gravação. Toque em “Tentar transcrever novamente”.');
+  showVoiceManualFallback(true);
+};
+
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='hidden' && universalVoiceRecorder?.state==='recording' && universalVoiceChunks.length){
+    try{
+      const blob=new Blob(universalVoiceChunks,{type:universalVoiceRecorder.mimeType||universalVoiceChunks[0]?.type||'audio/webm'});
+      window.coach522PersistRecordingBlob?.('universal',blob,{
+        label:universalVoiceOptions.label||'Resposta por voz',
+        lang:universalVoiceOptions.lang||'pt-BR',
+        targetId:universalVoiceOptions.targetId||'',
+        page:typeof currentPage!=='undefined'?currentPage:''
+      });
+    }catch{}
+  }
+});
+
 function friendlyVoiceError(error){const name=error?.name||'';if(name==='NotAllowedError'||name==='PermissionDeniedError')return 'O microfone foi bloqueado. Nas permissões do site, selecione Microfone → Permitir.';if(name==='NotFoundError')return 'Nenhum microfone foi encontrado neste celular.';if(name==='NotReadableError')return 'O microfone está sendo usado por outro aplicativo. Feche chamadas ou gravadores e tente novamente.';return 'Não foi possível iniciar o microfone. Atualize a página e tente novamente.';}
 function dictateTo(elementId,lang,options={}){startUniversalVoiceCapture({targetId:elementId,lang,maxSeconds:options.maxSeconds||25,label:options.label||'Resposta por voz'});}
 function startEnglishDictation(){if(englishLevel==='basic')startBeginnerRepeat();else if(englishLevel==='intermediate')dictateTo('intermediateResponse',englishAccent,{maxSeconds:20,label:'Resposta em inglês'});else dictateTo('advancedResponse',englishAccent,{maxSeconds:35,label:'Resposta em inglês'});}
@@ -4496,15 +4619,16 @@ renderEnglishMode();
 updateUI();
 checkTechnicalEnvironment();
 </script>
+<script src="/mobile-v522.js?v=522"></script>
 <script src="/studio.js?v=32"></script>
 <script src="/studio-framing.js?v=33"></script>
 <script src="/coachvoice-v33.js?v=40"></script>
 <script src="/coachday-v40.js?v=46"></script>
 <script src="/coachprep-v42.js?v=46"></script>
-<script src="/mentor-v52.js?v=521"></script>
+<script src="/mentor-v52.js?v=522"></script>
 <script src="/dashboard-v51.js?v=51"></script>
 <script src="/languages-v50.js?v=50"></script>
-<script src="/today-v52.js?v=521"></script>
+<script src="/today-v52.js?v=522"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));
