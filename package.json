@@ -1,8 +1,8 @@
 {
   "name": "coachvoice-ai",
   "private": true,
-  "version": "5.2.2",
-  "description": "CoachVoice AI v5.2.2: experiência móvel, wake lock, recuperação de áudio, rascunhos e menu responsivo.",
+  "version": "5.3.0",
+  "description": "CoachVoice AI: estúdio profissional do treinador, com módulos existentes preservados.",
   "engines": {
     "node": "22.x"
   }

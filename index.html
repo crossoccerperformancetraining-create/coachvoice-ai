@@ -4,12 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#071225">
-<meta name="application-name" content="CoachVoice AI v5.2">
+<meta name="application-name" content="CoachVoice AI">
+<meta name="description" content="Seu espaço de desenvolvimento como treinador: agenda, liderança, idiomas, comunicação e evolução.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="CoachVoice">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<title>CoachVoice AI v5.2 — Experiência Final</title>
+<title>CoachVoice AI — Estúdio do Treinador</title>
 <style>
 :root{
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -214,6 +215,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <link rel="stylesheet" href="/languages-v50.css?v=50">
 <link rel="stylesheet" href="/ui-v52.css?v=522">
 <link rel="stylesheet" href="/mobile-v522.css?v=522">
+<link rel="stylesheet" href="/pro-v53.css?v=530">
 </head>
 <body>
 <div class="app">
@@ -277,7 +279,8 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
       </div>
     </details>
 
-    <div class="drawer-note">CoachVoice AI v5.2.2 — experiência móvel, gravação protegida e recuperação automática.</div>
+    <div class="drawer-note">CoachVoice AI · v5.3
+Estúdio do Treinador</div>
   </div>
 
   <div class="drawer-footer">
@@ -4103,7 +4106,9 @@ function renderBlocks(){
     </article>`).join('');
 }
 function renderProgressBlocks(){
-  document.getElementById('progressBlocks').innerHTML=Object.entries(blocks).map(([key,b])=>`
+  const container=document.getElementById('progressBlocks');
+  if(!container)return;
+  container.innerHTML=Object.entries(blocks).map(([key,b])=>`
     <article class="block-card">
       <div class="block-head">
         <div class="block-icon">${b.icon}</div>
@@ -4629,6 +4634,7 @@ checkTechnicalEnvironment();
 <script src="/dashboard-v51.js?v=51"></script>
 <script src="/languages-v50.js?v=50"></script>
 <script src="/today-v52.js?v=522"></script>
+<script src="/pro-v53.js?v=530"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));
