@@ -1,0 +1,67 @@
+CoachVoice AI v5.3 — Premium UI
+
+O QUE MUDOU
+
+NAVEGAÇÃO
+- Celular: somente a barra inferior controla as 5 áreas principais:
+  Hoje · CoachDay · Mentor · Treinar · Evolução.
+- O antigo menu lateral de funções deixou de existir no celular.
+- A foto/avatar no topo abre apenas a área administrativa:
+  Meu CoachVoice, Pessoas, Busca, Backup e Testes do aparelho.
+- Tablet/computador: a barra inferior desaparece e entra uma sidebar premium fixa
+  com as mesmas 5 áreas principais.
+
+VISUAL
+- Navegação usa ícones lineares consistentes em vez de emojis.
+- Menos sombras, menos caixas concorrendo entre si e hierarquia visual mais limpa.
+- Azul-marinho fica reservado à estrutura; verde indica ação/destaque.
+- Topo passa a mostrar identidade do CoachVoice, escudo e avatar de forma discreta.
+
+HOJE
+- Nova abertura contextual com nome, equipe, data, compromissos, tarefas e alta prioridade.
+- Card “Prioridade agora” escolhe automaticamente o compromisso/tarefa mais relevante.
+- Compromissos e tarefas podem abrir o Mentor diretamente para preparação.
+- Agenda continua com Hoje / Semana / Calendário.
+
+MENTOR
+- Hero grande é removido do fluxo principal.
+- Conversa passa a ser o centro da tela.
+- Toolbar compacta: Nova · Voz · Histórico.
+- Falar, Enviar, Conclusão e Encerrar continuam como ações principais.
+- Recursos avançados permanecem em “Mais opções”.
+- A fala manual protegida e a recuperação de áudio da v5.2.2 foram preservadas.
+
+TREINAR
+- A Central de treinos foi reorganizada por objetivo:
+  Comunicação · Idiomas · Treinador.
+- English e Español têm acesso direto.
+- Entrevistas, Oratória, Liderança, Modelo de jogo, CoachPrep, Situações e Estúdio
+  ficam visualmente organizados e mais fáceis de encontrar.
+
+PRESERVADO
+- Menu móvel/áudio resiliente v5.2.2.
+- Wake Lock e recuperação de gravações.
+- Rascunhos automáticos.
+- Perfil, foto, equipe e escudo v5.2.1.
+- Agenda, Dashboard, busca, Pessoas e Backup.
+- Gemini/API/transcrição: nenhuma mudança.
+- GEMINI_API_KEY: nenhuma mudança.
+
+PUBLICAÇÃO
+1. Extraia o patch v5.3.
+2. Envie todos os arquivos para a raiz do GitHub.
+3. NÃO mexa em api/.
+4. NÃO altere GEMINI_API_KEY.
+5. Commit sugerido:
+   Aplicar interface premium v5.3
+6. Aguarde Vercel Production — Ready.
+7. Teste:
+   https://coachvoice-ai.vercel.app/?v=53
+
+TESTES PRIORITÁRIOS
+- iPhone: barra inferior, avatar no topo, busca e botão +.
+- Abra o avatar: confirme que aparecem somente funções administrativas.
+- Hoje: confirme Prioridade agora e preparação com Mentor.
+- Mentor: teste áudio longo e recuperação.
+- Treinar: navegue por Comunicação / Idiomas / Treinador.
+- Computador: confirme sidebar fixa e ausência da barra inferior.

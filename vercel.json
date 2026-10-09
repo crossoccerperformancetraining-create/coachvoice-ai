@@ -184,7 +184,7 @@
       ]
     },
     {
-      "source": "/pro-v53.css",
+      "source": "/premium-v53.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -193,7 +193,25 @@
       ]
     },
     {
-      "source": "/pro-v53.js",
+      "source": "/premium-v53.css",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/conversation-v54.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/conversation-v54.css",
       "headers": [
         {
           "key": "Cache-Control",

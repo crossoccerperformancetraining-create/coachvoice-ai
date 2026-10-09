@@ -1,0 +1,55 @@
+CoachVoice AI v5.4 — Conversation Mode
+
+NOVO FLUXO
+1. Toque em Conversar / Conversa rápida.
+2. Escolha Conversa livre, Mentor ou Só perguntas.
+3. Toque no microfone e fale pelo tempo que quiser.
+4. Pausas NÃO encerram sua fala.
+5. Toque novamente para finalizar.
+6. A partir daí tudo é automático:
+   transcreve → envia ao Gemini → recebe a resposta → fala a resposta em voz.
+7. Depois da resposta, o microfone permanece fechado aguardando você.
+
+PLAYER DA RESPOSTA
+- Pausar
+- Continuar
+- Repetir
+- Parar
+- Velocidade 1x / 1.15x / 1.25x
+- Se tocar no microfone enquanto o Mentor fala, a voz é interrompida e começa sua nova fala.
+
+INTERFACE
+- Conversation Mode em tela inteira.
+- Texto fica secundário e pode ser aberto/ocultado.
+- Estados grandes: Sua vez / Ouvindo / Entendendo / Mentor respondendo / Pausado.
+- Salvamento automático continua ativo.
+- Encerrar conversa continua gerando conclusão, decisão, pendência e próximo passo.
+- Conversa rápida adicionada à tela Hoje.
+
+TELA ATIVA
+- O Conversation Mode tenta manter a tela ligada durante TODA a conversa.
+- A recuperação de áudio da v5.2.2 permanece funcionando.
+
+HANDSFREE
+- Hands-free continua experimental e fica desligado por padrão.
+- O modo recomendado continua sendo o manual protegido para evitar interrupções por pausas.
+
+PRESERVADO
+- Premium UI v5.3.
+- Perfil/equipe.
+- Agenda/Dashboard.
+- Inglês/Espanhol.
+- Recuperação de áudio e rascunhos.
+- API/Gemini não foram alterados.
+- GEMINI_API_KEY não muda.
+
+PUBLICAÇÃO
+1. Extraia o patch v5.4.
+2. Envie os arquivos para a raiz do GitHub.
+3. NÃO mexa em api/.
+4. NÃO altere GEMINI_API_KEY.
+5. Commit:
+   Adicionar Conversation Mode v5.4
+6. Aguarde Vercel Production — Ready.
+7. Teste:
+   https://coachvoice-ai.vercel.app/?v=54
