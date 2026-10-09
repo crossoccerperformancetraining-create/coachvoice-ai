@@ -1,4 +1,14 @@
 /* CoachVoice — Professional workspace. Existing module behavior is preserved. */
+.mentor531-voice-panel{padding:22px;margin-bottom:20px;border:1px solid #c8d8e9;border-radius:16px;background:#fff;box-shadow:0 5px 20px #16355309}
+.mentor531-voice-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.mentor531-voice-head h2{margin:4px 0;font-size:1.35rem;line-height:1.3}.mentor531-voice-head p{margin:4px 0;color:#526b85;font-size:14px}.mentor531-voice-head button{flex-shrink:0}
+.mentor531-instruction{color:#536981;font-size:14px;margin:13px 0 16px;line-height:1.5}
+.mentor531-record-controls{display:grid;grid-template-columns:1fr 1fr;gap:12px}.mentor531-record-controls button{min-height:54px;font-size:16px}
+.mentor531-stop{background:#b32b3b;color:#fff;border:0;border-radius:10px;font-weight:750;padding:12px}
+.mentor531-voice-panel button:disabled{opacity:.48;cursor:default;filter:none}.mentor531-voice-panel[data-voice-state="recording"]{border-color:#c64751}.mentor531-voice-panel[data-voice-state="recording"] .mentor531-audio-status{color:#96232d;background:#fff0f1}
+.mentor531-audio-status{padding:11px 13px;background:#eef4fb;color:#2c526f;border-radius:10px;margin:12px 0;font-size:14px;line-height:1.5;min-height:43px}
+.mentor531-playback-controls{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:8px}.mentor531-playback-controls button{font-size:14px;padding:10px 8px}
+.mentor531-auto-voice{display:flex;gap:9px;align-items:center;font-size:14px;color:#314d68;margin-top:15px}.mentor531-auto-voice input{width:19px;height:19px;accent-color:#1d6745}
+@media(max-width:600px){.mentor531-voice-panel{padding:17px}.mentor531-voice-head h2{font-size:1.2rem}.mentor531-record-controls{gap:8px}.mentor531-record-controls button{font-size:14px}.mentor531-voice-head .compact{font-size:12px}.mentor531-playback-controls{grid-template-columns:1fr 1fr}.mentor531-playback-controls button:first-child{grid-column:1/-1}}
 :root{--cv-bg:#edf1f6;--cv-line:#dce3ec;--cv-radius:16px;--cv-shadow:0 4px 18px rgba(15,37,63,.045);--pro-accent:#b7e47a}
 body{font-size:16px;line-height:1.5}
 button,input,select,textarea{font-family:inherit}
@@ -59,3 +69,5 @@ button:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible,t
  .bottom-nav .nav span{font-size:12px!important}.bottom-nav{padding-bottom:calc(8px + env(safe-area-inset-bottom))!important}.pro-brand{padding:18px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+.mentor531-player-box{border-top:1px solid #dce5ed;margin-top:15px;padding-top:12px}.mentor531-player-box span{display:block;font-size:12px;color:#597188;margin-bottom:7px}.mentor531-player-box audio{width:100%;height:46px}
