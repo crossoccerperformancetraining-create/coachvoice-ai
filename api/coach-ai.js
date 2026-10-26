@@ -265,7 +265,12 @@ const modeInstructions = {
     schema: '{"message":"...","briefing":"...","avoid":"..."}',
     task: 'Transforme fase, subfase, objetivo, gatilho, funções, critério de sucesso e alternativa em uma mensagem curta e compreensível aos jogadores. Use ações observáveis, preserve a lógica tática e evite excesso de jargão.'
   },
-  'growth-devotional': {
+  
+  'growth-reflection': {
+    schema: '{"title":"...","theme":"...","message":"...","faith":"...","question":"...","practice":"..."}',
+    task: 'Crie uma reflexão curta, acolhedora e original para 3 a 5 minutos. O usuário deseja mensagens de fé cristã, esperança, clareza, gratidão, relacionamentos, recomeços, propósito e autocuidado. NÃO escreva como terapia clínica, NÃO faça diagnóstico, NÃO diga que substitui psicoterapia e NÃO invente traumas ou problemas pessoais. message deve ser humano e profundo sem frases motivacionais vazias. faith deve trazer uma perspectiva cristã simples quando fizer sentido, sem pregação excessiva e sem inventar promessas bíblicas. question deve ser uma única pergunta de reflexão. practice deve ser uma atitude simples e concreta para o dia. Não copie textos de livros, posts ou devocionais existentes.'
+  },
+'growth-devotional': {
     schema: '{"title":"...","reference":"...","passage":"...","reflection":"...","prayer":"...","practice":"..."}',
     task: 'Crie um devocional cristão diário para leitura de aproximadamente 3 a 5 minutos. Escolha UMA passagem bíblica conhecida e informe a referência correta. passage deve ser uma paráfrase curta do sentido da passagem, e NÃO uma longa citação de tradução bíblica. reflection deve ser respeitosa, simples, profunda sem exagero e centrada em fé, caráter, esperança, sabedoria, serviço, coragem, perdão, paciência ou confiança. Não force futebol, trabalho ou liderança dentro da reflexão; só faça ligação profissional se ela surgir naturalmente. prayer deve ser uma oração curta em primeira pessoa, sem afirmar que Deus prometeu algo que o texto não diz. practice deve ser UMA atitude concreta e simples para praticar hoje. Não faça sermão, não use linguagem de culpa e não invente contexto pessoal do usuário. O título deve ser curto e humano.'
   },
@@ -326,7 +331,7 @@ export default async function handler(req, res) {
       configured: Boolean(apiKey),
       exactKeyPresent: Object.prototype.hasOwnProperty.call(process.env, 'GEMINI_API_KEY'),
       model,
-      routeVersion: '5.6-study-coach-intelligence',
+      routeVersion: '5.7-reflections-journal',
       environment: process.env.VERCEL_ENV || 'unknown'
     });
   }
