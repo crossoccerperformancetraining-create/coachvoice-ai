@@ -324,11 +324,11 @@
     const toneMap={direct:'direto e objetivo',balanced:'equilibrado, humano e prático',reflective:'reflexivo sem ser interrogatório'};
     const lengthMap={short:'curtas',normal:'médias e naturais',detailed:'mais detalhadas quando necessário'};
     let identity={};
-    try{identity=typeof window.getCoachIdentity==='function'?window.getCoachIdentity():(JSON.parse(localStorage.getItem('coachvoice-profile-v521')||'{}')||{});}catch{}
+    try{identity=JSON.parse(localStorage.getItem('coachvoice-profile-v521')||'{}')||{};}catch{}
     const identityContext=[
       identity.name?`Nome de exibição do treinador: ${String(identity.name).slice(0,80)}.`:'',
       identity.teamName?`Equipe atual: ${String(identity.teamName).slice(0,120)}.`:'',
-      'Este é o perfil atual da engrenagem e tem prioridade sobre nomes antigos na memória. Use o nome em cumprimentos e quando perguntado; no restante, apenas quando soar natural.'
+      'Use nome e equipe apenas quando isso deixar a conversa mais natural ou evitar ambiguidade; não repita essas informações em toda resposta.'
     ].filter(Boolean).join(' ');
 
     const extra=[
@@ -345,7 +345,6 @@
     const checked=document.getElementById('mentor42AutoVoice')?.checked!==false;
     const settings=getJSON(MK.settings,{});
     settings.autoVoice=checked;setJSON(MK.settings,settings);
-    mentor531RefreshIdentity();
   };
 
   function mentor43SetSpeaking(active,text=''){
@@ -356,7 +355,6 @@
 
   function mentor44PickVoice(){
     try{
-      if(typeof pickVoice==='function')return pickVoice('pt-BR');
       const voices=speechSynthesis.getVoices()||[];
       return voices.find(v=>/^pt-BR$/i.test(v.lang))
         || voices.find(v=>/^pt/i.test(v.lang))
@@ -389,18 +387,11 @@
       mentor44AfterMentorSpeech();
       return;
     }
-    if(!options.nativeOnly&&typeof window.mentor531PlayAudio==='function'){
-      mentor461SpeechSeq++;
-      try{window.speechSynthesis?.cancel();}catch{}
-      window.mentor531PlayAudio(String(text),{onStatus:setCallStatus,onStart:()=>mentor43SetSpeaking(true,String(text)),onEnded:()=>{mentor43SetSpeaking(false);mentor44AfterMentorSpeech();}}).catch(()=>speak(text,{...options,nativeOnly:true}));
-      return;
-    }
     if(!('speechSynthesis' in window)){
       setCallStatus('Resposta pronta em texto. A voz não está disponível neste navegador.');
       mentor44AfterMentorSpeech();
       return;
     }
-
 
     const seq=++mentor461SpeechSeq;
     let started=false;
@@ -473,7 +464,6 @@
   }
 
   window.mentor42StopVoice=function mentor42StopVoice(){
-    window.mentor531StopAudioPlayback?.();
     mentor461SpeechSeq++;
     mentor461CurrentUtterance=null;
     try{speechSynthesis?.cancel();}catch{}
@@ -482,8 +472,6 @@
   };
 
   function setCallStatus(text){
-    const visible=document.getElementById('mentor531AudioStatus');
-    if(visible)visible.textContent=text;
     const el=document.getElementById('mentor42CallStatus');
     if(!el)return;
     el.textContent=text;
@@ -536,7 +524,7 @@
           ${turn.apiError?'<button class="mentor512-retry-ai" onclick="mentor512RetryLastAI()">↻ Tentar resposta novamente</button>':''}
           <small>${turn.role==='user'?'Você':'Mentor'} · ${esc(turn.time||'')}</small>
         </div>`).join('')
-      : `<div class="mentor42-bubble ai">Olá, ${esc(mentor531CoachIdentity().name)}. Conte a situação do seu jeito. Estou aqui para conversar.</div>`;
+      : `<div class="mentor42-bubble ai">Estou aqui. Conte a situação do seu jeito. Não precisamos começar pela solução.</div>`;
     const main=document.getElementById('mentor42Chat');
     const call=document.getElementById('mentor42CallChat');
     if(main){main.innerHTML=html;main.scrollTop=main.scrollHeight;}
@@ -698,7 +686,6 @@
   }
 
   window.mentor42Send=async function mentor42Send(fromCall=false){
-    if(mentor531Responding||mentor531Opening||mentor481Recording||mentor44Listening)return;
     if(state.conversationEnded){
       if(typeof toast==='function')toast('Esta conversa já foi encerrada. Inicie uma nova conversa para continuar.');
       return;
@@ -709,18 +696,12 @@
       if(typeof toast==='function')toast('Fale ou escreva uma situação primeiro.');
       return;
     }
-    mentor461PrimeSpeech();
-    mentor531Responding=true;
-    mentor481SetMicUI('responding');
     addTurn('user',text);
     if(input)input.value='';
     window.coach522ClearDraft?.('mentor42Input');
     window.coach522SetVoiceState?.('responding','Mentor respondendo');
     setCallStatus('Mentor pensando na sua resposta...');
-    let result;
-    try{result=await askDialogue(text);}
-    catch(error){result={__error:true,__message:error?.message||'Não foi possível conectar ao Mentor.'};}
-    finally{mentor531Responding=false;mentor481SetMicUI('idle');}
+    const result=await askDialogue(text);
 
     if(result?.__error){
       const message=mentor45FriendlyError(result);
@@ -838,47 +819,6 @@
   let mentor481Timer=null;
   let mentor481AutoSend=true;
   let mentor481CancelRequested=false;
-  let mentor531Opening=false;
-  let mentor531Responding=false;
-
-  function mentor531CoachIdentity(){
-    try{
-      if(typeof window.getCoachIdentity==='function')return window.getCoachIdentity();
-      const saved=getJSON('coachvoice-profile-v521',{});
-      return {name:saved.name||localStorage.getItem('coachvoice-name')||'Coach'};
-    }catch{return {name:'Coach'};}
-  }
-  function mentor531RefreshIdentity(){
-    const label=document.getElementById('mentor531CoachName');
-    if(label)label.textContent=`Perfil: ${mentor531CoachIdentity().name}`;
-    const checked=autoVoice();
-    ['mentor42AutoVoice','mentor531AutoVoice'].forEach(id=>{const el=document.getElementById(id);if(el)el.checked=checked;});
-  }
-  window.mentor531SaveAutoVoice=function(checked){
-    const settings=getJSON(MK.settings,{});settings.autoVoice=Boolean(checked);setJSON(MK.settings,settings);
-    mentor531RefreshIdentity();
-  };
-  window.mentor531TestVoice=function(){
-    mentor461PrimeSpeech();
-    speak(`Olá, ${mentor531CoachIdentity().name}. Esta é a voz do seu Mentor. Estou pronto para ouvir você.`,{force:true,userInitiated:true});
-  };
-  window.mentor531StartAudio=function(){
-    if(mentor531Opening||mentor531Responding||mentor481Recording||mentor481Processing||mentor44Listening)return;
-    mentor461PrimeSpeech();
-    return mentor481StartPushToTalk(true);
-  };
-  window.mentor531StopAudio=function(){
-    if(mentor481Recording&&mentor481Recorder?.state==='recording'){
-      mentor481Processing=true;
-      mentor481SetMicUI('processing');
-      setCallStatus('Finalizando sua fala e preparando a transcrição...');
-      mentor481Recorder.stop();
-    }else if(mentor44Listening){mentor44Recognition?.stop();}
-  };
-  window.addEventListener('coachvoice:identity',()=>{
-    mentor531RefreshIdentity();
-    if(!state.turns.length)renderChat();
-  });
 
   // v5.1.1 — preserva a última gravação se a transcrição falhar.
   let mentor511LastAudioBlob=null;
@@ -901,28 +841,21 @@
   }
 
   function mentor481SetMicUI(mode='idle'){
-    const busy=mode==='processing'||mode==='responding'||mode==='opening';
-    const start=document.getElementById('mentor531StartAudio');
-    const stop=document.getElementById('mentor531StopAudio');
-    if(start){start.disabled=busy||mode==='recording'||state.conversationEnded;start.textContent=mode==='opening'?'Abrindo microfone…':mode==='responding'?'Mentor respondendo…':'🎙 Iniciar áudio';}
-    if(stop)stop.disabled=mode!=='recording';
-    const panel=document.querySelector('.mentor531-voice-panel');
-    if(panel)panel.dataset.voiceState=mode;
     const main=document.getElementById('mentor481MainMicBtn');
     const mic=document.getElementById('mentor42BigMic');
 
     if(main){
-      main.disabled=busy||state.conversationEnded;
+      main.disabled=mode==='processing';
       main.textContent=mode==='recording'
-        ? '⏹ Encerrar áudio e enviar'
-        : busy
-          ? '⏳ Aguarde...'
-          : '🎙 Iniciar áudio';
+        ? '⏹ Finalizar minha fala e enviar'
+        : mode==='processing'
+          ? '⏳ Transcrevendo minha fala...'
+          : '🎙 Iniciar minha fala';
       main.classList.toggle('mentor481-recording',mode==='recording');
     }
 
     if(mic){
-      mic.disabled=busy||state.conversationEnded;
+      mic.disabled=mode==='processing';
       mic.innerHTML=mode==='recording'?'⏹':mode==='processing'?'…':'🎙';
       mic.classList.toggle('listening',mode==='recording');
       mic.classList.toggle('processing',mode==='processing');
@@ -1133,7 +1066,6 @@
   }
 
   async function mentor481StartPushToTalk(autoSend=true){
-    if(mentor531Opening||mentor531Responding)return;
     // Um toque manual sempre assume controle total do turno.
     // Nenhuma pausa pode enviar a mensagem.
     if(mentor513AutoSession){
@@ -1157,7 +1089,6 @@
     }
 
     // Não deixa a voz do próprio Mentor entrar na gravação.
-    window.mentor531StopAudioPlayback?.();
     try{speechSynthesis?.cancel();}catch{}
     mentor43SetSpeaking(false);
 
@@ -1174,8 +1105,6 @@
     mentor511ShowRetry(false);
 
     const live=document.getElementById('mentor44LiveTranscript');
-    mentor531Opening=true;
-    mentor481SetMicUI('opening');
     try{
       setCallStatus('Abrindo microfone...');
       mentor481Stream=await navigator.mediaDevices.getUserMedia({
@@ -1253,7 +1182,7 @@
         setCallStatus('Não consegui abrir a gravação manual. Tentando reconhecimento de fala...');
         mentor44StartListening(autoSend);
       }
-    }finally{mentor531Opening=false;}
+    }
   }
 
   window.mentor522RecoverAudioBlob=function mentor522RecoverAudioBlob(blob,meta={}){
@@ -1277,8 +1206,7 @@
   });
 
   window.mentor42Capture=function mentor42Capture(autoSend=false){
-    mentor461PrimeSpeech();
-    return mentor481StartPushToTalk(autoSend);
+    mentor481StartPushToTalk(autoSend);
   };
 
   // Modo automático antigo permanece disponível apenas como opção.
@@ -1312,7 +1240,6 @@
 
       mentor44Recognition.onstart=()=>{
         mentor44Listening=true;
-        mentor481SetMicUI('recording');
         if(mic){mic.classList.add('listening');mic.classList.remove('processing');}
         if(live){live.classList.add('listening');live.textContent='Modo automático ouvindo...';}
         setCallStatus('Modo automático ouvindo...');
@@ -1344,7 +1271,6 @@
 
       mentor44Recognition.onend=async ()=>{
         mentor44Listening=false;
-        mentor481SetMicUI('idle');
         if(mic)mic.classList.remove('listening');
         if(live)live.classList.remove('listening');
         const text=(mentor44LastTranscript||'').trim();
@@ -1637,10 +1563,9 @@
       input.disabled=ended;
       if(ended)input.placeholder='Conversa encerrada. Inicie uma nova conversa para continuar.';
     }
-    if(send)send.disabled=ended||mentor531Opening||mentor531Responding||mentor481Processing||mentor481Recording||mentor44Listening;
+    if(send)send.disabled=ended;
     if(mic)mic.disabled=ended;
     if(bigMic)bigMic.disabled=ended;
-    mentor481SetMicUI(mentor531Opening?'opening':mentor531Responding?'responding':mentor481Processing?'processing':(mentor481Recording||mentor44Listening)?'recording':'idle');
   }
 
   window.mentor49Conclude=async function mentor49Conclude(fromCall=false){
@@ -2411,6 +2336,35 @@
   };
 
 
+  window.mentor55OpenGrowthContext=function mentor55OpenGrowthContext(context={}){
+    window.mentor47NewConversation(true);
+    const kind=String(context.kind||'growth');
+    const title=String(context.title||'Reflexão de hoje');
+    const body=String(context.body||'').slice(0,5000);
+    const reference=String(context.reference||'').slice(0,160);
+    state.mode='mentor';
+    state.specialContext=[
+      kind==='devotional'
+        ?'O treinador escolheu conversar sobre o devocional diário. Trate o tema com respeito à fé cristã, sem transformar automaticamente a reflexão em futebol.'
+        :'O treinador escolheu conversar sobre um aprendizado de desenvolvimento profissional.',
+      `Tema: ${title}.`,
+      reference?`Referência: ${reference}.`:'',
+      body?`Conteúdo que ele acabou de ler: ${body}.`:'',
+      kind==='devotional'
+        ?'Acompanhe a reflexão de forma humana. Não pregue, não imponha interpretação, não force aplicação profissional e não faça perguntas por hábito.'
+        :'Ajude a transformar a ideia em compreensão, exemplo, decisão ou prática. Diferencie claramente o que veio do material e o que é sua síntese.'
+    ].filter(Boolean).join(' ');
+    setMode('mentor');
+    addTurn('assistant',kind==='devotional'
+      ?`Podemos conversar sobre “${title}”. Fale do que mais chamou sua atenção ou de alguma situação da sua vida que isso trouxe à mente.`
+      :`Vamos conversar sobre “${title}”. Pode me dizer o que fez sentido, o que você questiona ou onde gostaria de aplicar essa ideia.`
+    );
+    saveActive();renderChat();
+    const input=document.getElementById('mentor42Input');
+    if(input){input.value='';input.placeholder='Pode falar normalmente.';}
+    setCallStatus(`Contexto vinculado: ${title}`);
+  };
+
   window.mentor52OpenAgendaEvent=function mentor52OpenAgendaEvent(event={}){
     window.mentor47NewConversation(true);
     state.agendaEventId=String(event.id||'');
@@ -2533,8 +2487,7 @@
     const auto=document.getElementById('mentor44AutoConversation');
     if(auto)auto.checked=false;
     state.autoConversation=false;
-    mentor531RefreshIdentity();
-    mentor481SetMicUI(mentor531Opening?'opening':mentor481Recording?'recording':mentor531Responding?'responding':mentor481Processing?'processing':'idle');
+    mentor481SetMicUI('idle');
     mentor513ApplyProtectedManualMode(false);
     setMode(state.mode||'free');
     if(!state.callMode)state.callMode='voice';

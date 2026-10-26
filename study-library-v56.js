@@ -1,0 +1,287 @@
+window.STUDY56_LIBRARY=[
+  {
+    "id": "abel",
+    "title": "Cabeça Fria, Coração Quente",
+    "author": "Abel Ferreira",
+    "priority": "A",
+    "status": "searchable",
+    "themes": [
+      "Liderança e gestão",
+      "Psicologia e decisão",
+      "Treinamento",
+      "Comunicação"
+    ],
+    "bestUse": "Gestão de grupo, chegada ao clube, reuniões, liderança sob pressão e rotina competitiva.",
+    "url": "https://drive.google.com/file/d/10Vn-qYy2nE_ELNsiQRuToWCZhoWT4s8i/view"
+  },
+  {
+    "id": "ferguson",
+    "title": "Liderança",
+    "author": "Sir Alex Ferguson",
+    "priority": "A",
+    "status": "searchable",
+    "themes": [
+      "Liderança e gestão",
+      "Comunicação",
+      "Psicologia"
+    ],
+    "bestUse": "Cultura, autoridade, jogadores difíceis, comunicação e construção de equipes.",
+    "url": "https://drive.google.com/file/d/1VjOuwYn_bNVf6ORqnx4KOwkNGlRFzwwS/view"
+  },
+  {
+    "id": "ancelotti",
+    "title": "Quiet Leadership",
+    "author": "Carlo Ancelotti",
+    "priority": "A",
+    "status": "searchable",
+    "themes": [
+      "Liderança",
+      "Cultura",
+      "Gestão de talentos",
+      "Comissão técnica"
+    ],
+    "bestUse": "Gestão humana, relação treinador-jogador, hierarquia, delegação e staff.",
+    "url": "https://drive.google.com/file/d/1M9k-HO2x2gbooVTHEz9iocskgj5OnjUQ/view"
+  },
+  {
+    "id": "guardiola-conf",
+    "title": "Guardiola Confidencial",
+    "author": "Martí Perarnau",
+    "priority": "A",
+    "status": "searchable",
+    "themes": [
+      "Modelo de jogo",
+      "Treinamento",
+      "Liderança",
+      "Comunicação"
+    ],
+    "bestUse": "Preparação de jogo, princípios, treino, decisões do treinador e comunicação interna.",
+    "url": "https://drive.google.com/file/d/1K7iJQBo86OOG8sADJx9LEDcg8kICEaX9/view"
+  },
+  {
+    "id": "guardiola-evo",
+    "title": "Pep Guardiola — A Evolução",
+    "author": "Martí Perarnau",
+    "priority": "A",
+    "status": "searchable",
+    "themes": [
+      "Modelo de jogo",
+      "Adaptação",
+      "Liderança",
+      "Treinamento"
+    ],
+    "bestUse": "Evolução de ideias, adaptação ao contexto, talento, adversidade e planejamento.",
+    "url": "https://drive.google.com/file/d/1f6JC1T0GMAJ0jVV638f0pGxtTWN5Qg1b/view"
+  },
+  {
+    "id": "klopp",
+    "title": "Klopp",
+    "author": "Raphael Honigstein",
+    "priority": "B",
+    "status": "searchable",
+    "themes": [
+      "Liderança",
+      "Pressão",
+      "Modelo de jogo",
+      "Comunicação"
+    ],
+    "bestUse": "Pressing, identidade, energia do grupo, comunicação e construção cultural.",
+    "url": "https://drive.google.com/file/d/1CCiKVzShwPBrVv7wDM7Y__quqlrv5C6o/view"
+  },
+  {
+    "id": "piramide",
+    "title": "A Pirâmide Invertida",
+    "author": "Jonathan Wilson",
+    "priority": "B",
+    "status": "searchable",
+    "themes": [
+      "História tática",
+      "Sistemas",
+      "Evolução do jogo"
+    ],
+    "bestUse": "Referência histórica para sistemas, escolas e evolução tática.",
+    "url": "https://drive.google.com/file/d/1YEfQX_IZ8gd1vAbq0DjA6Aduna1peMDR/view"
+  },
+  {
+    "id": "castelo",
+    "title": "A Organização do Jogo",
+    "author": "Jorge Castelo",
+    "priority": "A",
+    "status": "searchable",
+    "themes": [
+      "Organização do jogo",
+      "Tática",
+      "Espaço",
+      "Posse",
+      "Treino"
+    ],
+    "bestUse": "Modelo de jogo, organização ofensiva e defensiva, princípios e desenho do treino.",
+    "url": "https://drive.google.com/file/d/1sd2kSxgf802844dju-MPOrngS9bxtplE/view"
+  },
+  {
+    "id": "ideias",
+    "title": "Para um Futebol Jogado com Ideias",
+    "author": "Vários autores",
+    "priority": "A",
+    "status": "searchable",
+    "themes": [
+      "Tática",
+      "Treinamento",
+      "Desempenho",
+      "Tomada de decisão"
+    ],
+    "bestUse": "Concepção de jogo, treino, avaliação tática e desenvolvimento do jogador.",
+    "url": "https://drive.google.com/file/d/1yRPmISID7herWKcGInO6-k_V1QXZ00jJ/view"
+  },
+  {
+    "id": "momentos",
+    "title": "Futebol, Conceitos & Ideias dos Momentos do Jogo",
+    "author": "Paulo Victor Gomes",
+    "priority": "B",
+    "status": "searchable",
+    "themes": [
+      "Momentos do jogo",
+      "Organização ofensiva",
+      "Organização defensiva",
+      "Transições"
+    ],
+    "bestUse": "Resumo rápido de conceitos e perguntas para estruturar o modelo de jogo.",
+    "url": "https://drive.google.com/file/d/1ykdO8PRwvqmqJiPdMY0BFD8Cfb8ceMB-/view"
+  },
+  {
+    "id": "analise",
+    "title": "Análise de Desempenho no Futebol",
+    "author": "Rafael Martins Cotta",
+    "priority": "A",
+    "status": "searchable",
+    "themes": [
+      "Análise",
+      "Dados",
+      "Desempenho",
+      "Modelo de jogo"
+    ],
+    "bestUse": "Observação, indicadores, análise do jogo e ligação entre teoria e prática.",
+    "url": "https://drive.google.com/file/d/1kwKi4qvextMUgrz7B0JAzgDfsu5xoLM1/view"
+  },
+  {
+    "id": "numeros",
+    "title": "Os Números do Jogo",
+    "author": "Chris Anderson & David Sally",
+    "priority": "A",
+    "status": "searchable",
+    "themes": [
+      "Dados",
+      "Estatística",
+      "Decisão",
+      "Montagem de equipes"
+    ],
+    "bestUse": "Pensamento crítico, uso de dados, vieses e tomada de decisão no futebol.",
+    "url": "https://drive.google.com/file/d/12GjtXMTJj311vijOmjoj_Bgao_R5bTP3/view"
+  },
+  {
+    "id": "seirullo",
+    "title": "Treinamento nos Esportes Coletivos",
+    "author": "Francisco Seirul·lo",
+    "priority": "PENDENTE",
+    "status": "pending",
+    "themes": [
+      "Treinamento",
+      "Metodologia sistêmica"
+    ],
+    "bestUse": "Requer outra cópia pesquisável ou tratamento antes de indexar.",
+    "url": "https://drive.google.com/file/d/1hlo4To-LA51giCqUYlxEUPyvTT1tGRWJ/view"
+  },
+  {
+    "id": "roffe",
+    "title": "Psicologia do jogador de futebol",
+    "author": "Marcelo Roffé",
+    "priority": "A",
+    "status": "searchable",
+    "themes": [
+      "Psicologia",
+      "Preparação mental",
+      "Formação",
+      "Grupo"
+    ],
+    "bestUse": "Jogador sob pressão, confiança, categorias de base e acompanhamento mental.",
+    "url": "https://drive.google.com/file/d/175_OHUrtU_OVj_VXFwrasPoTuIa3Egui/view"
+  },
+  {
+    "id": "bielsa",
+    "title": "Os 11 Caminhos para o Gol",
+    "author": "Marcelo Bielsa",
+    "priority": "PENDENTE",
+    "status": "pending",
+    "themes": [
+      "Ataque",
+      "Construção de oportunidades"
+    ],
+    "bestUse": "As cópias encontradas ainda não entregam texto pesquisável confiável.",
+    "url": "https://drive.google.com/file/d/1UyAcfQNj8EuUxnewgL5lG196rb6aF21F/view"
+  },
+  {
+    "id": "kahneman",
+    "title": "Rápido & Devagar",
+    "author": "Daniel Kahneman",
+    "priority": "A",
+    "status": "searchable",
+    "themes": [
+      "Decisão",
+      "Vieses",
+      "Psicologia",
+      "Probabilidade"
+    ],
+    "bestUse": "Tomada de decisão do treinador, vieses, pressão e análise crítica.",
+    "url": "https://drive.google.com/file/d/1hwFdTKa7OK8H56sEOljQ31aPQNmuEUCX/view"
+  },
+  {
+    "id": "mascherano",
+    "title": "Los 15 Escalones del Liderazgo",
+    "author": "Javier Mascherano",
+    "priority": "A",
+    "status": "searchable",
+    "themes": [
+      "Liderança",
+      "Valores",
+      "Escuta",
+      "Responsabilidade"
+    ],
+    "bestUse": "Liderança de vestiário, valores pessoais, papel do líder e autocrítica.",
+    "url": "https://drive.google.com/file/d/1uhPaZ8du1D_qJGU0cfi-7ayd6BkNofdC/view"
+  },
+  {
+    "id": "segundo",
+    "title": "El Segundo Entrenador",
+    "author": "Denis Puig",
+    "priority": "B",
+    "status": "searchable",
+    "themes": [
+      "Comissão técnica",
+      "Segundo treinador",
+      "Futebol profissional",
+      "Base"
+    ],
+    "bestUse": "Funções do auxiliar, relação com treinador principal e organização da comissão.",
+    "url": "https://drive.google.com/file/d/1V765RbtJGi-L7uoapZv2zIBdY8EtXXus/view"
+  },
+  {
+    "id": "barroca",
+    "title": "Modelo de Trabalho",
+    "author": "Eduardo Barroca & Roberto Maleson",
+    "priority": "A-PENDENTE",
+    "status": "pending",
+    "themes": [
+      "Modelo de trabalho",
+      "Liderança",
+      "Gestão de jogadores",
+      "Comissão técnica",
+      "Dirigentes",
+      "Treinamento",
+      "Crises",
+      "Mercado"
+    ],
+    "bestUse": "Cotidiano do treinador profissional no Brasil, gestão de pessoas, comissão, planejamento, crise e carreira.",
+    "url": "https://livromodelodetrabalho.com.br/",
+    "note": "Referência cadastrada; o PDF legítimo ainda não está disponível no Drive."
+  }
+];

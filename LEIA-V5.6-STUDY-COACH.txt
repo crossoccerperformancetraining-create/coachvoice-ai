@@ -1,0 +1,69 @@
+CoachVoice AI v5.6 — Study Coach Intelligence
+
+NOVO EIXO
+Situação → Estudo → Decisão → Simulação → Reflexão
+
+INCLUÍDO
+- Study Coach em tela própria dentro de Evolução.
+- Três modos de fonte:
+  Só biblioteca / IA geral / Comparar.
+- Biblioteca Essencial catalogada: 19 referências.
+- 16 referências marcadas como pesquisáveis no Google Drive.
+- 3 pendentes: Seirul·lo, Bielsa e Modelo de Trabalho (Eduardo Barroca).
+- Mesa de Referências: compara lentes de estudo sem imitar autores.
+- Casos para resolver: liderança, gestão, modelo de jogo, comissão, crise e diretoria.
+- Avaliação qualitativa da decisão.
+- Revisão espaçada: 2, 7, 21 e 60 dias.
+- Caderno do Treinador.
+- “Isso é meu” salva aprendizados pessoais.
+- Meu Modelo de Trabalho em 10 áreas.
+- Organização por IA usa apenas as notas pessoais salvas.
+- Podcast/revisão em voz.
+- Simulação integrada ao Mentor/Conversation Mode.
+- Fonte verificada manual: permite colar um trecho curto/nota fiel de um livro.
+- Quando existem fontes verificadas, o modo Só biblioteca usa apenas essas fontes.
+
+REGRA DE CONFIABILIDADE
+O app NÃO afirma que uma ideia veio de um livro apenas porque o livro está no catálogo.
+Existem três níveis:
+1. Catálogo: sabemos que o livro existe e para quais temas ele é relevante.
+2. Fonte verificada: trecho/nota conferida pelo usuário e salva localmente.
+3. Síntese IA: conhecimento geral do CoachVoice, explicitamente separado das fontes.
+
+GOOGLE DRIVE
+O catálogo foi preparado a partir da biblioteca real do usuário, mas o app publicado
+ainda NÃO tem acesso direto ao Google Drive. A conexão integral Drive -> CoachVoice
+exige uma integração de autenticação/API separada. Nenhuma credencial foi adicionada
+nesta versão.
+
+PRESERVADO
+- v5.5 Crescimento & Sabedoria.
+- Devocional diário.
+- Insight do treinador.
+- v5.4 Conversation Mode.
+- v5.3 Premium UI.
+- gravação resiliente e Wake Lock.
+- perfil/equipe, agenda, idiomas e Mentor.
+- GEMINI_API_KEY não foi alterada.
+
+PUBLICAÇÃO
+Patch da raiz:
+- index.html
+- growth-v55.js
+- study-v56.js
+- study-v56.css
+- study-library-v56.js
+- study-library-v56.json
+- sw.js
+- vercel.json
+- package.json
+- manifest.webmanifest
+
+Patch da API:
+- api/coach-ai.js
+
+Commit sugerido:
+Adicionar Study Coach Intelligence v5.6
+
+Teste:
+https://coachvoice-ai.vercel.app/?v=56

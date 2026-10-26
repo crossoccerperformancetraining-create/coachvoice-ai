@@ -4,13 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#071225">
-<meta name="application-name" content="CoachVoice AI">
-<meta name="description" content="Seu espaço de desenvolvimento como treinador: agenda, liderança, idiomas, comunicação e evolução.">
+<meta name="application-name" content="CoachVoice AI v5.3">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="CoachVoice">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<title>CoachVoice AI — Estúdio do Treinador</title>
+<title>CoachVoice AI v5.3 — Premium UI</title>
 <style>
 :root{
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -215,15 +214,20 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <link rel="stylesheet" href="/languages-v50.css?v=50">
 <link rel="stylesheet" href="/ui-v52.css?v=522">
 <link rel="stylesheet" href="/mobile-v522.css?v=522">
-<link rel="stylesheet" href="/pro-v53.css?v=531">
-<link rel="stylesheet" href="/session-v54.css?v=540">
-<link rel="stylesheet" href="/central-v55.css?v=550">
-<link rel="stylesheet" href="/conversation-merge-v56.css?v=560">
+<link rel="stylesheet" href="/premium-v53.css?v=53">
+<link rel="stylesheet" href="/conversation-v54.css?v=54">
+<link rel="stylesheet" href="/growth-v55.css?v=55">
+<link rel="stylesheet" href="/study-v56.css?v=56">
 </head>
 <body>
 <div class="app">
-<aside id="drawer" class="drawer">
-  <div class="drawer-profile">
+<aside id="drawer" class="drawer premium53-sidebar">
+  <div class="premium53-sidebar-brand">
+    <div class="premium53-mark">CV</div>
+    <div><strong>CoachVoice <span>AI</span></strong><small>Assistant for Coaches</small></div>
+  </div>
+
+  <div class="drawer-profile premium53-account-head">
     <div id="drawerCoachAvatar" class="avatar coach-identity-avatar">C</div>
     <div class="drawer-profile-copy">
       <strong>Coach</strong>
@@ -232,76 +236,43 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
     <div id="drawerTeamCrest" class="drawer-team-crest" aria-label="Escudo da equipe"></div>
   </div>
 
-  <div class="drawer-scroll" aria-label="Menu principal">
-    <button class="drawer-link drawer-overview-link" data-page="home" onclick="go('home')">⌂ Visão geral</button>
+  <nav class="premium53-desktop-nav" aria-label="Navegação principal">
+    <button class="drawer-link premium53-side-link active" data-page="dashboard" onclick="go('dashboard')"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><span>Hoje</span></button>
+    <button class="drawer-link premium53-side-link" data-page="daily" onclick="go('daily')"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/><path d="M8.5 3.7l1 1.7M15.5 3.7l-1 1.7"/></svg><span>CoachDay</span></button>
+    <button class="drawer-link premium53-side-link" data-page="mentor" onclick="go('mentor')"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 6.5A3.5 3.5 0 0 1 8.5 3h7A3.5 3.5 0 0 1 19 6.5v6A3.5 3.5 0 0 1 15.5 16H12l-4.5 4v-4A3.5 3.5 0 0 1 5 12.5z"/><path d="M9 9h6M9 12h4"/></svg><span>Mentor</span></button>
+    <button class="drawer-link premium53-side-link" data-page="practice" onclick="go('practice')"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3"/></svg><span>Treinar</span></button>
+    <button class="drawer-link premium53-side-link" data-page="progress" onclick="go('progress')"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M10 19V5M16 19v-8M22 19V3"/><path d="M2 19h22"/></svg><span>Evolução</span></button>
+  </nav>
 
-    <details class="drawer-group" open>
-      <summary>☀️ Hoje</summary>
-      <div class="drawer-group-links">
-        <button class="drawer-link active" data-page="dashboard" onclick="go('dashboard')">Agenda e prioridades</button>
-        <button class="drawer-link" data-page="daily" onclick="go('daily')">🧭 CoachDay AI</button>
-        <button class="drawer-link" data-page="daytoday" onclick="go('daytoday')">☕ Dia a Dia</button>
-      </div>
-    </details>
-
-    <details class="drawer-group">
-      <summary>🧠 Gestão</summary>
-      <div class="drawer-group-links">
-        <button class="drawer-link" data-page="mentor" onclick="go('mentor')">🎧 Mentor IA</button>
-        <button class="drawer-link" data-page="coachprep" onclick="go('coachprep')">🛡️ CoachPrep</button>
-        <button class="drawer-link" data-page="studio" onclick="go('studio')">🎥 Estúdio do Treinador</button>
-        <button class="drawer-link" data-page="matchday" onclick="go('matchday')">🏟 Dia de jogo</button>
-      </div>
-    </details>
-
-    <details class="drawer-group">
-      <summary>🎯 Treinar</summary>
-      <div class="drawer-group-links">
-        <button class="drawer-link" data-page="practice" onclick="go('practice')">Central de treinos</button>
-        <button class="drawer-link" data-page="languages" onclick="go('languages')">🌎 Inglês e Espanhol</button>
-        <button class="drawer-link" data-page="oratory" onclick="go('oratory')">🗣 Oratória</button>
-        <button class="drawer-link" data-page="interviews" onclick="go('interviews')">🎙 Entrevistas</button>
-        <button class="drawer-link" data-page="leadership" onclick="go('leadership')">🔥 Liderança</button>
-        <button class="drawer-link" data-page="gamemodel" onclick="go('gamemodel')">🧠 Modelo de jogo</button>
-        <button class="drawer-link" data-page="library" onclick="go('library')">📚 Biblioteca de situações</button>
-      </div>
-    </details>
-
-    <details class="drawer-group">
-      <summary>📈 Evolução</summary>
-      <div class="drawer-group-links">
-        <button class="drawer-link" data-page="tracks" onclick="go('tracks')">▦ Formação completa</button>
-        <button class="drawer-link" data-page="progress" onclick="go('progress')">▥ Evolução real</button>
-      </div>
-    </details>
-
-    <details class="drawer-group">
-      <summary>••• Mais</summary>
-      <div class="drawer-group-links">
-        <button class="drawer-link" data-page="technical" onclick="go('technical')">⚙ Testes do aparelho</button>
-      </div>
-    </details>
-
-    <div class="drawer-note">CoachVoice AI · v5.6
-Estúdio do Treinador</div>
+  <div class="premium53-mobile-admin">
+    <span class="premium53-admin-label">MINHA CONTA</span>
+    <button class="premium53-admin-link" onclick="go('profile')"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19 13.5v-3l-2.1-.7a7 7 0 0 0-.7-1.7l1-2L15 4l-2 .9a7 7 0 0 0-2 0L9 4 6.8 6.1l1 2a7 7 0 0 0-.7 1.7L5 10.5v3l2.1.7a7 7 0 0 0 .7 1.7l-1 2L9 20l2-.9a7 7 0 0 0 2 0l2 .9 2.2-2.1-1-2a7 7 0 0 0 .7-1.7z"/></svg><div><strong>Meu CoachVoice</strong><small>Perfil, equipe, voz e preferências</small></div><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+    <button class="premium53-admin-link" onclick="premium53OpenPeople()"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3.5 19c.5-4 2.4-6 5.5-6s5 2 5.5 6"/><circle cx="17" cy="9" r="2"/><path d="M16 14c2.8 0 4.4 1.6 4.8 4.5"/></svg><div><strong>Pessoas</strong><small>Jogadores, comissão e contatos</small></div><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+    <button class="premium53-admin-link" onclick="premium53OpenSearch()"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg><div><strong>Busca geral</strong><small>Conversas, tarefas e agenda</small></div><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+    <button class="premium53-admin-link" onclick="premium53OpenBackup()"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="m8 10 4 4 4-4"/><path d="M5 18v2h14v-2"/></svg><div><strong>Backup</strong><small>Exportar ou importar seus dados</small></div><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+    <button class="premium53-admin-link" onclick="go('technical')"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="8" cy="6" r="1.5" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="11" cy="18" r="1.5" fill="currentColor" stroke="none"/></svg><div><strong>Testes do aparelho</strong><small>Microfone, voz e conexão</small></div><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
   </div>
 
-  <div class="drawer-footer">
-    <button class="drawer-settings" data-page="profile" onclick="go('profile')">
-      <span>⚙️</span>
-      <div><strong>Meu CoachVoice</strong><small>Perfil, equipe, voz e backup</small></div>
-    </button>
+  <div class="premium53-sidebar-footer">
+    <button onclick="go('profile')" class="premium53-desktop-settings"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19 13.5v-3l-2.1-.7a7 7 0 0 0-.7-1.7l1-2L15 4l-2 .9a7 7 0 0 0-2 0L9 4 6.8 6.1l1 2a7 7 0 0 0-.7 1.7L5 10.5v3l2.1.7a7 7 0 0 0 .7 1.7l-1 2L9 20l2-.9a7 7 0 0 0 2 0l2 .9 2.2-2.1-1-2a7 7 0 0 0 .7-1.7z"/></svg><span>Meu CoachVoice</span></button>
+    <small>v5.3 · Premium UI</small>
   </div>
 </aside>
 <div id="overlay" class="overlay" onclick="closeDrawer()"></div>
 
 <main>
-<header class="topbar">
-  <button class="icon-btn" onclick="openDrawer()" aria-label="Abrir menu">☰</button>
-  <div class="brand"><h1>CoachVoice <span>AI</span></h1><p id="topSubtitle">Hoje — agenda e prioridades</p></div>
-  <div class="topbar-actions">
-    <button id="coach522FocusBtn" class="icon-btn" onclick="coach522ToggleFocus()" aria-label="Modo foco" title="Modo foco">◎</button>
-    <button class="icon-btn" onclick="today52OpenSearch()" aria-label="Buscar">⌕</button>
+<header class="topbar premium53-topbar">
+  <div class="premium53-top-identity">
+    <div id="premium53TopCrest" class="premium53-top-crest"></div>
+    <div class="premium53-top-title">
+      <h1>CoachVoice <span>AI</span></h1>
+      <p id="topSubtitle">Hoje — agenda e prioridades</p>
+    </div>
+  </div>
+  <div class="topbar-actions premium53-top-actions">
+    <button id="coach522FocusBtn" class="premium53-icon-button premium53-focus-button" onclick="coach522ToggleFocus()" aria-label="Modo foco" title="Modo foco">◎</button>
+    <button class="premium53-icon-button" onclick="today52OpenSearch()" aria-label="Buscar"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
+    <button id="premium53TopAvatar" class="premium53-top-avatar" onclick="premium53OpenAccount()" aria-label="Perfil e configurações">C</button>
   </div>
 </header>
 
@@ -373,6 +344,8 @@ Estúdio do Treinador</div>
 
 
 <section id="dashboard" class="page active">
+  <section id="premium53TodayOverview" class="premium53-today-overview"></section>
+  <section id="growth55TodayCards" class="growth55-today-cards"></section>
   <div class="dashboard-hero">
     <span class="eyebrow">HOJE — COACHVOICE</span>
     <h2>Agenda, prioridades, conversas e tarefas em uma única visão. Comece o dia, acompanhe o que importa e feche sem carregar tudo na cabeça.</h2>
@@ -983,25 +956,6 @@ Estúdio do Treinador</div>
 </section>
 
 <section id="mentor" class="page">
-  <article class="mentor531-voice-panel" aria-labelledby="mentor531VoiceTitle">
-    <div class="mentor531-voice-head">
-      <div><span class="label">MENTOR POR ÁUDIO</span><h2 id="mentor531VoiceTitle">Fale com o seu Mentor</h2><p id="mentor531CoachName">Perfil: Coach</p></div>
-      <button class="outline compact" onclick="go('profile')" aria-label="Configurar nome e voz">⚙ Nome e voz</button>
-    </div>
-    <p class="mentor531-instruction">Toque em Iniciar áudio, fale no seu ritmo e termine em Encerrar áudio. Sua fala será enviada ao Mentor.</p>
-    <div class="mentor531-record-controls">
-      <button id="mentor531StartAudio" class="primary" onclick="mentor531StartAudio()">🎙 Iniciar áudio</button>
-      <button id="mentor531StopAudio" class="mentor531-stop" onclick="mentor531StopAudio()" disabled>⏹ Encerrar áudio</button>
-    </div>
-    <div id="mentor531AudioStatus" class="mentor531-audio-status" role="status" aria-live="polite">Pronto para gravar.</div>
-    <div class="mentor531-playback-controls">
-      <button class="outline" onclick="mentor44RepeatLastAnswer()">🔊 Ouvir resposta</button>
-      <button class="secondary" onclick="mentor42StopVoice()">⏸ Parar voz</button>
-      <button class="secondary" onclick="mentor531TestVoice()">Testar voz</button>
-    </div>
-    <div id="mentor531PlayerBox" class="hidden mentor531-player-box"><span>Áudio do Mentor</span><audio id="mentor531Player" controls playsinline preload="metadata" aria-label="Reproduzir resposta do Mentor"></audio></div>
-    <label class="mentor531-auto-voice"><input id="mentor531AutoVoice" type="checkbox" checked onchange="mentor531SaveAutoVoice(this.checked)"> Responder em áudio automaticamente</label>
-  </article>
   <div class="mentor42-hero mentor47-hero">
     <span class="eyebrow">MENTOR IA DO TREINADOR — CONVERSA, VOZ E MEMÓRIA POR DIA</span>
     <h2>Converse normalmente. O Mentor responde, evita perguntas repetidas e sabe quando concluir.</h2>
@@ -1036,6 +990,12 @@ Estúdio do Treinador</div>
     <div id="mentor47DailyPanelBody"></div>
   </article>
 
+  <div class="premium53-mentor-toolbar">
+    <button onclick="mentor47NewConversation()"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg><span>Nova</span></button>
+    <button onclick="conversation54Start('free')"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/></svg><span>Conversar</span></button>
+    <button onclick="mentor47OpenHistory()"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A3.5 3.5 0 0 1 7.5 2H12v18H7.5A3.5 3.5 0 0 0 4 23z"/><path d="M20 5.5A3.5 3.5 0 0 0 16.5 2H12v18h4.5A3.5 3.5 0 0 1 20 23z"/></svg><span>Histórico</span></button>
+  </div>
+
   <article class="card mentor42-conversation-card mentor47-conversation-card">
     <div class="mentor42-section-head">
       <div>
@@ -1057,7 +1017,7 @@ Estúdio do Treinador</div>
       <button id="mentor481MainMicBtn" class="secondary" onclick="mentor42Capture(true)">🎙 Iniciar fala</button>
       <button id="mentor49SendBtn" class="primary" onclick="mentor42Send()">Enviar</button>
       <button class="mentor49-conclude" onclick="mentor49Conclude()">✅ Conclusão</button>
-      <button class="mentor49-end" onclick="mentor49PrepareEndConversation()">🔴 Encerrar conversa</button>
+      <button class="mentor49-end" onclick="mentor49PrepareEndConversation()">🔴 Encerrar</button>
     </div>
 
     <details class="coach522-more-actions">
@@ -1207,78 +1167,127 @@ Estúdio do Treinador</div>
     </article>
   </details>
 
-  <!-- interface de ligação por voz e vídeo -->
-  <div id="mentor42CallOverlay" class="mentor42-call-overlay hidden" role="dialog" aria-modal="true" aria-label="Conversa com o Mentor IA">
-    <div class="mentor42-call-shell mentor43-call-shell">
-      <div class="mentor42-call-head">
-        <div><small>MENTOR IA DO TREINADOR</small><h3 id="mentor42CallTitle">Conversa livre · voz</h3></div>
-        <button class="mentor42-call-close" onclick="mentor42EndCall()">✕</button>
+  <!-- v5.4 Conversation Mode -->
+  <div id="mentor42CallOverlay" class="mentor42-call-overlay conv54-overlay hidden" role="dialog" aria-modal="true" aria-label="Conversation Mode">
+    <div class="mentor42-call-shell mentor43-call-shell conv54-shell">
+
+      <header class="conv54-head">
+        <div>
+          <span class="conv54-eyebrow">COACHVOICE MENTOR</span>
+          <h3 id="mentor42CallTitle">Conversa livre</h3>
+        </div>
+        <div class="conv54-head-actions">
+          <button class="conv54-head-btn" onclick="conversation54ToggleTranscript()" aria-label="Mostrar texto"><svg class="conv54-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6h14M8 10h8M6 14h12M9 18h6"/></svg></button>
+          <button class="conv54-head-btn" onclick="mentor47OpenHistory()" aria-label="Histórico"><svg class="conv54-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5M12 7v5l3 2"/></svg></button>
+          <button class="conv54-close" onclick="mentor42EndCall()" aria-label="Fechar"><svg class="conv54-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+        </div>
+      </header>
+
+      <div class="conv54-mode-row" role="group" aria-label="Tipo de conversa">
+        <button id="conv54ModeFree" class="active" onclick="conversation54SetMode('free')">Conversa livre</button>
+        <button id="conv54ModeMentor" onclick="conversation54SetMode('mentor')">Mentor</button>
+        <button id="conv54ModeQuestions" onclick="conversation54SetMode('questions')">Só perguntas</button>
       </div>
 
-      <div class="mentor43-mode-switch">
-        <button id="mentor43VoiceModeBtn" class="active" onclick="mentor43SetCallMode('voice')">🎧 Voz</button>
-        <button id="mentor43VideoModeBtn" onclick="mentor43SetCallMode('video')">🎥 Vídeo</button>
-      </div>
+      <main class="conv54-stage">
+        <div id="conv54Wake" class="conv54-wake hidden">Tela ativa</div>
 
-      <div id="mentor513ManualBadge" class="mentor513-manual-badge">🛡️ Modo manual protegido</div>
-      <div id="mentor522VoiceState" class="mentor522-voice-state ready"><span></span><strong>Pronto para falar</strong></div>
-      <div id="mentor522WakeState" class="mentor522-wake-state hidden">🔒 Tela ativa durante a gravação</div>
-      <div id="mentor42CallStatus" class="mentor42-call-status">Toque 🎙 para começar. O Mentor só recebe sua fala depois que você tocar em ⏹.</div>
-      <div id="mentor44LiveTranscript" class="mentor44-live-transcript">Pode pensar, respirar e fazer pausas. Uma pausa não encerra sua fala.</div>
+        <div id="conv54Orb" class="conv54-orb ready" aria-hidden="true">
+          <div class="conv54-orb-ring ring1"></div>
+          <div class="conv54-orb-ring ring2"></div>
+          <div class="conv54-orb-core"><svg class="conv54-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v2M8 8v8M12 5v14M16 8v8M20 11v4"/></svg></div>
+        </div>
 
-      <div id="mentor43VideoStage" class="mentor43-video-stage hidden">
-        <div class="mentor43-ai-panel">
-          <div id="mentor43Avatar" class="mentor43-avatar">
-            <div class="mentor43-avatar-head">
-              <div class="mentor43-avatar-hair"></div>
-              <div class="mentor43-avatar-face">
-                <div class="mentor43-avatar-eyes"><span></span><span></span></div>
-                <div class="mentor43-avatar-mouth"></div>
+        <div id="conv54State" class="conv54-state ready">
+          <span>PRONTO</span>
+          <strong>Sua vez</strong>
+          <p>Toque no microfone quando quiser falar.</p>
+        </div>
+
+        <div id="mentor513ManualBadge" class="mentor513-manual-badge conv54-legacy-badge">🛡️ Modo manual protegido</div>
+        <div id="mentor522VoiceState" class="mentor522-voice-state ready conv54-hidden-legacy"><span></span><strong>Pronto para falar</strong></div>
+        <div id="mentor522WakeState" class="mentor522-wake-state hidden conv54-hidden-legacy">🔒 Tela ativa durante a gravação</div>
+        <div id="mentor42CallStatus" class="mentor42-call-status conv54-status">Toque no microfone para começar.</div>
+        <div id="mentor44LiveTranscript" class="mentor44-live-transcript conv54-live">Pode pensar e fazer pausas. Nada é enviado até você finalizar.</div>
+
+        <div id="mentor43VideoStage" class="mentor43-video-stage hidden">
+          <div class="mentor43-ai-panel">
+            <div id="mentor43Avatar" class="mentor43-avatar">
+              <div class="mentor43-avatar-head">
+                <div class="mentor43-avatar-hair"></div>
+                <div class="mentor43-avatar-face">
+                  <div class="mentor43-avatar-eyes"><span></span><span></span></div>
+                  <div class="mentor43-avatar-mouth"></div>
+                </div>
               </div>
+              <div class="mentor43-avatar-body"></div>
             </div>
-            <div class="mentor43-avatar-body"></div>
+            <strong>Mentor IA</strong>
+            <div id="mentor43Wave" class="mentor43-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div id="mentor43Caption" class="mentor43-caption">Estou pronto para conversar.</div>
           </div>
-          <strong>Mentor IA</strong>
-          <div id="mentor43Wave" class="mentor43-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          <div id="mentor43Caption" class="mentor43-caption">Estou pronto para conversar.</div>
+          <div class="mentor43-self-view">
+            <video id="mentor43SelfVideo" autoplay muted playsinline></video>
+            <div id="mentor43CameraPlaceholder" class="mentor43-camera-placeholder">Sua câmera</div>
+            <span>Você</span>
+          </div>
         </div>
-        <div class="mentor43-self-view">
-          <video id="mentor43SelfVideo" autoplay muted playsinline></video>
-          <div id="mentor43CameraPlaceholder" class="mentor43-camera-placeholder">Sua câmera</div>
-          <span>Você</span>
+
+        <section id="conv54TranscriptPanel" class="conv54-transcript-panel hidden">
+          <div class="conv54-transcript-head">
+            <strong>Conversa</strong>
+            <button onclick="conversation54ToggleTranscript(false)">Ocultar</button>
+          </div>
+          <div id="mentor42CallChat" class="mentor42-call-chat conv54-chat"></div>
+        </section>
+      </main>
+
+      <section id="conv54Player" class="conv54-player">
+        <div class="conv54-player-top">
+          <span>RESPOSTA DO MENTOR</span>
+          <button id="conv54SpeedBtn" onclick="conversation54CycleSpeed()">1x</button>
         </div>
+        <div class="conv54-player-controls">
+          <button onclick="conversation54Repeat()" aria-label="Repetir"><svg class="conv54-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7v5h-5"/><path d="M19 12a7 7 0 1 0-2 5"/></svg><small>Repetir</small></button>
+          <button id="conv54PauseBtn" class="main" onclick="conversation54TogglePause()" aria-label="Pausar ou continuar"><svg class="conv54-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><small>Pausar</small></button>
+          <button onclick="conversation54StopSpeech()" aria-label="Parar"><svg class="conv54-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1"/></svg><small>Parar</small></button>
+        </div>
+      </section>
+
+      <section class="conv54-turn-controls">
+        <button class="conv54-side conclude" onclick="mentor49Conclude(true)"><svg class="conv54-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg><span>Conclusão</span></button>
+
+        <div class="conv54-mic-wrap">
+          <button id="mentor42BigMic" class="mentor42-big-mic conv54-mic" onclick="conversation54Mic()" aria-label="Falar">
+            <svg class="conv54-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/></svg>
+          </button>
+          <small id="mentor513MicLabel">Falar</small>
+        </div>
+
+        <button class="conv54-side end" onclick="mentor49PrepareEndConversation(true)"><svg class="conv54-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span>Encerrar</span></button>
+      </section>
+
+      <div class="conv54-secondary-row">
+        <button onclick="conversation54ToggleTranscript()"><svg class="conv54-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6h14M8 10h8M6 14h12M9 18h6"/></svg><span>Texto</span></button>
+        <button onclick="mentor47OpenHistory()"><svg class="conv54-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5M12 7v5l3 2"/></svg><span>Histórico</span></button>
+        <details class="conv54-more">
+          <summary><svg class="conv54-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg><span>Mais</span></summary>
+          <div class="conv54-more-menu">
+            <button onclick="mentor47NewConversation()">Nova conversa</button>
+            <button id="mentor511RetryCall" class="hidden" onclick="mentor511RetryTranscription()">Tentar transcrever novamente</button>
+            <button onclick="mentor47SaveDay(true)">Salvar dia</button>
+            <button id="mentor43CameraBtn" onclick="mentor43ToggleCamera()">Câmera</button>
+            <label><input id="mentor44AutoConversation" type="checkbox" onchange="mentor44SaveAutoConversation()"> Hands-free experimental</label>
+          </div>
+        </details>
       </div>
 
-      <div id="mentor42CallChat" class="mentor42-call-chat"></div>
-
-      <div class="mentor52-primary-controls">
-        <button class="mentor52-main-action conclude" onclick="mentor49Conclude(true)">✅<small>Conclusão</small></button>
-        <div class="mentor513-mic-wrap">
-          <button id="mentor42BigMic" class="mentor42-big-mic" onclick="mentor42Capture(true)" aria-label="Iniciar minha fala" title="Toque para começar a falar">🎙</button>
-          <small id="mentor513MicLabel">Iniciar fala</small>
-        </div>
-        <button class="mentor52-main-action end" onclick="mentor49PrepareEndConversation(true)">🔴<small>Encerrar</small></button>
-      </div>
-
-      <details class="mentor52-call-advanced">
-        <summary>••• Mais opções</summary>
-        <div class="mentor52-advanced-grid">
-          <button onclick="mentor47NewConversation()">＋ Nova conversa</button>
-          <button onclick="mentor44RepeatLastAnswer()">🔊 Ouvir resposta</button>
-          <button id="mentor511RetryCall" class="hidden" onclick="mentor511RetryTranscription()">↻ Tentar transcrever novamente</button>
-          <button onclick="mentor47SaveDay(true)">💾 Salvar dia</button>
-          <button id="mentor43CameraBtn" class="hidden" onclick="mentor43ToggleCamera()">📷 Câmera</button>
-        </div>
-        <label class="mentor513-auto-option mentor52-auto-option"><input id="mentor44AutoConversation" type="checkbox" onchange="mentor44SaveAutoConversation()"> ⚡ Automático experimental — pode interpretar uma pausa como fim da fala</label>
-      </details>
-
-      <div id="mentor49CallClosurePanel" class="mentor49-closure-panel mentor49-call-closure hidden"></div>
-      <p id="mentor43CallNote" class="mentor42-call-note"><strong>Manual protegido:</strong> toque 🎙 uma vez para começar. Fale o tempo que precisar, inclusive com pausas. O CoachVoice só finaliza e envia quando você tocar em ⏹.</p>
+      <div id="mentor49CallClosurePanel" class="mentor49-closure-panel mentor49-call-closure conv54-closure hidden"></div>
+      <p id="mentor43CallNote" class="mentor42-call-note conv54-note">Você controla quando termina de falar. Depois disso, transcrição, envio e resposta acontecem automaticamente.</p>
       <p id="mentor43AvatarNote" class="mentor43-avatar-note hidden">Avatar visual animado: não é vídeo humano real e não analisa emoções ou expressões.</p>
     </div>
   </div>
 </section>
-
 
 <section id="languages" class="page">
   <div class="language-hero">
@@ -1556,22 +1565,40 @@ Estúdio do Treinador</div>
   <article class="spanish-card"><h3>🧳 30 frases essenciais — primeiro mês</h3><p class="intro">Comandos de treino, gestão, cobrança, imprensa e rotina. Toque para ouvir e repetir no seu ritmo.</p><div id="spanishEssentials" class="spanish-essential-grid"></div></article>
 </section>
 
-<section id="practice" class="page">
-  <div class="hero">
-    <span class="eyebrow">CENTRAL DE TREINOS</span>
-    <h2>Escolha o tipo de situação que precisa praticar hoje.</h2>
-    <p>Cada área combina orientação local, voz e IA opcional.</p>
+<section id="practice" class="page premium53-training-page">
+  <div class="premium53-page-heading">
+    <span>DESENVOLVIMENTO</span>
+    <h2>O que você quer treinar agora?</h2>
+    <p>Escolha o objetivo. O CoachVoice leva você direto para a prática certa.</p>
   </div>
-  <div class="hub-grid">
-    <button class="practice-card" onclick="go('languages')"><span class="practice-icon">🌎</span><span><strong>Idiomas do treinador</strong><small>Inglês e espanhol em situações profissionais.</small></span><b>→</b></button>
-    <button class="practice-card" onclick="go('oratory')"><span class="practice-icon">🗣</span><span><strong>Oratória com IA</strong><small>Estrutura, pausas e reescrita.</small></span><b>→</b></button>
-    <button class="practice-card" onclick="go('interviews')"><span class="practice-icon">🎙</span><span><strong>Entrevistas</strong><small>Jornalista, feedback e nova pergunta.</small></span><b>→</b></button>
-    <button class="practice-card" onclick="go('leadership')"><span class="practice-icon">🔥</span><span><strong>Liderança</strong><small>Jogador, comissão e diretoria.</small></span><b>→</b></button>
-    <button class="practice-card" onclick="go('gamemodel')"><span class="practice-icon">🧠</span><span><strong>Modelo de jogo</strong><small>Transforme princípios em comunicação clara.</small></span><b>→</b></button>
-    <button class="practice-card" onclick="go('daily')"><span class="practice-icon">📓</span><span><strong>Diário do treinador</strong><small>Organize manhã, treino e reflexão.</small></span><b>→</b></button>
-  </div>
-</section>
 
+  <section class="premium53-training-group">
+    <div class="premium53-group-head"><div><span>COMUNICAÇÃO</span><h3>Falar, responder e liderar</h3></div></div>
+    <div class="premium53-training-grid">
+      <button class="premium53-training-card" onclick="go('interviews')"><i><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg></i><div><strong>Entrevistas</strong><small>Coletivas, pressão e respostas ao vivo</small></div><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+      <button class="premium53-training-card" onclick="go('oratory')"><i><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 6.5A3.5 3.5 0 0 1 8.5 3h7A3.5 3.5 0 0 1 19 6.5v6A3.5 3.5 0 0 1 15.5 16H12l-4.5 4v-4A3.5 3.5 0 0 1 5 12.5z"/><path d="M9 9h6M9 12h4"/></svg></i><div><strong>Oratória</strong><small>Clareza, ritmo, pausas e presença</small></div><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+      <button class="premium53-training-card" onclick="go('leadership')"><i><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3"/><path d="M6 21c.7-5 2.7-8 6-8s5.3 3 6 8"/><path d="m5 6-2-2M19 6l2-2"/></svg></i><div><strong>Liderança</strong><small>Jogadores, comissão e diretoria</small></div><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+    </div>
+  </section>
+
+  <section class="premium53-training-group">
+    <div class="premium53-group-head"><div><span>IDIOMAS</span><h3>Comunicação internacional</h3></div></div>
+    <div class="premium53-language-pair">
+      <button onclick="go('english')"><i><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></i><div><strong>English</strong><small>Campo, imprensa e gestão</small></div></button>
+      <button onclick="go('spanish')"><i><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></i><div><strong>Español</strong><small>Conversación para entrenadores</small></div></button>
+    </div>
+  </section>
+
+  <section class="premium53-training-group">
+    <div class="premium53-group-head"><div><span>TREINADOR</span><h3>Modelo, preparação e repertório</h3></div></div>
+    <div class="premium53-training-grid">
+      <button class="premium53-training-card" onclick="go('gamemodel')"><i><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 4v16M3 12h18"/><circle cx="12" cy="12" r="2"/></svg></i><div><strong>Modelo de jogo</strong><small>Princípios transformados em comunicação</small></div><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+      <button class="premium53-training-card" onclick="go('coachprep')"><i><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5c0 5 3 8 7 10 4-2 7-5 7-10V6z"/></svg></i><div><strong>CoachPrep</strong><small>Gestão, liderança e preparação profissional</small></div><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+      <button class="premium53-training-card" onclick="go('library')"><i><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A3.5 3.5 0 0 1 7.5 2H12v18H7.5A3.5 3.5 0 0 0 4 23z"/><path d="M20 5.5A3.5 3.5 0 0 0 16.5 2H12v18h4.5A3.5 3.5 0 0 1 20 23z"/></svg></i><div><strong>Situações</strong><small>Biblioteca para treino e simulação</small></div><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+      <button class="premium53-training-card" onclick="go('studio')"><i><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h11v10H4z"/><path d="m15 10 5-3v10l-5-3z"/></svg></i><div><strong>Estúdio</strong><small>Postura, enquadramento e vídeo</small></div><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+    </div>
+  </section>
+</section>
 
 <section id="daily" class="page">
   <div class="coachday-hero">
@@ -2286,6 +2313,39 @@ Estúdio do Treinador</div>
     <p>Não usamos notas fictícias de confiança ou estado emocional. Os indicadores vêm das atividades registradas neste aparelho.</p>
   </div>
 
+  <section class="growth55-shell">
+    <div class="growth55-section-head">
+      <div><span>CRESCIMENTO & SABEDORIA</span><h2>Um pouco de fé, estudo e reflexão todos os dias.</h2></div>
+      <small>Sem transformar tudo em futebol. Cada área tem sua função.</small>
+    </div>
+
+    <div class="growth55-grid">
+      <article class="growth55-card devotional">
+        <div class="growth55-card-icon"><svg class="growth55-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.4 5.4 0 0 0-7.6 0L12 5.8l-1.2-1.2a5.4 5.4 0 0 0-7.6 7.6L12 21l8.8-8.8a5.4 5.4 0 0 0 0-7.6z"/></svg></div>
+        <div><span>DEVOCIONAL · 3–5 MIN</span><h3 id="growth55DevotionalTitle">Seu momento de hoje</h3><p id="growth55DevotionalPreview">Passagem bíblica, reflexão, oração e uma atitude para praticar.</p></div>
+        <button class="growth55-primary" onclick="growth55OpenDevotional()">Começar <svg class="growth55-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5"/></svg></button>
+      </article>
+
+      <article class="growth55-card insight">
+        <div class="growth55-card-icon"><svg class="growth55-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 1.2 3.8L17 8l-3.8 1.2L12 13l-1.2-3.8L7 8l3.8-1.2z"/><path d="m19 14 .7 2.3L22 17l-2.3.7L19 20l-.7-2.3L16 17l2.3-.7z"/></svg></div>
+        <div><span>INSIGHT DO TREINADOR · 5 MIN</span><h3 id="growth55InsightTitle">Uma ideia para desenvolver hoje</h3><p id="growth55InsightPreview">Enquanto sua biblioteca não está conectada, a IA usa desenvolvimento profissional geral.</p></div>
+        <button class="growth55-primary" onclick="growth55OpenInsight()">Estudar <svg class="growth55-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M14 7l5 5-5 5"/></svg></button>
+      </article>
+
+      <article class="growth55-card library study56-entry-card">
+        <div class="growth55-card-icon"><svg class="growth55-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A3.5 3.5 0 0 1 7.5 2H12v18H7.5A3.5 3.5 0 0 0 4 23z"/><path d="M20 5.5A3.5 3.5 0 0 0 16.5 2H12v18h4.5A3.5 3.5 0 0 1 20 23z"/></svg></div>
+        <div><span>STUDY COACH INTELLIGENCE</span><h3>Biblioteca viva do treinador</h3><p>Transforme situações reais em estudo, decisão, simulação, reflexão e construção do seu Modelo de Trabalho.</p></div>
+        <button class="growth55-primary" onclick="study56Open()">Abrir Study Coach</button>
+      </article>
+
+      <article class="growth55-card review">
+        <div class="growth55-card-icon"><svg class="growth55-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 4.5A3 3 0 0 0 4 6a3 3 0 0 0 .6 1.8A3.5 3.5 0 0 0 5 14.6V16a3 3 0 0 0 4.5 2.6M14.5 4.5A3 3 0 0 1 20 6a3 3 0 0 1-.6 1.8 3.5 3.5 0 0 1-.4 6.8V16a3 3 0 0 1-4.5 2.6M12 3v18M8 9h4M12 14h4"/></svg></div>
+        <div><span>MEMÓRIA DE APRENDIZADO</span><h3>Revisar aprendizados</h3><p id="growth55LearningPreview">Devocionais, insights e ideias importantes ficam organizados para revisão.</p></div>
+        <button class="growth55-secondary" onclick="growth55OpenLearning()">Ver evolução</button>
+      </article>
+    </div>
+  </section>
+
   <div class="metric-grid">
     <div class="metric"><strong id="progressXp">0</strong><small>Pontos de prática</small></div>
     <div class="metric"><strong id="progressStreak">0</strong><small>Dias de sequência</small></div>
@@ -2321,7 +2381,7 @@ Estúdio do Treinador</div>
     <button class="outline" style="margin-top:10px" onclick="go('dashboard');setTimeout(()=>dashboardGenerateWeeklyReview(),120)">Atualizar revisão semanal</button>
   </article>
 
-  <article class="card">
+  <article id="premium53PeopleSection" class="card">
     <span class="label">Pessoas</span>
     <h3>Jogadores, comissão, diretoria e contatos importantes</h3>
     <p class="intro">O histórico do Mentor pode alimentar esta área sem transformar o CoachVoice em um CRM pesado.</p>
@@ -2371,7 +2431,7 @@ Estúdio do Treinador</div>
         </div>
         <input id="coachPhotoFile" class="hidden" type="file" accept="image/*" onchange="handleCoachIdentityImage('photo',this)">
         <label class="label" for="coachName">Nome de exibição</label>
-        <input id="coachName" class="select-field" value="Coach" placeholder="Seu nome de treinador">
+        <input id="coachName" class="select-field" value="Coach" placeholder="Ex.: Adriana Silva">
       </section>
 
       <section class="coach521-identity-card">
@@ -2465,7 +2525,7 @@ Estúdio do Treinador</div>
     </div>
   </article>
 
-  <article class="card">
+  <article id="premium53BackupSection" class="card">
     <span class="label">Backup e portabilidade</span>
     <h3>Seus dados continuam seus</h3>
     <p class="intro">Exporte tarefas, agenda, histórico, pessoas e preferências para um arquivo. A importação substitui somente as chaves presentes no backup.</p>
@@ -2486,14 +2546,142 @@ Estúdio do Treinador</div>
   </article>
 </section>
 
-<nav class="bottom-nav">
-  <button class="nav active" data-page="dashboard" onclick="go('dashboard')">☀️<span>Hoje</span></button>
-  <button class="nav" data-page="daily" onclick="go('daily')">🧭<span>CoachDay</span></button>
-  <button class="nav" data-page="mentor" onclick="go('mentor')">🤖<span>Mentor</span></button>
-  <button class="nav" data-page="practice" onclick="go('practice')">🎯<span>Treinar</span></button>
-  <button class="nav" data-page="progress" onclick="go('progress')">▥<span>Evolução</span></button>
+
+
+<div id="study56Overlay" class="study56-overlay hidden" role="dialog" aria-modal="true" aria-label="Study Coach Intelligence">
+  <div class="study56-shell">
+    <header class="study56-head">
+      <div>
+        <span>EVOLUÇÃO · STUDY COACH</span>
+        <h2>Study Coach Intelligence</h2>
+        <p>Situação → Estudo → Decisão → Simulação → Reflexão</p>
+      </div>
+      <button class="study56-close" onclick="study56Close()" aria-label="Fechar">×</button>
+    </header>
+
+    <nav class="study56-tabs" aria-label="Áreas do Study Coach">
+      <button class="active" data-study-tab="study" onclick="study56Tab('study')">Estudar</button>
+      <button data-study-tab="table" onclick="study56Tab('table')">Mesa</button>
+      <button data-study-tab="cases" onclick="study56Tab('cases')">Casos</button>
+      <button data-study-tab="review" onclick="study56Tab('review')">Revisar</button>
+      <button data-study-tab="notebook" onclick="study56Tab('notebook')">Caderno</button>
+      <button data-study-tab="model" onclick="study56Tab('model')">Meu Modelo</button>
+      <button data-study-tab="library" onclick="study56Tab('library')">Biblioteca</button>
+    </nav>
+
+    <div id="study56Body" class="study56-body">
+      <section id="study56ViewStudy" class="study56-view active">
+        <div class="study56-hero">
+          <span>SITUAÇÃO REAL</span>
+          <h3>O que está acontecendo?</h3>
+          <textarea id="study56Situation" maxlength="2400" placeholder="Ex.: Meu camisa 10 perdeu espaço, está insatisfeito e procurou um dirigente. Quero conversar com ele sem perder autoridade nem fechar a porta."></textarea>
+          <div class="study56-topic-chips">
+            <button onclick="study56Preset('lideranca')">Liderança</button>
+            <button onclick="study56Preset('jogador')">Jogador insatisfeito</button>
+            <button onclick="study56Preset('crise')">Crise de resultados</button>
+            <button onclick="study56Preset('modelo')">Modelo de jogo</button>
+            <button onclick="study56Preset('comissao')">Comissão técnica</button>
+            <button onclick="study56Preset('diretoria')">Diretoria</button>
+          </div>
+        </div>
+
+        <section class="study56-source-box">
+          <div>
+            <span>COMO A IA DEVE TRABALHAR?</span>
+            <strong id="study56SourceLabel">Comparar biblioteca + IA</strong>
+          </div>
+          <div class="study56-source-segment">
+            <button data-source-mode="library" onclick="study56SourceMode('library')">Só biblioteca</button>
+            <button data-source-mode="ai" onclick="study56SourceMode('ai')">IA geral</button>
+            <button data-source-mode="compare" class="active" onclick="study56SourceMode('compare')">Comparar</button>
+          </div>
+          <small id="study56SourceNote">A biblioteca catalogada orienta as referências. Ideias específicas dos autores só são atribuídas quando houver trecho verificado.</small>
+        </section>
+
+        <button id="study56StudyBtn" class="study56-main-action" onclick="study56RunStudy()">Estudar esta situação</button>
+        <div id="study56StudyResult" class="study56-result"></div>
+      </section>
+
+      <section id="study56ViewTable" class="study56-view">
+        <div class="study56-view-head"><span>MESA DE REFERÊNCIAS</span><h3>Olhe para o mesmo problema por lentes diferentes.</h3><p>Não é uma imitação de treinadores reais. O CoachVoice usa o perfil temático das obras para organizar ângulos de estudo.</p></div>
+        <textarea id="study56TableSituation" maxlength="1800" placeholder="Digite uma situação para colocar na mesa..."></textarea>
+        <button class="study56-main-action" onclick="study56RunTable()">Montar mesa</button>
+        <div id="study56TableResult" class="study56-result"></div>
+      </section>
+
+      <section id="study56ViewCases" class="study56-view">
+        <div class="study56-view-head"><span>CASOS PARA RESOLVER</span><h3>Treine decisão antes de precisar dela.</h3><p>Escolha um tema e resolva uma situação. Depois compare sua decisão com critérios e referências.</p></div>
+        <div class="study56-case-topics">
+          <button onclick="study56GenerateCase('liderança')">Liderança</button>
+          <button onclick="study56GenerateCase('gestão de grupo')">Gestão de grupo</button>
+          <button onclick="study56GenerateCase('modelo de jogo')">Modelo de jogo</button>
+          <button onclick="study56GenerateCase('comissão técnica')">Comissão</button>
+          <button onclick="study56GenerateCase('crise')">Crise</button>
+          <button onclick="study56GenerateCase('diretoria')">Diretoria</button>
+        </div>
+        <div id="study56CaseResult" class="study56-result"></div>
+      </section>
+
+      <section id="study56ViewReview" class="study56-view">
+        <div class="study56-view-head"><span>REVISÃO ESPAÇADA</span><h3>Não basta ler. É preciso recuperar a ideia.</h3><p id="study56ReviewCount">Nenhuma revisão pendente.</p></div>
+        <div id="study56ReviewResult" class="study56-result"></div>
+      </section>
+
+      <section id="study56ViewNotebook" class="study56-view">
+        <div class="study56-view-head"><span>CADERNO DO TREINADOR</span><h3>O que está virando parte do seu pensamento?</h3><p>Notas pessoais ficam separadas das ideias dos autores.</p></div>
+        <div class="study56-note-compose">
+          <textarea id="study56NoteInput" maxlength="2400" placeholder="Escreva ou cole uma reflexão sua..."></textarea>
+          <button onclick="study56SaveManualNote()">Salvar nota</button>
+        </div>
+        <div id="study56NotebookList" class="study56-note-list"></div>
+      </section>
+
+      <section id="study56ViewModel" class="study56-view">
+        <div class="study56-view-head"><span>MEU MODELO DE TRABALHO</span><h3>Construa sua identidade com o que você realmente acredita e aplica.</h3><p>A IA organiza suas notas; ela não transforma ideias de autores em convicções suas sem você confirmar.</p></div>
+        <div id="study56ModelGrid" class="study56-model-grid"></div>
+      </section>
+
+      <section id="study56ViewLibrary" class="study56-view">
+        <div class="study56-view-head"><span>BIBLIOTECA ESSENCIAL</span><h3>19 referências já catalogadas.</h3><p>16 PDFs estão pesquisáveis no Drive. O app ainda não lê esses PDFs diretamente; a conexão integral com o Drive é uma etapa técnica separada.</p></div>
+        <div class="study56-library-status">
+          <div><strong>19</strong><span>referências</span></div>
+          <div><strong>16</strong><span>pesquisáveis</span></div>
+          <div><strong>13</strong><span>prioridade A</span></div>
+          <div><strong>3</strong><span>pendentes</span></div>
+        </div>
+        <input id="study56LibrarySearch" placeholder="Buscar livro, autor ou tema..." oninput="study56RenderLibrary(this.value)">
+        <div id="study56LibraryList" class="study56-library-list"></div>
+        <details class="study56-source-note-panel">
+          <summary>Adicionar trecho/nota verificada de um livro</summary>
+          <p>Use quando você quiser que o modo “Só biblioteca” trabalhe com um trecho que você conferiu. O texto fica apenas neste aparelho.</p>
+          <select id="study56SourceBook"></select>
+          <input id="study56SourceLocation" placeholder="Localização opcional: capítulo, seção ou página">
+          <textarea id="study56SourceText" maxlength="6500" placeholder="Cole um trecho curto ou uma nota fiel ao conteúdo do livro."></textarea>
+          <button onclick="study56SaveVerifiedSource()">Salvar fonte verificada</button>
+          <div id="study56VerifiedSources"></div>
+        </details>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div id="growth55Modal" class="growth55-modal hidden" role="dialog" aria-modal="true" aria-label="Crescimento e Sabedoria">
+  <div class="growth55-modal-shell">
+    <header class="growth55-modal-head">
+      <div><span id="growth55ModalEyebrow">CRESCIMENTO</span><h2 id="growth55ModalTitle">Momento de hoje</h2></div>
+      <button onclick="growth55CloseModal()" aria-label="Fechar"><svg class="growth55-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </header>
+    <div id="growth55ModalBody" class="growth55-modal-body"></div>
+  </div>
+</div>
+<nav class="bottom-nav premium53-bottom-nav" aria-label="Navegação principal">
+  <button class="nav active" data-page="dashboard" onclick="go('dashboard')"><span class="premium53-nav-symbol"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span><span>Hoje</span></button>
+  <button class="nav" data-page="daily" onclick="go('daily')"><span class="premium53-nav-symbol"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/><path d="M8.5 3.7l1 1.7M15.5 3.7l-1 1.7"/></svg></span><span>CoachDay</span></button>
+  <button class="nav" data-page="mentor" onclick="go('mentor')"><span class="premium53-nav-symbol"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 6.5A3.5 3.5 0 0 1 8.5 3h7A3.5 3.5 0 0 1 19 6.5v6A3.5 3.5 0 0 1 15.5 16H12l-4.5 4v-4A3.5 3.5 0 0 1 5 12.5z"/><path d="M9 9h6M9 12h4"/></svg></span><span>Mentor</span></button>
+  <button class="nav" data-page="practice" onclick="go('practice')"><span class="premium53-nav-symbol"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3"/></svg></span><span>Treinar</span></button>
+  <button class="nav" data-page="progress" onclick="go('progress')"><span class="premium53-nav-symbol"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M10 19V5M16 19v-8M22 19V3"/><path d="M2 19h22"/></svg></span><span>Evolução</span></button>
 </nav>
-<button class="today52-fab" onclick="today52OpenQuickCreate('task')" aria-label="Criar">＋</button>
+<button class="today52-fab premium53-fab" onclick="today52OpenQuickCreate('task')" aria-label="Criar"><svg class="premium53-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></button>
 <div id="today52ModalOverlay" class="today52-modal-overlay" onclick="today52CloseQuick();today52CloseSearch();today52CloseInfo();today52CloseEventFeedback()"></div>
 
 <div id="today52QuickModal" class="today52-modal" role="dialog" aria-modal="true">
@@ -2726,7 +2914,7 @@ function pickVoice(lang){
 
   if(voicePreference!=='auto'){
     const hints=voicePreference==='female'?femaleHints:maleHints;
-    const match=candidates.find(v=>hints.some(h=>h==='male'?/\bmale\b/.test(normalizedVoiceName(v.name)):normalizedVoiceName(v.name).includes(h)));
+    const match=candidates.find(v=>hints.some(h=>normalizedVoiceName(v.name).includes(h)));
     if(match)return match;
   }
   return candidates[0]||null;
@@ -3359,10 +3547,6 @@ function saveEnglishSession(item,response,score){
 
 
 async function callCoachAI(mode,payload={}){
-  const identity=getCoachIdentity();
-  const contextChoice=payload.contextChoice||'team';
-  const teamContext=contextChoice==='general'?null:(payload.teamContext===undefined?window.coach54Context?.():payload.teamContext);
-  payload={...payload,contextChoice,teamContext,coachIdentity:{name:identity.name,teamName:contextChoice==='general'?'':(teamContext?.name||identity.teamName)}};
   const controller=new AbortController();
   const timeout=setTimeout(()=>controller.abort(),45000);
   try{
@@ -4011,6 +4195,17 @@ function applyCoachIdentity(){
     '🛡️'
   );
 
+  renderIdentityImage(
+    document.getElementById('premium53TopAvatar'),
+    identity.photo,
+    identityInitials(identity.name)
+  );
+  renderIdentityImage(
+    document.getElementById('premium53TopCrest'),
+    identity.crest,
+    identity.teamName?'CV':''
+  );
+
   const nameInput=document.getElementById('coachName');
   if(nameInput)nameInput.value=identity.name;
   const teamInput=document.getElementById('coachTeamName');
@@ -4132,9 +4327,7 @@ function renderBlocks(){
     </article>`).join('');
 }
 function renderProgressBlocks(){
-  const container=document.getElementById('progressBlocks');
-  if(!container)return;
-  container.innerHTML=Object.entries(blocks).map(([key,b])=>`
+  document.getElementById('progressBlocks').innerHTML=Object.entries(blocks).map(([key,b])=>`
     <article class="block-card">
       <div class="block-head">
         <div class="block-icon">${b.icon}</div>
@@ -4656,15 +4849,15 @@ checkTechnicalEnvironment();
 <script src="/coachvoice-v33.js?v=40"></script>
 <script src="/coachday-v40.js?v=46"></script>
 <script src="/coachprep-v42.js?v=46"></script>
-<script src="/mentor-audio-v531.js?v=540"></script>
-<script src="/mentor-v52.js?v=540"></script>
+<script src="/mentor-v52.js?v=522"></script>
 <script src="/dashboard-v51.js?v=51"></script>
 <script src="/languages-v50.js?v=50"></script>
 <script src="/today-v52.js?v=522"></script>
-<script src="/pro-v53.js?v=540"></script>
-<script src="/session-v54.js?v=560"></script>
-<script src="/central-v55.js?v=560"></script>
-<script src="/conversation-merge-v56.js?v=560"></script>
+<script src="/premium-v53.js?v=53"></script>
+<script src="/conversation-v54.js?v=54"></script>
+<script src="/growth-v55.js?v=55"></script>
+<script src="/study-library-v56.js?v=56"></script>
+<script src="/study-v56.js?v=56"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));
