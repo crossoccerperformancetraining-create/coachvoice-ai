@@ -1,0 +1,29 @@
+CoachVoice AI v5.6.1 — Automático Assistido
+
+FLUXO
+Abrir Conversar → Mentor fala → microfone abre sozinho → você fala → toca Finalizar fala →
+transcrição automática → envio automático → resposta automática → voz automática →
+microfone abre sozinho novamente.
+
+SEGURANÇA
+- Pausas NÃO enviam sua fala.
+- O antigo hands-free por detecção de pausa continua desligado.
+- Você controla o fim da sua fala com um toque.
+- Se tocar no microfone enquanto o Mentor fala, ele é interrompido e sua fala começa.
+- O botão Encerrar agora prepara o fechamento, salva e encerra em um único fluxo.
+- Também reconhece os comandos exatos: “encerrar conversa”, “finalizar conversa” e “terminar conversa”.
+- Mais → Automático assistido permite desligar essa automação durante a conversa.
+
+PRESERVADO
+Study Coach v5.6, Devocional, Crescimento & Sabedoria, Wake Lock, recuperação de áudio e APIs.
+Nenhuma alteração em GEMINI_API_KEY ou nos arquivos da API.
+
+PUBLICAÇÃO
+Extraia o patch na raiz do GitHub.
+Não precisa substituir nada dentro da pasta api.
+
+Commit sugerido:
+Automatizar conversa por voz v5.6.1
+
+Teste:
+https://coachvoice-ai.vercel.app/?v=561

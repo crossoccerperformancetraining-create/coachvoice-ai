@@ -1,0 +1,32 @@
+CoachVoice AI v5.6.3 — Biblioteca somente do Google Drive
+
+AJUSTE
+- Removida a referência “Modelo de Trabalho”, de Eduardo Barroca e Roberto Maleson.
+- Motivo: o livro não está no Google Drive do usuário e havia sido incluído apenas como referência pendente.
+- A Biblioteca Essencial passa a mostrar somente os livros levantados no Google Drive do usuário.
+
+CONTAGEM ATUAL
+- 18 referências catalogadas.
+- 16 PDFs pesquisáveis.
+- 12 referências de prioridade A.
+- 2 pendentes de texto pesquisável: Seirul·lo e Bielsa.
+
+IMPORTANTE
+O catálogo do app foi montado a partir do Google Drive real do usuário.
+Isso NÃO significa que o site publicado no Vercel já possui conexão direta e contínua com o Google Drive.
+A conexão automática Drive → CoachVoice continua sendo uma integração futura separada.
+
+CONVERSA
+A v5.6.2 foi preservada:
+microfone → falar → Enviar fala → IA responde → resposta toca automaticamente.
+O microfone permanece fechado até o próximo toque.
+
+PUBLICAÇÃO
+Extraia o patch na raiz do GitHub.
+Não precisa alterar a pasta api nem a GEMINI_API_KEY.
+
+Commit sugerido:
+Ajustar biblioteca para somente livros do Google Drive v5.6.3
+
+Teste:
+https://coachvoice-ai.vercel.app/?v=563

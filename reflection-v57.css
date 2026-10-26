@@ -1,0 +1,42 @@
+
+/* CoachVoice v5.7 — Reflexões & Diário */
+body.reflection57-open{overflow:hidden}
+.reflection57-overlay{position:fixed;inset:0;z-index:275;background:#f4f1ea;color:#263238}
+.reflection57-overlay.hidden{display:none!important}
+.reflection57-shell{height:100dvh;display:grid;grid-template-rows:auto auto 1fr;background:linear-gradient(180deg,#f7f4ed,#eef4f0)}
+.reflection57-head{padding:calc(14px + env(safe-area-inset-top)) 16px 12px;display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid rgba(24,54,45,.08)}
+.reflection57-head span,.reflection57-intro>span,.reflection57-reading>span{font-size:.62rem;letter-spacing:.11em;font-weight:900;color:#728b72}
+.reflection57-head h2{margin:3px 0 2px;font-family:Georgia,serif;font-size:1.35rem;color:#22342f}
+.reflection57-head p{margin:0;font-size:.7rem;color:#71807b}
+.reflection57-head>button{width:40px;height:40px;border:0;border-radius:50%;background:#fff;color:#50635c;font-size:1.35rem;box-shadow:0 5px 18px rgba(32,54,46,.08)}
+.reflection57-tabs{display:flex;padding:8px 12px;gap:6px;border-bottom:1px solid rgba(24,54,45,.07);background:rgba(255,255,255,.45)}
+.reflection57-tabs button{flex:1;border:0;border-radius:11px;padding:9px;background:transparent;color:#7b8b85;font-weight:800}
+.reflection57-tabs button.active{background:#fff;color:#355b48;box-shadow:0 4px 14px rgba(25,58,45,.07)}
+.reflection57-body{overflow:auto;padding:14px 14px calc(30px + env(safe-area-inset-bottom))}
+.reflection57-view{display:none;max-width:760px;margin:0 auto}.reflection57-view.active{display:block}
+.reflection57-reading,.reflection57-intro,.reflection57-compose{background:rgba(255,255,255,.86);border:1px solid rgba(54,84,70,.09);border-radius:20px;padding:18px;box-shadow:0 10px 30px rgba(49,73,61,.06)}
+.reflection57-reading h3,.reflection57-intro h3{font-family:Georgia,serif;color:#263b32;font-size:1.45rem;line-height:1.18;margin:6px 0 15px}
+.reflection57-reading section{padding:12px 0;border-top:1px solid rgba(55,79,68,.08)}
+.reflection57-reading section b{font-size:.61rem;letter-spacing:.1em;color:#77907d}
+.reflection57-reading section p{font-family:Georgia,serif;font-size:1rem;line-height:1.65;color:#3d4c46;margin:7px 0 0}
+.reflection57-reading section.faith{background:#f0f5ee;margin:5px -8px;padding:12px 8px;border-radius:12px;border-top:0}
+.reflection57-reading section.practice{background:#eef6f3;margin:5px -8px;padding:12px 8px;border-radius:12px;border-top:0}
+.reflection57-note{margin-top:12px;font-size:.63rem;line-height:1.45;color:#84908b}
+.reflection57-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:14px}
+.reflection57-actions button,.reflection57-compose-actions button{border:1px solid #cad7d0;background:#fff;color:#456153;border-radius:12px;padding:10px;font-weight:800;font-size:.7rem}
+.reflection57-actions button.primary,.reflection57-compose-actions button.primary{background:#426b56;color:#fff;border-color:#426b56}
+.reflection57-intro p{color:#75837d;line-height:1.45;font-size:.72rem}
+.reflection57-theme-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
+.reflection57-theme-grid button{border:1px solid rgba(52,81,67,.09);background:rgba(255,255,255,.85);border-radius:17px;padding:13px;text-align:left;color:#344a40;box-shadow:0 7px 22px rgba(49,73,61,.04)}
+.reflection57-theme-grid i{display:grid;place-items:center;width:33px;height:33px;border-radius:50%;background:#eaf2ec;font-style:normal;margin-bottom:9px;color:#5e806a}
+.reflection57-theme-grid strong,.reflection57-theme-grid small{display:block}.reflection57-theme-grid small{margin-top:4px;color:#7d8c86;line-height:1.35}
+#reflection57ThemeResult{margin-top:12px}
+.reflection57-compose textarea{width:100%;min-height:160px;box-sizing:border-box;border:1px solid #d4ded9;border-radius:14px;background:#fbfcfa;padding:13px;font:inherit;color:#34453e;resize:vertical}
+.reflection57-compose-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
+.reflection57-journal-list{display:grid;gap:8px;margin-top:10px}
+.reflection57-journal-list article{display:grid;grid-template-columns:1fr auto;gap:8px;background:rgba(255,255,255,.82);border:1px solid rgba(52,81,67,.08);border-radius:15px;padding:12px}
+.reflection57-journal-list span{font-size:.6rem;font-weight:900;color:#78907e}.reflection57-journal-list p{white-space:pre-wrap;color:#45564f;line-height:1.5;margin:5px 0 0;font-family:Georgia,serif}
+.reflection57-journal-list button{border:0;background:transparent;color:#a27b79}
+.reflection57-empty,.reflection57-loading{padding:24px;text-align:center;color:#7a8a83}
+.growth55-card.reflection57{background:linear-gradient(145deg,#fbfaf5,#edf5ef)}
+@media(min-width:760px){.reflection57-body{padding:22px}.reflection57-theme-grid{grid-template-columns:repeat(3,1fr)}.reflection57-actions{grid-template-columns:repeat(4,1fr)}}

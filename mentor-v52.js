@@ -783,6 +783,106 @@
   // O modo automático nunca é carregado de uma conversa anterior.
   let mentor513AutoSession=false;
 
+  // v5.6.1 — Automático assistido:
+  // após o Mentor terminar de falar, o microfone reabre sozinho.
+  // Pausas NÃO encerram a fala. O treinador toca uma vez para finalizar o turno.
+  let mentor561AutoAssistSession=false;
+  let mentor561AutoStartTimer=null;
+  let mentor561AutoHoldUntil=0;
+
+  function mentor561ClearAutoStart(){
+    if(mentor561AutoStartTimer){
+      clearTimeout(mentor561AutoStartTimer);
+      mentor561AutoStartTimer=null;
+    }
+  }
+
+  function mentor561NormalizeCommand(value=''){
+    return String(value||'')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replace(/[^a-z0-9\s]/g,' ')
+      .replace(/\s+/g,' ')
+      .trim();
+  }
+
+  function mentor561IsEndCommand(value=''){
+    const t=mentor561NormalizeCommand(value);
+    return /^(quero )?(encerrar|finalizar|terminar|parar) (a )?conversa$/.test(t)
+      || /^(encerrar|finalizar|terminar) agora$/.test(t);
+  }
+
+  function mentor561UpdateAssistUI(){
+    const toggle=document.getElementById('conv561AutoAssist');
+    if(toggle)toggle.checked=mentor561AutoAssistSession;
+    const badge=document.getElementById('mentor513ManualBadge');
+    if(badge){
+      badge.classList.toggle('auto',mentor561AutoAssistSession);
+      badge.textContent=mentor561AutoAssistSession
+        ? '⚡ Automático assistido'
+        : '🛡️ Manual protegido';
+    }
+  }
+
+  window.mentor561SetAutoAssist=function mentor561SetAutoAssist(enabled=true,options={}){
+    mentor561AutoAssistSession=Boolean(enabled);
+    mentor561ClearAutoStart();
+    mentor561UpdateAssistUI();
+    if(!options.quiet && state.isCallOpen){
+      setCallStatus(mentor561AutoAssistSession
+        ? 'Automático assistido ligado. Depois de cada resposta, o microfone abre sozinho; toque em ⏹ apenas quando terminar sua fala.'
+        : 'Automático assistido desligado. Toque 🎙 para iniciar cada fala.');
+    }
+    return mentor561AutoAssistSession;
+  };
+
+  window.mentor561HoldAutoAssist=function mentor561HoldAutoAssist(ms=1400){
+    mentor561AutoHoldUntil=Math.max(mentor561AutoHoldUntil,Date.now()+Math.max(0,Number(ms)||0));
+    mentor561ClearAutoStart();
+  };
+
+  function mentor561ScheduleAutoMic(delay=850){
+    mentor561ClearAutoStart();
+    if(!mentor561AutoAssistSession || !state.isCallOpen || state.conversationEnded)return;
+    mentor561AutoStartTimer=setTimeout(()=>{
+      mentor561AutoStartTimer=null;
+      if(!mentor561AutoAssistSession || !state.isCallOpen || state.conversationEnded)return;
+      if(Date.now()<mentor561AutoHoldUntil){
+        mentor561ScheduleAutoMic(Math.max(250,mentor561AutoHoldUntil-Date.now()+80));
+        return;
+      }
+      if(mentor481Recording || mentor481Processing || mentor44Listening)return;
+      if(window.speechSynthesis && (speechSynthesis.speaking||speechSynthesis.paused)){
+        mentor561ScheduleAutoMic(400);
+        return;
+      }
+      setCallStatus('Sua vez. Abrindo o microfone automaticamente...');
+      mentor481StartPushToTalk(true);
+    },Math.max(100,Number(delay)||850));
+  }
+  window.mentor561ScheduleAutoMic=mentor561ScheduleAutoMic;
+
+  window.mentor561EndConversation=async function mentor561EndConversation(){
+    if(state.conversationEnded){
+      try{window.mentor42EndCall?.();}catch{}
+      return;
+    }
+    mentor561AutoAssistSession=false;
+    mentor561ClearAutoStart();
+    mentor561UpdateAssistUI();
+    try{mentor481CancelPushToTalk();}catch{}
+    try{speechSynthesis?.cancel();}catch{}
+    setCallStatus('Encerrando a conversa, preparando o resumo e salvando...');
+    try{
+      await window.mentor49PrepareEndConversation?.(true);
+      await window.mentor49ConfirmEndConversation?.();
+      setTimeout(()=>window.mentor42EndCall?.(),350);
+    }catch(error){
+      console.info('Falha ao encerrar automaticamente:',error);
+      setCallStatus('Não consegui finalizar automaticamente. Use Encerrar novamente.');
+    }
+  };
+
   function mentor513ApplyProtectedManualMode(message=true){
     mentor513AutoSession=false;
     state.autoConversation=false;
@@ -958,6 +1058,13 @@
     mentor511LastAudioBlob=null;
     window.coach522ClearRecording?.('mentor');
 
+    if(mentor561IsEndCommand(text)){
+      if(input)input.value='';
+      if(live)live.textContent='✓ Comando recebido: encerrar conversa.';
+      await window.mentor561EndConversation?.();
+      return;
+    }
+
     const suspicious=mentor512TranscriptLooksSuspicious(text);
     if(suspicious){
       if(live)live.textContent='A transcrição parece ter repetido trechos. Revise o texto antes de enviar.';
@@ -1066,6 +1173,7 @@
   }
 
   async function mentor481StartPushToTalk(autoSend=true){
+    mentor561ClearAutoStart();
     // Um toque manual sempre assume controle total do turno.
     // Nenhuma pausa pode enviar a mensagem.
     if(mentor513AutoSession){
@@ -1153,9 +1261,13 @@
 
       if(live){
         live.classList.add('listening');
-        live.textContent='🔴 Estou ouvindo. Fale com calma; suas pausas NÃO enviam a mensagem.';
+        live.textContent=mentor561AutoAssistSession
+          ? '🔴 Estou ouvindo. Pode fazer pausas. Toque em ⏹ quando terminar; depois envio e resposta são automáticos.'
+          : '🔴 Estou ouvindo. Fale com calma; suas pausas NÃO enviam a mensagem.';
       }
-      setCallStatus('Estou ouvindo. Pode pensar e fazer pausas. Nada será enviado até você tocar em ⏹ Finalizar.');
+      setCallStatus(mentor561AutoAssistSession
+        ? 'Estou ouvindo. Pode pensar e fazer pausas. Toque em ⏹ Enviar fala quando terminar.'
+        : 'Estou ouvindo. Pode pensar e fazer pausas. Nada será enviado até você tocar em ⏹ Finalizar.');
 
       mentor481Timer=setInterval(()=>{
         const elapsed=Math.floor((Date.now()-mentor481StartedAt)/1000);
@@ -1369,7 +1481,12 @@
       ?'Videochamada pronta. Modo manual protegido: toque 🎙 para falar e ⏹ quando terminar.'
       :'Modo manual protegido: toque 🎙 para começar; pausas não encerram sua fala.');
     const greeting=callGreeting();
-    if(state.turns.length===0){addTurn('assistant',greeting);speak(greeting,{force:true});}
+    if(state.turns.length===0){
+      addTurn('assistant',greeting);
+      speak(greeting,{force:true});
+    }else if(mentor561AutoAssistSession){
+      mentor561ScheduleAutoMic(650);
+    }
   };
 
   function callGreeting(){
@@ -1381,6 +1498,9 @@
   }
 
   window.mentor42EndCall=function mentor42EndCall(){
+    mentor561AutoAssistSession=false;
+    mentor561ClearAutoStart();
+    mentor561UpdateAssistUI();
     mentor513ApplyProtectedManualMode(false);
     mentor481CancelPushToTalk();
     document.getElementById('mentor42CallOverlay')?.classList.add('hidden');
@@ -2151,6 +2271,14 @@
 
 
   function mentor44AfterMentorSpeech(){
+    if(mentor561AutoAssistSession && state.isCallOpen && !state.conversationEnded){
+      window.coach522InteractionComplete?.('mentor');
+      window.coach522SetVoiceState?.('ready','Sua vez — microfone automático');
+      setCallStatus('Sua vez. Toque no microfone quando quiser responder.');
+      mentor561ScheduleAutoMic(850);
+      return;
+    }
+
     if(mentor513AutoSession && state.isCallOpen){
       setTimeout(()=>{
         if(state.isCallOpen && mentor513AutoSession && !mentor44Listening && !mentor481Recording){
@@ -2484,6 +2612,9 @@
     settings.autoConversation=false;
     setJSON(MK.settings,settings);
     mentor513AutoSession=false;
+    mentor561AutoAssistSession=false;
+    mentor561ClearAutoStart();
+    mentor561UpdateAssistUI();
     const auto=document.getElementById('mentor44AutoConversation');
     if(auto)auto.checked=false;
     state.autoConversation=false;

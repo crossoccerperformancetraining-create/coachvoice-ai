@@ -263,25 +263,5 @@ window.STUDY56_LIBRARY=[
     ],
     "bestUse": "Funções do auxiliar, relação com treinador principal e organização da comissão.",
     "url": "https://drive.google.com/file/d/1V765RbtJGi-L7uoapZv2zIBdY8EtXXus/view"
-  },
-  {
-    "id": "barroca",
-    "title": "Modelo de Trabalho",
-    "author": "Eduardo Barroca & Roberto Maleson",
-    "priority": "A-PENDENTE",
-    "status": "pending",
-    "themes": [
-      "Modelo de trabalho",
-      "Liderança",
-      "Gestão de jogadores",
-      "Comissão técnica",
-      "Dirigentes",
-      "Treinamento",
-      "Crises",
-      "Mercado"
-    ],
-    "bestUse": "Cotidiano do treinador profissional no Brasil, gestão de pessoas, comissão, planejamento, crise e carreira.",
-    "url": "https://livromodelodetrabalho.com.br/",
-    "note": "Referência cadastrada; o PDF legítimo ainda não está disponível no Drive."
   }
 ];

@@ -1,0 +1,32 @@
+CoachVoice AI v5.6.2 - Conversa Simples
+
+AJUSTE
+O microfone voltou a ser controlado pelo treinador.
+
+FLUXO
+1. Toque no microfone.
+2. Fale normalmente e faça pausas se precisar.
+3. Toque no mesmo botão em Enviar fala.
+4. O CoachVoice transcreve e envia automaticamente.
+5. A IA responde.
+6. A resposta toca automaticamente em voz.
+7. O microfone permanece fechado.
+8. Quando quiser falar novamente, toque no microfone.
+
+PRESERVADO
+- Repetir / pausar / parar a resposta em voz.
+- Encerrar conversa com salvamento e fechamento.
+- Interromper a voz do Mentor tocando no microfone.
+- Pausas nunca enviam a fala sozinhas.
+- Study Coach v5.6, biblioteca do Google Drive, devocional, caderno e Meu Modelo de Trabalho.
+- APIs e GEMINI_API_KEY sem alterações.
+
+PUBLICAÇÃO
+Extraia o patch na raiz do GitHub.
+Não precisa alterar a pasta api.
+
+Commit sugerido:
+Simplificar conversa por voz v5.6.2
+
+Teste:
+https://coachvoice-ai.vercel.app/?v=562

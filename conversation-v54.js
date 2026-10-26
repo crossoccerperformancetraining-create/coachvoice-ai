@@ -9,7 +9,7 @@ let currentState='ready';
 let callOpen=false;
 
 const stateCopy={
-  ready:['PRONTO','Sua vez','Toque no microfone quando quiser falar.'],
+  ready:['PRONTO','Sua vez','Toque no microfone quando quiser responder.'],
   recording:['OUVINDO','Estou ouvindo você','Pode falar com calma e fazer pausas. Só você decide quando termina.'],
   transcribing:['PROCESSANDO','Entendendo sua fala','Aguarde um instante. Sua mensagem será enviada automaticamente.'],
   responding:['MENTOR','Mentor respondendo','A resposta começa automaticamente assim que ficar pronta.'],
@@ -58,7 +58,7 @@ function setState(name){
   }
   if(micLabel){
     micLabel.textContent=
-      name==='recording'?'Finalizar e enviar':
+      name==='recording'?'Enviar fala':
       name==='responding'||name==='paused'?'Interromper e falar':
       name==='transcribing'?'Transcrevendo…':'Falar';
   }
@@ -125,10 +125,16 @@ window.conversation54Start=function(mode='free'){
   if(!['free','mentor','questions'].includes(mode))mode='free';
   const select=document.getElementById('mentor42Mode');
   if(select){select.value=mode;window.mentor42ModeChanged?.();}
+  // v5.6.2: o treinador controla o início de cada fala.
+  // Depois de enviar, resposta e áudio continuam automáticos.
+  window.mentor561SetAutoAssist?.(false,{quiet:true});
+  const assisted=document.getElementById('conv561AutoAssist');
+  if(assisted)assisted.checked=false;
   window.mentor42StartCall?.(mode);
 };
 
 window.conversation54Mic=function(){
+  window.mentor561HoldAutoAssist?.(1500);
   // Se o Mentor ainda estiver falando, tocar no mic interrompe a voz primeiro.
   if(window.speechSynthesis && (speechSynthesis.speaking||speechSynthesis.paused)){
     try{speechSynthesis.cancel();}catch{}
@@ -156,6 +162,14 @@ window.conversation54Repeat=function(){
   try{speechSynthesis.cancel();}catch{}
   setState('responding');
   setTimeout(()=>window.mentor44RepeatLastAnswer?.(),80);
+};
+
+window.conversation561ToggleAutoAssist=function(input){
+  const enabled=Boolean(input?.checked);
+  window.mentor561SetAutoAssist?.(enabled);
+  if(enabled && currentState==='ready'){
+    window.mentor561ScheduleAutoMic?.(500);
+  }
 };
 
 window.conversation54StopSpeech=function(){
@@ -190,8 +204,10 @@ window.conversation54ToggleTranscript=function(force){
 
 function updateHandsFreeLabel(){
   const input=document.getElementById('mentor44AutoConversation');
-  if(!input)return;
-  input.checked=false; // segurança: sempre inicia manual
+  if(input)input.checked=false; // hands-free por pausa continua desligado.
+  const assisted=document.getElementById('conv561AutoAssist');
+  if(assisted)assisted.checked=false;
+  window.mentor561SetAutoAssist?.(false,{quiet:true});
 }
 
 function observeStatus(){
@@ -233,6 +249,7 @@ function wrapCalls(){
     const wrappedEnd=function(...args){
       callOpen=false;
       paused=false;
+      window.mentor561SetAutoAssist?.(false,{quiet:true});
       releaseWake();
       return originalEnd.apply(this,args);
     };

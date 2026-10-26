@@ -1,0 +1,45 @@
+CoachVoice AI v5.7 — Reflexões & Diário
+
+NOVO
+Dentro de Evolução → Crescimento & Sabedoria:
+- Reflexões & Diário
+- Aba Hoje
+- Aba Temas
+- Aba Diário
+
+TEMAS
+- Fé & confiança
+- Esperança & recomeços
+- Calma & presença
+- Gratidão
+- Relacionamentos & perdão
+- Propósito & escolhas
+
+FLUXO
+1. Abrir Reflexões.
+2. Ler ou ouvir uma reflexão curta.
+3. Escrever no diário, conversar com o Mentor ou apenas guardar.
+4. O diário fica local neste aparelho.
+
+IMPORTANTE
+- Não é terapia clínica.
+- Não diagnostica saúde mental.
+- Não substitui psicoterapia, atendimento médico ou suporte profissional quando necessário.
+- As reflexões são originais e não copiam o livro mostrado nas imagens.
+- A fé cristã aparece com respeito, sem forçar futebol ou trabalho.
+
+PRESERVADO
+- Conversa simples da v5.6.2.
+- Biblioteca somente dos livros do Google Drive da v5.6.3.
+- Study Coach.
+- Devocional diário.
+- Caderno do treinador e Meu Modelo de Trabalho.
+- APIs existentes e GEMINI_API_KEY.
+
+PUBLICAÇÃO
+Patch da raiz + patch da API.
+Commit sugerido:
+Adicionar Reflexões e Diário v5.7
+
+Teste:
+https://coachvoice-ai.vercel.app/?v=57
