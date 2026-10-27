@@ -218,6 +218,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <link rel="stylesheet" href="/conversation-v54.css?v=54">
 <link rel="stylesheet" href="/growth-v55.css?v=55">
 <link rel="stylesheet" href="/reflection-v57.css?v=57">
+<link rel="stylesheet" href="/opening-v571.css?v=571">
 <link rel="stylesheet" href="/study-v56.css?v=56">
 </head>
 <body>
@@ -345,6 +346,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
 
 <section id="dashboard" class="page active">
+  <section id="opening571Today" class="opening571-today"></section>
   <section id="premium53TodayOverview" class="premium53-today-overview"></section>
   <section id="growth55TodayCards" class="growth55-today-cards"></section>
   <div class="dashboard-hero">
@@ -2566,6 +2568,21 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 
 
 
+
+
+<div id="opening571Overlay" class="opening571-overlay hidden" role="dialog" aria-modal="true" aria-label="Rotina de abertura do CoachVoice">
+  <div class="opening571-overlay-shell">
+    <header class="opening571-overlay-head">
+      <div>
+        <span>HOJE · ROTINA DE ABERTURA</span>
+        <h2 id="opening571OverlayTitle">Começar o dia</h2>
+        <p>Você escolhe o que faz sentido. Nada aqui é obrigatório.</p>
+      </div>
+      <button onclick="opening571CloseRoutine()" aria-label="Fechar">×</button>
+    </header>
+    <div id="opening571RoutineBody" class="opening571-routine-body"></div>
+  </div>
+</div>
 
 <div id="reflection57Overlay" class="reflection57-overlay hidden" role="dialog" aria-modal="true" aria-label="Reflexões e Diário">
   <div class="reflection57-shell">
@@ -4933,6 +4950,8 @@ checkTechnicalEnvironment();
 <script src="/conversation-v54.js?v=54"></script>
 <script src="/growth-v55.js?v=55"></script>
 <script src="/reflection-v57.js?v=57"></script>
+<script src="/opening-book-v571.js?v=571"></script>
+<script src="/opening-v571.js?v=571"></script>
 <script src="/study-library-v56.js?v=56"></script>
 <script src="/study-v56.js?v=56"></script>
 <script>

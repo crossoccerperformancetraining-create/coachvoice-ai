@@ -1,0 +1,52 @@
+CoachVoice AI v5.7.1 — Abertura Inteligente
+
+TELA HOJE
+Ao abrir o app, o CoachVoice passa a oferecer:
+1. Bom dia / Boa tarde / Boa noite + nome do treinador.
+2. Uma única ideia contextual para conversar.
+3. Botão Conversar agora / Outra ideia.
+4. Rotina opcional “Começar minha rotina”.
+5. Hoje no CoachVoice:
+   - Conversa
+   - Reflexão
+   - Leitura
+   - Curso
+   - Agenda
+   - Study Coach
+
+REFLEXÃO
+Abre a área Reflexões & Diário v5.7 e mostra o texto do dia, com opção de ouvir.
+
+LEITURA
+- Alterna diariamente entre trechos curtos verificados dos PDFs do Google Drive.
+- Mostra título e autor.
+- Permite ouvir, conversar com o Mentor e abrir o livro.
+- Não existe alegação de leitura ao vivo do Drive pelo site.
+- As perguntas após o trecho são sínteses do CoachVoice, separadas do texto do livro.
+
+CURSO
+- Detecta a primeira aula ainda não concluída da Formação.
+- Mostra bloco, aula e objetivo.
+- “Iniciar módulo” abre diretamente a aula.
+- Quando todas estiverem concluídas, volta para o início da formação.
+
+CONVERSA
+- A sugestão diária pode usar tarefas, agenda e resumo anterior quando útil.
+- Não transforma a abertura em questionário.
+- A conversa continua no fluxo simples: microfone → falar → enviar → IA responde em voz → microfone fechado.
+
+INTERFACE
+- A antiga saudação/briefing duplicada e os cards diários do Crescimento ficam ocultos na tela Hoje.
+- Eles continuam disponíveis em suas áreas originais.
+- Agenda, prioridades e tarefas permanecem abaixo da abertura.
+
+PUBLICAÇÃO
+1. Extrair patch da raiz no GitHub.
+2. Substituir somente api/coach-ai.js pelo patch da API.
+3. Não alterar GEMINI_API_KEY.
+
+Commit sugerido:
+Adicionar Abertura Inteligente v5.7.1
+
+Teste:
+https://coachvoice-ai.vercel.app/?v=571
