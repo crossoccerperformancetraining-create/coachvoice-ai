@@ -237,6 +237,10 @@ const modeInstructions = {
     schema: '{"summary":"...","learning":"...","nextAction":"...","carryForward":"..."}',
     task: 'Resuma uma conversa de desenvolvimento do treinador em quatro campos curtos. Registre o contexto sem rotular pessoas. learning deve ser um aprendizado observável. nextAction deve ser concreto e revisável. carryForward deve indicar o que perguntar ou verificar na próxima conversa.'
   },
+  'today-opening': {
+    schema: '{"title":"...","starter":"...","why":"..."}',
+    task: 'Crie UMA sugestão curta e humana para iniciar a conversa do treinador ao abrir o CoachVoice. Use horário do dia, tarefas/eventos e contexto de ontem somente quando forem realmente úteis. O assunto pode ser trabalho, liderança, decisão, vida pessoal, reflexão, fé, aprendizado ou organização. Não transforme a abertura em questionário. starter deve ser uma única pergunta ou convite para conversa. title deve ter no máximo 7 palavras. why deve ter no máximo 24 palavras e explicar por que esse assunto pode ser útil agora. Não invente fatos nem emoções e não force futebol.'
+  },
   'today-brief': {
     schema: '{"brief":"..."}',
     task: 'Crie um briefing de manhã extremamente curto e humano para o treinador usando SOMENTE tarefas, compromissos e janela de trabalho enviados. brief deve ter de 2 a 4 frases. Identifique no máximo três prioridades reais, respeite horários fixos e evite encher todos os espaços livres. Não invente compromissos, não faça julgamento emocional e não termine com pergunta. Se o dia estiver sobrecarregado, sugira adiar uma prioridade menor de forma neutra. Se estiver leve, preserve margem para imprevistos.'
@@ -331,7 +335,7 @@ export default async function handler(req, res) {
       configured: Boolean(apiKey),
       exactKeyPresent: Object.prototype.hasOwnProperty.call(process.env, 'GEMINI_API_KEY'),
       model,
-      routeVersion: '5.7-reflections-journal',
+      routeVersion: '5.7.1-smart-opening',
       environment: process.env.VERCEL_ENV || 'unknown'
     });
   }
