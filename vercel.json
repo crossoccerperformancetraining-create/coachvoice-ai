@@ -184,7 +184,7 @@
       ]
     },
     {
-      "source": "/premium-v53.js",
+      "source": "/pro-v53.css",
       "headers": [
         {
           "key": "Cache-Control",
@@ -193,7 +193,7 @@
       ]
     },
     {
-      "source": "/premium-v53.css",
+      "source": "/pro-v53.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -202,7 +202,7 @@
       ]
     },
     {
-      "source": "/conversation-v54.js",
+      "source": "/session-v54.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -211,7 +211,7 @@
       ]
     },
     {
-      "source": "/conversation-v54.css",
+      "source": "/session-v54.css",
       "headers": [
         {
           "key": "Cache-Control",
@@ -220,7 +220,7 @@
       ]
     },
     {
-      "source": "/growth-v55.js",
+      "source": "/central-v55.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -229,7 +229,7 @@
       ]
     },
     {
-      "source": "/growth-v55.css",
+      "source": "/central-v55.css",
       "headers": [
         {
           "key": "Cache-Control",
@@ -238,7 +238,7 @@
       ]
     },
     {
-      "source": "/study-v56.js",
+      "source": "/conversation-merge-v56.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -247,70 +247,7 @@
       ]
     },
     {
-      "source": "/study-v56.css",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/study-library-v56.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/study-library-v56.json",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/reflection-v57.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/reflection-v57.css",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/opening-v571.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/opening-v571.css",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/opening-book-v571.js",
+      "source": "/conversation-merge-v56.css",
       "headers": [
         {
           "key": "Cache-Control",
@@ -327,10 +264,16 @@
       "maxDuration": 30
     },
     "api/coach-ai.js": {
-      "maxDuration": 30
+      "maxDuration": 60
     },
     "api/transcribe.js": {
       "maxDuration": 30
+    },
+    "api/mentor-voice.js": {
+      "maxDuration": 60
+    },
+    "api/session-vision.js": {
+      "maxDuration": 60
     }
   }
 }

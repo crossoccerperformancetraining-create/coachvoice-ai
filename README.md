@@ -1,3 +1,13 @@
+# CoachVoice AI 5.6
+
+Versão integrada: conversa manual, controles de voz e Central do Treinador. Leia [LEIA-V5.6-INTEGRACAO.md](LEIA-V5.6-INTEGRACAO.md).
+
+# CoachVoice AI 5.5
+
+A versão atual reúne a Central do Treinador, telas próprias por área e o upgrade de sessões e voz. Leia [LEIA-V5.5-CENTRAL.md](LEIA-V5.5-CENTRAL.md).
+
+## Documentação anterior
+
 ## CoachVoice AI v5.2 — Experiência Final
 
 Hoje · Agenda · CoachDay · Mentor humanizado · Treinar · Evolução · Backup local

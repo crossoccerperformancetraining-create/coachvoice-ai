@@ -1,9 +1,12 @@
 {
   "name": "coachvoice-ai",
   "private": true,
-  "version": "5.7.3",
-  "description": "CoachVoice AI v5.7.3: recuperação da voz automática do Mentor no Safari/iPhone.",
+  "version": "5.6.0",
+  "description": "CoachVoice AI: Central do Treinador e telas de trabalho integradas.",
   "engines": {
     "node": "22.x"
+  },
+  "scripts": {
+    "test": "node tests/session-v54.test.cjs && node tests/api-v54.test.cjs && node tests/voice-v54.test.cjs && node tests/conversation-v56.test.cjs"
   }
 }
