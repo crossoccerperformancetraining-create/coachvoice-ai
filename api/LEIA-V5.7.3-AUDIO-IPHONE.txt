@@ -1,0 +1,14 @@
+CoachVoice AI v5.7.3 — áudio do Mentor no iPhone/Safari
+
+Esta versão parte do CV572_FULL e corrige a reprodução da resposta por voz:
+- no iPhone/iPad, o Safari escolhe a voz nativa do sistema em vez de uma voz selecionada que pode começar sem som;
+- a fala recebe uma tentativa de recuperação se o áudio não iniciar ou ficar preso;
+- a versão do script e o cache foram atualizados para o iPhone receber o arquivo novo.
+
+PUBLICAÇÃO
+1. Extraia todo o pacote completo na raiz do repositório do CoachVoice no GitHub e substitua os arquivos existentes.
+2. Faça o commit e aguarde o deploy da Vercel.
+3. No iPhone, abra https://coachvoice-ai.vercel.app/?v=573 no Safari conectado à internet para atualizar o app instalado.
+4. Inicie uma conversa, toque no microfone, fale e finalize. Se o iPhone bloquear a primeira reprodução, toque em “Repetir”.
+
+Esta correção não altera a pasta api nem a GEMINI_API_KEY.
