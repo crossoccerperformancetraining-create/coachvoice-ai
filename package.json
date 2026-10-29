@@ -1,12 +1,9 @@
 {
   "name": "coachvoice-ai",
   "private": true,
-  "version": "5.6.0",
-  "description": "CoachVoice AI: Central do Treinador e telas de trabalho integradas.",
+  "version": "5.7.1",
+  "description": "CoachVoice AI v5.7.1: abertura inteligente na tela Hoje com conversa, reflexão, leitura, curso e agenda.",
   "engines": {
     "node": "22.x"
-  },
-  "scripts": {
-    "test": "node tests/session-v54.test.cjs && node tests/api-v54.test.cjs && node tests/voice-v54.test.cjs && node tests/conversation-v56.test.cjs"
   }
 }

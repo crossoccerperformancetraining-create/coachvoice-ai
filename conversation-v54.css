@@ -205,6 +205,3 @@
 .conv561-auto-label{display:flex!important;align-items:center;gap:9px;color:#dce9f2!important}
 .conv561-auto-label input{accent-color:#4ecb65;width:17px;height:17px}
 .conv54-state.recording p{max-width:360px}
-
-/* v5.7.2 — estabilidade de áudio da resposta */
-.conv572-audio-hint{display:block;text-align:center;color:rgba(221,234,242,.68);font-size:.62rem;line-height:1.35;margin:4px auto 8px;max-width:390px}
