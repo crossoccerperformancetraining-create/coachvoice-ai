@@ -366,23 +366,91 @@
   let mentor461SpeechSeq=0;
   let mentor461CurrentUtterance=null;
 
-  function mentor461PrimeSpeech(){
-    if(mentor461SpeechPrimed || !('speechSynthesis' in window))return;
+
+  let mentor572AudioContext=null;
+  let mentor572LastSpokenText='';
+
+  function mentor572UnlockAudioOutput(){
+    // Chamado durante um toque real do usuário. Mantém o áudio liberado no iPhone/Safari
+    // enquanto a gravação é transcrita e a IA responde de forma assíncrona.
     try{
-      speechSynthesis.cancel();
+      const AudioCtx=window.AudioContext||window.webkitAudioContext;
+      if(AudioCtx){
+        mentor572AudioContext=mentor572AudioContext||new AudioCtx();
+        mentor572AudioContext.resume?.();
+        const osc=mentor572AudioContext.createOscillator();
+        const gain=mentor572AudioContext.createGain();
+        gain.gain.value=0.00001;
+        osc.connect(gain);gain.connect(mentor572AudioContext.destination);
+        osc.start();osc.stop(mentor572AudioContext.currentTime+0.025);
+      }
+    }catch{}
+
+    if(!('speechSynthesis' in window))return;
+    try{
       speechSynthesis.resume?.();
-      const warmup=new SpeechSynthesisUtterance(' ');
+      const warmup=new SpeechSynthesisUtterance('\u00A0');
       warmup.lang='pt-BR';
       warmup.volume=0.01;
       warmup.rate=2;
+      const voice=mentor44PickVoice();
+      if(voice)warmup.voice=voice;
       speechSynthesis.speak(warmup);
       mentor461SpeechPrimed=true;
     }catch{}
   }
+  window.mentor572UnlockAudioOutput=mentor572UnlockAudioOutput;
+
+  function mentor572SpeechChunks(value,maxChars=230){
+    const text=String(value||'').replace(/\s+/g,' ').trim();
+    if(!text)return [];
+    const sentences=text.match(/[^.!?;:]+[.!?;:]?|[^.!?;:]+$/g)||[text];
+    const chunks=[];
+    let current='';
+    const push=()=>{if(current.trim()){chunks.push(current.trim());current='';}};
+    for(const raw of sentences){
+      const s=raw.trim();
+      if(!s)continue;
+      if(s.length>maxChars){
+        push();
+        const words=s.split(/\s+/);
+        let part='';
+        for(const word of words){
+          const candidate=part?`${part} ${word}`:word;
+          if(candidate.length>maxChars && part){chunks.push(part);part=word;}
+          else part=candidate;
+        }
+        if(part)chunks.push(part);
+        continue;
+      }
+      const candidate=current?`${current} ${s}`:s;
+      if(candidate.length>maxChars){push();current=s;}
+      else current=candidate;
+    }
+    push();
+    return chunks;
+  }
+
+  function mentor572VoiceForSpeech(){
+    const preferred=mentor44PickVoice();
+    if(preferred)return preferred;
+    try{
+      const voices=speechSynthesis.getVoices()||[];
+      return voices.find(v=>/^pt/i.test(v.lang))||voices[0]||null;
+    }catch{return null;}
+  }
+
+  function mentor461PrimeSpeech(){
+    if(mentor461SpeechPrimed || !('speechSynthesis' in window))return;
+    mentor572UnlockAudioOutput();
+  }
 
   function speak(text,options={}){
     const force=Boolean(options.force);
-    if(!text || (!force && !autoVoice())){
+    const value=String(text||'').trim();
+    mentor572LastSpokenText=value;
+
+    if(!value || (!force && !autoVoice())){
       mentor43SetSpeaking(false);
       mentor44AfterMentorSpeech();
       return;
@@ -394,71 +462,113 @@
     }
 
     const seq=++mentor461SpeechSeq;
-    let started=false;
+    const chunks=mentor572SpeechChunks(value,230);
+    let index=0;
+    let firstStarted=false;
     let finished=false;
-    let startTimer=null;
+    let watchdog=null;
+    let retryWithoutVoice=false;
 
-    try{
-      speechSynthesis.cancel();
-      speechSynthesis.resume?.();
+    const finish=(message)=>{
+      if(finished || seq!==mentor461SpeechSeq)return;
+      finished=true;
+      if(watchdog)clearTimeout(watchdog);
+      mentor461CurrentUtterance=null;
+      mentor43SetSpeaking(false);
+      if(message)setCallStatus(message);
+      mentor44AfterMentorSpeech();
+    };
 
-      const u=new SpeechSynthesisUtterance(String(text));
+    const speakNext=()=>{
+      if(finished || seq!==mentor461SpeechSeq)return;
+      if(index>=chunks.length){
+        finish('Sua vez. Toque no microfone para continuar.');
+        return;
+      }
+
+      const chunk=chunks[index];
+      const u=new SpeechSynthesisUtterance(chunk);
       mentor461CurrentUtterance=u;
       u.lang='pt-BR';
+
       let rate=.92;
       try{
         const v52=JSON.parse(localStorage.getItem('coachvoice-v52-settings')||'{}');
         if(Number.isFinite(Number(v52.voiceRate)))rate=Math.min(1.2,Math.max(.75,Number(v52.voiceRate)));
       }catch{}
-      u.rate=rate;
-      u.pitch=1;
-      u.volume=1;
+      u.rate=rate;u.pitch=1;u.volume=1;
 
-      const voice=mentor44PickVoice();
-      if(voice)u.voice=voice;
-
-      const finish=(message)=>{
-        if(finished || seq!==mentor461SpeechSeq)return;
-        finished=true;
-        if(startTimer)clearTimeout(startTimer);
-        mentor43SetSpeaking(false);
-        if(message)setCallStatus(message);
-        mentor44AfterMentorSpeech();
-      };
+      if(!retryWithoutVoice){
+        const voice=mentor572VoiceForSpeech();
+        if(voice)u.voice=voice;
+      }
 
       u.onstart=()=>{
         if(seq!==mentor461SpeechSeq)return;
-        started=true;
-        if(startTimer)clearTimeout(startTimer);
-        mentor43SetSpeaking(true,text);
-        setCallStatus('Mentor falando...');
+        firstStarted=true;
+        if(watchdog){clearTimeout(watchdog);watchdog=null;}
+        mentor43SetSpeaking(true,value);
+        setCallStatus(index===0?'Mentor falando...':'Mentor continua falando...');
       };
 
       u.onend=()=>{
-        finish('Sua vez. Toque no microfone para continuar.');
+        if(seq!==mentor461SpeechSeq)return;
+        if(watchdog){clearTimeout(watchdog);watchdog=null;}
+        index++;
+        retryWithoutVoice=false;
+        setTimeout(speakNext,60);
       };
 
       u.onerror=(event)=>{
-        const blocked=String(event?.error||'').toLowerCase();
+        if(seq!==mentor461SpeechSeq)return;
+        if(watchdog){clearTimeout(watchdog);watchdog=null;}
+        const err=String(event?.error||'').toLowerCase();
+
+        if(!retryWithoutVoice && !firstStarted && !/not-allowed/.test(err)){
+          retryWithoutVoice=true;
+          try{speechSynthesis.cancel();speechSynthesis.resume?.();}catch{}
+          setTimeout(speakNext,100);
+          return;
+        }
+
         finish(
-          blocked.includes('not-allowed') || blocked.includes('interrupted')
-            ? 'Resposta pronta. Toque em 🔊 Ouvir / repetir resposta para liberar o áudio no iPhone.'
-            : 'A resposta está no texto. Toque em 🔊 Ouvir / repetir resposta para escutar.'
+          /not-allowed|interrupted/.test(err)
+            ? 'A resposta chegou, mas o iPhone bloqueou a voz automática. Toque em 🔊 Repetir uma vez para liberar.'
+            : 'A resposta chegou em texto. Toque em 🔊 Repetir para escutar.'
         );
       };
 
-      speechSynthesis.speak(u);
+      try{
+        speechSynthesis.resume?.();
+        speechSynthesis.speak(u);
+      }catch{
+        finish('A resposta chegou em texto. Toque em 🔊 Repetir para escutar.');
+        return;
+      }
 
-      // Safari/iOS can accept speak() but not actually start it after an async API response.
-      // In that case keep the text and give the user a one-tap, user-gesture fallback.
-      startTimer=setTimeout(()=>{
-        if(seq!==mentor461SpeechSeq || started || finished)return;
-        try{speechSynthesis.resume?.();}catch{}
-        setCallStatus('Resposta pronta. Se o iPhone não falar automaticamente, toque em 🔊 Ouvir / repetir resposta.');
-      },2200);
+      if(index===0){
+        watchdog=setTimeout(()=>{
+          if(seq!==mentor461SpeechSeq || firstStarted || finished)return;
+          try{speechSynthesis.resume?.();}catch{}
+          setCallStatus('Resposta pronta. Tentando iniciar o áudio...');
+          setTimeout(()=>{
+            if(seq!==mentor461SpeechSeq || firstStarted || finished)return;
+            try{speechSynthesis.cancel();}catch{}
+            retryWithoutVoice=true;
+            speakNext();
+          },350);
+        },1400);
+      }
+    };
+
+    try{
+      speechSynthesis.cancel();
+      speechSynthesis.resume?.();
+      setCallStatus('Resposta pronta. Iniciando voz do Mentor...');
+      speakNext();
     }catch{
       mentor43SetSpeaking(false);
-      setCallStatus('Resposta pronta. Toque em 🔊 Ouvir / repetir resposta para escutar.');
+      setCallStatus('Resposta pronta. Toque em 🔊 Repetir para escutar.');
       mentor44AfterMentorSpeech();
     }
   }
@@ -686,6 +796,7 @@
   }
 
   window.mentor42Send=async function mentor42Send(fromCall=false){
+    if(state.isCallOpen)mentor572UnlockAudioOutput();
     if(state.conversationEnded){
       if(typeof toast==='function')toast('Esta conversa já foi encerrada. Inicie uma nova conversa para continuar.');
       return;
@@ -1187,6 +1298,8 @@
     if(mentor481Processing)return;
 
     if(mentor481Recording){
+      // O toque que encerra a fala prepara a saída de áudio antes da transcrição + IA.
+      mentor572UnlockAudioOutput();
       setCallStatus('Finalizando sua fala...');
       try{
         if(mentor481Recorder?.state==='recording')mentor481Recorder.stop();
@@ -1196,6 +1309,8 @@
       return;
     }
 
+    // Este toque também prepara a próxima resposta falada.
+    mentor572UnlockAudioOutput();
     // Não deixa a voz do próprio Mentor entrar na gravação.
     try{speechSynthesis?.cancel();}catch{}
     mentor43SetSpeaking(false);
@@ -2316,6 +2431,7 @@
   };
 
   window.mentor44RepeatLastAnswer=function mentor44RepeatLastAnswer(){
+    mentor572UnlockAudioOutput();
     const text=lastAssistantText();
     if(!text){
       if(typeof toast==='function')toast('Ainda não há resposta do Mentor para repetir.');

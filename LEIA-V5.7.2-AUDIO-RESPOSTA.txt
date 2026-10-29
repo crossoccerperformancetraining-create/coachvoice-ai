@@ -1,0 +1,31 @@
+CoachVoice AI v5.7.2 — Correção da voz da IA
+
+PROBLEMA CORRIGIDO
+A IA respondia em texto, mas em alguns iPhones/Safari a voz automática não iniciava depois do fluxo gravação → transcrição → Gemini.
+
+AJUSTE
+- O toque que encerra sua fala prepara/libera a saída de áudio antes das etapas assíncronas.
+- AudioContext + SpeechSynthesis são preparados durante gesto real do usuário.
+- Respostas longas são divididas em blocos menores para maior estabilidade no Safari/iPhone.
+- Se a primeira tentativa não iniciar, há uma segunda tentativa automática sem voz fixa.
+- Repetir permanece como fallback de um toque.
+
+FLUXO PRESERVADO
+Microfone → falar → Enviar fala → IA responde → voz automática → microfone fechado.
+O microfone NÃO reabre sozinho.
+
+PRESERVADO
+- Abertura Inteligente v5.7.1.
+- Reflexões & Diário v5.7.
+- Biblioteca do Google Drive v5.6.3.
+- Study Coach.
+- Nenhuma alteração nas APIs nem na GEMINI_API_KEY.
+
+PUBLICAÇÃO
+Extraia o patch da raiz no GitHub. Não precisa alterar a pasta api.
+
+Commit sugerido:
+Corrigir voz automática da IA v5.7.2
+
+Teste:
+https://coachvoice-ai.vercel.app/?v=572
