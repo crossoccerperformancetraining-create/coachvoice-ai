@@ -1,0 +1,12 @@
+CoachVoice v5.7.6 — Validação técnica (03/11/2026)
+
+Base utilizada: v5.7.5 completa, com as melhorias progressivas da v5.7.2 preservadas no fluxo do Mentor.
+
+- 9 testes automatizados simulados aprovados (camada de áudio e rota TTS).
+- Sintaxe: 28 arquivos JavaScript verificados com node --check.
+- HTML: 548 IDs, nenhum duplicado; 2 scripts inline com sintaxe válida.
+- ZIP: testado após compactação, sem erros de integridade.
+- Integração real com Gemini: não executada (sem chave de API neste ambiente).
+- Reprodução em iPhone físico: ainda precisa ser validada após publicação.
+
+O pacote completo substitui a versão anterior na raiz do GitHub, incluindo api/tts.js. A chave GEMINI_API_KEY não deve ser incluída nos arquivos.

@@ -35,3 +35,23 @@ Não é necessário trocar a chave se a v4.7 já estava funcionando.
 2. Abra `Entrevistas` → `Vitória na estreia`.
 3. Responda e toque em `Responder próxima pergunta`.
 4. Ligue `Coletiva contínua` e faça uma sequência de 5 perguntas.
+
+## v5.7.5 — Áudio iPhone + continuidade diária
+- iPhone: a fala usa primeiro Gemini TTS em áudio real; se a rota falhar, volta automaticamente para a voz do navegador.
+- iPad e demais aparelhos mantêm o mecanismo já usado na v5.7.3.
+- Novo acompanhamento leve na tela Hoje: check-in rápido, continuidade do registro de ontem e fechamento noturno.
+- Devocional/reflexões, diário, Study Coach, biblioteca, curso, agenda e Mentor foram preservados.
+- Nova função serverless: `api/tts.js`, usando a mesma `GEMINI_API_KEY` já configurada no Vercel.
+
+
+
+## v5.7.5 — Voz natural, pausas e fontes
+- Voz TTS com prosódia mais conversacional no iPhone e fallback preservado.
+- Devocional lido por blocos: passagem, reflexão, oração e atitude, com pausas reais.
+- Reflexões e leitura do dia com pausa entre título e conteúdo.
+- Leitura do livro mostra fonte, autor, status de trecho verificado e botão Abrir fonte.
+- Study Coach mostra referência/fonte e link para a obra quando disponível.
+
+## v5.7.6 — Cancelamento de áudio seguro (03/11/2026)
+
+Corrige reprodução tardia após interrupção, espera indefinida de áudio pausado e solicitações TTS pendentes. A prioridade para áudio real no iPhone, o fallback do Safari e todos os módulos v5.7.5 permanecem. Leia `LEIA-V5.7.6-AUDIO-ESTAVEL.txt`.

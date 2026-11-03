@@ -1,0 +1,25 @@
+CoachVoice AI v5.7.5 — Voz Natural + Pausas + Citações
+
+AJUSTES DESTA VERSÃO
+- Voz mais natural: instruções de fala humana, conversacional e sem tom robótico/locutor.
+- iPhone continua usando Gemini TTS primeiro e voz do navegador como fallback.
+- iPad e demais aparelhos preservam o mecanismo já funcional, com pausas melhoradas no conteúdo estruturado.
+- Devocional: pausa entre título, passagem, reflexão, oração e atitude para hoje.
+- Reflexões: pausa depois do título e entre os blocos.
+- Leitura do livro: título/autor → pausa → trecho → pausa → pergunta.
+- Study Coach/Leitura do dia: fonte visível com título, autor e botão Abrir fonte quando houver link cadastrado.
+- Página só é mostrada quando houver uma referência verificada; o app não inventa número de página.
+
+PRESERVADO
+- Devocional, Reflexões & Diário.
+- Abertura Inteligente e rotina guiada.
+- Check-in, continuidade do dia anterior e fechamento noturno.
+- Study Coach e biblioteca.
+- Curso, agenda, Mentor e conversa simples.
+
+PUBLICAÇÃO
+Use o pacote completo ou aplique o patch de raiz e o arquivo api/tts.js.
+Não altere GEMINI_API_KEY.
+
+Commit sugerido:
+Melhorar voz, pausas e citações v5.7.5

@@ -135,17 +135,30 @@ window.conversation54Start=function(mode='free'){
 
 window.conversation54Mic=function(){
   window.mentor561HoldAutoAssist?.(1500);
-  // Se o Mentor ainda estiver falando, tocar no mic interrompe a voz primeiro.
+  // Se o Mentor ainda estiver falando, tocar no mic interrompe qualquer mecanismo de voz primeiro.
+  window.voice573?.cancel?.();
   if(window.speechSynthesis && (speechSynthesis.speaking||speechSynthesis.paused)){
     try{speechSynthesis.cancel();}catch{}
-    paused=false;
   }
+  paused=false;
   setTimeout(()=>window.mentor42Capture?.(true),40);
 };
 
-window.conversation54TogglePause=function(){
-  if(!('speechSynthesis' in window))return;
+window.conversation54TogglePause=async function(){
   const btn=document.getElementById('conv54PauseBtn');
+  if(window.voice573?.isServerPlaying?.()){
+    const handled=await window.voice573.togglePause?.();
+    if(!handled)return;
+    paused=Boolean(window.voice573?.isServerPaused?.());
+    setState(paused?'paused':'responding');
+    if(btn){
+      btn.innerHTML=paused
+        ?`<svg class="conv54-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="m8 5 11 7-11 7z"/></svg><small>Continuar</small>`
+        :`<svg class="conv54-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M8 5v14M16 5v14"/></svg><small>Pausar</small>`;
+    }
+    return;
+  }
+  if(!('speechSynthesis' in window))return;
   if(speechSynthesis.paused){
     try{speechSynthesis.resume();paused=false;setState('responding');}catch{}
     if(btn){btn.innerHTML=`<svg class="conv54-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M8 5v14M16 5v14"/></svg><small>Pausar</small>`;}
@@ -159,6 +172,7 @@ window.conversation54TogglePause=function(){
 
 window.conversation54Repeat=function(){
   paused=false;
+  window.voice573?.cancel?.();
   try{speechSynthesis.cancel();}catch{}
   setState('responding');
   setTimeout(()=>window.mentor44RepeatLastAnswer?.(),80);
@@ -251,7 +265,12 @@ function wrapCalls(){
       paused=false;
       window.mentor561SetAutoAssist?.(false,{quiet:true});
       releaseWake();
-      return originalEnd.apply(this,args);
+      const result=originalEnd.apply(this,args);
+      if(localStorage.getItem('coachvoice-opening-v573-resume')==='1'){
+        localStorage.removeItem('coachvoice-opening-v573-resume');
+        setTimeout(()=>window.opening573ResumeRoutine?.(),220);
+      }
+      return result;
     };
     wrappedEnd.__conv54=true;
     window.mentor42EndCall=wrappedEnd;

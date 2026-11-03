@@ -129,6 +129,18 @@ window.study56Preset=function(kind){
   const el=document.getElementById('study56Situation');if(el){el.value=examples[kind]||'';el.focus();}
 };
 
+function libraryMatch(ref){
+  const title=String(ref?.title||'').trim().toLowerCase();
+  return LIB.find(b=>b.id===ref?.id||String(b.title||'').trim().toLowerCase()===title)||null;
+}
+function sourceReferenceHtml(ref,verified=false){
+  const b=libraryMatch(ref);
+  const title=ref?.title||b?.title||'';
+  const author=ref?.author||b?.author||'';
+  const label=verified?'Trecho/nota verificada da sua biblioteca':'Referência da sua biblioteca';
+  const url=b?.url||'';
+  return `<div class="study56-source-reference"><small>Fonte: ${esc(title)}${author?` — ${esc(author)}`:''} · ${esc(label)}</small>${url?`<a href="${esc(url)}" target="_blank" rel="noopener">Abrir fonte</a>`:''}</div>`;
+}
 function sourceCards(books){
   return books.map(b=>`<article class="study56-source-card">
     <div><span>${esc(b.priority)} · ${b.status==='searchable'?'CATALOGADO':'PENDENTE'}</span><strong>${esc(b.title)}</strong><small>${esc(b.author)}</small></div>
@@ -154,7 +166,7 @@ function renderStudy(data,situation,mode){
       <article><b>3</b><span>APLICAÇÃO</span><strong>${esc(data.application||'')}</strong><p>${esc(data.tomorrow||'')}</p></article>
     </div>
 
-    ${refs.length?`<section class="study56-output-section"><span>REFERÊNCIAS DA SUA BIBLIOTECA</span><div class="study56-ref-list">${refs.map(r=>`<div><strong>${esc(r.title||'')}</strong><small>${esc(r.author||'')}</small><p>${esc(r.why||r.reason||'')}</p></div>`).join('')}</div></section>`:''}
+    ${refs.length?`<section class="study56-output-section"><span>REFERÊNCIAS DA SUA BIBLIOTECA</span><div class="study56-ref-list">${refs.map(r=>`<div><strong>${esc(r.title||'')}</strong><small>${esc(r.author||'')}</small><p>${esc(r.why||r.reason||'')}</p>${sourceReferenceHtml(r,mode==='library')}</div>`).join('')}</div></section>`:''}
 
     ${data.aiSynthesis?`<section class="study56-output-section ai"><span>SÍNTESE DO COACHVOICE</span><p>${esc(data.aiSynthesis)}</p></section>`:''}
     ${Array.isArray(data.tensions)&&data.tensions.length?`<section class="study56-output-section"><span>TENSÕES / PONTOS PARA NÃO SIMPLIFICAR</span>${data.tensions.map(x=>`<p>• ${esc(x)}</p>`).join('')}</section>`:''}
@@ -259,11 +271,14 @@ window.study56Podcast=async function(){
     ?[lastStudy.reading,lastStudy.aiSynthesis,lastStudy.application].filter(Boolean).join(' ')
     :result.script;
   if(!script)return;
+  window.voice573?.unlock?.();
+  if(window.voice573?.speak){
+    window.voice573.speak(String(script).replace(/\n+/g,'\n\n'),{lang:'pt-BR',rate:.92,profile:'podcast',sectionPause:420,onError:()=>showToast('O áudio não iniciou. Toque novamente para tentar.')});
+    showToast('Áudio iniciado. Você pode fechar o Study Coach e continuar ouvindo.');
+    return;
+  }
   if(!('speechSynthesis' in window)){showToast('Leitura em voz não disponível neste navegador.');return;}
-  try{speechSynthesis.cancel();}catch{}
-  const u=new SpeechSynthesisUtterance(script);u.lang='pt-BR';
-  try{const s=JSON.parse(localStorage.getItem('coachvoice-v52-settings')||'{}');u.rate=Number(s.voiceRate)||1;}catch{u.rate=1;}
-  speechSynthesis.speak(u);showToast('Áudio iniciado. Você pode fechar o Study Coach e continuar ouvindo.');
+  const u=new SpeechSynthesisUtterance(script);u.lang='pt-BR';u.rate=.92;speechSynthesis.speak(u);
 };
 
 window.study56RunTable=async function(){

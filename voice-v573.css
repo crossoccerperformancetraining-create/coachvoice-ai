@@ -1,0 +1,5 @@
+
+/* CoachVoice v5.7.3 — voz unificada */
+.voice573-status{display:flex;align-items:center;gap:6px;font-size:.62rem;color:#71808a}
+.voice573-status.ok{color:#4f7d61}.voice573-status.warn{color:#986f3d}
+.voice573-status::before{content:"●";font-size:.55rem}

@@ -1,5 +1,5 @@
-const CACHE='coachvoice-v5.7.1-smart-opening';
-const FILES=['/','/index.html','/manifest.webmanifest','/icon-192.png','/icon-512.png','/studio.css','/studio.js','/studio-framing.js','/coachvoice-v33.js','/coachday.css','/coachday-v40.js','/coachprep.css','/coachprep-v42.js','/mentor-v52.css','/mentor-v52.js','/dashboard-v51.css','/dashboard-v51.js','/languages-v50.css','/languages-v50.js','/today-v52.js','/ui-v52.css'];
+const CACHE='coachvoice-v5.7.6-audio-stable';
+const FILES=['/','/index.html','/manifest.webmanifest','/icon-192.png','/icon-512.png','/studio.css','/studio.js','/studio-framing.js','/coachvoice-v33.js','/coachday.css','/coachday-v40.js','/coachprep.css','/coachprep-v42.js','/mentor-v52.css','/mentor-v52.js','/dashboard-v51.css','/dashboard-v51.js','/languages-v50.css','/languages-v50.js','/today-v52.js','/ui-v52.css','/voice-v575.js','/voice-v573.css','/daily-v574.js','/daily-v574.css'];
 
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting()));

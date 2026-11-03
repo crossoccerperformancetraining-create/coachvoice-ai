@@ -1,0 +1,51 @@
+CoachVoice AI v5.7.4 — Áudio iPhone + Continuidade Diária
+
+OBJETIVO DESTA VERSÃO
+Corrigir especificamente o caso em que a resposta da IA aparece no iPhone, mas o áudio não toca,
+sem alterar o comportamento que já funciona no iPad.
+
+ÁUDIO
+- iPhone: usa primeiro Gemini TTS em áudio real por /api/tts.
+- Se o TTS não responder, tenta automaticamente a voz nativa do navegador.
+- iPad e demais aparelhos continuam usando o mecanismo da v5.7.3.
+- Microfone, Repetir, Pausar e Interromper foram ajustados para reconhecer também o áudio do servidor.
+- O microfone continua fechado depois da resposta da IA.
+- A mesma GEMINI_API_KEY já usada no projeto é reaproveitada; não crie outra chave.
+
+HOJE — ACOMPANHAMENTO LEVE
+- Check-in rápido: Bem / Mais ou menos / Dia pesado.
+- Continuidade: se houver fechamento salvo no dia anterior, ele aparece como ponto de retomada.
+- Fechamento noturno: campo curto para registrar aprendizado, decisão ou pendência para amanhã.
+- Atalho “Conversar agora” envia esse contexto ao Mentor sem criar nova aba.
+
+PRESERVADO
+- Devocional / Reflexões & Diário.
+- Abertura Inteligente e rotina guiada.
+- Study Coach e biblioteca dos livros catalogados.
+- Curso do dia e formação.
+- Agenda e prioridades.
+- Mentor e conversa simples: tocar no microfone → falar → enviar → IA responde → escutar.
+- Nenhuma remoção de função da v5.7.3.
+
+PUBLICAÇÃO
+Opção 1 — pacote completo:
+Substitua o conteúdo do repositório pelo conteúdo do pacote completo, preservando somente as
+variáveis de ambiente na Vercel (elas não ficam no ZIP).
+
+Opção 2 — patch:
+1. Extraia o PATCH_RAIZ na raiz do GitHub.
+2. Extraia o API_TTS e coloque tts.js dentro de api/.
+3. Não altere GEMINI_API_KEY.
+4. Faça commit e aguarde o deployment ficar Ready.
+
+Commit sugerido:
+Corrigir áudio do iPhone e adicionar continuidade diária v5.7.4
+
+Teste recomendado no iPhone:
+1. Abra o CoachVoice e entre no Mentor.
+2. Toque no microfone, fale e envie.
+3. Aguarde a resposta; ela deve tocar automaticamente.
+4. Teste também 🔊 Ouvir resposta.
+5. Confirme que o microfone permanece fechado depois da fala da IA.
+
+No iPad, confirme apenas que o áudio continua funcionando como antes.

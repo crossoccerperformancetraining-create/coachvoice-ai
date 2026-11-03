@@ -1,0 +1,47 @@
+CoachVoice AI v5.7.3 — Rotina Guiada + Correção de Áudio
+
+CORREÇÃO PRINCIPAL
+A voz foi centralizada em um único mecanismo para Mentor, Reflexões e leitura dos livros.
+No iPhone/Safari, o toque em Microfone, Enviar, Ouvir, Próximo ou Começar rotina libera/prepara
+a saída de áudio antes de qualquer chamada assíncrona.
+
+ROTINA DA TELA HOJE
+Agora é realmente passo a passo:
+1/6 Saudação
+2/6 Reflexão
+3/6 Livro
+4/6 Conversa com a IA
+5/6 Curso
+6/6 Agenda
+
+- Próximo / Voltar / Pular.
+- A rotina guarda o passo atual.
+- Se abrir a conversa com a IA pelo passo 4, ao encerrar volta para Hoje e retoma no curso.
+- Se abrir o curso, a rotina guarda que o próximo passo é Agenda.
+- A tela Hoje continua mostrando atalhos para Conversa, Reflexão, Leitura, Curso, Agenda e Study Coach.
+
+ÁUDIO
+- Ouvir reflexão: toque direto libera áudio antes de carregar qualquer dado.
+- Ouvir trecho do livro: leitura por voz imediata.
+- Mentor: o toque no microfone prepara a saída antes de transcrever e chamar a IA.
+- Respostas longas são divididas em partes menores, mais estáveis no Safari.
+- O microfone continua fechado depois da resposta da IA.
+- Se o navegador ainda bloquear a voz, Repetir permanece como fallback de um toque.
+
+PRESERVADO
+- Biblioteca somente com os livros do Google Drive catalogados.
+- Reflexões & Diário.
+- Study Coach.
+- Abertura contextual por horário.
+- Conversa: microfone → falar → enviar → IA responde em voz → microfone fechado.
+- Nenhuma alteração em GEMINI_API_KEY.
+
+PUBLICAÇÃO
+Patch da raiz: extrair na raiz do GitHub.
+Não precisa alterar a pasta api nesta versão.
+
+Commit sugerido:
+Corrigir áudio e adicionar rotina guiada v5.7.3
+
+Teste:
+https://coachvoice-ai.vercel.app/?v=573

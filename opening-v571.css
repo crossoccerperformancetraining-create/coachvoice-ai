@@ -28,3 +28,24 @@
 .opening571-overlay .opening571-book,.opening571-overlay .opening571-course{margin-bottom:8px}
 .opening571-today.loading{opacity:.65}
 @media(min-width:760px){.opening571-hero{display:grid;grid-template-columns:.9fr 1.5fr;gap:14px;align-items:center}.opening571-start{grid-column:1/-1}.opening571-flow-grid{grid-template-columns:repeat(6,1fr)}.opening571-daily-pair{grid-template-columns:1.2fr .8fr}.opening571-conversation{margin-top:0}}
+
+/* v5.7.3 — rotina guiada */
+.opening573-hero{position:relative;overflow:hidden}
+.opening573-hero:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(83,210,106,.07);right:-75px;top:-80px;pointer-events:none}
+.opening573-start{position:relative;z-index:1;background:rgba(86,210,106,.12)!important;border-color:rgba(86,210,106,.3)!important;color:#a8efb5!important}
+.opening573-mini-meta{display:flex;align-items:center;gap:6px;margin-top:7px;color:#8197a9}.opening573-mini-meta small{margin:0}
+.opening573-progress{background:#fff;border:1px solid #e0e7e4;border-radius:16px;padding:12px;margin-bottom:10px}
+.opening573-progress>div:first-child{display:flex;justify-content:space-between;align-items:center}.opening573-progress span{font-size:.59rem;letter-spacing:.09em;color:#6e8176;font-weight:900}.opening573-progress strong{font-size:.72rem;color:#33483d}
+.opening573-progress-track{height:5px;background:#e9eeeb;border-radius:99px;margin-top:9px;overflow:hidden}.opening573-progress-track i{display:block;height:100%;background:#57b86b;border-radius:99px;transition:width .25s ease}
+.opening573-step-content{background:#fff;border:1px solid #e2e8e5;border-radius:20px;padding:18px;box-shadow:0 10px 30px rgba(34,57,47,.05)}
+.opening573-step-content>span{font-size:.61rem;letter-spacing:.11em;font-weight:900;color:#5c876b}.opening573-step-content h3{font-family:Georgia,serif;font-size:1.45rem;line-height:1.2;margin:7px 0;color:#283d33}.opening573-step-content>p{font-family:Georgia,serif;color:#53645c;line-height:1.62;font-size:.93rem}
+.opening573-step-content>blockquote{margin:13px 0;padding:13px 14px;border-left:3px solid #5ba66d;background:#f1f6f2;border-radius:10px;font-family:Georgia,serif;color:#3b5145;font-size:1.05rem;line-height:1.5}
+.opening573-faith,.opening573-question,.opening573-context-box{background:#f3f7f3;border-radius:13px;padding:12px;margin:10px 0}.opening573-faith b,.opening573-question b{font-size:.59rem;letter-spacing:.09em;color:#65816f}.opening573-faith p,.opening573-question p{font-family:Georgia,serif;color:#495b52;line-height:1.55;margin:5px 0 0}
+.opening573-inline-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}.opening573-inline-actions button,.opening573-inline-actions a{flex:1;min-width:120px;border:1px solid #d2ddd6;background:#fff;color:#3f624f;border-radius:11px;padding:9px;text-decoration:none;text-align:center;font-weight:850;font-size:.67rem}
+.opening573-big-action{width:100%;border:0;border-radius:13px;padding:12px;background:#10314d;color:#fff;font-weight:900;margin-top:12px}.opening573-help{display:block;color:#7d8a84;font-size:.63rem;line-height:1.4;margin-top:7px}
+.opening573-book blockquote{margin:13px 0;padding:14px;border-left:3px solid #5ba66d;background:#f3f7f3;border-radius:10px;font-family:Georgia,serif;font-size:1.03rem;line-height:1.55;color:#3c5045}
+.opening573-agenda{display:grid;gap:7px;margin:12px 0}.opening573-agenda>div{display:grid;grid-template-columns:74px 1fr;gap:8px;align-items:center;padding:10px;border:1px solid #e5ebe7;border-radius:11px}.opening573-agenda span{font-size:.62rem;color:#718178}.opening573-agenda strong{font-size:.76rem;color:#33463d}
+.opening573-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px}.opening573-nav>div{display:flex;gap:6px}.opening573-nav button{border:1px solid #d5dfda;background:#fff;color:#536b5e;border-radius:11px;padding:9px 12px;font-weight:850;font-size:.68rem}.opening573-nav button.primary{background:#426e56;color:#fff;border-color:#426e56}.opening573-nav button.ghost{background:transparent}
+@media(min-width:760px){.opening573-step-content{padding:24px}.opening573-nav{margin-top:13px}}
+
+.opening573-book-source{display:block;margin:10px 0 2px;color:#667085;font-size:.78rem;line-height:1.4}

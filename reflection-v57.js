@@ -80,13 +80,28 @@ async function getToday(force=false,theme=''){
   return data;
 }
 function speak(text){
+  const value=String(text||'').trim();
+  if(!value)return;
+  window.voice573?.unlock?.();
+  if(window.voice573?.speak){
+    window.voice573.speak(value,{
+      lang:'pt-BR',rate:.90,profile:'reflection',sectionPause:600,
+      onError:()=>{if(typeof window.toast==='function')toast('O iPhone não iniciou a voz. Toque em Ouvir novamente e confira o volume do aparelho.');}
+    });
+    return;
+  }
   if(!('speechSynthesis' in window))return;
   try{speechSynthesis.cancel();}catch{}
-  const u=new SpeechSynthesisUtterance(String(text||''));u.lang='pt-BR';u.rate=1;
-  speechSynthesis.speak(u);
+  const u=new SpeechSynthesisUtterance(value);u.lang='pt-BR';u.rate=.94;speechSynthesis.speak(u);
 }
 function reflectionText(d){
-  return [d.title,d.message,d.faith,d.question,d.practice].filter(Boolean).join('. ');
+  return [
+    `Reflexão de hoje. ${d.title||''}`,
+    d.message?`Para pensar. ${d.message}`:'',
+    d.faith?`Fé. ${d.faith}`:'',
+    d.question?`Uma pergunta. ${d.question}`:'',
+    d.practice?`Para hoje. ${d.practice}`:''
+  ].filter(Boolean).join('\n\n');
 }
 function viewHTML(d){
   return `<article class="reflection57-reading" id="reflection57Readable">
@@ -105,6 +120,9 @@ function viewHTML(d){
     </div>
   </article>`;
 }
+
+window.reflection57GetToday=getToday;
+window.reflection57Text=reflectionText;
 
 window.reflection57Open=async function(tab='today'){
   document.getElementById('reflection57Overlay')?.classList.remove('hidden');
@@ -138,7 +156,9 @@ window.reflection57Generate=async function(theme){
   window.reflection57Active=d;
 };
 window.reflection57Speak=async function(){
-  let d=window.reflection57Active;
+  // Libera a voz imediatamente no toque, antes de qualquer await.
+  window.voice573?.unlock?.();
+  let d=window.reflection57Active||read(CACHE,null)?.data||null;
   if(!d)d=await getToday();
   speak(reflectionText(d));
 };

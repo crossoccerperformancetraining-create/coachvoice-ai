@@ -382,89 +382,70 @@
 
   function speak(text,options={}){
     const force=Boolean(options.force);
-    if(!text || (!force && !autoVoice())){
+    const value=String(text||'').trim();
+    if(!value || (!force && !autoVoice())){
       mentor43SetSpeaking(false);
       mentor44AfterMentorSpeech();
       return;
     }
+
+    let rate=.92;
+    try{
+      const v52=JSON.parse(localStorage.getItem('coachvoice-v52-settings')||'{}');
+      if(Number.isFinite(Number(v52.voiceRate)))rate=Math.min(1.2,Math.max(.75,Number(v52.voiceRate)));
+    }catch{}
+
+    if(window.voice573?.speak){
+      const seq=++mentor461SpeechSeq;
+      setCallStatus('Resposta pronta. Iniciando voz do Mentor...');
+      window.voice573.speak(value,{
+        lang:'pt-BR',rate,
+        onStart:()=>{
+          if(seq!==mentor461SpeechSeq)return;
+          mentor43SetSpeaking(true,value);
+          setCallStatus('Mentor falando...');
+        },
+        onEnd:()=>{
+          if(seq!==mentor461SpeechSeq)return;
+          mentor43SetSpeaking(false);
+          setCallStatus('Sua vez. Toque no microfone para continuar.');
+          mentor44AfterMentorSpeech();
+        },
+        onError:(err)=>{
+          if(seq!==mentor461SpeechSeq)return;
+          mentor43SetSpeaking(false);
+          setCallStatus(
+            /not-allowed|did_not_start/i.test(String(err||''))
+              ?'A resposta chegou, mas o iPhone bloqueou a voz. Toque em 🔊 Repetir uma vez.'
+              :'A resposta chegou em texto. Toque em 🔊 Repetir para escutar.'
+          );
+          mentor44AfterMentorSpeech();
+        }
+      });
+      return;
+    }
+
     if(!('speechSynthesis' in window)){
       setCallStatus('Resposta pronta em texto. A voz não está disponível neste navegador.');
       mentor44AfterMentorSpeech();
       return;
     }
-
-    const seq=++mentor461SpeechSeq;
-    let started=false;
-    let finished=false;
-    let startTimer=null;
-
     try{
-      speechSynthesis.cancel();
-      speechSynthesis.resume?.();
-
-      const u=new SpeechSynthesisUtterance(String(text));
-      mentor461CurrentUtterance=u;
-      u.lang='pt-BR';
-      let rate=.92;
-      try{
-        const v52=JSON.parse(localStorage.getItem('coachvoice-v52-settings')||'{}');
-        if(Number.isFinite(Number(v52.voiceRate)))rate=Math.min(1.2,Math.max(.75,Number(v52.voiceRate)));
-      }catch{}
-      u.rate=rate;
-      u.pitch=1;
-      u.volume=1;
-
-      const voice=mentor44PickVoice();
-      if(voice)u.voice=voice;
-
-      const finish=(message)=>{
-        if(finished || seq!==mentor461SpeechSeq)return;
-        finished=true;
-        if(startTimer)clearTimeout(startTimer);
-        mentor43SetSpeaking(false);
-        if(message)setCallStatus(message);
-        mentor44AfterMentorSpeech();
-      };
-
-      u.onstart=()=>{
-        if(seq!==mentor461SpeechSeq)return;
-        started=true;
-        if(startTimer)clearTimeout(startTimer);
-        mentor43SetSpeaking(true,text);
-        setCallStatus('Mentor falando...');
-      };
-
-      u.onend=()=>{
-        finish('Sua vez. Toque no microfone para continuar.');
-      };
-
-      u.onerror=(event)=>{
-        const blocked=String(event?.error||'').toLowerCase();
-        finish(
-          blocked.includes('not-allowed') || blocked.includes('interrupted')
-            ? 'Resposta pronta. Toque em 🔊 Ouvir / repetir resposta para liberar o áudio no iPhone.'
-            : 'A resposta está no texto. Toque em 🔊 Ouvir / repetir resposta para escutar.'
-        );
-      };
-
+      speechSynthesis.cancel();speechSynthesis.resume?.();
+      const u=new SpeechSynthesisUtterance(value);u.lang='pt-BR';u.rate=rate;
+      u.onstart=()=>{mentor43SetSpeaking(true,value);setCallStatus('Mentor falando...');};
+      u.onend=()=>{mentor43SetSpeaking(false);setCallStatus('Sua vez. Toque no microfone para continuar.');mentor44AfterMentorSpeech();};
+      u.onerror=()=>{mentor43SetSpeaking(false);setCallStatus('Resposta pronta. Toque em 🔊 Repetir para escutar.');mentor44AfterMentorSpeech();};
       speechSynthesis.speak(u);
-
-      // Safari/iOS can accept speak() but not actually start it after an async API response.
-      // In that case keep the text and give the user a one-tap, user-gesture fallback.
-      startTimer=setTimeout(()=>{
-        if(seq!==mentor461SpeechSeq || started || finished)return;
-        try{speechSynthesis.resume?.();}catch{}
-        setCallStatus('Resposta pronta. Se o iPhone não falar automaticamente, toque em 🔊 Ouvir / repetir resposta.');
-      },2200);
     }catch{
-      mentor43SetSpeaking(false);
-      setCallStatus('Resposta pronta. Toque em 🔊 Ouvir / repetir resposta para escutar.');
+      setCallStatus('Resposta pronta. Toque em 🔊 Repetir para escutar.');
       mentor44AfterMentorSpeech();
     }
   }
 
   window.mentor42StopVoice=function mentor42StopVoice(){
     mentor461SpeechSeq++;
+    window.voice573?.cancel?.();
     mentor461CurrentUtterance=null;
     try{speechSynthesis?.cancel();}catch{}
     mentor43SetSpeaking(false);
@@ -686,6 +667,7 @@
   }
 
   window.mentor42Send=async function mentor42Send(fromCall=false){
+    if(state.isCallOpen)window.voice573?.unlock?.();
     if(state.conversationEnded){
       if(typeof toast==='function')toast('Esta conversa já foi encerrada. Inicie uma nova conversa para continuar.');
       return;
@@ -1173,6 +1155,7 @@
   }
 
   async function mentor481StartPushToTalk(autoSend=true){
+    window.voice573?.unlock?.();
     mentor561ClearAutoStart();
     // Um toque manual sempre assume controle total do turno.
     // Nenhuma pausa pode enviar a mensagem.
@@ -1197,6 +1180,7 @@
     }
 
     // Não deixa a voz do próprio Mentor entrar na gravação.
+    window.voice573?.cancel?.();
     try{speechSynthesis?.cancel();}catch{}
     mentor43SetSpeaking(false);
 
@@ -2316,6 +2300,7 @@
   };
 
   window.mentor44RepeatLastAnswer=function mentor44RepeatLastAnswer(){
+    window.voice573?.unlock?.();
     const text=lastAssistantText();
     if(!text){
       if(typeof toast==='function')toast('Ainda não há resposta do Mentor para repetir.');

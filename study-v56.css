@@ -86,3 +86,5 @@ body.study56-open{overflow:hidden}
  .study56-model-grid{grid-template-columns:1fr 1fr}
  .study56-library-list{grid-template-columns:1fr 1fr}
 }
+
+.study56-source-reference{margin-top:8px;padding-top:7px;border-top:1px solid rgba(15,23,42,.08);display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}.study56-source-reference small{color:#667085}.study56-source-reference a{font-size:.78rem;font-weight:700;text-decoration:none}

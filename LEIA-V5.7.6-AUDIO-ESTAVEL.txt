@@ -1,0 +1,26 @@
+CoachVoice AI v5.7.6 — Áudio estável (iPhone/Safari)
+
+BASE
+Esta edição consolida a linha v5.7.5, que já preserva e amplia a v5.7.2, e acrescenta correções pontuais de áudio. O pacote é COMPLETO.
+
+CORREÇÕES
+- Cancela a solicitação de áudio pendente ao começar outra resposta ou tocar no microfone.
+- Uma voz interrompida/pausada não pode voltar a tocar quando a API responder mais tarde.
+- Libera a reprodução em espera após cancelamento, sem deixar uma promessa pendurada.
+- Libera também a promessa da voz do navegador quando a fala é interrompida.
+- O servidor não alterna modelos em erros definitivos de chave, permissão, limites e requisição inválida.
+- Mantém Gemini TTS real para iPhone; voz do Safari fica de reserva.
+- Mantém microfone manual/fechado entre as respostas, botão Ouvir resposta e o reprodutor.
+
+PRESERVADO
+Mentor, Diário, Reflexões, Devocional, Abertura Inteligente, Study Coach, Biblioteca, central e funcionalidades da v5.7.5.
+
+PUBLICAR
+1. Faça um backup de seus registros no aplicativo antes da atualização.
+2. Extraia o pacote completo; substitua os arquivos na RAIZ do repositório, incluindo a pasta api.
+3. Não envie o ZIP diretamente nem adicione uma pasta externa.
+4. A GEMINI_API_KEY permanece nas variáveis de ambiente da Vercel. Não coloque chave no código.
+5. No iPhone, após publicação, feche e reabra o app. Faça teste real de voz, repetir, pausar, interromper e enviar uma nova fala.
+
+VERIFICAÇÃO
+Validações automatizadas de sintaxe, integridade ZIP e testes simulados. Não equivale a teste real em iPhone nem à chamada autenticada à API Gemini.

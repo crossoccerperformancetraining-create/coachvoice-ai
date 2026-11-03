@@ -1,9 +1,12 @@
 {
   "name": "coachvoice-ai",
   "private": true,
-  "version": "5.7.1",
-  "description": "CoachVoice AI v5.7.1: abertura inteligente na tela Hoje com conversa, reflexão, leitura, curso e agenda.",
+  "version": "5.7.6",
+  "description": "CoachVoice AI v5.7.6: áudio estável com cancelamento seguro e Gemini TTS no iPhone, preservando diário, biblioteca e Study Coach.",
   "engines": {
     "node": "22.x"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.cjs"
   }
 }
