@@ -389,28 +389,10 @@
       mentor44AfterMentorSpeech();
       return;
     }
-    // Motor da v4.6.1 primeiro, sem aguardar requisição TTS ao servidor.
-    // O modo Gemini continua disponível como opção independente no Perfil.
-    if(window.coach5112Voice?.canSpeak() && (options.nativeOnly||window.coach5112Voice.getMode()==='stable')){
-      const seq=++mentor461SpeechSeq;
-      let rate=.92;try{rate=Number(JSON.parse(localStorage.getItem('coachvoice-v52-settings')||'{}').voiceRate)||.92;}catch{}
-      window.coach5112Voice.speak(String(text),{
-        lang:'pt-BR',rate,
-        onStart:()=>mentor43SetSpeaking(true,String(text)),
-        onStatus:status=>{if(seq===mentor461SpeechSeq)setCallStatus(status);}
-      }).then(result=>{
-        if(seq!==mentor461SpeechSeq)return;
-        mentor43SetSpeaking(false);
-        if(result==='completed')mentor44AfterMentorSpeech();
-        else if(result==='blocked')setCallStatus('Resposta pronta. Toque em 🔊 Ouvir resposta para liberar a voz no iPhone.');
-        else if(result!=='cancelled')setCallStatus('A resposta está em texto. Toque em 🔊 Ouvir resposta para tentar novamente.');
-      });
-      return;
-    }
     if(!options.nativeOnly&&typeof window.mentor531PlayAudio==='function'){
       mentor461SpeechSeq++;
       try{window.speechSynthesis?.cancel();}catch{}
-      window.mentor531PlayAudio(String(text),{onStatus:setCallStatus,onStart:()=>mentor43SetSpeaking(true,String(text)),onEnded:()=>{mentor43SetSpeaking(false);mentor44AfterMentorSpeech();},onBlocked:()=>setCallStatus('Áudio pronto. Toque em 🔊 Ouvir resposta para liberar no iPhone.'),onError:()=>speak(text,{...options,nativeOnly:true})}).catch(()=>speak(text,{...options,nativeOnly:true}));
+      window.mentor531PlayAudio(String(text),{onStatus:setCallStatus,onStart:()=>mentor43SetSpeaking(true,String(text)),onEnded:()=>{mentor43SetSpeaking(false);mentor44AfterMentorSpeech();}}).catch(()=>speak(text,{...options,nativeOnly:true}));
       return;
     }
     if(!('speechSynthesis' in window)){
@@ -496,10 +478,9 @@
 
   window.mentor42StopVoice=function mentor42StopVoice(){
     window.mentor531StopAudioPlayback?.();
-    window.coach5112Voice?.stop();
     mentor461SpeechSeq++;
     mentor461CurrentUtterance=null;
-    try{window.coach5112Voice?.stop();speechSynthesis?.cancel();}catch{}
+    try{speechSynthesis?.cancel();}catch{}
     mentor43SetSpeaking(false);
     setCallStatus('Voz interrompida. Toque no microfone quando quiser continuar.');
   };
@@ -1182,7 +1163,7 @@
 
     // Não deixa a voz do próprio Mentor entrar na gravação.
     window.mentor531StopAudioPlayback?.();
-    try{window.coach5112Voice?.stop();speechSynthesis?.cancel();}catch{}
+    try{speechSynthesis?.cancel();}catch{}
     mentor43SetSpeaking(false);
 
     if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){
@@ -1312,7 +1293,7 @@
       return;
     }
 
-    try{window.coach5112Voice?.stop();speechSynthesis?.cancel();}catch{}
+    try{speechSynthesis?.cancel();}catch{}
     mentor43SetSpeaking(false);
 
     const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -1702,7 +1683,7 @@
       return;
     }
     try{mentor481CancelPushToTalk();}catch{}
-    try{window.coach5112Voice?.stop();speechSynthesis?.cancel();}catch{}
+    try{speechSynthesis?.cancel();}catch{}
     state.closureDraft={stage:'loading'};
     saveActive();
     renderClosurePanel();

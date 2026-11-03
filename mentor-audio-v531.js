@@ -4,13 +4,8 @@
  let sequence=0,controller=null,active=null;
  const cache=new Map();
  const defaultPlayer=()=>document.getElementById('mentor531Player');
- const recovery=()=>{let button=document.getElementById('cv5111GlobalHear');if(button)return button;
-   button=document.createElement('button');button.type='button';button.id='cv5111GlobalHear';button.className='cv5111-voice-recovery';button.textContent='🔊 Ouvir resposta (toque para liberar no iPhone)';
-   button.setAttribute('aria-label','Ouvir resposta do Mentor');button.onclick=()=>active?.play().catch(()=>{});
-   document.body.append(button);return button;};
- const showRecovery=visible=>{const b=visible?recovery():document.getElementById('cv5111GlobalHear');b?.classList.toggle('is-visible',Boolean(visible));};
  const stop=()=>{
-   sequence++;controller?.abort();controller=null;showRecovery(false);
+   sequence++;controller?.abort();controller=null;
    for(const a of [active,defaultPlayer()])if(a){try{a.pause();a.currentTime=0;}catch{}a.onended=null;a.onerror=null;a.onplay=null;}
  };
  window.mentor531StopAudioPlayback=stop;
@@ -40,10 +35,10 @@
      let speed=.92;try{const prefs=JSON.parse(localStorage.getItem('coachvoice-v52-settings')||'{}');speed=Number(prefs.voiceRate)||.92;}catch{}
      audio.playbackRate=Math.min(1.25,Math.max(.75,speed));
      const box=options.box||document.getElementById('mentor531PlayerBox');if(box){box.hidden=false;box.classList.remove('hidden');}
-     audio.onplay=()=>{if(thisTurn!==sequence)return;showRecovery(false);notify('Reproduzindo voz…');options.onStart?.();};
-     audio.onended=()=>{if(thisTurn!==sequence)return;showRecovery(false);notify('Resposta concluída.');options.onEnded?.();};
-     audio.onerror=()=>{if(thisTurn!==sequence)return;if(!options.player)showRecovery(true);notify('Erro de reprodução. Toque em ouvir novamente.');options.onError?.();};
-     try{await audio.play();}catch{if(thisTurn===sequence){if(!options.player)showRecovery(true);notify('Toque em ▶ para ouvir a resposta no iPhone.');options.onBlocked?.();}}
+     audio.onplay=()=>{if(thisTurn!==sequence)return;notify('Reproduzindo voz…');options.onStart?.();};
+     audio.onended=()=>{if(thisTurn!==sequence)return;notify('Resposta concluída.');options.onEnded?.();};
+     audio.onerror=()=>{if(thisTurn!==sequence)return;notify('Erro de reprodução. Toque em ouvir novamente.');options.onError?.();};
+     try{await audio.play();}catch{if(thisTurn===sequence){notify('Toque em ▶ para ouvir a resposta no iPhone.');options.onBlocked?.();}}
    }catch(e){if(thisTurn!==sequence)return;controller=null;notify(e.message||'Áudio indisponível.');throw e;}
  };
 })();

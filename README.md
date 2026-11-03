@@ -1,15 +1,3 @@
-# CoachVoice AI v5.11.2 — Voz estável no iPhone
-
-A instalação e as limitações estão em `LEIA-V5.11.2-VOZ-ESTAVEL.md`.
-
-# CoachVoice AI v5.11.1 — Notícias no menu e áudio no iPhone
-
-Consulte `LEIA-V5.11.1-AUDIO-NOTICIAS.md` para correções, instalação e testes.
-
-# CoachVoice AI v5.11.1 — Notícias no menu e áudio no iPhone
-
-Consulte `LEIA-V5.11.1-AUDIO-NOTICIAS.md` para correções, instalação e testes.
-
 # CoachVoice AI v5.11 — Football Intelligence
 
 **Atualização completa sobre a base oficial do pacote v5.10 da Biblioteca do Drive**, mantendo Study Coach, Biblioteca privada por importação, Central de Competições, projeto da equipe, Mentor, inglês/espanhol, CoachDay e demais áreas existentes.

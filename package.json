@@ -1,12 +1,12 @@
 {
   "name": "coachvoice-ai",
   "private": true,
-  "version": "5.11.2",
-  "description": "CoachVoice AI v5.11.2: conversa estável com voz nativa do iPhone e opção Gemini TTS",
+  "version": "5.11.0",
+  "description": "CoachVoice AI v5.11: Estúdio do Treinador, Football Intelligence e voz TTS selecionável",
   "engines": {
     "node": "22.x"
   },
   "scripts": {
-    "test": "node tests/session-v54.test.cjs && node tests/api-v54.test.cjs && node tests/voice-v54.test.cjs && node tests/conversation-v56.test.cjs && node tests/controls-v57.test.cjs && node tests/competitions-v58.test.cjs && node tests/study-v59.test.cjs && node tests/private-library-v510.test.cjs && node tests/football-intelligence-v511.test.cjs && node --test tests/menu-audio-v5111.test.cjs && node --test tests/stable-speech-v5112.test.cjs"
+    "test": "node tests/session-v54.test.cjs && node tests/api-v54.test.cjs && node tests/voice-v54.test.cjs && node tests/conversation-v56.test.cjs && node tests/controls-v57.test.cjs && node tests/competitions-v58.test.cjs && node tests/study-v59.test.cjs && node tests/private-library-v510.test.cjs && node tests/football-intelligence-v511.test.cjs"
   }
 }
