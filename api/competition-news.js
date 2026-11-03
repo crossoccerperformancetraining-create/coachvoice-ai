@@ -1,0 +1,18 @@
+const cache=new Map(),TTL=10*60*1000;
+const STATES={AC:'Acre',AL:'Alagoas',AP:'Amapá',AM:'Amazonas',BA:'Bahia',CE:'Ceará',DF:'Distrito Federal',ES:'Espírito Santo',GO:'Goiás',MA:'Maranhão',MT:'Mato Grosso',MS:'Mato Grosso do Sul',MG:'Minas Gerais',PA:'Pará',PB:'Paraíba',PR:'Paraná',PE:'Pernambuco',PI:'Piauí',RJ:'Rio de Janeiro',RN:'Rio Grande do Norte',RS:'Rio Grande do Sul',RO:'Rondônia',RR:'Roraima',SC:'Santa Catarina',SP:'São Paulo',SE:'Sergipe',TO:'Tocantins'};
+function json(res,status,payload){res.statusCode=status;res.setHeader('Content-Type','application/json; charset=utf-8');res.setHeader('Cache-Control','no-store');res.end(JSON.stringify(payload));}
+function clean(value,max=100){return String(value||'').replace(/[<>\x00-\x1f]/g,'').trim().slice(0,max);}
+function safeUrl(v){try{const u=new URL(v);return u.protocol==='https:'&&!u.username&&!u.password?u.href:'';}catch{return '';}}
+function decode(s){return String(s||'').replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g,'$1').replace(/<[^>]*>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;|&apos;/g,"'").replace(/&#(\d+);/g,(_,n)=>Number(n)<1114112?String.fromCodePoint(Number(n)):'');}
+function tag(s,t){return decode(s.match(new RegExp('<'+t+'(?:\\s[^>]*)?>([\\s\\S]*?)</'+t+'>','i'))?.[1]||'').trim();}
+export function parseFeed(xml){const seen=new Set();return [...String(xml).matchAll(/<item>([\s\S]*?)<\/item>/gi)].map(m=>{const text=m[1],title=tag(text,'title'),url=safeUrl(tag(text,'link')),date=Date.parse(tag(text,'pubDate'));return {title:title.slice(0,260),url,publisher:tag(text,'source').slice(0,100),publishedAt:Number.isFinite(date)?new Date(date).toISOString():null};}).filter(n=>{const key=n.title.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');if(!n.title||!n.url||seen.has(key))return false;seen.add(key);return true;}).sort((a,b)=>(Date.parse(b.publishedAt)||0)-(Date.parse(a.publishedAt)||0)).slice(0,24);}
+export default async function handler(req,res){
+ if(req.method!=='GET'){res.setHeader('Allow','GET');return json(res,405,{error:'Use GET.'});}
+ const state=clean(req.query?.state,2).toUpperCase(),season=Number(req.query?.season),competition=clean(req.query?.competition),club=clean(req.query?.club,80);
+ if(!STATES[state]||!Number.isInteger(season)||season<2000||season>2100||!competition)return json(res,400,{error:'Estado, competição ou temporada inválidos.'});
+ const key=JSON.stringify([state,season,competition,club]),old=cache.get(key);if(old&&Date.now()-old.at<TTL)return json(res,200,{...old.data,cached:true});
+ // O endereço de consulta é fixo; entradas nunca se tornam URLs de busca no servidor.
+ const query=`futebol ${STATES[state]} "${competition.replace(/["\\]/g,'')}" ${season} ${club.replace(/["\\]/g,'')} when:90d`;
+ const url='https://news.google.com/rss/search?'+new URLSearchParams({q:query,hl:'pt-BR',gl:'BR',ceid:'BR:pt-419'});
+ try{const response=await fetch(url,{signal:AbortSignal.timeout(12000),headers:{Accept:'application/rss+xml, application/xml'}});if(!response.ok)throw Error('feed');const xml=await response.text();if(xml.length>2000000)throw Error('size');const data={state,season,competition,club,fetchedAt:new Date().toISOString(),items:parseFeed(xml),aggregator:'Google Notícias · futebol',cached:false};if(cache.size>=150)cache.delete(cache.keys().next().value);cache.set(key,{at:Date.now(),data});return json(res,200,data);}catch{return json(res,502,{error:'Não foi possível consultar as notícias agora. O conteúdo salvo continua disponível.',code:'news_unavailable'});}
+}
