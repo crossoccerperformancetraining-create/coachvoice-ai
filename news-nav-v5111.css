@@ -1,0 +1,10 @@
+/* v5.11.1 — seis atalhos principais, sem cortar notícias em celulares pequenos. */
+.cv55-shell .bottom-nav{grid-template-columns:repeat(6,minmax(0,1fr));gap:1px;padding-left:max(3px,env(safe-area-inset-left));padding-right:max(3px,env(safe-area-inset-right))}
+.cv55-shell .bottom-nav .nav{min-width:0;padding:5px 1px;overflow:hidden;white-space:nowrap}
+.cv55-shell .bottom-nav .nav span:not(.cv55-nav-icon){font-size:clamp(9px,2.45vw,12px);font-weight:750;letter-spacing:-.2px}
+.cv55-shell .bottom-nav .nav .cv55-nav-icon{font-size:clamp(17px,5vw,22px)}
+.cv5111-voice-recovery{display:none;position:fixed;bottom:calc(84px + env(safe-area-inset-bottom));right:10px;left:10px;max-width:430px;margin:auto;z-index:150;background:#194878;color:#fff;border:2px solid #b7d3e9;border-radius:14px;padding:13px 14px;font-weight:750;box-shadow:0 5px 30px #0004}
+.cv5111-voice-recovery.is-visible{display:block}
+.cv5111-audio-actions{display:flex;flex-direction:column;gap:8px;align-items:stretch;margin:9px auto;max-width:340px}
+.cv5111-audio-actions button{min-height:46px;padding:11px 14px;border-radius:12px;font-size:15px;font-weight:750;border:1px solid #aec5d9;background:#edf6ff;color:#173e62}
+.cv5111-audio-actions button[hidden]{display:none!important}
