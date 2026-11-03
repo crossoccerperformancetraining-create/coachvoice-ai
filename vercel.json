@@ -184,7 +184,7 @@
       ]
     },
     {
-      "source": "/pro-v53.css",
+      "source": "/premium-v53.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -193,7 +193,7 @@
       ]
     },
     {
-      "source": "/pro-v53.js",
+      "source": "/premium-v53.css",
       "headers": [
         {
           "key": "Cache-Control",
@@ -202,7 +202,7 @@
       ]
     },
     {
-      "source": "/session-v54.js",
+      "source": "/conversation-v54.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -211,160 +211,7 @@
       ]
     },
     {
-      "source": "/session-v54.css",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/central-v55.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/central-v55.css",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/conversation-merge-v56.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/conversation-merge-v56.css",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/competitions-v58.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/competitions-v58.css",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/data/competition-a4-2027.json",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/study-v56.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/study-v56.css",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/study-library-v56.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/study-library-v56.json",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/growth-v55.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/growth-v55.css",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/study-library-private-v510.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/market-v511.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/market-v511.css",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/voice-test-v511.js",
+      "source": "/conversation-v54.css",
       "headers": [
         {
           "key": "Cache-Control",
@@ -381,25 +228,10 @@
       "maxDuration": 30
     },
     "api/coach-ai.js": {
-      "maxDuration": 60
+      "maxDuration": 30
     },
     "api/transcribe.js": {
       "maxDuration": 30
-    },
-    "api/mentor-voice.js": {
-      "maxDuration": 60
-    },
-    "api/session-vision.js": {
-      "maxDuration": 60
-    },
-    "api/competition-research.js": {
-      "maxDuration": 60
-    },
-    "api/competition-news.js": {
-      "maxDuration": 30
-    },
-    "api/market.js": {
-      "maxDuration": 20
     }
   }
 }

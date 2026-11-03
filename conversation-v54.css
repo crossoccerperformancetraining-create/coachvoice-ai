@@ -200,8 +200,3 @@
   .conv54-player-controls button.main{width:42px;height:42px}
   .conv54-mic{width:65px!important;height:65px!important}
 }
-
-/* v5.6.1 — Automático Assistido */
-.conv561-auto-label{display:flex!important;align-items:center;gap:9px;color:#dce9f2!important}
-.conv561-auto-label input{accent-color:#4ecb65;width:17px;height:17px}
-.conv54-state.recording p{max-width:360px}
