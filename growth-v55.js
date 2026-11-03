@@ -61,7 +61,7 @@ async function getDevotional(force=false){
 async function getInsight(force=false){
   if(!force){const c=cacheForToday(INSIGHT_KEY);if(c)return c.data;}
   const recent=history().filter(x=>x.type==='insight').slice(0,7).map(x=>x.topic).filter(Boolean);
-  const result=await ai('growth-daily-insight',{date:dayKey(),avoidRecentTopics:recent,libraryConnected:true,libraryMode:'catalog-only'});
+  const result=await ai('growth-daily-insight',{date:dayKey(),avoidRecentTopics:recent,libraryConnected:false,libraryMode:'catalog-only'});
   const data=result?.__error?dailyFallback(fallbackInsights):result;
   save(INSIGHT_KEY,{date:dayKey(),data,source:result?.__error?'fallback':'ai'});
   return data;
@@ -76,34 +76,14 @@ function modal(title,eyebrow,body){
 }
 window.growth55CloseModal=function(){document.getElementById('growth55Modal')?.classList.add('hidden');document.body.classList.remove('growth55-modal-open');try{speechSynthesis.cancel();}catch{}};
 
-function speak(text,profile='devotional'){
-  const value=String(text||'').trim();if(!value)return;
-  window.voice573?.unlock?.();
-  if(window.voice573?.speak){
-    window.voice573.speak(value,{lang:'pt-BR',rate:profile==='devotional' ? .90 : .93,profile,sectionPause:620,onError:()=>{if(typeof window.toast==='function')toast('O áudio não iniciou. Toque em Ouvir novamente.');}});
-    return;
-  }
+function speak(text){
   if(!('speechSynthesis' in window))return;
   try{speechSynthesis.cancel();}catch{}
-  const u=new SpeechSynthesisUtterance(value);u.lang='pt-BR';u.rate=profile==='devotional' ? .90 : .93;speechSynthesis.speak(u);
+  const u=new SpeechSynthesisUtterance(String(text||''));u.lang='pt-BR';
+  try{const p=JSON.parse(localStorage.getItem('coachvoice-v52-settings')||'{}');u.rate=Number(p.voiceRate)||1;}catch{u.rate=1;}
+  speechSynthesis.speak(u);
 }
-function devotionalSpeech(d){
-  return [
-    `Devocional de hoje. ${d.title||''}`,
-    `Passagem. ${d.reference||''}. ${d.passage||''}`,
-    `Reflexão. ${d.reflection||''}`,
-    `Oração. ${d.prayer||''}`,
-    `Atitude para hoje. ${d.practice||''}`
-  ].filter(Boolean).join('\n\n');
-}
-window.growth55SpeakCurrent=async function(){
-  const c=cacheForToday(DEV_KEY);
-  const modalEyebrow=document.getElementById('growth55ModalEyebrow')?.textContent||'';
-  if(/DEVOCIONAL/i.test(modalEyebrow)){
-    const d=c?.data||await getDevotional();speak(devotionalSpeech(d),'devotional');return;
-  }
-  const el=document.getElementById('growth55Readable');if(el)speak(el.innerText,'reflection');
-};
+window.growth55SpeakCurrent=function(){const el=document.getElementById('growth55Readable');if(el)speak(el.innerText)};
 
 window.growth55OpenDevotional=async function(force=false){
   modal('Preparando seu momento…','DEVOCIONAL','<div class="growth55-loading"><span></span><p>Preparando uma leitura curta para hoje.</p></div>');
@@ -157,10 +137,7 @@ window.growth55Talk=async function(type){
     :[data.idea,data.why,data.example,data.practice].filter(Boolean).join(' ');
   growth55CloseModal();
   if(typeof window.go==='function')go('mentor');
-  setTimeout(()=>{
-    window.mentor55OpenGrowthContext?.({kind:type,title:data.title,reference:data.reference||data.topic||'',body});
-    setTimeout(()=>window.conversation54Start?.('mentor'),160);
-  },160);
+  window.coach54OpenSession?.('mentor',{scenario:data.title||'Reflexão',goal:'Conversar sobre a reflexão selecionada.',useTeam:false,studyContext:{purpose:'reflection',title:data.title,body:body.slice(0,3500)}});
 };
 
 window.growth55OpenLibrarySetup=function(){
@@ -201,6 +178,6 @@ function renderEvolutionPreview(){
 }
 
 // Warm the daily cache only after page load; failure falls back locally.
-document.addEventListener('DOMContentLoaded',()=>{renderToday();renderEvolutionPreview();setTimeout(async()=>{try{await getDevotional();await getInsight();renderToday();renderEvolutionPreview();}catch{}},800);});
+document.addEventListener('DOMContentLoaded',()=>{renderToday();renderEvolutionPreview();;});
 window.addEventListener('storage',()=>{renderToday();renderEvolutionPreview();});
 })();

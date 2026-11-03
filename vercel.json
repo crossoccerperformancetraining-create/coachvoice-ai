@@ -184,7 +184,7 @@
       ]
     },
     {
-      "source": "/premium-v53.js",
+      "source": "/pro-v53.css",
       "headers": [
         {
           "key": "Cache-Control",
@@ -193,7 +193,7 @@
       ]
     },
     {
-      "source": "/premium-v53.css",
+      "source": "/pro-v53.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -202,7 +202,7 @@
       ]
     },
     {
-      "source": "/conversation-v54.js",
+      "source": "/session-v54.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -211,7 +211,7 @@
       ]
     },
     {
-      "source": "/conversation-v54.css",
+      "source": "/session-v54.css",
       "headers": [
         {
           "key": "Cache-Control",
@@ -220,7 +220,7 @@
       ]
     },
     {
-      "source": "/growth-v55.js",
+      "source": "/central-v55.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -229,7 +229,52 @@
       ]
     },
     {
-      "source": "/growth-v55.css",
+      "source": "/central-v55.css",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/conversation-merge-v56.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/conversation-merge-v56.css",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/competitions-v58.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/competitions-v58.css",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/data/competition-a4-2027.json",
       "headers": [
         {
           "key": "Cache-Control",
@@ -274,7 +319,7 @@
       ]
     },
     {
-      "source": "/reflection-v57.js",
+      "source": "/growth-v55.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -283,7 +328,7 @@
       ]
     },
     {
-      "source": "/reflection-v57.css",
+      "source": "/growth-v55.css",
       "headers": [
         {
           "key": "Cache-Control",
@@ -292,7 +337,7 @@
       ]
     },
     {
-      "source": "/opening-v571.js",
+      "source": "/study-library-private-v510.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -301,7 +346,7 @@
       ]
     },
     {
-      "source": "/opening-v571.css",
+      "source": "/market-v511.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -310,7 +355,7 @@
       ]
     },
     {
-      "source": "/opening-book-v571.js",
+      "source": "/market-v511.css",
       "headers": [
         {
           "key": "Cache-Control",
@@ -319,43 +364,7 @@
       ]
     },
     {
-      "source": "/voice-v573.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/voice-v573.css",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/voice-v574.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/daily-v574.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/daily-v574.css",
+      "source": "/voice-test-v511.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -372,13 +381,25 @@
       "maxDuration": 30
     },
     "api/coach-ai.js": {
-      "maxDuration": 30
+      "maxDuration": 60
     },
     "api/transcribe.js": {
       "maxDuration": 30
     },
-    "api/tts.js": {
+    "api/mentor-voice.js": {
+      "maxDuration": 60
+    },
+    "api/session-vision.js": {
+      "maxDuration": 60
+    },
+    "api/competition-research.js": {
+      "maxDuration": 60
+    },
+    "api/competition-news.js": {
       "maxDuration": 30
+    },
+    "api/market.js": {
+      "maxDuration": 20
     }
   }
 }
