@@ -15,7 +15,7 @@ function audioBuffer(part){
  let b=Buffer.from(part.data,'base64');const mime=String(part.mime_type||part.mimeType||'').toLowerCase();
  if(b.length<64||b.length>4*1024*1024)return null;
  if(b.toString('ascii',0,4)==='RIFF'&&b.toString('ascii',8,12)==='WAVE')return b;
- if(/l16|pcm|audio\/raw/.test(mime)||(!mime&&b.length%2===0)){
+ if(/l16|pcm|audio\/raw|audio\/wav|wave/.test(mime)||(!mime&&b.length%2===0)){
    if(b.length%2!==0)return null;let rate=Number(mime.match(/rate=(\d+)/)?.[1])||24000;
    if(!Number.isFinite(rate)||rate<8000||rate>96000)rate=24000;
    b=wav(b,rate);return b;
@@ -26,7 +26,7 @@ async function callGoogle(apiKey,model,text,voice,language,signal){
  const newApi=/^gemini-3\./.test(model);
  const url=newApi?'https://generativelanguage.googleapis.com/v1beta/interactions':`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
  const body=newApi?{
-   model,store:false,input:[{type:'user_input',content:[{type:'text',text,annotations:[{type:'speech_metadata',style:`Leia exatamente o texto em ${language}, com voz natural, clara e pausas profissionais. Não acrescente palavras.`}]}]}],response_format:{type:'audio',mime_type:'audio/wav'},generation_config:{speech_config:[{voice}]}
+   model,store:false,input:`Leia em ${language} com clareza, sem acrescentar palavras: ${text}`,response_format:{type:'audio'},generation_config:{speech_config:[{voice}]}
  }:{contents:[{parts:[{text:`Leia exatamente em ${language} o texto a seguir, sem acrescentar palavras. Fale naturalmente.\n${text}`}]}],generationConfig:{responseModalities:['AUDIO'],speechConfig:{voiceConfig:{prebuiltVoiceConfig:{voiceName:voice}}}}};
  const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},body:JSON.stringify(body),signal});
  const d=await r.json().catch(()=>({}));return {status:r.status,ok:r.ok,data:d};
