@@ -145,16 +145,30 @@ async function respond(){if(!s||s.finished||s.finishing||s.phase==='thinking')re
   if(s.autoVoice){const segments=[{text:reply,lang:result.spokenLanguage||s.language}];if(feedback&&feedback!==reply)segments.push({text:feedback,lang:'pt-BR'});if(model&&!reply.toLowerCase().includes(model.toLowerCase()))segments.push({text:model,lang:s.language});if(question)segments.push({text:question,lang:s.language});await speakSequence(segments,true);}
   else afterResponse();
 }
-async function speakNative(text,lang){return new Promise(resolve=>{if(!window.speechSynthesis){resolve(false);return;}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text),session=s;u.lang=lang;u.rate=voiceRate();session.nativeUtterance=u;u.voice=typeof pickVoice==='function'?pickVoice(lang):null;if(!u.voice&&localStorage.getItem('coachvoice-voice')==='male'){setStatus('Sem voz masculina do aparelho. Verifique a geração Gemini no perfil.','error');resolve(false);return;}let remaining=Math.max(6000,text.length*150),began=Date.now(),timer,done=false;const end=ok=>{if(done)return;done=true;clearTimeout(timer);session.nativeCancel=null;session.nativePauseTimer=null;resolve(ok);};const timeout=()=>{speechSynthesis.cancel();end(false);};timer=setTimeout(timeout,remaining);session.nativePauseTimer=paused=>{clearTimeout(timer);if(paused)remaining=Math.max(1000,remaining-(Date.now()-began));else{began=Date.now();timer=setTimeout(timeout,remaining);}};session.nativeCancel=()=>end(false);u.onend=()=>end(true);u.onerror=()=>end(false);speechSynthesis.speak(u);});}
+async function speakNative(text,lang,allowDeviceAnyVoice=false){return new Promise(resolve=>{if(!window.speechSynthesis){resolve(false);return;}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text),session=s;u.lang=lang;u.rate=voiceRate();session.nativeUtterance=u;u.voice=typeof pickVoice==='function'?pickVoice(lang):null;if(!u.voice&&localStorage.getItem('coachvoice-voice')==='male'&&!allowDeviceAnyVoice){setStatus('Sem voz masculina do aparelho. Verifique a geração Gemini no perfil.','error');resolve(false);return;}let remaining=Math.max(6000,text.length*150),began=Date.now(),timer,done=false;const end=ok=>{if(done)return;done=true;clearTimeout(timer);session.nativeCancel=null;session.nativePauseTimer=null;resolve(ok);};const timeout=()=>{speechSynthesis.cancel();end(false);};timer=setTimeout(timeout,remaining);session.nativePauseTimer=paused=>{clearTimeout(timer);if(paused)remaining=Math.max(1000,remaining-(Date.now()-began));else{began=Date.now();timer=setTimeout(timeout,remaining);}};session.nativeCancel=()=>end(false);u.onend=()=>end(true);u.onerror=()=>end(false);speechSynthesis.speak(u);});}
 
+function segmentSpeech(parts,maxChars=850){
+ const result=[];
+ for(const part of parts){let remaining=String(part.text||'').trim();
+   while(remaining.length){if(remaining.length<=maxChars){result.push({...part,text:remaining});break;}
+     let point=Math.max(remaining.lastIndexOf('. ',maxChars),remaining.lastIndexOf('? ',maxChars),remaining.lastIndexOf('! ',maxChars),remaining.lastIndexOf('; ',maxChars));
+     if(point<Math.round(maxChars*.38))point=remaining.lastIndexOf(' ',maxChars);
+     if(point<Math.round(maxChars*.38))point=maxChars;
+     const chunk=remaining.slice(0,point).trim();if(chunk)result.push({...part,text:chunk});
+     remaining=remaining.slice(point).trim();
+   }
+ }
+ return result;
+}
 async function speakSequence(segments,continueListening=false){
-  if(!s||s.pausedAt||s.finishing)return;const turn=++generation;setPhase('speaking');s.pendingSpeech=segments;s.continueAfterSpeech=continueListening;
+ segments=segmentSpeech(segments);
+  if(!s||s.pausedAt||s.finishing)return;const turn=++generation;s.audioFailed=false;s.blockedSpeech=null;setPhase('speaking');s.pendingSpeech=segments;s.continueAfterSpeech=continueListening;
   for(let i=0;i<segments.length;i++){
     if(turn!==generation||!s||s.pausedAt||s.finishing)return;
     const segment=segments[i];if(!segment.text)continue;
     try{
-      await new Promise((resolve,reject)=>{let done=false;const settle=()=>{if(!done){done=true;resolve();}};s.resolveSpeech=settle;window.mentor531PlayAudio(segment.text.slice(0,3000),{player:$('cv54Audio'),box:$('cv54PlaybackBox'),language:segment.lang,onStatus:text=>setStatus(text,'speaking'),onEnded:settle,onBlocked:()=>{s.blockedSpeech={segments:segments.slice(i+1),continueListening};setStatus('O navegador pede um toque para liberar o áudio. Toque em Ouvir resposta ou abra Mais opções e toque no reprodutor.','error');},onError:()=>reject(new Error('playback'))}).catch(reject);});
-    }catch(error){console.warn('CoachVoice session voice:',error?.message||String(error));setStatus(error?.status===429?'O serviço de voz atingiu um limite temporário. Tentando a voz do aparelho…':'Voz da IA indisponível agora. Tentando a voz do aparelho…','error');const success=await speakNative(segment.text,segment.lang);if(turn!==generation||s.pausedAt||s.finishing)return;if(!success){setPhase('idle');setStatus(error?.status===429?'O serviço de voz atingiu um limite temporário e a voz do aparelho não respondeu. O texto está salvo; tente Repetir resposta mais tarde.':'A resposta está no texto. Use Repetir resposta para tentar ouvir.','error');return;}}
+      await new Promise((resolve,reject)=>{let done=false;const settle=()=>{if(!done){done=true;resolve();}};s.resolveSpeech=settle;window.mentor531PlayAudio(segment.text,{player:$('cv54Audio'),box:$('cv54PlaybackBox'),language:segment.lang,onStatus:text=>setStatus(text,'speaking'),onEnded:settle,onBlocked:()=>{s.blockedSpeech={segments:segments.slice(i),continueListening};setStatus('O navegador pede um toque para liberar o áudio. Toque em Ouvir resposta ou abra Mais opções e toque no reprodutor.','error');},onError:()=>reject(new Error('playback'))}).catch(reject);});
+    }catch(error){console.warn('CoachVoice session voice:',error?.message||String(error));setStatus(error?.status===429?'O serviço de voz atingiu um limite temporário. Tentando a voz do aparelho…':'Voz da IA indisponível agora. Tentando a voz do aparelho…','error');const success=await speakNative(segment.text,segment.lang);if(turn!==generation||s.pausedAt||s.finishing)return;if(!success){s.audioFailed=true;setPhase('idle');setStatus(error?.status===429?'O serviço de voz atingiu um limite temporário e a voz do aparelho não respondeu. O texto está salvo; tente Repetir resposta mais tarde.':'A resposta está no texto. Use Repetir resposta para tentar ouvir.','error');return;}}
   }
   if(turn!==generation||!s)return;s.resolveSpeech=null;s.pendingSpeech=null;s.voicePaused=false;if(continueListening)afterResponse();else{setPhase(s.finished?'finished':s.pausedAt?'paused':'idle');setStatus(s.finished?'Resumo concluído. Confira seu registro e os itens que deseja guardar.':'Resposta concluída. Toque em Falar para continuar a conversa.');}
 }
@@ -222,10 +236,22 @@ window.coach54OpenProject=()=>{window.go('profile');$('cv54ProjectCard')?.scroll
 function voiceRate(){const saved=read('coachvoice-conversation-v54',{});return [1,1.15,1.25].includes(Number(saved.speed))?Number(saved.speed):1;}
 function stopSpeech(){if(!s)return;generation++;window.mentor531StopAudioPlayback?.();window.speechSynthesis?.cancel();s.resolveSpeech?.();s.nativeCancel?.();s.resolveSpeech=null;s.pendingSpeech=null;s.blockedSpeech=null;s.voicePaused=false;setPhase(s.finished?'finished':s.pausedAt?'paused':'idle');setStatus('Voz interrompida. Sua resposta continua salva.');}
 window.coach56StopSpeech=stopSpeech;
+window.coach5111HearReply=()=>{if(!s?.lastResponse)return;
+  const audio=$('cv54Audio');
+  if(s.blockedSpeech&&audio?.src){audio.play().catch(()=>{setStatus('O Safari não liberou o áudio. Tente Repetir resposta ou a voz do aparelho.','error');});return;}
+  repeat(false);
+};
+window.coach5111DeviceReply=async()=>{if(!s?.lastResponse)return;
+  if(!window.speechSynthesis){setStatus('Não há voz do aparelho disponível neste navegador.','error');return;}
+  stopSpeech();setPhase('speaking');setStatus('Voz do aparelho (pode ser diferente da voz escolhida)…','speaking');
+  const session=s,text=String(s.lastReply?.spoken||s.lastResponse||''),lang=s.lastReply?.spokenLanguage||s.language;
+  const ok=await speakNative(text.slice(0,3000),lang,true);
+  if(s===session&&s?.phase==='speaking'){setPhase('idle');setStatus(ok?'Voz do aparelho concluída. Microfone fechado.':'A voz do aparelho não respondeu. A resposta continua disponível em texto.',ok?'ready':'error');}
+};
 window.coach56Interrupt=async()=>{if(!s||s.finished||s.finishing||s.controller||s.aiPending)return;if(rec?.state==='recording'){await stopRecording(true);return;}stopSpeech();s.capture='manual';if(s.pausedAt){await resume();return;}await start();};
 window.coach56PauseSpeech=()=>{if(!s||s.phase!=='speaking')return;const audio=$('cv54Audio');if(s.voicePaused){if(s.voicePauseNative){s.nativePauseTimer?.(false);window.speechSynthesis?.resume();}else audio.play().catch(()=>setStatus('Toque no reprodutor para continuar.','error'));s.voicePaused=false;setStatus('Mentor respondendo…','speaking');}else if(window.speechSynthesis?.speaking||!audio.paused){s.voicePauseNative=!!window.speechSynthesis?.speaking;if(s.voicePauseNative){s.nativePauseTimer?.(true);speechSynthesis.pause();}else audio.pause();s.voicePaused=true;setStatus('Resposta pausada. Continue para ouvir do mesmo ponto.');}window.dispatchEvent(new Event('coachvoice:voice-player'));};
 window.coach56SetSpeed=rate=>{const old=read('coachvoice-conversation-v54',{});write('coachvoice-conversation-v54',{...old,speed:rate});const prefs=read('coachvoice-v52-settings',{});write('coachvoice-v52-settings',{...prefs,voiceRate:rate});$('cv54Audio').playbackRate=rate;if(s?.nativeUtterance&&s.phase==='speaking'){stopSpeech();repeat(false);}return rate;};
-window.coach56State=()=>({area:s?.area,phase:s?.phase,voicePaused:!!s?.voicePaused,finished:!!s?.finished,capture:s?.capture,started:!!s?.started,blockedSpeech:!!s?.blockedSpeech,video:!!s?.video});
+window.coach56State=()=>({area:s?.area,phase:s?.phase,voicePaused:!!s?.voicePaused,finished:!!s?.finished,capture:s?.capture,started:!!s?.started,blockedSpeech:!!s?.blockedSpeech,audioFailed:!!s?.audioFailed,hasReply:!!s?.lastResponse,video:!!s?.video});
 
 window.coach54OpenSaved=openSaved;window.coach54RefreshProgress=renderProgress;
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();

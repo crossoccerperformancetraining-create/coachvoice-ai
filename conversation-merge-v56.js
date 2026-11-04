@@ -17,6 +17,8 @@ function init(){
  $('cv57VoiceState').textContent=s.phase==='speaking'?(s.voicePaused?'Resposta pausada':s.blockedSpeech?'Toque em Ouvir resposta':'IA falando'):({ready:'Vamos conversar?',recording:'Estou ouvindo você',thinking:'Preparando sua resposta',processing:'Enviando sua fala',paused:'Conversa pausada',idle:'Sua vez de falar',finished:'Conversa salva',error:'Confira a mensagem acima',opening:'Preparando a conversa',finishing:'Salvando seu registro'}[s.phase]||'Sua conversa');
  $('cv57VoicePanel').dataset.phase=s.phase||'ready';$('cv57Context').hidden=$('cv54LiveContext').hidden;
  if(s.blockedSpeech)$('cv57Options').open=true;
+ $('cv5111HearReply').hidden=!s.blockedSpeech;
+ $('cv5111DeviceReply').hidden=!s.audioFailed;
  const textMode=(s.started?s.capture:$('cv54Capture').value)==='text';if(textMode){setTranscript(true);$('cv57Write').open=true;}
  if(s.finished){setTranscript(true);$('cv57Write').open=false;}
  }
@@ -27,13 +29,14 @@ function init(){
  options.append($('cv54PlaybackBox'),player,$('cv54HearExample'),$('cv54RetryAudio'),$('cv54RetryAI'));composer.prepend(options);
  const writer=document.createElement('details');writer.id='cv57Write';writer.innerHTML='<summary>Digitar mensagem</summary>';writer.append($('cv54Text').closest('label'),$('cv54SendText').parentElement);composer.append(writer);$('cv54SendAudio').hidden=true;
  $('cv54Start').hidden=true;$('cv54Pause').textContent='Pausar conversa';
- const primary=$('cv56Interrupt');primary.className='cv57-talk';primary.innerHTML='<svg aria-hidden="true" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/></svg><span>Iniciar conversa</span>';primary.onclick=()=>{const s=window.coach56State();if(s.started&&s.capture==='text'&&['idle','error'].includes(s.phase))return $('cv54SendText').onclick();if(s.phase==='ready'||s.phase==='paused')return $('cv54Start').onclick();if(s.blockedSpeech)return $('cv54Audio').play().catch(()=>{});return window.coach56Interrupt();};
+ const primary=$('cv56Interrupt');primary.className='cv57-talk';primary.innerHTML='<svg aria-hidden="true" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/></svg><span>Iniciar conversa</span>';primary.onclick=()=>{const s=window.coach56State();if(s.started&&s.capture==='text'&&['idle','error'].includes(s.phase))return $('cv54SendText').onclick();if(s.phase==='ready'||s.phase==='paused')return $('cv54Start').onclick();if(s.blockedSpeech)return window.coach5111HearReply?.();return window.coach56Interrupt();};
  const pause=$('cv54Pause').onclick;$('cv54Pause').onclick=()=>window.coach56State().phase==='paused'?$('cv54Start').onclick():pause();
  const shortcuts=document.createElement('div');shortcuts.className='cv57-shortcuts';shortcuts.append($('cv54Repeat'),$('cv56Transcript'));dock.prepend(primary,shortcuts);session.append(dock);repeatTools.remove();
  $('cv56Transcript').onclick=()=>setTranscript(session.classList.contains('cv56-hide-text'));
- const panel=document.createElement('div');panel.id='cv57VoicePanel';panel.innerHTML='<div class="cv57-orb" aria-hidden="true">'+primary.querySelector('svg').outerHTML+'</div><strong id="cv57VoiceState">Vamos conversar?</strong><p>Use o botão abaixo. A resposta em áudio toca automaticamente quando ativada.</p>';body.insertBefore(panel,$('cv54Log'));
+ const panel=document.createElement('div');panel.id='cv57VoicePanel';panel.innerHTML='<div class="cv57-orb" aria-hidden="true">'+primary.querySelector('svg').outerHTML+'</div><strong id="cv57VoiceState">Vamos conversar?</strong><p>Use o botão abaixo. A resposta em áudio toca automaticamente quando ativada.</p><div class="cv5111-audio-actions"><button id="cv5111HearReply" type="button" hidden>🔊 Ouvir resposta</button><button id="cv5111DeviceReply" type="button" hidden>🔊 Ouvir com a voz do iPhone (pode ser diferente)</button></div>';body.insertBefore(panel,$('cv54Log'));
  const context=document.createElement('details');context.id='cv57Context';context.innerHTML='<summary>Objetivo desta conversa</summary>';body.insertBefore(context,$('cv54LiveContext'));context.append($('cv54LiveContext'));
  const open57=window.coach54OpenSession;window.coach54OpenSession=(area,opts={})=>{open57(area,opts);options.open=false;writer.open=false;context.open=false;setTranscript($('cv54Capture').value==='text');sync();if(!window.coach56State().started)primary.focus();};
+ $('cv5111HearReply').onclick=()=>window.coach5111HearReply?.();$('cv5111DeviceReply').onclick=()=>window.coach5111DeviceReply?.();
  $('cv54Capture').addEventListener('change',sync);setTranscript(false);
 
  new MutationObserver(sync).observe($('cv54Status'),{childList:true,subtree:true});['play','pause','ended'].forEach(event=>$('cv54Audio').addEventListener(event,sync));window.addEventListener('coachvoice:voice-player',sync);

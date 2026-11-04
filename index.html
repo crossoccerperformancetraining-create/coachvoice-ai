@@ -221,6 +221,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <link rel="stylesheet" href="/conversation-merge-v56.css?v=5100">
 <link rel="stylesheet" href="/competitions-v58.css?v=5100">
 <link rel="stylesheet" href="/market-v511.css?v=5110">
+<link rel="stylesheet" href="/news-nav-v5111.css?v=5111">
 <link rel="stylesheet" href="/growth-v55.css?v=5100">
 <link rel="stylesheet" href="/study-v56.css?v=5100">
 </head>
@@ -286,8 +287,8 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
       </div>
     </details>
 
-    <div class="drawer-note">CoachVoice AI · v5.11
-Football Intelligence</div>
+    <div class="drawer-note">CoachVoice AI · v5.11.1
+Áudio e Notícias</div>
   </div>
 
   <div class="drawer-footer">
@@ -2898,15 +2899,20 @@ function pickVoice(lang){
   return candidates[0]||null;
 }
 function speakText(text,lang,rate){
+  const value=String(text||'').trim();if(!value)return;
+  // Em todos os módulos, a escolha explícita de timbre usa o mesmo Gemini TTS.
+  // O iPhone pode bloquear reprodução após uma chamada de rede: o botão global aparecerá.
+  if(voicePreference!=='auto'&&typeof window.mentor531PlayAudio==='function'){
+    window.mentor531PlayAudio(value.slice(0,3000),{language:lang||'pt-BR',onStatus:message=>{if(/toque|indisponível|erro/i.test(message))toast(message);}})
+      .catch(()=>toast('A voz escolhida não pôde ser gerada. Confira o Perfil ou use a voz automática.'));
+    if(value.length>3000)toast('Texto longo: esta leitura ficou limitada a 3.000 caracteres.');
+    return;
+  }
   if(!('speechSynthesis' in window)){toast('Voz não disponível neste navegador.');return;}
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang=lang;
-  u.rate=rate;
-  const voice=pickVoice(lang);
-  if(!voice&&voicePreference==='male'){toast('Voz masculina do aparelho indisponível. Use Testar voz no perfil para ouvir Orus.');return;}
-  if(voice)u.voice=voice;
-  speechSynthesis.cancel();
-  speechSynthesis.speak(u);
+  const u=new SpeechSynthesisUtterance(value);
+  u.lang=lang||'pt-BR';u.rate=rate;
+  const voice=pickVoice(lang);if(voice)u.voice=voice;
+  speechSynthesis.cancel();speechSynthesis.speak(u);
 }
 function setVoicePreference(value){
   voicePreference=value;
@@ -4823,18 +4829,18 @@ checkTechnicalEnvironment();
 <script src="/coachvoice-v33.js?v=40"></script>
 <script src="/coachday-v40.js?v=46"></script>
 <script src="/coachprep-v42.js?v=46"></script>
-<script src="/mentor-audio-v531.js?v=540"></script>
+<script src="/mentor-audio-v531.js?v=5111"></script>
 <script src="/mentor-v52.js?v=540"></script>
 <script src="/dashboard-v51.js?v=51"></script>
 <script src="/languages-v50.js?v=50"></script>
 <script src="/today-v52.js?v=522"></script>
 <script src="/pro-v53.js?v=540"></script>
-<script src="/session-v54.js?v=5100"></script>
-<script src="/central-v55.js?v=5100"></script>
-<script src="/conversation-merge-v56.js?v=5100"></script>
-<script src="/competitions-v58.js?v=5100"></script>
-<script src="/market-v511.js?v=5110"></script>
-<script src="/voice-test-v511.js?v=5110"></script>
+<script src="/session-v54.js?v=5111"></script>
+<script src="/central-v55.js?v=5111"></script>
+<script src="/conversation-merge-v56.js?v=5111"></script>
+<script src="/competitions-v58.js?v=5111"></script>
+<script src="/market-v511.js?v=5111"></script>
+<script src="/voice-test-v511.js?v=5111"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));
