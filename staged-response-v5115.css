@@ -1,0 +1,7 @@
+.coach5115-stage-hidden{display:none!important}
+.coach5115-stage-controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0 8px;padding:12px;border:1px solid #d3e4e2;background:#f2f9f6;border-radius:14px}
+.coach5115-stage-controls .coach5115-stage-counter{flex-basis:100%;font-size:.74rem;font-weight:750;color:#255947}
+.coach5115-stage-controls button{border:1px solid #bed9d0;background:#fff;color:#195b4c;border-radius:11px;padding:10px 13px;font-weight:750;cursor:pointer;font-size:.76rem}
+.coach5115-stage-controls button:first-of-type{background:#197c65;color:#fff;border-color:#197c65}
+.coach5115-stage-controls button[hidden]{display:none!important}
+@media(max-width:600px){.coach5115-stage-controls button{flex:1 1 auto}}

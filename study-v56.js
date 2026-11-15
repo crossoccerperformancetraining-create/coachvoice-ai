@@ -169,6 +169,7 @@ function renderStudy(data,situation,mode){
     </div>
   </section>`;
   lastStudy={...data,situation,mode,refs,createdAt:now()};
+  window.coach5115Stages?.study();
 }
 
 window.study56RunStudy=async function(){
@@ -214,7 +215,8 @@ window.study56RunStudy=async function(){
 
   const result=await ai(mode,payload);
   if(result?.__error){
-    host.innerHTML=`<div class="study56-error"><strong>Não consegui gerar o estudo agora.</strong><p>${esc(result.__message||'Tente novamente em instantes.')}</p></div>`;
+    const quota=result.__status===429||/resource_exhausted|quota|limite/i.test(String(result.__code||'')+' '+String(result.__message||''));
+    host.innerHTML=`<div class="study56-error"><strong>${quota?'Limite temporário do Gemini':'Não consegui gerar o estudo agora.'}</strong><p>${quota?'A resposta não foi gerada. Dividir a apresentação em etapas não contorna a cota da API. Tente novamente quando o limite for renovado.':esc(result.__message||'Tente novamente em instantes.')}</p></div>`;
     return;
   }
   renderStudy(result,situation,requestedMode);
@@ -253,7 +255,7 @@ window.study56Podcast=async function(){
     :result.script;
   if(!script)return;
   const box=document.getElementById('study59PodcastBox'),player=document.getElementById('study59PodcastAudio');box.hidden=false;document.getElementById('study59PodcastText').textContent=script;
-  try{podcastResolve?.();const generation=++podcastGeneration,chunks=[];let chunk='';for(const word of String(script).slice(0,16000).split(/\s+/)){if(chunk.length+word.length+(chunk?1:0)>2700){chunks.push(chunk);chunk='';}chunk+=(chunk?' ':'')+word;}if(chunk)chunks.push(chunk);for(const text of chunks){if(generation!==podcastGeneration)return;await new Promise((resolve,reject)=>{podcastResolve=resolve;window.mentor531PlayAudio(text,{player,box,language:'pt-BR',onStatus:t=>document.getElementById('study59PodcastStatus').textContent=t,onEnded:resolve,onError:()=>reject(Error('audio')),onBlocked:()=>document.getElementById('study59PodcastStatus').textContent='Áudio pronto. Toque em reproduzir.'}).catch(reject);});}podcastResolve=null;}
+  try{podcastResolve?.();podcastGeneration++;if(window.cvUnifiedRead){await window.cvUnifiedRead(script.slice(0,16000),{container:box,player,language:'pt-BR'});}else{await window.mentor531PlayAudio(script.slice(0,3000),{player,box,language:'pt-BR',onStatus:t=>document.getElementById('study59PodcastStatus').textContent=t,onBlocked:()=>document.getElementById('study59PodcastStatus').textContent='Áudio pronto. Toque em reproduzir.'});}}
   catch{document.getElementById('study59PodcastStatus').textContent='Serviço de voz indisponível. O roteiro está disponível abaixo.';}
 
 };

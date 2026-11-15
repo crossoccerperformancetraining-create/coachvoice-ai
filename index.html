@@ -216,14 +216,17 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
 <link rel="stylesheet" href="/ui-v52.css?v=522">
 <link rel="stylesheet" href="/mobile-v522.css?v=522">
 <link rel="stylesheet" href="/pro-v53.css?v=531">
-<link rel="stylesheet" href="/session-v54.css?v=540">
+<link rel="stylesheet" href="/session-v54.css?v=5114">
 <link rel="stylesheet" href="/central-v55.css?v=550">
 <link rel="stylesheet" href="/conversation-merge-v56.css?v=5100">
 <link rel="stylesheet" href="/competitions-v58.css?v=5100">
 <link rel="stylesheet" href="/market-v511.css?v=5110">
-<link rel="stylesheet" href="/news-nav-v5111.css?v=5111">
+<link rel="stylesheet" href="/news-nav-v5111.css?v=5113">
 <link rel="stylesheet" href="/growth-v55.css?v=5100">
+<link rel="stylesheet" href="/staged-response-v5115.css?v=5115">
+<link rel="stylesheet" href="/coach-dialogue-stages-v5116.css?v=5116">
 <link rel="stylesheet" href="/study-v56.css?v=5100">
+<link rel="stylesheet" href="/reader-unified-v512.css?v=5120">
 </head>
 <body>
 <div class="app">
@@ -287,7 +290,7 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
       </div>
     </details>
 
-    <div class="drawer-note">CoachVoice AI · v5.11.1
+    <div class="drawer-note">CoachVoice AI · v5.11.7
 Áudio e Notícias</div>
   </div>
 
@@ -2441,7 +2444,12 @@ button{font:inherit}.app{min-height:100vh}main{padding-bottom:92px}
       <button class="voice-option" data-voice="male" onclick="setVoicePreference('male')">👨 Masculina</button>
       <button class="voice-option" data-voice="auto" onclick="setVoicePreference('auto')">⚙ Automática</button>
     </div>
-    <p class="voice-note">Gemini TTS: masculina Orus, feminina Kore, automática Gacrux. Voz do aparelho depende das vozes instaladas no iPhone. A escolha permanece salva.</p>
+    <label class="label" for="cv5112VoiceMode">Áudio da conversa</label>
+    <select id="cv5112VoiceMode" class="select-field" onchange="coach5112ChooseMode(this.value)">
+      <option value="stable">Estável (recomendado) · voz do iPhone, sem esperar Gemini</option>
+      <option value="gemini">Gemini TTS · voz masculina Orus / feminina Kore</option>
+    </select>
+    <p class="voice-note">Estável usa o sintetizador do iPhone e pode usar outro timbre, mesmo com Masculina selecionada. Para exigir Orus, escolha Gemini. Em ambos os modos, o microfone fica fechado depois da resposta.</p>
     <div class="cv511-row"><button class="secondary" type="button" onclick="coach511TestVoice()">🔊 Testar voz selecionada</button></div>
     <div id="cv511VoiceTestBox" hidden><audio id="cv511VoiceTestPlayer" controls playsinline style="width:100%"></audio></div>
     <p id="cv511VoiceTestStatus" class="voice-note" role="status" aria-live="polite"></p>
@@ -2900,7 +2908,11 @@ function pickVoice(lang){
 }
 function speakText(text,lang,rate){
   const value=String(text||'').trim();if(!value)return;
-  // Em todos os módulos, a escolha explícita de timbre usa o mesmo Gemini TTS.
+  if(window.coach5112Voice?.canSpeak()&&window.coach5112Voice.getMode()==='stable'){
+    window.coach5112Voice.speak(value,{lang:lang||'pt-BR',rate:rate||.92,onBlocked:()=>toast('Toque novamente em Ouvir: o iPhone bloqueou o som.')});
+    return;
+  }
+  // A escolha explícita de timbre usa Gemini apenas no modo Gemini.
   // O iPhone pode bloquear reprodução após uma chamada de rede: o botão global aparecerá.
   if(voicePreference!=='auto'&&typeof window.mentor531PlayAudio==='function'){
     window.mentor531PlayAudio(value.slice(0,3000),{language:lang||'pt-BR',onStatus:message=>{if(/toque|indisponível|erro/i.test(message))toast(message);}})
@@ -4829,18 +4841,21 @@ checkTechnicalEnvironment();
 <script src="/coachvoice-v33.js?v=40"></script>
 <script src="/coachday-v40.js?v=46"></script>
 <script src="/coachprep-v42.js?v=46"></script>
+<script src="/stable-speech-v5112.js?v=5113"></script>
 <script src="/mentor-audio-v531.js?v=5111"></script>
-<script src="/mentor-v52.js?v=540"></script>
+<script src="/reader-unified-v512.js?v=5120"></script>
+<script src="/mentor-v52.js?v=5112"></script>
 <script src="/dashboard-v51.js?v=51"></script>
 <script src="/languages-v50.js?v=50"></script>
 <script src="/today-v52.js?v=522"></script>
 <script src="/pro-v53.js?v=540"></script>
-<script src="/session-v54.js?v=5111"></script>
+<script src="/session-v54.js?v=5116"></script>
 <script src="/central-v55.js?v=5111"></script>
-<script src="/conversation-merge-v56.js?v=5111"></script>
+<script src="/conversation-merge-v56.js?v=5113"></script>
 <script src="/competitions-v58.js?v=5111"></script>
 <script src="/market-v511.js?v=5111"></script>
-<script src="/voice-test-v511.js?v=5111"></script>
+<script src="/voice-test-v511.js?v=5112"></script>
+<script src="/audio-diagnostico-v5113.js?v=5113"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(()=>{}));
@@ -4848,8 +4863,10 @@ if ('serviceWorker' in navigator) {
 </script>
 
 <script src="/study-library-v56.js?v=5100"></script>
-<script src="/growth-v55.js?v=5100"></script>
+<script src="/staged-response-v5115.js?v=5115"></script>
+<script src="/coach-dialogue-stages-v5116.js?v=5116"></script>
+<script src="/growth-v55.js?v=5115"></script>
 <script src="/study-library-private-v510.js?v=5100"></script>
-<script src="/study-v56.js?v=5100"></script>
+<script src="/study-v56.js?v=5115"></script>
 </body>
 </html>

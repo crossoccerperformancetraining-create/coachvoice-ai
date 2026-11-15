@@ -8,3 +8,7 @@
 .cv5111-audio-actions{display:flex;flex-direction:column;gap:8px;align-items:stretch;margin:9px auto;max-width:340px}
 .cv5111-audio-actions button{min-height:46px;padding:11px 14px;border-radius:12px;font-size:15px;font-weight:750;border:1px solid #aec5d9;background:#edf6ff;color:#173e62}
 .cv5111-audio-actions button[hidden]{display:none!important}
+
+/* CoachVoice v5.11.3: controles locais de diagnóstico de áudio */
+.cv5113-diagnostics{padding:14px;margin:16px 0;border:1px solid #8cacc7;border-radius:14px;background:var(--card-bg,#f4f8fc);color:var(--text,#182e43)}
+.cv5113-diagnostics h4{margin:0 0 6px;font-size:1rem}.cv5113-diagnostics p{margin:5px 0 10px;line-height:1.45}.cv5113-metadata{font-size:.83rem;opacity:.82}.cv5113-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}.cv5113-buttons button{min-width:0;white-space:normal;line-height:1.25;min-height:47px;padding:8px}@media(max-width:400px){.cv5113-buttons{grid-template-columns:1fr}}

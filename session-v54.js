@@ -36,9 +36,9 @@ async function mediaPut(record){const db=await mediaDB();try{await new Promise((
 async function mediaGet(id){const db=await mediaDB();try{return await new Promise((resolve,reject)=>{const req=db.transaction('media').objectStore('media').get(id);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);});}finally{db.close();}}
 function template(){
   const el=document.createElement('dialog');el.id='cv54Session';el.className='cv54-dialog';el.setAttribute('aria-labelledby','cv54Title');
-  el.innerHTML=`<header class="cv54-head"><div><span class="cv54-kicker">SESSÃO DO TREINADOR</span><h2 id="cv54Title"></h2><small id="cv54Identity"></small></div><button type="button" id="cv54Close">Fechar</button></header><div class="cv54-body"><div class="cv54-setup" id="cv54Setup"><div class="cv54-grid"><label class="cv54-field">Situação<select id="cv54Scenario"></select></label><label class="cv54-field">Forma de conversar<select id="cv54Capture"><option value="continuous">Contínua · envio após uma pausa na fala</option><option value="manual">Manual · você escolhe quando enviar</option><option value="text">Texto · sem microfone</option></select></label><label class="cv54-field">Idioma da prática<select id="cv54Language"><option value="pt-BR">Português</option><option value="en-US">Inglês americano</option><option value="en-GB">Inglês britânico</option><option value="es-ES">Espanhol da Espanha</option><option value="es-MX">Espanhol latino-americano</option></select></label><label class="cv54-field">Nível / pressão<select id="cv54Level"></select></label><label class="cv54-field cv54-full">Objetivo desta sessão<textarea id="cv54Goal" maxlength="700"></textarea></label></div><div class="cv54-tools"><label><input type="checkbox" id="cv54UseTeam">Usar projeto da equipe</label><label><input type="checkbox" id="cv54Video">Gravar vídeo</label><label><input type="checkbox" id="cv54Autovoice" checked>Resposta automática em áudio</label></div><p class="cv54-muted" id="cv54SetupNote">A conversa contínua envia a fala após cerca de 2 segundos de silêncio. Em campo barulhento, prefira o modo manual.</p><div id="cv54ProjectLine" class="cv54-project-line"></div></div><div id="cv54LiveContext" class="cv54-project-line" hidden></div><div id="cv54Status" class="cv54-status" role="status" aria-live="polite"><span class="cv54-dot"></span><span id="cv54StatusText">Pronto para iniciar.</span><strong id="cv54Time" style="margin-left:auto">00:00</strong></div><div id="cv54VideoWrap" class="cv54-video-wrap hidden"><video id="cv54Preview" muted playsinline autoplay></video><div class="cv54-video-guide"></div></div><div id="cv54Log" class="cv54-log" aria-live="polite" aria-label="Conversa da sessão"></div><div id="cv54PlaybackBox" hidden><audio id="cv54Audio" class="cv54-player" controls playsinline preload="metadata"></audio></div><div class="cv54-tools"><button class="outline" id="cv54Repeat">Repetir resposta</button><button class="outline" id="cv54HearExample">Ouvir exemplo</button><button class="outline" id="cv54RetryAudio" hidden>Reenviar gravação</button><button class="outline" id="cv54RetryAI" hidden>Tentar resposta novamente</button></div><label class="cv54-field">Escrever ou corrigir sua fala<textarea id="cv54Text" placeholder="Você também pode conversar por texto." maxlength="3000"></textarea></label><div class="cv54-actions"><button class="secondary" id="cv54SendText">Enviar texto</button><button class="outline" id="cv54SendAudio">Enviar fala</button></div><div class="cv54-controls"><button class="primary" id="cv54Start">Iniciar sessão</button><button class="secondary" id="cv54Pause" disabled>Pausar</button><button class="cv54-end" id="cv54End" disabled>Finalizar</button></div><div id="cv54Review" class="cv54-review" hidden></div></div>`;
+  el.innerHTML=`<header class="cv54-head"><div><span class="cv54-kicker">SESSÃO DO TREINADOR</span><h2 id="cv54Title"></h2><small id="cv54Identity"></small></div><button type="button" id="cv54Close">Fechar</button></header><div class="cv54-body"><div class="cv54-setup" id="cv54Setup"><div class="cv54-grid"><label class="cv54-field">Situação<select id="cv54Scenario"></select></label><label class="cv54-field">Forma de conversar<select id="cv54Capture"><option value="continuous">Contínua · envio após uma pausa na fala</option><option value="manual">Manual · você escolhe quando enviar</option><option value="text">Texto · sem microfone</option></select></label><label class="cv54-field">Idioma da prática<select id="cv54Language"><option value="pt-BR">Português</option><option value="en-US">Inglês americano</option><option value="en-GB">Inglês britânico</option><option value="es-ES">Espanhol da Espanha</option><option value="es-MX">Espanhol latino-americano</option></select></label><label class="cv54-field">Nível / pressão<select id="cv54Level"></select></label><label class="cv54-field cv54-full">Objetivo desta sessão<textarea id="cv54Goal" maxlength="700"></textarea></label></div><div class="cv54-tools"><label><input type="checkbox" id="cv54UseTeam">Usar projeto da equipe</label><label><input type="checkbox" id="cv54Video">Gravar vídeo</label><label><input type="checkbox" id="cv54Autovoice" checked>Resposta automática em áudio</label></div><p class="cv54-muted" id="cv54SetupNote">A conversa contínua envia a fala após cerca de 2 segundos de silêncio. Em campo barulhento, prefira o modo manual.</p><div id="cv54ProjectLine" class="cv54-project-line"></div></div><div id="cv54LiveContext" class="cv54-project-line" hidden></div><div id="cv54Status" class="cv54-status" role="status" aria-live="polite"><span class="cv54-dot"></span><span id="cv54StatusText">Pronto para iniciar.</span><strong id="cv54Time" style="margin-left:auto">00:00</strong></div><button id="cv5116ResumeCoach" class="outline cv5116-resume" type="button" hidden>↻ Continuar resposta do Coach</button><button id="cv5114RetryAudio" class="outline cv5114-retry" type="button" hidden>↻ Reenviar gravação salva</button><div id="cv54VideoWrap" class="cv54-video-wrap hidden"><video id="cv54Preview" muted playsinline autoplay></video><div class="cv54-video-guide"></div></div><div id="cv54Log" class="cv54-log" aria-live="polite" aria-label="Conversa da sessão"></div><div id="cv54PlaybackBox" hidden><audio id="cv54Audio" class="cv54-player" controls playsinline preload="metadata"></audio></div><div class="cv54-tools"><button class="outline" id="cv54Repeat">Repetir resposta</button><button class="outline" id="cv54HearExample">Ouvir exemplo</button><button class="outline" id="cv54RetryAudio" hidden>Reenviar gravação</button><button class="outline" id="cv54RetryAI" hidden>Tentar resposta novamente</button></div><label class="cv54-field">Escrever ou corrigir sua fala<textarea id="cv54Text" placeholder="Você também pode conversar por texto." maxlength="3000"></textarea></label><div class="cv54-actions"><button class="secondary" id="cv54SendText">Enviar texto</button><button class="outline" id="cv54SendAudio">Enviar fala</button></div><div class="cv54-controls"><button class="primary" id="cv54Start">Iniciar sessão</button><button class="secondary" id="cv54Pause" disabled>Pausar</button><button class="cv54-end" id="cv54End" disabled>Finalizar</button></div><div id="cv54Review" class="cv54-review" hidden></div></div>`;
   document.body.append(el);el.addEventListener('cancel',e=>{e.preventDefault();close();});
-  $('cv54Close').onclick=close;$('cv54Start').onclick=start;$('cv54Pause').onclick=pause;$('cv54End').onclick=finish;$('cv54SendAudio').onclick=()=>stopRecording(true);$('cv54SendText').onclick=sendText;$('cv54Repeat').onclick=()=>repeat(false);$('cv54HearExample').onclick=()=>repeat(true);$('cv54RetryAudio').onclick=retryAudio;$('cv54RetryAI').onclick=()=>respond();
+  $('cv54Close').onclick=close;$('cv54Start').onclick=start;$('cv54Pause').onclick=pause;$('cv54End').onclick=finish;$('cv54SendAudio').onclick=()=>stopRecording(true);$('cv54SendText').onclick=sendText;$('cv54Repeat').onclick=()=>repeat(false);$('cv54HearExample').onclick=()=>repeat(true);$('cv54RetryAudio').onclick=retryAudio;$('cv5114RetryAudio').onclick=retryAudio;$('cv54RetryAI').onclick=()=>respond();$('cv5116ResumeCoach').onclick=()=>respond();
   $('cv54Audio').addEventListener('play',()=>{if(s?.blockedSpeech){s.blockedSpeech=null;setStatus('IA respondendo…','speaking');}});
   $('cv54UseTeam').onchange=projectLine;$('cv54Video').onchange=()=>{if($('cv54Video').checked)$('cv54Capture').value='manual';};
 }
@@ -49,7 +49,7 @@ function currentRoute(){return document.querySelector('section.page.active')?.id
 window.coach54OpenSession=function(area=currentRoute(),options={}){
   if(s&&!s.finished&&s.started){$('cv54Session').showModal?.();setStatus('Há uma sessão em andamento. Finalize antes de abrir outra.');return;}
   if($('mentor531StopAudio')&&!$('mentor531StopAudio').disabled){notify('Encerre a gravação atual do Mentor antes de abrir outra sessão.');return;}
-  lastFocus=document.activeElement;cleanup();mediaBlobs=[];visualFrames=[];
+  lastFocus=document.activeElement;cleanup();window.coach5116Stages?.reset();mediaBlobs=[];visualFrames=[];
   const conf=AREAS[area]||AREAS.mentor,prefs=read(K.prefs,{capture:'manual',autoVoice:true,useTeam:true});
   s={id:uid(),area,title:conf.title,phase:'ready',started:false,finished:false,history:[],metrics:[],mediaIds:[],lastResponse:'',lastExample:'',options,seconds:0};
   $('cv54Title').textContent=conf.title;$('cv54Identity').textContent=`${identity().name||'Coach'} · ${identity().teamName||activeProject()?.name||'Seu espaço de trabalho'}`;
@@ -60,7 +60,7 @@ window.coach54OpenSession=function(area=currentRoute(),options={}){
   if(options.level&&[...$('cv54Level').options].some(x=>x.value===options.level))$('cv54Level').value=options.level;
   $('cv54Goal').value=options.goal||conf.goal;$('cv54Capture').value=conf.video?'manual':prefs.capture;$('cv54Autovoice').checked=prefs.autoVoice!==false;$('cv54UseTeam').checked=!!activeProject()&&prefs.useTeam!==false;$('cv54Video').checked=options.video??!!conf.video;if(options.useTeam!==undefined)$('cv54UseTeam').checked=!!activeProject()&&options.useTeam;
   $('cv54SetupNote').textContent=conf.video?'Confira câmera na altura dos olhos e mãos no enquadramento. O vídeo só começa em Iniciar sessão. Ao finalizar, você escolhe enviar quadros à análise visual.':'A conversa contínua envia a fala após cerca de 2 segundos de silêncio. Em campo barulhento, prefira o modo manual.';
-  $('cv54Setup').hidden=false;$('cv54LiveContext').hidden=true;$('cv54Log').replaceChildren();$('cv54Text').value='';$('cv54Review').hidden=true;$('cv54PlaybackBox').hidden=true;$('cv54VideoWrap').classList.add('hidden');$('cv54RetryAudio').hidden=true;$('cv54RetryAI').hidden=true;$('cv54Time').textContent='00:00';projectLine();setPhase('ready');setStatus('Pronto para iniciar.');
+  $('cv54Setup').hidden=false;$('cv54LiveContext').hidden=true;$('cv54Log').replaceChildren();$('cv54Text').value='';$('cv54Review').hidden=true;$('cv54PlaybackBox').hidden=true;$('cv54VideoWrap').classList.add('hidden');$('cv54RetryAudio').hidden=true;$('cv5114RetryAudio').hidden=true;$('cv54RetryAI').hidden=true;if($('cv5116ResumeCoach'))$('cv5116ResumeCoach').hidden=true;$('cv54Time').textContent='00:00';projectLine();setPhase('ready');setStatus('Pronto para iniciar.');
   document.body.classList.add('cv54-no-scroll');$('cv54Session').showModal();$('cv54Start').focus();
 };
 function persistDraft(){if(s?.started&&!s.finished)write(K.draft,{id:s.id,area:s.area,title:s.title,goal:s.goal,scenario:s.scenario,language:s.language,projectId:s.project?.id||'',projectName:s.project?.name||'',history:s.history,metrics:s.metrics,seconds:s.seconds,startedAt:s.startedAt,mediaIds:s.mediaIds});}
@@ -91,7 +91,7 @@ async function beginRecording(){
   const turn=++generation;setPhase('opening');setStatus(s.video?'Abrindo câmera e microfone…':'Abrindo microfone…');
   try{
     if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder)throw new Error('Este navegador não oferece gravação. Use o modo texto.');
-    window.mentor42StopVoice?.();window.cancelUniversalVoiceCapture?.();if(typeof stopStudioCamera==='function')stopStudioCamera();
+    window.coach5112Voice?.prepareForCapture?.();window.mentor42StopVoice?.();window.cancelUniversalVoiceCapture?.();if(typeof stopStudioCamera==='function')stopStudioCamera();
     const input=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:s.video?{facingMode:'user',width:{ideal:640},height:{ideal:480}}:false});
     if(turn!==generation||!s||s.pausedAt||s.finished||s.finishing){input.getTracks().forEach(t=>t.stop());return;}
     stream=input;recordKind=s.video?'video':'audio';mediaBlobs=[];recordStart=Date.now();pausedMillis=0;pauseStart=0;
@@ -124,28 +124,130 @@ async function stopRecording(send=true){
   if(send)return transcribe(speechBlob,recordSeconds,recordKind);if(!s.finishing)setPhase('idle');return true;
 }
 async function retryAudio(){if(!s?.lastBlob||['processing','thinking','recording','speaking','finishing'].includes(s.phase))return;await transcribe(s.lastBlob,s.lastBlobSeconds,s.lastBlobKind);}
-async function transcribe(blob,seconds,kind){
-  if(!s)return;const session=s,turn=++generation;setStatus('Transcrevendo sua fala…','processing');if(!s.finishing)setPhase('processing');
-  try{if(blob.size>3.8*1024*1024)throw new Error('O arquivo ficou grande. Seu vídeo está salvo; escreva a fala para continuar.');const controller=new AbortController();s.controller=controller;const timer=setTimeout(()=>controller.abort(),43000);let response;try{response=await fetch(`/api/transcribe?lang=${encodeURIComponent(s.language)}`,{method:'POST',headers:{'Content-Type':blob.type},body:blob,signal:controller.signal});}finally{clearTimeout(timer);}const result=await response.json();if(s===session)s.controller=null;if(turn!==generation)return false;if(!response.ok||!result.text?.trim())throw new Error(result.error||'A transcrição ficou vazia.');$('cv54RetryAudio').hidden=true;$('cv54Text').value='';const metric=textMetrics(result.text,seconds);s.metrics.push({...metric,kind});append('user',result.text,{metric});
-    if(s.options.onText)s.options.onText(result.text);
-    if(s.finishing)return true;await respond();return true;
-  }catch(error){if(s===session)s.controller=null;if(turn!==generation)return false;setPhase(s.pausedAt?'paused':'error');setStatus(error.name==='AbortError'?'A transcrição demorou. Sua gravação foi preservada.':`${error.message} Sua gravação foi preservada. Você pode reenviar ou escrever a fala.`,'error');$('cv54RetryAudio').hidden=false;return false;}
+// v5.11.4: o Safari pode transformar um retorno HTML/erro em uma SyntaxError genérica.
+// Ler o status e verificar o JSON permite mostrar o problema sem perder o áudio gravado.
+async function parseTranscriptionJson(response){
+  const status=Number(response?.status)||0;
+  const http=status?`HTTP ${status}`:'sem código HTTP';
+  let data;
+  if(typeof response?.text==='function'){
+    let raw;
+    try{raw=await response.text();}
+    catch{throw new Error(`Não foi possível ler o retorno da transcrição (${http}).`);}
+    if(!raw||!raw.trim())throw new Error(`O servidor de transcrição respondeu sem dados (${http}).`);
+    try{data=JSON.parse(raw);}
+    catch{throw new Error(`O servidor devolveu uma resposta inválida (${http}), em vez dos dados da transcrição. Verifique a publicação da pasta api.`);}
+  }else{
+    // Compatibilidade com testes/implementações que só expõem response.json().
+    try{data=await response.json();}
+    catch{throw new Error(`Não foi possível interpretar os dados da transcrição (${http}).`);}
+  }
+  if(!data||typeof data!=='object'||Array.isArray(data))throw new Error(`O servidor devolveu dados inválidos (${http}).`);
+  return data;
 }
+async function transcribe(blob,seconds,kind){
+  if(!s)return false;
+  const session=s,turn=++generation,transcribeStartedAt=Date.now();
+  $('cv54RetryAudio').hidden=true;
+  if($('cv5114RetryAudio'))$('cv5114RetryAudio').hidden=true;
+  setStatus('Transcrevendo sua fala…','processing');
+  if(!s.finishing)setPhase('processing');
+  let stage='preparacao',httpStatus=0;
+  try{
+    if(!blob||!blob.size)throw new Error('Sua gravação está vazia. Grave novamente.');
+    if(blob.size>3.8*1024*1024)throw new Error('O arquivo ficou grande. Sua gravação está salva; escreva a fala para continuar.');
+    const controller=new AbortController();s.controller=controller;
+    const timer=setTimeout(()=>controller.abort(),43000);
+    let response;
+    const headerType=String(blob.type||'').toLowerCase().split(';')[0].trim();
+    const headers={'Accept':'application/json'};
+    if(/^(audio|video)\/[a-z0-9.+-]+$/.test(headerType))headers['Content-Type']=headerType;
+    try{
+      stage='envio';
+      response=await fetch(`/api/transcribe?lang=${encodeURIComponent(s.language||'pt-BR')}`,{
+        method:'POST',headers,body:blob,signal:controller.signal,cache:'no-store'
+      });
+      httpStatus=Number(response.status)||0;
+      stage='resposta';
+    }finally{clearTimeout(timer);}
+    const result=await parseTranscriptionJson(response);
+    if(s===session)s.controller=null;
+    if(turn!==generation||s!==session)return false;
+    if(!response.ok){
+      const message=httpStatus===429?'O serviço de transcrição está temporariamente ocupado.':
+        httpStatus===413?'O áudio ficou grande demais. Tente uma fala menor.':
+        `A transcrição falhou no servidor (HTTP ${httpStatus||'?'}).`;
+      throw new Error(message);
+    }
+    if(typeof result.text!=='string'||!result.text.trim())throw new Error('O servidor não devolveu uma transcrição.');
+    window.coach5113Diagnostics?.record?.('tempo-transcricao',`${Math.round((Date.now()-transcribeStartedAt)/100)/10}s`);
+    $('cv54RetryAudio').hidden=true;
+    if($('cv5114RetryAudio'))$('cv5114RetryAudio').hidden=true;
+    $('cv54Text').value='';
+    const metric=textMetrics(result.text,seconds);s.metrics.push({...metric,kind});append('user',result.text,{metric});
+    if(s.options.onText)s.options.onText(result.text);
+    if(s.finishing)return true;
+    await respond();return true;
+  }catch(error){
+    if(s===session)s.controller=null;
+    if(turn!==generation||s!==session)return false;
+    const timeout=error?.name==='AbortError';
+    const message=timeout?'A transcrição demorou mais que o permitido.':
+      stage==='envio'?'Falha ao enviar sua gravação. Verifique a conexão e tente novamente.':
+      error?.message||'Não foi possível transcrever a gravação.';
+    window.coach5113Diagnostics?.record?.('transcricao-erro',`${stage}; ${timeout?'tempo':error?.name||'erro'}; HTTP ${httpStatus||0}`);
+    setPhase(s.pausedAt?'paused':'error');
+    setStatus(`${message} A gravação foi preservada. Toque em Reenviar gravação salva ou digite sua fala.`,'error');
+    $('cv54RetryAudio').hidden=false;
+    if($('cv5114RetryAudio'))$('cv5114RetryAudio').hidden=!s.lastBlob;
+    return false;
+  }
+}
+
 function textMetrics(text,seconds=0){const words=String(text).trim().split(/\s+/).filter(Boolean).length;return{words,seconds,wpm:seconds?Math.round(words/seconds*60):null,fillers:(String(text).match(/\b(né|tipo|assim|basicamente|you know|like|o sea|este)\b/gi)||[]).length};}
 async function sendText(){if(!s||s.finished||!['ready','idle','paused','error'].includes(s.phase))return;const value=$('cv54Text').value.trim();if(!value)return;if(!s.started){$('cv54Capture').value='text';await start();}if(s.phase==='speaking'||s.finished)return;append('user',value,{metric:textMetrics(value)});s.metrics.push(textMetrics(value));$('cv54Text').value='';if(s.options.onText)s.options.onText(value);await respond();}
 function agendaContext(){return {tasks:read('coachvoice-dashboard-tasks-v50',[]).filter(t=>t.day===day()&&!t.done).slice(0,5).map(t=>({title:t.title,time:t.time})),events:read('coachvoice-agenda-v52',[]).filter(e=>e.date===day()).slice(0,5).map(e=>({title:e.title,time:e.time,duration:e.duration}))};}
-function payload(){return {area:s.area,title:s.title,scenario:s.scenario,goal:s.goal,language:s.language,level:s.level,conversationMode:s.conversationMode||'free',target:s.options.target||'',studyContext:s.options.studyContext||null,competitionContext:s.options.competitionContext||(s.project?.competitionWatch?window.coach58ProjectStudyContext?.(s.project.competitionWatch):null)||null,coachPreferences:read('coachvoice-v52-settings',{}),teamContext:s.project,contextChoice:s.project?'team':'general',history:s.history.slice(-8).map(h=>({role:h.role,text:h.text.slice(0,1100)})),metrics:s.metrics.slice(-2),agenda:['dashboard','daily','coachprep','matchday'].includes(s.area)?agendaContext():undefined};}
-async function respond(){if(!s||s.finished||s.finishing||s.phase==='thinking')return;const turn=++generation;setPhase('thinking');setStatus('Preparando a resposta…','processing');$('cv54RetryAI').hidden=true;
-  const session=s;session.aiPending=true;let result;try{result=await window.callCoachAI('session-dialogue',payload());}catch{result={__error:true,__message:'A IA não respondeu. Sua fala está salva.'};}finally{session.aiPending=false;}if(turn!==generation||s!==session||s.finished)return;
-  if(result.__error){setPhase(s.pausedAt?'paused':'error');setStatus(result.__message||'A IA não respondeu. Sua fala está salva.','error');$('cv54RetryAI').hidden=false;return;}
+function payload(){return {area:s.area,title:s.title,scenario:s.scenario,goal:s.goal,language:s.language,level:s.level,conversationMode:s.conversationMode||'free',target:s.options.target||'',studyContext:s.options.studyContext||null,competitionContext:s.options.competitionContext||(s.project?.competitionWatch?window.coach58ProjectStudyContext?.(s.project.competitionWatch):null)||null,coachPreferences:read('coachvoice-v52-settings',{}),teamContext:s.project,contextChoice:s.project?'team':'general',history:s.history.slice(-8).map(h=>({role:h.role,text:h.text.slice(0,1100)})),shortReply:!!s.shortReply,metrics:s.metrics.slice(-2),agenda:['dashboard','daily','coachprep','matchday'].includes(s.area)?agendaContext():undefined};}
+async function respond(){if(!s||s.finished||s.finishing||s.phase==='thinking')return;
+  // Evita repetir imediatamente solicitações quando a própria API já confirmou cota esgotada.
+  if(s.lastQuotaAt&&Date.now()-s.lastQuotaAt<45000){setPhase('error');setStatus('O limite do Gemini foi atingido há pouco. Sua conversa e suas falas estão salvas. Aguarde a liberação da cota antes de tentar novamente.','error');$('cv54RetryAI').hidden=false;return;}
+  const turn=++generation;setPhase('thinking');setStatus('Fala recebida. Preparando resposta do Coach…','processing');$('cv54RetryAI').hidden=true;if($('cv5116ResumeCoach'))$('cv5116ResumeCoach').hidden=true;
+  const session=s,aiStartedAt=Date.now();session.aiPending=true;let result;try{result=await window.callCoachAI('session-dialogue',payload());}catch{result={__error:true,__message:'A IA não respondeu. Sua fala está salva.'};}finally{session.aiPending=false;}if(turn!==generation||s!==session||s.finished)return;
+  window.coach5113Diagnostics?.record?.('tempo-coach-ia',`${Math.round((Date.now()-aiStartedAt)/100)/10}s`);
+  if(result.__error){
+    const quota=result.__status===429||/resource_exhausted|quota/i.test(String(result.__code||''));
+    const truncated=result.__code==='output_truncated';
+    if(quota){s.lastQuotaAt=Date.now();s.shortReply=false;}
+    if(truncated)s.shortReply=true;
+    setPhase(s.pausedAt?'paused':'error');
+    setStatus(quota?'O Gemini atingiu o limite de uso. A sessão continua aberta e sua fala está salva. As etapas dividem respostas recebidas, mas não removem a cota. Tente novamente quando o serviço estiver disponível.':truncated?'A resposta ultrapassou o tamanho permitido. Sua fala está salva. Toque em Tentar resposta curta para continuar.':result.__message||'A IA não respondeu. Sua fala está salva.','error');
+    $('cv54RetryAI').textContent=quota?'Tentar quando a cota voltar':truncated?'Tentar resposta curta':'Tentar resposta novamente';
+    $('cv54RetryAI').hidden=false;
+    if(['mentor','daytoday'].includes(s.area)){
+      if($('cv5116ResumeCoach'))$('cv5116ResumeCoach').textContent=quota?'↻ Tentar quando a cota voltar':truncated?'↻ Tentar resposta mais curta':'↻ Continuar resposta do Coach';
+      if($('cv5116ResumeCoach'))$('cv5116ResumeCoach').hidden=false;
+    }
+    return;
+  }
+  s.lastQuotaAt=0;s.shortReply=false;
   const reply=String(result.spoken||result.feedback||'').trim();if(!reply){setPhase('error');setStatus('A IA devolveu uma resposta vazia. Tente novamente.','error');$('cv54RetryAI').hidden=false;return;}
   const natural=['mentor','daytoday'].includes(s.area),feedback=natural?'':String(result.feedback||'').trim(),model=natural?'':String(result.model||'').trim(),question=natural?'':String(result.nextQuestion||'').trim();s.lastResponse=[reply,feedback&&feedback!==reply?feedback:'',model?`Exemplo: ${model}`:'',question].filter(Boolean).join('\n\n');s.lastExample=model;s.lastReply={...result,feedback,model,nextQuestion:question};
   append('assistant',s.lastResponse,{kind:'feedback',feedback,model,nextAttempt:String(result.nextAttempt||'')});
+  const stageParts=natural?window.coach5116Stages?.present(reply)||[reply]:[reply];
   if(s.pausedAt){setPhase('paused');setStatus('Sessão pausada. A resposta está pronta; toque em Continuar.');return;}
-  if(s.autoVoice){const segments=[{text:reply,lang:result.spokenLanguage||s.language}];if(feedback&&feedback!==reply)segments.push({text:feedback,lang:'pt-BR'});if(model&&!reply.toLowerCase().includes(model.toLowerCase()))segments.push({text:model,lang:s.language});if(question)segments.push({text:question,lang:s.language});await speakSequence(segments,true);}
+  if(s.autoVoice){const segments=stageParts.map(text=>({text,lang:result.spokenLanguage||s.language}));if(feedback&&feedback!==reply)segments.push({text:feedback,lang:'pt-BR'});if(model&&!reply.toLowerCase().includes(model.toLowerCase()))segments.push({text:model,lang:s.language});if(question)segments.push({text:question,lang:s.language});await speakSequence(segments,true);}
   else afterResponse();
 }
-async function speakNative(text,lang,allowDeviceAnyVoice=false){return new Promise(resolve=>{if(!window.speechSynthesis){resolve(false);return;}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text),session=s;u.lang=lang;u.rate=voiceRate();session.nativeUtterance=u;u.voice=typeof pickVoice==='function'?pickVoice(lang):null;if(!u.voice&&localStorage.getItem('coachvoice-voice')==='male'&&!allowDeviceAnyVoice){setStatus('Sem voz masculina do aparelho. Verifique a geração Gemini no perfil.','error');resolve(false);return;}let remaining=Math.max(6000,text.length*150),began=Date.now(),timer,done=false;const end=ok=>{if(done)return;done=true;clearTimeout(timer);session.nativeCancel=null;session.nativePauseTimer=null;resolve(ok);};const timeout=()=>{speechSynthesis.cancel();end(false);};timer=setTimeout(timeout,remaining);session.nativePauseTimer=paused=>{clearTimeout(timer);if(paused)remaining=Math.max(1000,remaining-(Date.now()-began));else{began=Date.now();timer=setTimeout(timeout,remaining);}};session.nativeCancel=()=>end(false);u.onend=()=>end(true);u.onerror=()=>end(false);speechSynthesis.speak(u);});}
+async function speakNative(text,lang,allowDeviceAnyVoice=false){
+  // A experiência estável é o mecanismo da v4.6.1, com divisão de falas longas.
+  // allowDeviceAnyVoice preserva a ação explícita de ouvir pela voz do aparelho.
+  if(window.coach5112Voice?.canSpeak()){
+    const status=await window.coach5112Voice.speak(text,{lang,rate:voiceRate(),onStatus:message=>setStatus(message,'speaking')});
+    return status==='completed';
+  }
+  setStatus('O navegador não disponibilizou voz neste aparelho. A resposta continua no texto.','error');
+  return false;
+}
 
 function segmentSpeech(parts,maxChars=850){
  const result=[];
@@ -160,24 +262,90 @@ function segmentSpeech(parts,maxChars=850){
  }
  return result;
 }
+async function playServerSegment(segment,session,turn){
+  try{
+    return await new Promise((resolve,reject)=>{
+      let done=false;
+      const settle=value=>{if(done)return;done=true;resolve(value);};
+      s.resolveSpeech=()=>settle('cancelled');
+      window.mentor531PlayAudio(segment.text,{
+        player:$('cv54Audio'),box:$('cv54PlaybackBox'),language:segment.lang,
+        onStatus:text=>{if(turn===generation&&s===session)setStatus(text,'speaking');},
+        onEnded:()=>settle('completed'),onBlocked:()=>settle('blocked'),onError:()=>settle('error')
+      }).catch(reject);
+    });
+  }catch(error){window.coach5113Diagnostics?.record('gemini-falha',error?.message||'erro');return 'error';}
+}
 async function speakSequence(segments,continueListening=false){
- segments=segmentSpeech(segments);
-  if(!s||s.pausedAt||s.finishing)return;const turn=++generation;s.audioFailed=false;s.blockedSpeech=null;setPhase('speaking');s.pendingSpeech=segments;s.continueAfterSpeech=continueListening;
+  segments=segmentSpeech(segments);
+  if(!s||s.pausedAt||s.finishing)return;
+  const session=s,turn=++generation,voiceStartedAt=Date.now();
+  let voiceStartRecorded=false;
+  const noteVoiceStart=()=>{if(voiceStartRecorded||turn!==generation||s!==session)return;voiceStartRecorded=true;window.coach5113Diagnostics?.record?.('tempo-inicio-voz',`${Math.round((Date.now()-voiceStartedAt)/100)/10}s`);};
+  s.audioFailed=false;s.blockedSpeech=null;s.audioFallback=null;
+  setPhase('speaking');s.pendingSpeech=segments;s.continueAfterSpeech=continueListening;
+  const stable=window.coach5112Voice?.getMode?.()!=='gemini';
   for(let i=0;i<segments.length;i++){
-    if(turn!==generation||!s||s.pausedAt||s.finishing)return;
+    if(turn!==generation||s!==session||s.pausedAt||s.finishing)return;
     const segment=segments[i];if(!segment.text)continue;
-    try{
-      await new Promise((resolve,reject)=>{let done=false;const settle=()=>{if(!done){done=true;resolve();}};s.resolveSpeech=settle;window.mentor531PlayAudio(segment.text,{player:$('cv54Audio'),box:$('cv54PlaybackBox'),language:segment.lang,onStatus:text=>setStatus(text,'speaking'),onEnded:settle,onBlocked:()=>{s.blockedSpeech={segments:segments.slice(i),continueListening};setStatus('O navegador pede um toque para liberar o áudio. Toque em Ouvir resposta ou abra Mais opções e toque no reprodutor.','error');},onError:()=>reject(new Error('playback'))}).catch(reject);});
-    }catch(error){console.warn('CoachVoice session voice:',error?.message||String(error));setStatus(error?.status===429?'O serviço de voz atingiu um limite temporário. Tentando a voz do aparelho…':'Voz da IA indisponível agora. Tentando a voz do aparelho…','error');const success=await speakNative(segment.text,segment.lang);if(turn!==generation||s.pausedAt||s.finishing)return;if(!success){s.audioFailed=true;setPhase('idle');setStatus(error?.status===429?'O serviço de voz atingiu um limite temporário e a voz do aparelho não respondeu. O texto está salvo; tente Repetir resposta mais tarde.':'A resposta está no texto. Use Repetir resposta para tentar ouvir.','error');return;}}
+    if(['mentor','daytoday'].includes(s.area))window.coach5116Stages?.onAudioSegment(segment.text,i);
+    let result='error';
+    let mediaAttempted=false;
+    if(stable && window.coach5112Voice?.canSpeak()){
+      result=await window.coach5112Voice.speak(segment.text,{
+        lang:segment.lang,rate:voiceRate(),onStart:noteVoiceStart,
+        onStatus:text=>{if(turn===generation&&s===session)setStatus(text,'speaking');}
+      });
+      // O erro/bloqueio nativo não deve provocar outra tentativa idêntica.
+      // Usar a voz gerada como alternativa com reprodutor manual visível.
+      if(result==='blocked'||result==='error'){
+        if(turn!==generation||s!==session||s.pausedAt||s.finishing)return;
+        setStatus('Voz do iPhone indisponível. Preparando áudio alternativo…','processing');
+        mediaAttempted=true;
+        result=await playServerSegment(segment,session,turn);
+      }
+    }else if(!stable || !window.coach5112Voice?.canSpeak()){
+      mediaAttempted=true;
+      result=await playServerSegment(segment,session,turn);
+    }
+    if(turn!==generation||s!==session||s.pausedAt||s.finishing)return;
+    if(result==='cancelled')return;
+    if(result==='blocked'){
+      s.audioFallback=mediaAttempted && $('cv54Audio')?.src?.startsWith('blob:') ? {segments:segments.slice(i),continueListening} : null;
+      s.blockedSpeech={segments:segments.slice(i),continueListening};
+      s.pendingSpeech=segments.slice(i);
+      setPhase('idle');
+      setStatus('Resposta pronta. Toque em 🔊 Ouvir resposta para liberar o áudio no iPhone. Microfone fechado.','error');
+      return;
+    }
+    if(result!=='completed'){
+      window.mentor531StopAudioPlayback?.();
+      setStatus('Som selecionado indisponível. Tentando a voz estável do iPhone…','error');
+      const fallback=mediaAttempted?'error':window.coach5112Voice?.canSpeak()?await window.coach5112Voice.speak(segment.text,{lang:segment.lang,rate:voiceRate()}):'unavailable';
+      if(turn!==generation||s!==session||s.pausedAt||s.finishing)return;
+      if(fallback==='blocked'){
+        s.blockedSpeech={segments:segments.slice(i),continueListening};
+        s.pendingSpeech=segments.slice(i);
+        setPhase('idle');setStatus('Safari bloqueou o áudio. Toque em 🔊 Ouvir resposta. Microfone fechado.','error');return;
+      }
+      if(fallback!=='completed'){
+        s.audioFailed=true;s.pendingSpeech=segments.slice(i);s.blockedSpeech={segments:segments.slice(i),continueListening};setPhase('idle');
+        setStatus('Não foi possível tocar a voz. A resposta está salva no texto. Toque em 🔊 Ouvir resposta.','error');return;
+      }
+    }
   }
-  if(turn!==generation||!s)return;s.resolveSpeech=null;s.pendingSpeech=null;s.voicePaused=false;if(continueListening)afterResponse();else{setPhase(s.finished?'finished':s.pausedAt?'paused':'idle');setStatus(s.finished?'Resumo concluído. Confira seu registro e os itens que deseja guardar.':'Resposta concluída. Toque em Falar para continuar a conversa.');}
+  if(turn!==generation||s!==session)return;
+  s.resolveSpeech=null;s.pendingSpeech=null;s.blockedSpeech=null;s.audioFallback=null;s.voicePaused=false;
+  if(['mentor','daytoday'].includes(s.area))window.coach5116Stages?.revealAll();
+  if(continueListening)afterResponse();
+  else{setPhase(s.finished?'finished':s.pausedAt?'paused':'idle');setStatus(s.finished?'Resumo concluído. Confira seu registro.':'Resposta concluída. Toque em Falar para continuar.');}
 }
 function afterResponse(){if(!s||s.finished||s.pausedAt||s.finishing)return;setPhase('idle');setStatus('Sua vez.');if(s.capture==='continuous'&&!s.video)beginRecording();else if(s.video)setStatus('Tentativa concluída. Toque em Falar para gravar outra.');else if(s.capture==='manual')setStatus('Sua vez. Toque em Falar para gravar.');}
 async function repeat(example=false){if(!s)return;if(rec)await stopRecording(false);if(s.pausedAt){s.pauseTotal+=Date.now()-s.pausedAt;s.pausedAt=0;}await speakSequence(example?[{text:s.lastExample,lang:s.language}]:s.lastReply?[{text:s.lastReply.spoken,lang:s.lastReply.spokenLanguage||s.language},...(s.lastReply.feedback&&s.lastReply.feedback!==s.lastReply.spoken?[{text:s.lastReply.feedback,lang:'pt-BR'}]:[]),...(s.lastReply.model?[{text:s.lastReply.model,lang:s.language}]:[]),...(s.lastReply.nextQuestion?[{text:s.lastReply.nextQuestion,lang:s.language}]:[])]:[{text:s.lastResponse,lang:s.language}],false);}
-function pause(){if(!s||!s.started||s.finished||s.pausedAt)return;s.pausedAt=Date.now();if(rec?.state==='recording'){rec.pause();if(audioRecorder?.state==='recording')audioRecorder.pause();pauseStart=Date.now();stream?.getTracks().forEach(t=>t.enabled=false);clearTimeout(maxTimer);}if(s.phase==='speaking'){s.voicePaused=false;generation++;window.mentor531StopAudioPlayback?.();window.speechSynthesis?.cancel();s.resolveSpeech?.();s.nativeCancel?.();}if(s.phase==='opening'){generation++;releaseCapture();}setPhase('paused');setStatus('Sessão pausada. Microfone e voz interrompidos.');persistDraft();wake?.release().catch(()=>{});wake=null;}
+function pause(){if(!s||!s.started||s.finished||s.pausedAt)return;s.pausedAt=Date.now();if(rec?.state==='recording'){rec.pause();if(audioRecorder?.state==='recording')audioRecorder.pause();pauseStart=Date.now();stream?.getTracks().forEach(t=>t.enabled=false);clearTimeout(maxTimer);}if(s.phase==='speaking'){s.voicePaused=false;generation++;window.mentor531StopAudioPlayback?.();window.coach5112Voice?.stop();window.speechSynthesis?.cancel();s.resolveSpeech?.();s.nativeCancel?.();}if(s.phase==='opening'){generation++;releaseCapture();}setPhase('paused');setStatus('Sessão pausada. Microfone e voz interrompidos.');persistDraft();wake?.release().catch(()=>{});wake=null;}
 async function resume(){if(!s?.pausedAt)return;s.pauseTotal+=Date.now()-s.pausedAt;s.pausedAt=0;await acquireWake();if(rec?.state==='paused'){pausedMillis+=Date.now()-pauseStart;pauseStart=0;stream?.getTracks().forEach(t=>t.enabled=true);rec.resume();if(audioRecorder?.state==='paused')audioRecorder.resume();setPhase('recording');setStatus('Ouvindo novamente…','recording');maxTimer=setTimeout(()=>stopRecording(true),Math.max(1000,(s.video?90000:s.capture==='manual'?180000:60000)-(Date.now()-recordStart-pausedMillis)));return;}if(s.pendingSpeech){await speakSequence(s.pendingSpeech,s.continueAfterSpeech);return;}if(s.controller||s.aiPending){setPhase(s.aiPending?'thinking':'processing');setStatus('Aguardando a operação em andamento…');return;}setPhase('idle');if(s.capture!=='text')await beginRecording();else setStatus('Escreva para continuar.');}
 async function finish(){
-  if(!s||!s.started||s.finished||s.finishing)return;s.finishing=true;generation++;s.controller?.abort();s.controller=null;window.mentor531StopAudioPlayback?.();window.speechSynthesis?.cancel();s.resolveSpeech?.();s.nativeCancel?.();setPhase('finishing');
+  if(!s||!s.started||s.finished||s.finishing)return;s.finishing=true;generation++;s.controller?.abort();s.controller=null;window.mentor531StopAudioPlayback?.();window.coach5112Voice?.stop();window.speechSynthesis?.cancel();s.resolveSpeech?.();s.nativeCancel?.();setPhase('finishing');
   if(s.pausedAt){s.pauseTotal+=Date.now()-s.pausedAt;s.pausedAt=0;}s.seconds=elapsed();clearInterval(clock);clock=null;
   if(rec)await stopRecording(true);releaseCapture();wake?.release().catch(()=>{});wake=null;
   setStatus('Preparando o resumo da sessão…','processing');
@@ -195,7 +363,7 @@ function confirmChoices(){const memories=[...$('cv54Review').querySelectorAll('[
 function saveExample(){const list=read(K.examples,[]);if(!list.some(x=>x.sessionId===s.id)){list.unshift({id:uid(),sessionId:s.id,title:s.scenario,area:s.area,tag:s.area==='gamemodel'?'Tática':s.area==='leadership'?'Gestão do grupo':'Comunicação',text:s.history.filter(h=>h.role==='user').map(h=>h.text).join('\n\n'),feedback:s.lastResponse,createdAt:Date.now()});write(K.examples,list);}$('cv54SavedMessage').textContent='Exemplo guardado na Biblioteca de situações.';renderExamples();}
 async function analyzeVisual(){const button=$('cv54Visual'),box=$('cv54VisualResult');button.disabled=true;box.textContent='Analisando os quadros selecionados…';try{const response=await fetch('/api/session-vision',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({frames:s.frames,context:s.goal,transcript:s.history.filter(h=>h.role==='user').map(h=>h.text).join('\n')})});const result=await response.json();if(!response.ok)throw new Error(result.error);s.visual=result;saveSession();box.innerHTML=`<h4>Observações visuais</h4>${result.observations.map(o=>`<p><strong>${esc(o.evidence)}</strong><br>${esc(o.suggestion)}</p>`).join('')}<p class="cv54-muted">${esc(result.limits)}</p><div class="cv54-next">${esc(result.nextAttempt)}</div>`;}catch(e){box.textContent=e.message||'Não foi possível analisar. Seu vídeo está salvo.';}finally{button.disabled=false;}}
 async function showMedia(ids,container){container.replaceChildren();for(const id of ids){try{const item=await mediaGet(id);if(!item)continue;const url=URL.createObjectURL(item.blob);mediaUrls.push(url);const media=document.createElement(item.kind==='video'?'video':'audio');media.controls=true;media.setAttribute('playsinline','');media.style.width='100%';media.style.maxHeight='300px';media.src=url;container.append(media);const a=document.createElement('a');a.href=url;a.download=`coachvoice-${item.id}.${item.blob.type.includes('mp4')?'mp4':item.blob.type.includes('ogg')?'ogg':'webm'}`;a.textContent='Baixar esta gravação';container.append(a);}catch{container.append(document.createTextNode('Não foi possível recuperar esta mídia.'));}}}
-function cleanup(){generation++;clearInterval(clock);clock=null;window.mentor531StopAudioPlayback?.();window.speechSynthesis?.cancel();s?.controller?.abort();s?.resolveSpeech?.();s?.nativeCancel?.();if(rec){rec.onstop=null;try{rec.stop();}catch{}rec=null;}if(audioRecorder){audioRecorder.onstop=null;try{audioRecorder.stop();}catch{}audioRecorder=null;}releaseCapture();wake?.release().catch(()=>{});wake=null;mediaUrls.forEach(u=>URL.revokeObjectURL(u));mediaUrls=[];}
+function cleanup(){generation++;clearInterval(clock);clock=null;window.mentor531StopAudioPlayback?.();window.coach5112Voice?.stop();window.speechSynthesis?.cancel();s?.controller?.abort();s?.resolveSpeech?.();s?.nativeCancel?.();if(rec){rec.onstop=null;try{rec.stop();}catch{}rec=null;}if(audioRecorder){audioRecorder.onstop=null;try{audioRecorder.stop();}catch{}audioRecorder=null;}releaseCapture();wake?.release().catch(()=>{});wake=null;mediaUrls.forEach(u=>URL.revokeObjectURL(u));mediaUrls=[];}
 async function close(){if(s?.started&&!s.finished){await finish();return;}cleanup();$('cv54Session').close();document.body.classList.remove('cv54-no-scroll');lastFocus?.focus?.();}
 const projectFields=[['name','Equipe','text'],['season','Temporada','text'],['competition','Competição','text'],['division','Divisão','text'],['group','Grupo','text'],['preseasonStart','Início da pré-temporada','date'],['competitionStart','Início da competição','date'],['stage','Momento da temporada','select'],['objective','Objetivo da equipe','textarea'],['model','Modelo de jogo e princípios','textarea'],['squad','Perfil do elenco e necessidades','textarea'],['staff','Comissão e responsabilidades','textarea'],['structure','Estrutura e recursos disponíveis','textarea'],['process','Processo atual e dificuldades','textarea'],['source','Fontes do calendário e regulamento','textarea'],['verifiedAt','Data da conferência','date'],['dataStatus','Situação dos dados','select']];
 function projectForm(){const article=document.createElement('article');article.id='cv54ProjectCard';article.className='card';article.innerHTML=`<span class="label">PROJETO DA TEMPORADA</span><h3>O contexto que acompanha suas conversas</h3><p class="cv54-muted">Cadastre os fatos da equipe. Calendário, grupo e regulamento são informados e conferidos por você; a IA não busca nem inventa esses dados.</p><label class="cv54-field">Projeto ativo<select id="cv54ProjectSelect"></select></label><div class="cv54-actions"><button class="outline" id="cv54NewProject">Novo projeto</button></div><form id="cv54ProjectForm"><div class="cv54-grid" style="margin-top:18px">${projectFields.map(([key,label,type])=>`<label class="cv54-field ${type==='textarea'?'cv54-full':''}">${label}${type==='textarea'?`<textarea name="${key}" maxlength="${key==='source'?900:1200}"></textarea>`:type==='select'?`<select name="${key}">${(key==='stage'?['Pré-temporada','Competição','Transição','Planejamento']:['draft','confirmed']).map(v=>`<option value="${v}">${v==='draft'?'Em elaboração':v==='confirmed'?'Conferidos por mim':v}</option>`).join('')}</select>`:`<input name="${key}" type="${type}" maxlength="120" ${key==='name'?'required':''}>`}</label>`).join('')}</div><div class="cv54-actions"><button class="primary" type="submit">Salvar projeto e ativar</button><button class="outline" type="button" id="cv54General">Usar prática geral</button></div></form><p id="cv54ProjectMessage" class="cv54-form-message" role="status"></p><h4>Memória revisável da equipe</h4><p class="cv54-muted">Apenas pontos que você confirmou nas sessões. Você pode corrigir ou remover um ponto da memória ativa.</p><div id="cv54ProjectMemory"></div>`;
@@ -234,22 +402,56 @@ window.addEventListener('pagehide',()=>{persistDraft();cleanup();});window.addEv
 window.coach54OpenProject=()=>{window.go('profile');$('cv54ProjectCard')?.scrollIntoView({behavior:'smooth',block:'start'});};
 
 function voiceRate(){const saved=read('coachvoice-conversation-v54',{});return [1,1.15,1.25].includes(Number(saved.speed))?Number(saved.speed):1;}
-function stopSpeech(){if(!s)return;generation++;window.mentor531StopAudioPlayback?.();window.speechSynthesis?.cancel();s.resolveSpeech?.();s.nativeCancel?.();s.resolveSpeech=null;s.pendingSpeech=null;s.blockedSpeech=null;s.voicePaused=false;setPhase(s.finished?'finished':s.pausedAt?'paused':'idle');setStatus('Voz interrompida. Sua resposta continua salva.');}
+function stopSpeech(){if(!s)return;generation++;window.mentor531StopAudioPlayback?.();window.coach5112Voice?.stop();window.speechSynthesis?.cancel();s.resolveSpeech?.();s.nativeCancel?.();s.resolveSpeech=null;s.pendingSpeech=null;s.blockedSpeech=null;s.audioFallback=null;s.voicePaused=false;setPhase(s.finished?'finished':s.pausedAt?'paused':'idle');setStatus('Voz interrompida. Sua resposta continua salva.');}
 window.coach56StopSpeech=stopSpeech;
-window.coach5111HearReply=()=>{if(!s?.lastResponse)return;
-  const audio=$('cv54Audio');
-  if(s.blockedSpeech&&audio?.src){audio.play().catch(()=>{setStatus('O Safari não liberou o áudio. Tente Repetir resposta ou a voz do aparelho.','error');});return;}
+window.coach5111HearReply=()=>{
+  if(!s||(!s.lastResponse&&!s.blockedSpeech))return;
+  // A ação vem de um toque real; reinicia o trecho bloqueado sem chamar a IA.
+  if(s.audioFallback && $('cv54Audio')?.src?.startsWith('blob:')){
+    const recovery=s.audioFallback,session=s,audio=$('cv54Audio');
+    s.audioFallback=null;
+    audio.onended=()=>{
+      if(s!==session)return;
+      s.blockedSpeech=null;s.pendingSpeech=null;
+      const rest=recovery.segments.slice(1);
+      if(rest.length)speakSequence(rest,recovery.continueListening);
+      else if(recovery.continueListening)afterResponse();
+      else{setPhase('idle');setStatus('Resposta concluída. Toque em Falar quando quiser.');}
+    };
+    audio.onerror=()=>{if(s===session){setPhase('idle');setStatus('O arquivo de voz falhou. Tente o teste de áudio no Perfil.','error');}};
+    audio.play().then(()=>{if(s===session){setPhase('speaking');setStatus('Reproduzindo áudio alternativo…','speaking');}})
+      .catch(error=>{if(s===session){s.audioFallback=recovery;setPhase('idle');setStatus('iPhone bloqueou o som: '+(error?.name||'erro')+'. Abra Perfil → Diagnóstico de áudio.','error');}});
+    return;
+  }
+  if(s.blockedSpeech){const pending=s.blockedSpeech;s.blockedSpeech=null;speakSequence(pending.segments,pending.continueListening);return;}
   repeat(false);
 };
+window.coach5113AlternateReply=async()=>{
+  if(!s?.lastResponse)return;
+  // Alternativa explícita caso Safari marque 'concluído' mas o iPhone não emita som.
+  // Não chama a IA de conversa novamente: solicita apenas áudio da resposta salva.
+  stopSpeech();const session=s,turn=generation;
+  const text=String(s.lastReply?.spoken||s.lastResponse||'').slice(0,3000),audio=$('cv54Audio');
+  setPhase('speaking');setStatus('Preparando a mesma resposta pela voz Gemini…','processing');
+  try{
+    await window.mentor531PlayAudio(text,{
+      player:audio,box:$('cv54PlaybackBox'),language:s.lastReply?.spokenLanguage||s.language,
+      onStatus:message=>{if(s===session&&turn===generation)setStatus(message,'speaking');},
+      onEnded:()=>{if(s===session&&turn===generation){setPhase('idle');setStatus('Resposta concluída. Microfone fechado.');}},
+      onBlocked:()=>{if(s===session&&turn===generation){setPhase('idle');setStatus('Áudio preparado. Toque em ▶ no reprodutor para ouvir no iPhone.','error');}},
+      onError:()=>{if(s===session&&turn===generation){setPhase('idle');setStatus('Falha no reprodutor. Veja Perfil → Diagnóstico de áudio.','error');}}
+    });
+  }catch(error){if(s===session&&turn===generation){setPhase('idle');setStatus('Gemini indisponível: '+(error?.message||'falha')+'. A resposta permanece no texto.','error');}}
+};
 window.coach5111DeviceReply=async()=>{if(!s?.lastResponse)return;
-  if(!window.speechSynthesis){setStatus('Não há voz do aparelho disponível neste navegador.','error');return;}
+  if(!window.coach5112Voice?.canSpeak()){setStatus('Não há voz do aparelho disponível neste navegador.','error');return;}
   stopSpeech();setPhase('speaking');setStatus('Voz do aparelho (pode ser diferente da voz escolhida)…','speaking');
   const session=s,text=String(s.lastReply?.spoken||s.lastResponse||''),lang=s.lastReply?.spokenLanguage||s.language;
   const ok=await speakNative(text.slice(0,3000),lang,true);
   if(s===session&&s?.phase==='speaking'){setPhase('idle');setStatus(ok?'Voz do aparelho concluída. Microfone fechado.':'A voz do aparelho não respondeu. A resposta continua disponível em texto.',ok?'ready':'error');}
 };
 window.coach56Interrupt=async()=>{if(!s||s.finished||s.finishing||s.controller||s.aiPending)return;if(rec?.state==='recording'){await stopRecording(true);return;}stopSpeech();s.capture='manual';if(s.pausedAt){await resume();return;}await start();};
-window.coach56PauseSpeech=()=>{if(!s||s.phase!=='speaking')return;const audio=$('cv54Audio');if(s.voicePaused){if(s.voicePauseNative){s.nativePauseTimer?.(false);window.speechSynthesis?.resume();}else audio.play().catch(()=>setStatus('Toque no reprodutor para continuar.','error'));s.voicePaused=false;setStatus('Mentor respondendo…','speaking');}else if(window.speechSynthesis?.speaking||!audio.paused){s.voicePauseNative=!!window.speechSynthesis?.speaking;if(s.voicePauseNative){s.nativePauseTimer?.(true);speechSynthesis.pause();}else audio.pause();s.voicePaused=true;setStatus('Resposta pausada. Continue para ouvir do mesmo ponto.');}window.dispatchEvent(new Event('coachvoice:voice-player'));};
+window.coach56PauseSpeech=()=>{if(!s||s.phase!=='speaking')return;const audio=$('cv54Audio');if(s.voicePaused){if(s.voicePauseNative){s.nativePauseTimer?.(false);window.coach5112Voice?.resume();window.speechSynthesis?.resume();}else audio.play().catch(()=>setStatus('Toque no reprodutor para continuar.','error'));s.voicePaused=false;setStatus('Mentor respondendo…','speaking');}else if(window.speechSynthesis?.speaking||!audio.paused){s.voicePauseNative=!!window.speechSynthesis?.speaking;if(s.voicePauseNative){s.nativePauseTimer?.(true);window.coach5112Voice?.pause();}else audio.pause();s.voicePaused=true;setStatus('Resposta pausada. Continue para ouvir do mesmo ponto.');}window.dispatchEvent(new Event('coachvoice:voice-player'));};
 window.coach56SetSpeed=rate=>{const old=read('coachvoice-conversation-v54',{});write('coachvoice-conversation-v54',{...old,speed:rate});const prefs=read('coachvoice-v52-settings',{});write('coachvoice-v52-settings',{...prefs,voiceRate:rate});$('cv54Audio').playbackRate=rate;if(s?.nativeUtterance&&s.phase==='speaking'){stopSpeech();repeat(false);}return rate;};
 window.coach56State=()=>({area:s?.area,phase:s?.phase,voicePaused:!!s?.voicePaused,finished:!!s?.finished,capture:s?.capture,started:!!s?.started,blockedSpeech:!!s?.blockedSpeech,audioFailed:!!s?.audioFailed,hasReply:!!s?.lastResponse,video:!!s?.video});
 
