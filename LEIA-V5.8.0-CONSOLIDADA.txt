@@ -1,0 +1,16 @@
+CoachVoice AI v5.8.0 — base de áudio estável consolidada
+
+BASE
+- v5.7.6: Gemini TTS real no iPhone/Safari, cancelamento, pausa, retomada e fallback do aparelho.
+- v5.7.6: Mentor, Reflexões, Devocional, Abertura Inteligente e Study Coach preservados.
+
+INTEGRAÇÕES
+- Central de Competições e Notícias.
+- Mercado da Bola.
+- Filtros de notícias por hoje, 24 horas, 7 dias, todas e data específica.
+- Biblioteca privada por importação continua fora do código público.
+
+PENDÊNCIA CONSCIENTE
+- O conteúdo completo dos 365 dias de Além dos 90 Minutos não foi inventado nem exposto no GitHub.
+- O índice privado dos livros continua sendo importado pelo próprio aparelho.
+- A chamada Gemini TTS ainda precisa de GEMINI_API_KEY configurada e teste físico no iPhone.

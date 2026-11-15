@@ -1,11 +1,11 @@
 {
-  "name": "CoachVoice AI — Estúdio do Treinador",
+  "name": "CoachVoice AI v5.7.6",
   "short_name": "CoachVoice",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#eef2f6",
-  "theme_color": "#0b1a2e",
+  "theme_color": "#071225",
   "lang": "pt-BR",
   "icons": [
     {

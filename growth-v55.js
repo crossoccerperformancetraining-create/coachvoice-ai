@@ -5,7 +5,6 @@ const DEV_KEY='coachvoice-growth-devotional-v55';
 const INSIGHT_KEY='coachvoice-growth-insight-v55';
 const HISTORY_KEY='coachvoice-growth-history-v55';
 const LIBRARY_KEY='coachvoice-growth-library-v55';
-const currentDisplayed={devotional:null,insight:null};
 
 const esc=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const dayKey=(d=new Date())=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -55,17 +54,16 @@ async function getDevotional(force=false){
   if(!force){const c=cacheForToday(DEV_KEY);if(c)return c.data;}
   const identity=typeof window.getCoachIdentity==='function'?window.getCoachIdentity():{};
   const result=await ai('growth-devotional',{date:dayKey(),coachName:identity.name||'',language:'pt-BR'});
-  const data=result?.__error?{...dailyFallback(fallbackDevotionals),__localExample:true,__quota:result.__status===429||/quota|limite/i.test(String(result.__message||''))}:result;
-  // Um exemplo local não é uma resposta gerada; não gravar no cache como nova consulta bem-sucedida.
-  if(!result?.__error)save(DEV_KEY,{date:dayKey(),data,source:'ai'});
+  const data=result?.__error?dailyFallback(fallbackDevotionals):result;
+  save(DEV_KEY,{date:dayKey(),data,source:result?.__error?'fallback':'ai'});
   return data;
 }
 async function getInsight(force=false){
   if(!force){const c=cacheForToday(INSIGHT_KEY);if(c)return c.data;}
   const recent=history().filter(x=>x.type==='insight').slice(0,7).map(x=>x.topic).filter(Boolean);
-  const result=await ai('growth-daily-insight',{date:dayKey(),avoidRecentTopics:recent,libraryConnected:false,libraryMode:'catalog-only'});
-  const data=result?.__error?{...dailyFallback(fallbackInsights),__localExample:true,__quota:result.__status===429||/quota|limite/i.test(String(result.__message||''))}:result;
-  if(!result?.__error)save(INSIGHT_KEY,{date:dayKey(),data,source:'ai'});
+  const result=await ai('growth-daily-insight',{date:dayKey(),avoidRecentTopics:recent,libraryConnected:true,libraryMode:'catalog-only'});
+  const data=result?.__error?dailyFallback(fallbackInsights):result;
+  save(INSIGHT_KEY,{date:dayKey(),data,source:result?.__error?'fallback':'ai'});
   return data;
 }
 
@@ -78,26 +76,39 @@ function modal(title,eyebrow,body){
 }
 window.growth55CloseModal=function(){document.getElementById('growth55Modal')?.classList.add('hidden');document.body.classList.remove('growth55-modal-open');try{speechSynthesis.cancel();}catch{}};
 
-function speak(text){
-  if(window.cvUnifiedRead){
-    const article=document.getElementById('growth55Readable');
-    cvUnifiedRead(text,{container:article,language:'pt-BR'});
+function speak(text,profile='devotional'){
+  const value=String(text||'').trim();if(!value)return;
+  window.voice573?.unlock?.();
+  if(window.voice573?.speak){
+    window.voice573.speak(value,{lang:'pt-BR',rate:profile==='devotional' ? .90 : .93,profile,sectionPause:620,onError:()=>{if(typeof window.toast==='function')toast('O áudio não iniciou. Toque em Ouvir novamente.');}});
     return;
   }
-  if(window.coach5112Voice?.speak){window.coach5112Voice.speak(text,{lang:'pt-BR'});return;}
   if(!('speechSynthesis' in window))return;
   try{speechSynthesis.cancel();}catch{}
-  const u=new SpeechSynthesisUtterance(String(text||''));u.lang='pt-BR';
-  try{const p=JSON.parse(localStorage.getItem('coachvoice-v52-settings')||'{}');u.rate=Number(p.voiceRate)||1;}catch{u.rate=1;}
-  speechSynthesis.speak(u);
+  const u=new SpeechSynthesisUtterance(value);u.lang='pt-BR';u.rate=profile==='devotional' ? .90 : .93;speechSynthesis.speak(u);
 }
-window.growth55SpeakCurrent=function(){const el=document.getElementById('growth55Readable');if(el)speak(el.textContent)};
+function devotionalSpeech(d){
+  return [
+    `Devocional de hoje. ${d.title||''}`,
+    `Passagem. ${d.reference||''}. ${d.passage||''}`,
+    `Reflexão. ${d.reflection||''}`,
+    `Oração. ${d.prayer||''}`,
+    `Atitude para hoje. ${d.practice||''}`
+  ].filter(Boolean).join('\n\n');
+}
+window.growth55SpeakCurrent=async function(){
+  const c=cacheForToday(DEV_KEY);
+  const modalEyebrow=document.getElementById('growth55ModalEyebrow')?.textContent||'';
+  if(/DEVOCIONAL/i.test(modalEyebrow)){
+    const d=c?.data||await getDevotional();speak(devotionalSpeech(d),'devotional');return;
+  }
+  const el=document.getElementById('growth55Readable');if(el)speak(el.innerText,'reflection');
+};
 
 window.growth55OpenDevotional=async function(force=false){
   modal('Preparando seu momento…','DEVOCIONAL','<div class="growth55-loading"><span></span><p>Preparando uma leitura curta para hoje.</p></div>');
-  const d=await getDevotional(force);currentDisplayed.devotional=d;
+  const d=await getDevotional(force);
   modal(d.title||'Devocional de hoje','DEVOCIONAL · 3–5 MIN',`
-    ${d.__localExample?`<div class="growth55-source-note" role="status">${d.__quota?"Limite temporário da IA atingido.":"IA temporariamente indisponível."} Este é um exemplo local, não uma nova resposta do Gemini. Tente novamente quando o serviço estiver disponível.</div>`:""}
     <article id="growth55Readable" class="growth55-reading devotional-reading">
       <div class="growth55-reference"><span>PASSAGEM</span><strong>${esc(d.reference||'')}</strong><p>${esc(d.passage||'')}</p></div>
       <section><span>REFLEXÃO</span><p>${esc(d.reflection||'')}</p></section>
@@ -105,19 +116,17 @@ window.growth55OpenDevotional=async function(force=false){
       <section class="practice"><span>ATITUDE PARA HOJE</span><strong>${esc(d.practice||'')}</strong></section>
     </article>
     <div class="growth55-actions">
-      <button onclick="growth55SpeakCurrent()">Ouvir tudo</button>
+      <button onclick="growth55SpeakCurrent()">Ouvir</button>
       <button onclick="growth55Talk('devotional')">Conversar sobre isso</button>
       <button class="primary" onclick="growth55Complete('devotional')">Concluir</button>
     </div>
     <button class="growth55-regenerate" onclick="growth55OpenDevotional(true)">Gerar outro devocional hoje</button>`);
-  window.coach5115Stages?.growth();
 };
 
 window.growth55OpenInsight=async function(force=false){
   modal('Preparando insight…','INSIGHT DO TREINADOR','<div class="growth55-loading"><span></span><p>Escolhendo uma ideia curta para desenvolver hoje.</p></div>');
-  const d=await getInsight(force);currentDisplayed.insight=d;
+  const d=await getInsight(force);
   modal(d.title||'Insight do treinador','INSIGHT DO TREINADOR · 3–5 MIN',`
-    ${d.__localExample?`<div class="growth55-source-note" role="status">${d.__quota?"Limite temporário da IA atingido.":"IA temporariamente indisponível."} Este é um exemplo local, não uma nova resposta do Gemini.</div>`:""}
     <article id="growth55Readable" class="growth55-reading insight-reading">
       <div class="growth55-reference"><span>TEMA</span><strong>${esc(d.topic||'Desenvolvimento')}</strong></div>
       <section><span>IDEIA CENTRAL</span><p>${esc(d.idea||'')}</p></section>
@@ -127,29 +136,31 @@ window.growth55OpenInsight=async function(force=false){
       <div class="growth55-source-note">Este insight é desenvolvimento geral. Para estudar com suas referências catalogadas, abra o Study Coach.</div>
     </article>
     <div class="growth55-actions">
-      <button onclick="growth55SpeakCurrent()">Ouvir tudo</button>
+      <button onclick="growth55SpeakCurrent()">Ouvir</button>
       <button onclick="growth55Talk('insight')">Discutir com Mentor</button>
       <button class="primary" onclick="growth55Complete('insight')">Aprendi</button>
     </div>
     <button class="growth55-regenerate" onclick="growth55OpenInsight(true)">Gerar outro insight hoje</button>`);
-  window.coach5115Stages?.growth();
 };
 
 window.growth55Complete=async function(type){
-  const data=currentDisplayed[type]||(type==='devotional'?await getDevotional():await getInsight());
-  record(type,data,{source:data.__localExample?'exemplo-local':'ia'});
+  const data=type==='devotional'?await getDevotional():await getInsight();
+  record(type,data);
   if(typeof window.toast==='function')toast(type==='devotional'?'Devocional concluído.':'Insight registrado no seu aprendizado.');
   growth55CloseModal();
 };
 
 window.growth55Talk=async function(type){
-  const data=currentDisplayed[type]||(type==='devotional'?await getDevotional():await getInsight());
+  const data=type==='devotional'?await getDevotional():await getInsight();
   const body=type==='devotional'
     ?[data.passage,data.reflection,data.practice].filter(Boolean).join(' ')
     :[data.idea,data.why,data.example,data.practice].filter(Boolean).join(' ');
   growth55CloseModal();
   if(typeof window.go==='function')go('mentor');
-  window.coach54OpenSession?.('mentor',{scenario:data.title||'Reflexão',goal:'Conversar sobre a reflexão selecionada.',useTeam:false,studyContext:{purpose:'reflection',title:data.title,body:body.slice(0,3500)}});
+  setTimeout(()=>{
+    window.mentor55OpenGrowthContext?.({kind:type,title:data.title,reference:data.reference||data.topic||'',body});
+    setTimeout(()=>window.conversation54Start?.('mentor'),160);
+  },160);
 };
 
 window.growth55OpenLibrarySetup=function(){
@@ -190,6 +201,6 @@ function renderEvolutionPreview(){
 }
 
 // Warm the daily cache only after page load; failure falls back locally.
-document.addEventListener('DOMContentLoaded',()=>{renderToday();renderEvolutionPreview();;});
+document.addEventListener('DOMContentLoaded',()=>{renderToday();renderEvolutionPreview();setTimeout(async()=>{try{await getDevotional();await getInsight();renderToday();renderEvolutionPreview();}catch{}},800);});
 window.addEventListener('storage',()=>{renderToday();renderEvolutionPreview();});
 })();

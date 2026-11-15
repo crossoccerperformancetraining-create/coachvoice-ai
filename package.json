@@ -1,12 +1,12 @@
 {
   "name": "coachvoice-ai",
   "private": true,
-  "version": "5.12.0",
-  "description": "CoachVoice AI v5.12.0: leitor unificado, devocional/livros por partes e notícias por período",
+  "version": "5.8.0",
+  "description": "CoachVoice AI v5.7.6: áudio estável com cancelamento seguro e Gemini TTS no iPhone, preservando diário, biblioteca e Study Coach.",
   "engines": {
     "node": "22.x"
   },
   "scripts": {
-    "test": "node tests/session-v54.test.cjs && node tests/api-v54.test.cjs && node tests/voice-v54.test.cjs && node tests/conversation-v56.test.cjs && node tests/controls-v57.test.cjs && node tests/competitions-v58.test.cjs && node tests/study-v59.test.cjs && node tests/private-library-v510.test.cjs && node tests/football-intelligence-v511.test.cjs && node --test tests/menu-audio-v5111.test.cjs && node --test tests/stable-speech-v5112.test.cjs && node --test tests/ios-audio-v5113.test.cjs && node --test tests/transcription-safari-v5114.test.cjs && node tests/staged-v5115.test.cjs && node tests/coach-stages-v5116.test.cjs && node tests/latency-v5117.test.cjs"
+    "test": "node --test tests/*.test.cjs"
   }
 }
