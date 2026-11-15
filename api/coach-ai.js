@@ -38,7 +38,7 @@ function uniqueModels(primary) {
   ].filter(Boolean))];
 }
 
-async function callGenerateContent({ apiKey, model, input, systemInstruction = '', authMode = 'header' }) {
+async function callGenerateContent({ apiKey, model, input, systemInstruction = '', authMode = 'header', maxOutputTokens = 4096 }) {
   const base = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
   const url = authMode === 'query'
     ? `${base}?key=${encodeURIComponent(apiKey)}`
@@ -61,7 +61,7 @@ async function callGenerateContent({ apiKey, model, input, systemInstruction = '
       generationConfig: {
         responseMimeType: 'application/json',
         temperature: 0.35,
-        maxOutputTokens: 4096
+        maxOutputTokens
       }
     })
   });
@@ -70,7 +70,7 @@ async function callGenerateContent({ apiKey, model, input, systemInstruction = '
   return { response, data };
 }
 
-async function callGemini({ apiKey, model, input, systemInstruction = '' }) {
+async function callGemini({ apiKey, model, input, systemInstruction = '', maxOutputTokens = 4096 }) {
   const models = uniqueModels(model);
   let last = null;
 
@@ -84,7 +84,8 @@ async function callGemini({ apiKey, model, input, systemInstruction = '' }) {
           model: candidateModel,
           input,
           systemInstruction,
-          authMode
+          authMode,
+          maxOutputTokens
         });
 
         if (result.response.ok) {
@@ -104,11 +105,15 @@ async function callGemini({ apiKey, model, input, systemInstruction = '' }) {
           message
         });
 
-        // Quota não melhora trocando autenticação/modelo muitas vezes.
+        // Sem repetir requisições em erros de cota, servidor ou parâmetros.
+        // Essas tentativas desnecessárias podiam atrasar muito a resposta falada.
         if (status === 429) return last;
-
-        // Se o modelo não existir/estiver indisponível, passa para o próximo.
-        if (status === 404 || /model|not found|not supported/i.test(message)) break;
+        // Um modelo ausente pode usar o próximo fallback configurado.
+        if (status === 404) break;
+        // A autenticação via query é apenas um fallback para 401 no header.
+        if (status === 401 && authMode === 'header') continue;
+        // Em 400/403/5xx e outros erros, devolver imediatamente o erro real.
+        return last;
       } catch (error) {
         last = {
           response: { ok: false, status: 502 },
@@ -121,6 +126,9 @@ async function callGemini({ apiKey, model, input, systemInstruction = '' }) {
           authMode,
           message: error?.message || String(error)
         });
+        // Falha de rede deve aparecer para recuperação explícita do usuário,
+        // em vez de disparar até cinco chamadas extras em sequência.
+        return last;
       }
     }
   }
@@ -379,7 +387,11 @@ Responda em português do Brasil, salvo quando o exercício pedir inglês ou esp
 Siga exatamente o esquema JSON solicitado.
 `.trim();
 
-  const input = `${config.task}
+  const shortened = mode==='session-dialogue'&&payload.shortReply ? '\nTENTATIVA DE RECUPERAÇÃO: responda em até 90 palavras, sem perder a ideia principal. Não continue frases cortadas e não invente que uma resposta anterior foi entregue.\n' : '';
+  const agileDialogue = mode==='session-dialogue' && ['mentor','daytoday'].includes(payload.area) && !payload.shortReply
+    ? '\nCONVERSA COM ÁUDIO ÁGIL: comece diretamente pela resposta, sem saudações repetidas, preâmbulos ou listas desnecessárias. Para questões simples, prefira 60 a 110 palavras. Para uma questão complexa, use o espaço necessário (até o limite de 180 palavras do modo), entregando uma resposta completa e coerente; não omita o essencial nem mande pedir uma continuação. A divisão em partes acontece no aplicativo após a geração.\n'
+    : '';
+  const input = `${config.task}${shortened}${agileDialogue}
 
 FORMATO OBRIGATÓRIO:
 Retorne SOMENTE um objeto JSON válido.
@@ -394,20 +406,23 @@ ${payloadText}`;
       apiKey,
       model,
       systemInstruction,
-      input
+      input,
+      maxOutputTokens: /^(study-coach-|growth-study-sources|growth-devotional|growth-daily-insight)/.test(mode) ? 6144 : 4096
     });
 
     if (!response.ok) {
       console.error('Gemini Coach AI error:', data);
       const upstreamStatus = response.status || 502;
       return sendJson(res, upstreamStatus === 429 ? 429 : 502, {
-        error: data?.error?.message || 'O Gemini não respondeu.',
+        error: upstreamStatus === 429 ? 'Limite temporário da API Gemini atingido. Aguarde a renovação da cota; dividir a apresentação não cria novas respostas.' : (data?.error?.message || 'O Gemini não respondeu.'),
         code: data?.error?.status || data?.error?.code || 'gemini_error',
         upstreamStatus,
         modelUsed
       });
     }
 
+    const finishReason=String(data?.candidates?.[0]?.finishReason||'');
+    if(finishReason==='MAX_TOKENS'){return sendJson(res, 502, {error:'A geração ultrapassou o tamanho máximo desta resposta. Nada foi apresentado como completo.',code:'output_truncated',finishReason});}
     const raw = extractGeminiText(data);
     if (!raw) {
       return sendJson(res, 502, {
